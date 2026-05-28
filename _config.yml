@@ -1,0 +1,6 @@
+title: STUDY MAX FINAL
+description: 기말고사 학습 포털
+lang: ko-KR
+theme: minima
+plugins:
+  - jekyll-feed
