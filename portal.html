@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIMPUL STUDY — 학습 포털</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles/portal.css" />
+</head>
+<body>
+  <aside class="sidebar box">
+    <div class="logo">
+      <a href="./index.html" class="logo-link" aria-label="처음으로 돌아가기">
+        <img src="./assets/simpul-logo.png" alt="SIMPUL 로고" class="app-logo" onerror="this.style.display='none'; this.parentNode.textContent='SIMPUL STUDY';" />
+      </a>
+    </div>
+    <nav class="menu">
+      <button class="active" onclick="showDashboard(this)">🏁 대시보드</button>
+      <button data-src="korean_hub.html" onclick="showSubject(this,'국어 학습')">📖 국어</button>
+      <button data-src="english_hub.html" onclick="showSubject(this,'영어 학습')">📝 영어</button>
+      <button data-src="science_hub.html" onclick="showSubject(this,'통합과학 학습')">🧪 통합과학</button>
+      <button data-src="society_hub.html" onclick="showSubject(this,'통합사회 학습')">🌍 통합사회</button>
+      <button data-src="mega_study.html" onclick="showSubject(this,'정보 학습')">💻 정보</button>
+    </nav>
+    <div class="home"><a href="./index.html">처음으로</a></div>
+  </aside>
+
+  <main class="main">
+    <header class="header box">
+      <div>
+        <h1 id="title">기말 학습 대시보드</h1>
+        <p id="desc"></p>
+      </div>
+      <div class="profile-chip">
+        <div class="profile-avatar-wrap">
+          <img id="profileAvatar" alt="프로필" />
+          <span id="profileAvatarFallback">🙂</span>
+        </div>
+        <div class="profile-texts">
+          <strong id="profileNameLabel">이름 미설정</strong>
+          <span id="profileClassLabel">반/번호 미설정</span>
+          <button id="profileEditBtn" type="button">정보 수정</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="content box">
+      <div id="dashPanel" class="panel active">
+        <div class="dashboard-grid">
+          <article class="card box"><h3>기말 D-DAY (2026-06-29)</h3><div class="v" id="ddayValue">D-0</div></article>
+          <article class="card box"><h3>내 목표</h3><div class="v" id="goalValue">목표 설정 전</div></article>
+          <article class="card box team-card">
+            <h3>운영진</h3>
+            <p>CEO : 10224 최시원</p>
+            <p>CTO : 10229 심규원</p>
+            <p>CMO : 10211 신준영</p>
+            <p>문의 : Teams 26-10224 최시원</p>
+          </article>
+          <article class="goal box">
+            <h3>개인 목표 설정</h3>
+            <div class="goal-form">
+              <input id="goalInput" type="text" placeholder="예: 수학 3단원 오답 2회독" />
+              <button type="button" id="goalSaveBtn">저장</button>
+            </div>
+            <p id="goalMsg" class="goal-msg"></p>
+          </article>
+
+
+          <article class="memo box">
+            <h3>오늘 메모</h3>
+            <textarea id="memoInput" placeholder="핵심만 간단히 기록하세요."></textarea>
+            <div class="memo-actions">
+              <button type="button" id="memoSaveBtn">메모 저장</button>
+            </div>
+            <p id="memoMsg" class="goal-msg"></p>
+          </article>
+        </div>
+      </div>
+      <div id="framePanel" class="panel">
+        <iframe id="frame" src="about:blank" title="학습 페이지"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <div id="inkToolbar" class="ink-toolbar box minimized" role="toolbar" aria-label="손글씨 도구">
+    <button type="button" id="inkMinBtn" class="ink-min-btn" title="최소화">✍️</button>
+    <span id="inkGrip" class="ink-grip" title="드래그해서 이동">이동</span>
+    <div class="ink-toolbar-controls">
+    <button type="button" id="inkToggleBtn">✍️ 손글씨 모드</button>
+    <button type="button" id="inkPenBtn" class="active">펜</button>
+    <button type="button" id="inkEraserBtn">지우개</button>
+    <button type="button" id="inkHighlighterBtn">하이라이트</button>
+    <button type="button" id="inkUndoBtn" title="되돌리기">↶</button>
+    <button type="button" id="inkRedoBtn" title="다시하기">↷</button>
+    <label class="ink-size-wrap">굵기 <input id="inkSizeRange" type="range" min="1" max="24" value="3" /></label>
+    <label class="ink-color-wrap">색상 <input id="inkColorInput" type="color" value="#0f172a" /></label>
+    <button type="button" id="inkClearBtn">전체 지우기</button>
+    <button type="button" id="inkSaveBtn">저장</button>
+    <span id="inkMsg" class="ink-msg"></span>
+    </div>
+  </div>
+  <canvas id="inkLayer" aria-label="전체 화면 손글씨 레이어"></canvas>
+  <div id="profileModal" class="profile-modal" role="dialog" aria-modal="true" aria-label="학습자 정보">
+    <div class="profile-modal-card box">
+      <h2>학습자 정보 입력</h2>
+      <p>처음에는 개인 수준을 확인하는 간단한 테스트가 진행됩니다. 테스트는 한 번만 진행하면 되고, 원하면 건너뛰기 버튼으로 바로 넘어갈 수 있습니다.</p>
+      <div class="profile-grid">
+        <label>반 (1~8)<input id="profileClassInput" type="number" min="1" max="8" /></label>
+        <label>번호 (1~35)<input id="profileNumberInput" type="number" min="1" max="35" /></label>
+        <label class="full">이름<input id="profileNameInput" type="text" placeholder="이름 입력" /></label>
+        <label class="full">프로필 사진<input id="profilePhotoInput" type="file" accept="image/*" /></label>
+      </div>
+      <p id="profileModalMsg" class="profile-modal-msg"></p>
+      <div class="profile-modal-actions"><button id="profileSaveBtn" type="button">저장</button></div>
+    </div>
+  </div>
+
+
+  <div id="musicWidget" class="music-widget box minimized dock-right" aria-label="배경 음악 플레이어">
+    <button id="musicMiniPauseBtn" type="button" class="music-mini-pause" title="재생/정지">⏸</button>
+    <button id="musicDockToggle" type="button" class="music-dock-toggle" title="펼치기">🎵 BGM</button>
+    <div class="music-header"><h3>🎵 BGM</h3><div class="music-head-actions"><button id="musicMinBtn" type="button" class="music-min-btn" title="최소화">－</button><span id="musicGrip" class="music-grip" title="드래그해서 이동">이동</span></div></div>
+    <div class="music-row">
+      <input id="musicUrlInput" type="url" placeholder="오디오 URL 붙여넣기 (mp3, ogg...)" />
+      <button id="musicAddBtn" type="button">추가</button>
+    </div>
+    <div class="music-controls">
+      <button id="musicPrevBtn" type="button" title="이전">⏮</button>
+      <button id="musicPlayBtn" type="button">▶️ 재생</button>
+      <button id="musicNextBtn" type="button" title="다음">⏭</button>
+    </div>
+    <audio id="musicAudio" preload="metadata"></audio>
+    <iframe id="musicYoutubeFrame" class="music-youtube" title="YouTube player" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    <ol id="musicPlaylist" class="music-playlist"></ol>
+    <p id="musicMsg" class="music-msg"></p>
+    <p class="music-ad-tip">💡 유튜브 광고가 나오면 직접 오디오 URL(mp3/ogg)을 사용하거나 YouTube Premium을 이용하세요.</p>
+  </div>
+
+  <div id="aiWidget" class="ai-widget box minimized dock-right" aria-label="AI 학습 코치">
+    <button id="aiDockToggle" type="button" class="ai-dock-toggle" title="펼치기">🤖 AI</button>
+    <div class="ai-widget-header">
+      <h3>🤖 AI 코치</h3>
+      <div class="ai-head-actions">
+        <button id="aiMinBtn" type="button" class="ai-min-btn" title="최소화">－</button>
+        <span id="aiGrip" class="ai-grip" title="드래그해서 이동">이동</span>
+      </div>
+    </div>
+    <p id="aiAutoStatus" class="ai-auto-status"></p>
+    <div class="ai-widget-body">
+      <textarea id="aiSourceInput" placeholder="학습 내용을 붙여넣거나, 과목 페이지로 이동하면 자동 분석됩니다."></textarea>
+      <div class="ai-actions">
+        <button type="button" id="aiAnalyzeFrameBtn">📄 페이지 분석</button>
+        <button type="button" id="aiAnalyzeBtn">🚀 학습 시작</button>
+      </div>
+      <p id="aiMsg" class="ai-msg-line"></p>
+      <div id="aiSummary" class="ai-summary"></div>
+      <ol id="aiQuestionList" class="ai-question-list"></ol>
+      <div id="aiQuizCards" class="ai-quiz-cards-widget"></div>
+    </div>
+  </div>
+
+  <script src="./scripts/portal.js"></script>
+</body>
+</html>
