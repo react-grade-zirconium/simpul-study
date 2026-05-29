@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+      - work
+  push:
+    branches:
+      - main
+      - work
+      - 'codex/**'
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint-and-validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate frontend script syntax (index)
+        run: node --check scripts/index.js
+
+      - name: Validate frontend script syntax (portal)
+        run: node --check scripts/portal.js
+
+      - name: Validate server syntax
+        run: node --check server.mjs
