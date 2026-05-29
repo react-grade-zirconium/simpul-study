@@ -25,7 +25,6 @@ body{font-family:'Pretendard',sans-serif;min-height:100vh;display:flex;gap:14px;
 .goal-form{display:flex;gap:8px;flex-wrap:wrap}.goal-form input{flex:1;min-width:220px;border:1px solid var(--line);border-radius:8px;padding:10px;font-family:inherit}
 .goal-form button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:10px 12px;font-weight:600;cursor:pointer}
 .goal-msg{margin-top:6px;font-size:.84rem;color:#2563eb;min-height:1.2em}
-.ai-coach{grid-column:1/-1;padding:14px;display:grid;gap:10px}.ai-coach h3,.ai-quiz h3{font-size:.92rem}.ai-coach textarea{width:100%;min-height:120px;border:1px solid var(--line);border-radius:8px;padding:10px;font-family:inherit;resize:vertical}
 .memo{grid-column:1/-1;padding:14px}.memo h3{font-size:.92rem;margin-bottom:8px}.memo textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:8px;padding:10px;font-family:inherit;resize:vertical}
 .memo-actions{margin-top:8px;display:flex;justify-content:flex-end}
 .memo-actions button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:9px 12px;font-weight:600;cursor:pointer}
