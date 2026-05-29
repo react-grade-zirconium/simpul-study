@@ -32,12 +32,17 @@ function getOrCreateDeviceId() {
 }
 
 
+function getLineTargetWidth(el) {
+  const parentWidth = el.parentElement ? el.parentElement.clientWidth : window.innerWidth;
+  return Math.min(el.scrollWidth + 4, Math.max(0, parentWidth));
+}
+
 function typeTo(el, text, duration = 900) {
   el.classList.add('typing');
   el.textContent = text;
   el.style.maxWidth = '0px';
   requestAnimationFrame(() => {
-    const target = el.scrollWidth;
+    const target = getLineTargetWidth(el);
     el.style.transition = `max-width ${duration}ms steps(${Math.max(text.length, 6)}, end)`;
     el.style.maxWidth = `${target}px`;
   });
