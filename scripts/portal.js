@@ -70,6 +70,7 @@ const PROFILE_NUMBER_KEY = 'studymax_profile_number';
 const PROFILE_PHOTO_KEY = 'studymax_profile_photo';
 const AI_CONTENT_BANK_KEY = 'studymax_ai_content_bank_v1';
 const AI_QUESTIONS_KEY = 'studymax_ai_questions_v1';
+const AI_WIDGET_POSITION_KEY = 'studymax_ai_widget_position_v1';
 
 function getClassNumberFromAccessCode() {
   const code = localStorage.getItem(ACCESS_CODE_KEY) || '';
@@ -858,7 +859,7 @@ function initAiCoach() {
   if (!aiSourceInput || !aiAnalyzeBtn || !aiMsgEl || !aiAnalyzeFrameBtn) return;
 
   if (widget && minBtn && dockToggleBtn) {
-    initAiWidgetDrag(widget);
+    const restoreWidgetPosition = initAiWidgetDrag(widget);
 
     function setDockState(minimized) {
       widget.classList.remove('dock-left');
@@ -866,6 +867,14 @@ function initAiCoach() {
       widget.classList.toggle('minimized', minimized);
       dockToggleBtn.textContent = minimized ? '🤖 AI' : '숨기기';
       dockToggleBtn.title = minimized ? '펼치기' : '숨기기';
+      if (minimized) {
+        widget.style.left = '';
+        widget.style.top = '';
+        widget.style.right = '';
+        widget.style.bottom = '';
+      } else if (typeof restoreWidgetPosition === 'function') {
+        restoreWidgetPosition();
+      }
     }
 
     minBtn.addEventListener('click', () => setDockState(true));
@@ -891,19 +900,49 @@ function initAiCoach() {
 
 function initAiWidgetDrag(widget) {
   const grip = document.getElementById('aiGrip');
-  if (!grip || !widget) return;
+  const header = widget.querySelector('.ai-widget-header');
+  if (!widget) return null;
   let dragging = false;
   let offsetX = 0;
   let offsetY = 0;
+  let activeHandle = null;
+
+  const clampWidgetPosition = (left, top) => {
+    const margin = 8;
+    const maxX = Math.max(margin, window.innerWidth - widget.offsetWidth - margin);
+    const maxY = Math.max(margin, window.innerHeight - widget.offsetHeight - margin);
+    return {
+      left: Math.max(margin, Math.min(left, maxX)),
+      top: Math.max(margin, Math.min(top, maxY))
+    };
+  };
+
+  const savePosition = () => {
+    const rect = widget.getBoundingClientRect();
+    const pos = clampWidgetPosition(rect.left, rect.top);
+    localStorage.setItem(AI_WIDGET_POSITION_KEY, JSON.stringify(pos));
+  };
+
+  const applyPosition = (pos) => {
+    if (!pos || !Number.isFinite(pos.left) || !Number.isFinite(pos.top)) return false;
+    const safe = clampWidgetPosition(pos.left, pos.top);
+    widget.style.left = `${safe.left}px`;
+    widget.style.top = `${safe.top}px`;
+    widget.style.right = 'auto';
+    widget.style.bottom = 'auto';
+    return true;
+  };
+
+  const restorePosition = () => {
+    try { return applyPosition(JSON.parse(localStorage.getItem(AI_WIDGET_POSITION_KEY) || 'null')); }
+    catch (_) { return false; }
+  };
 
   const move = (e) => {
     if (!dragging) return;
-    const nx = e.clientX - offsetX;
-    const ny = e.clientY - offsetY;
-    const maxX = window.innerWidth - widget.offsetWidth;
-    const maxY = window.innerHeight - widget.offsetHeight;
-    widget.style.left = `${Math.max(0, Math.min(nx, maxX))}px`;
-    widget.style.top = `${Math.max(0, Math.min(ny, maxY))}px`;
+    const pos = clampWidgetPosition(e.clientX - offsetX, e.clientY - offsetY);
+    widget.style.left = `${pos.left}px`;
+    widget.style.top = `${pos.top}px`;
     e.preventDefault();
   };
 
@@ -911,27 +950,43 @@ function initAiWidgetDrag(widget) {
     if (!dragging) return;
     dragging = false;
     widget.classList.remove('dragging');
+    savePosition();
     window.removeEventListener('pointermove', move);
     window.removeEventListener('pointerup', end);
     window.removeEventListener('pointercancel', end);
-    try { grip.releasePointerCapture(e.pointerId); } catch (_) {}
+    try { activeHandle?.releasePointerCapture(e.pointerId); } catch (_) {}
+    activeHandle = null;
   };
 
-  grip.addEventListener('pointerdown', (e) => {
+  const start = (e) => {
+    if (widget.classList.contains('minimized')) return;
+    if (e.target.closest('button, input, textarea, select, a')) return;
     dragging = true;
+    activeHandle = e.currentTarget;
     widget.classList.add('dragging');
     const rect = widget.getBoundingClientRect();
     offsetX = e.clientX - rect.left;
     offsetY = e.clientY - rect.top;
-    widget.style.left = `${rect.left}px`;
-    widget.style.top = `${rect.top}px`;
-    widget.style.bottom = 'auto';
-    try { grip.setPointerCapture(e.pointerId); } catch (_) {}
+    applyPosition({ left: rect.left, top: rect.top });
+    try { activeHandle.setPointerCapture(e.pointerId); } catch (_) {}
     window.addEventListener('pointermove', move, { passive: false });
     window.addEventListener('pointerup', end);
     window.addEventListener('pointercancel', end);
     e.preventDefault();
-  }, { passive: false });
+  };
+
+  [grip, header].filter(Boolean).forEach((handle) => {
+    handle.addEventListener('pointerdown', start, { passive: false });
+  });
+
+  window.addEventListener('resize', () => {
+    if (widget.classList.contains('minimized')) return;
+    const rect = widget.getBoundingClientRect();
+    applyPosition({ left: rect.left, top: rect.top });
+    savePosition();
+  });
+
+  return restorePosition;
 }
 
 
