@@ -64,7 +64,6 @@ const aiQuizCardsEl = document.getElementById('aiQuizCards');
 const FINAL_EXAM_DATE = '2026-06-29';
 const GOAL_STORAGE_KEY = 'studymax_personal_goal';
 const MEMO_STORAGE_KEY = 'studymax_today_memo';
-const INK_STORAGE_KEY = 'studymax_ink_snapshot_v2';
 const PROFILE_NAME_KEY = 'studymax_profile_name';
 const PROFILE_CLASS_KEY = 'studymax_profile_class';
 const PROFILE_NUMBER_KEY = 'studymax_profile_number';
@@ -73,6 +72,7 @@ const AI_CONTENT_BANK_KEY = 'studymax_ai_content_bank_v1';
 const AI_QUESTIONS_KEY = 'studymax_ai_questions_v1';
 const AI_WIDGET_POSITION_KEY = 'studymax_ai_widget_position_v1';
 const SIDEBAR_COLLAPSED_KEY = 'studymax_subject_sidebar_collapsed';
+const SUBJECT_TAB_INK_SCOPE_NOTE = 'Dashboard, each subject, and each in-subject tab must keep separate ink storage whenever a subject adds tabbed content.';
 
 function getClassNumberFromAccessCode() {
   const code = localStorage.getItem(ACCESS_CODE_KEY) || '';
@@ -159,7 +159,7 @@ function applySidebarState(collapsed) {
   document.body.classList.toggle('sidebar-collapsed', collapsed);
   if (subjectToggleBtn) {
     subjectToggleBtn.setAttribute('aria-expanded', String(!collapsed));
-    subjectToggleBtn.textContent = collapsed ? '☰ 과목' : '× 과목';
+    subjectToggleBtn.textContent = collapsed ? '과목' : '닫기';
   }
   localStorage.setItem(SIDEBAR_COLLAPSED_KEY, collapsed ? '1' : '0');
 }
@@ -177,18 +177,78 @@ function showDashboard(btn) {
   framePanel.classList.remove('active');
   title.textContent = '기말 학습 대시보드';
   desc.textContent = '';
+  if (window.syncInkContext) window.syncInkContext();
 }
 function showSubject(btn, heading) {
   setActive(btn);
   document.body.classList.add('subject-mode');
   dashPanel.classList.remove('active');
   framePanel.classList.add('active');
+  frame.dataset.subject = btn.dataset.subject || inferSubjectFromSrc(btn.dataset.src || '');
   frame.src = btn.dataset.src;
   title.textContent = heading;
   desc.textContent = '';
   const autoStatusEl = document.getElementById('aiAutoStatus');
   if (autoStatusEl) autoStatusEl.textContent = `${heading} 로딩 중...`;
-  frame.onload = () => autoAnalyzeCurrentFrame(heading);
+  frame.onload = () => {
+    autoAnalyzeCurrentFrame(heading);
+    bindFrameInkContextSync();
+    if (window.syncInkContext) window.syncInkContext();
+  };
+  if (window.syncInkContext) window.syncInkContext();
+}
+
+
+function inferSubjectFromSrc(src) {
+  const clean = String(src || '').split('/').pop().replace(/\.html(?:[#?].*)?$/, '');
+  if (clean.includes('korean')) return 'korean';
+  if (clean.includes('english')) return 'english';
+  if (clean.includes('science')) return 'science';
+  if (clean.includes('society')) return 'society';
+  if (clean.includes('mega') || clean.includes('info')) return 'info';
+  return clean || 'subject';
+}
+
+function getNestedFrameDocument(rootFrame) {
+  try {
+    const doc = rootFrame?.contentDocument;
+    if (!doc) return null;
+    const activeTab = doc.querySelector('.tab-btn.active');
+    if (activeTab) return doc;
+    const inner = doc.querySelector('iframe');
+    return inner?.contentDocument || doc;
+  } catch (_) {
+    return null;
+  }
+}
+
+function getCurrentInkScope() {
+  if (!document.body.classList.contains('subject-mode')) return 'dashboard';
+  const subject = frame?.dataset.subject || inferSubjectFromSrc(frame?.getAttribute('src') || '');
+  const doc = getNestedFrameDocument(frame);
+  const activeTab = doc?.querySelector('.tab-btn.active');
+  const activePanel = doc?.querySelector('.tab-panel.active');
+  const tab = activeTab?.dataset?.tab || activePanel?.id || 'page';
+  return `subject:${subject}:tab:${tab}`;
+}
+
+function bindFrameInkContextSync() {
+  const doc = getNestedFrameDocument(frame);
+  if (!doc || doc.body?.dataset.inkSyncBound === '1') return;
+  if (doc.body) doc.body.dataset.inkSyncBound = '1';
+  doc.querySelectorAll('.tab-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      setTimeout(() => { if (window.syncInkContext) window.syncInkContext(); }, 30);
+    });
+  });
+  const nested = frame?.contentDocument?.querySelector('iframe');
+  if (nested && nested.dataset.inkSyncBound !== '1') {
+    nested.dataset.inkSyncBound = '1';
+    nested.addEventListener('load', () => {
+      bindFrameInkContextSync();
+      if (window.syncInkContext) window.syncInkContext();
+    });
+  }
 }
 
 function autoAnalyzeCurrentFrame(heading) {
@@ -293,7 +353,7 @@ function initGlobalInk() {
   const msg = document.getElementById('inkMsg');
   if (!canvas || !toolbar || !toggleBtn || !penBtn || !eraserBtn || !highlighterBtn || !undoBtn || !redoBtn || !clearBtn || !saveBtn || !sizeInput || !colorInput || !msg) return;
 
-  const INK_STROKES_KEY = 'studymax_ink_strokes_v1';
+  const INK_STROKES_PREFIX = 'studymax_ink_strokes_v2:';
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
   let drawing = false;
@@ -304,7 +364,8 @@ function initGlobalInk() {
   let strokes = [];
   let redoStack = [];
 
-  initToolbarDrag(toolbar);
+  let activeInkScope = getCurrentInkScope();
+  toolbar.dataset.inkScope = activeInkScope;
 
   function setMsg(text) { msg.textContent = text; if (!text) return; setTimeout(() => { if (msg.textContent === text) msg.textContent = ''; }, 1800); }
   function setTool(next) {
@@ -364,17 +425,32 @@ function initGlobalInk() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (const s of strokes) drawStroke(s);
   }
+  function inkStorageKey(scope = activeInkScope) {
+    return `${INK_STROKES_PREFIX}${scope}`;
+  }
   function persistStrokes() {
-    localStorage.setItem(INK_STROKES_KEY, JSON.stringify(strokes));
+    localStorage.setItem(inkStorageKey(), JSON.stringify(strokes));
   }
   function loadStrokes() {
     try {
-      const raw = localStorage.getItem(INK_STROKES_KEY);
-      if (!raw) return;
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed)) strokes = parsed;
+      const raw = localStorage.getItem(inkStorageKey());
+      strokes = raw ? JSON.parse(raw) : [];
+      if (!Array.isArray(strokes)) strokes = [];
     } catch (_) { strokes = []; }
   }
+  function syncInkContext() {
+    const nextScope = getCurrentInkScope();
+    if (nextScope === activeInkScope) return;
+    persistStrokes();
+    activeInkScope = nextScope;
+    toolbar.dataset.inkScope = activeInkScope;
+    redoStack = [];
+    loadStrokes();
+    drawAll();
+    updateUndoRedoUI();
+    setMsg(activeInkScope === 'dashboard' ? '대시보드 필기 불러옴' : '현재 탭 필기 불러옴');
+  }
+  window.syncInkContext = syncInkContext;
   function beginStroke(e) {
     if (!document.body.classList.contains('ink-on')) return;
     if (e.target.closest && e.target.closest('#inkToolbar')) return;
@@ -425,14 +501,7 @@ function initGlobalInk() {
   const inkMinBtn = document.getElementById('inkMinBtn');
   if (inkMinBtn) {
     inkMinBtn.addEventListener('click', () => {
-      const isMin = toolbar.classList.toggle('minimized');
-      inkMinBtn.title = isMin ? '펼치기' : '최소화';
-      inkMinBtn.textContent = isMin ? '✍️' : '✍️';
-      if (isMin && document.body.classList.contains('ink-on')) {
-        document.body.classList.remove('ink-on');
-        toggleBtn.classList.remove('active');
-        toggleBtn.textContent = '✍️ 손글씨 모드';
-      }
+      setMsg('손글씨 도구는 상단에 고정되어 있습니다.');
     });
   }
 
@@ -460,7 +529,9 @@ function initGlobalInk() {
   resizeCanvas();
   updateUndoRedoUI();
   window.addEventListener('resize', resizeCanvas);
+  window.addEventListener('beforeunload', persistStrokes);
 }
+
 
 renderDday();
 loadGoal();
@@ -489,13 +560,40 @@ function initMusicWidget() {
   const youtubeFrame = document.getElementById('musicYoutubeFrame');
   const widget = document.getElementById('musicWidget');
   if (!urlInput || !addBtn || !playBtn || !prevBtn || !nextBtn || !listEl || !msgEl || !audio || !widget || !minBtn || !youtubeFrame || !dockToggleBtn) return;
-  initMusicWidgetDrag(widget);
 
   const MUSIC_LIST_KEY = 'studymax_music_playlist_v1';
   const MUSIC_INDEX_KEY = 'studymax_music_playlist_index_v1';
+  const MUSIC_POSITION_KEY = 'studymax_music_position_v1';
   let playlist = [];
   let currentIndex = -1;
   let currentMode = 'audio';
+
+  function markCustomPosition(custom) {
+    widget.dataset.customPosition = custom ? '1' : '0';
+    if (custom) widget.classList.remove('dock-left', 'dock-right');
+  }
+
+  function persistMusicPosition() {
+    const rect = widget.getBoundingClientRect();
+    localStorage.setItem(MUSIC_POSITION_KEY, JSON.stringify({ x: rect.left, y: rect.top }));
+  }
+
+  function applySavedMusicPosition() {
+    try {
+      const pos = JSON.parse(localStorage.getItem(MUSIC_POSITION_KEY) || 'null');
+      if (!pos || !Number.isFinite(pos.x) || !Number.isFinite(pos.y)) return;
+      const maxX = Math.max(0, window.innerWidth - widget.offsetWidth);
+      const maxY = Math.max(0, window.innerHeight - widget.offsetHeight);
+      widget.style.left = `${Math.max(0, Math.min(pos.x, maxX))}px`;
+      widget.style.top = `${Math.max(0, Math.min(pos.y, maxY))}px`;
+      widget.style.right = 'auto';
+      widget.style.bottom = 'auto';
+      markCustomPosition(true);
+    } catch (_) {}
+  }
+
+  initMusicWidgetDrag(widget, () => { markCustomPosition(true); persistMusicPosition(); });
+  applySavedMusicPosition();
 
   function setMsg(text) {
     msgEl.textContent = text;
@@ -670,29 +768,22 @@ function initMusicWidget() {
   }
 
   function setDockState(minimized) {
-    widget.classList.remove('dock-left');
-    widget.classList.add('dock-right');
+    if (widget.dataset.customPosition !== '1') {
+      widget.classList.remove('dock-left');
+      widget.classList.add('dock-right');
+    } else {
+      widget.classList.remove('dock-left', 'dock-right');
+    }
     widget.classList.toggle('minimized', minimized);
     minBtn.title = minimized ? '펼치기' : '최소화';
+    minBtn.textContent = minimized ? '＋' : '－';
     dockToggleBtn.textContent = minimized ? '🎵 BGM' : '숨기기';
     dockToggleBtn.title = minimized ? '펼치기' : '숨기기';
-    if (!minimized) {
-      clearTimeout(autoMinTimer);
-      if (currentMode === 'youtube') {
-        const yid = parseYoutubeId(playlist[currentIndex] || '');
-        if (yid) {
-          youtubeFrame.src = `https://www.youtube.com/embed/${yid}?autoplay=0&rel=0`;
-          playBtn.textContent = '▶️ 재생';
-        }
-      } else if (!audio.paused) {
-        audio.pause();
-      }
-      syncMiniPause(false);
-    }
+    if (!minimized) clearTimeout(autoMinTimer);
   }
 
   minBtn.addEventListener('click', () => {
-    setDockState(true);
+    setDockState(!widget.classList.contains('minimized'));
   });
 
   dockToggleBtn.addEventListener('click', () => {
@@ -706,7 +797,7 @@ function initMusicWidget() {
 }
 
 
-function initMusicWidgetDrag(widget) {
+function initMusicWidgetDrag(widget, onDragEnd) {
   const grip = document.getElementById('musicGrip');
   if (!grip || !widget) return;
   let dragging = false;
@@ -732,6 +823,7 @@ function initMusicWidgetDrag(widget) {
     window.removeEventListener('pointerup', end);
     window.removeEventListener('pointercancel', end);
     try { grip.releasePointerCapture(e.pointerId); } catch (_) {}
+    if (typeof onDragEnd === 'function') onDragEnd();
   };
 
   grip.addEventListener('pointerdown', (e) => {
@@ -744,6 +836,7 @@ function initMusicWidgetDrag(widget) {
     widget.style.top = `${rect.top}px`;
     widget.style.right = 'auto';
     widget.style.bottom = 'auto';
+    widget.classList.remove('dock-left', 'dock-right');
     try { grip.setPointerCapture(e.pointerId); } catch (_) {}
     window.addEventListener('pointermove', move, { passive: false });
     window.addEventListener('pointerup', end);
@@ -757,8 +850,9 @@ initAiCoach();
 
 
 function extractTextFromCurrentFrame() {
-  if (!frame || !frame.contentDocument) return '';
-  const bodyText = frame.contentDocument.body ? frame.contentDocument.body.innerText : '';
+  const doc = getNestedFrameDocument(frame);
+  if (!doc) return '';
+  const bodyText = doc.body ? doc.body.innerText : '';
   return (bodyText || '').replace(/\s+/g, ' ').trim();
 }
 
@@ -956,6 +1050,7 @@ function initAiWidgetDrag(widget) {
     widget.style.top = `${safe.top}px`;
     widget.style.right = 'auto';
     widget.style.bottom = 'auto';
+    widget.classList.remove('dock-left', 'dock-right');
     return true;
   };
 
