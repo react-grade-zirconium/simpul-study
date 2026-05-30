@@ -8,7 +8,8 @@
   <link rel="stylesheet" href="./styles/portal.css" />
 </head>
 <body>
-  <aside class="sidebar box">
+  <button id="subjectToggleBtn" class="subject-toggle" type="button" aria-expanded="true" aria-controls="subjectSidebar">과목</button>
+  <aside id="subjectSidebar" class="sidebar box">
     <div class="logo">
       <a href="./index.html" class="logo-link" aria-label="처음으로 돌아가기">
         <img src="./simpul-logo.png" alt="SIMPUL 로고" class="app-logo" onerror="this.style.display='none'; this.parentNode.textContent='SIMPUL STUDY';" />
@@ -16,11 +17,12 @@
     </div>
     <nav class="menu">
       <button class="active" onclick="showDashboard(this)">🏁 대시보드</button>
-      <button data-src="korean_hub.html" onclick="showSubject(this,'국어 학습')">📖 국어</button>
-      <button data-src="english_hub.html" onclick="showSubject(this,'영어 학습')">📝 영어</button>
-      <button data-src="science_hub.html" onclick="showSubject(this,'통합과학 학습')">🧪 통합과학</button>
-      <button data-src="society_hub.html" onclick="showSubject(this,'통합사회 학습')">🌍 통합사회</button>
-      <button data-src="mega_study.html" onclick="showSubject(this,'정보 학습')">💻 정보</button>
+      <button data-src="korean_hub.html" data-subject="korean" onclick="showSubject(this,'국어 학습')">📖 국어</button>
+      <button data-src="english_hub.html" data-subject="english" onclick="showSubject(this,'영어 학습')">📝 영어</button>
+      <button data-src="science_hub.html" data-subject="science" onclick="showSubject(this,'통합과학 학습')">🧪 통합과학</button>
+      <button data-src="society_hub.html" data-subject="society" onclick="showSubject(this,'통합사회 학습')">🌍 통합사회</button>
+      <button data-src="mega_study.html" data-subject="info" onclick="showSubject(this,'정보 학습')">💻 정보</button>
+      <button onclick="showVersionHistory(this)">🕘 버전 기록</button>
     </nav>
     <div class="home"><a href="./index.html">처음으로</a></div>
   </aside>
@@ -98,15 +100,27 @@
           </article>
         </div>
       </div>
+      <div id="versionPanel" class="panel">
+        <article class="version-panel box">
+          <h2>버전 기록</h2>
+          <p>학습 포털의 주요 변경 사항을 과목 탭과 같은 방식으로 확인할 수 있습니다.</p>
+          <ol>
+            <li><strong>v0.4</strong><span>손글씨를 대시보드/과목/탭별로 개별 저장하고, 상단 한 줄 도구막대 이동 기능을 재구성했습니다.</span></li>
+            <li><strong>v0.3</strong><span>국어 음운 총정리 전체 콘텐츠와 과목별 iframe 화면을 추가했습니다.</span></li>
+            <li><strong>v0.2</strong><span>과목 선택창 접기/펼치기와 BGM 플레이어를 정리했습니다.</span></li>
+            <li><strong>v0.1</strong><span>기말 학습 대시보드, 목표, 메모, AI 학습 코치 기본 화면을 만들었습니다.</span></li>
+          </ol>
+        </article>
+      </div>
       <div id="framePanel" class="panel">
         <iframe id="frame" src="about:blank" title="학습 페이지"></iframe>
       </div>
     </section>
   </main>
 
-  <div id="inkToolbar" class="ink-toolbar box minimized" role="toolbar" aria-label="손글씨 도구">
-    <button type="button" id="inkMinBtn" class="ink-min-btn" title="최소화">✍️</button>
-    <span id="inkGrip" class="ink-grip" title="드래그해서 이동">이동</span>
+  <div id="inkToolbar" class="ink-toolbar box" role="toolbar" aria-label="손글씨 도구">
+    <button type="button" id="inkMinBtn" class="ink-min-btn" title="상단 중앙으로 이동">상단</button>
+    <span id="inkGrip" class="ink-grip" title="드래그해서 손글씨 도구 이동">이동</span>
     <div class="ink-toolbar-controls">
     <button type="button" id="inkToggleBtn">✍️ 손글씨 모드</button>
     <button type="button" id="inkPenBtn" class="active">펜</button>
