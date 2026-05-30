@@ -43,6 +43,7 @@ const title = document.getElementById('title');
 const desc = document.getElementById('desc');
 const dashPanel = document.getElementById('dashPanel');
 const framePanel = document.getElementById('framePanel');
+const versionPanel = document.getElementById('versionPanel');
 const frame = document.getElementById('frame');
 const subjectToggleBtn = document.getElementById('subjectToggleBtn');
 const ddayEl = document.getElementById('ddayValue');
@@ -175,6 +176,7 @@ function showDashboard(btn) {
   document.body.classList.remove('subject-mode');
   dashPanel.classList.add('active');
   framePanel.classList.remove('active');
+  if (versionPanel) versionPanel.classList.remove('active');
   title.textContent = '기말 학습 대시보드';
   desc.textContent = '';
   if (window.syncInkContext) window.syncInkContext();
@@ -183,6 +185,7 @@ function showSubject(btn, heading) {
   setActive(btn);
   document.body.classList.add('subject-mode');
   dashPanel.classList.remove('active');
+  if (versionPanel) versionPanel.classList.remove('active');
   framePanel.classList.add('active');
   frame.dataset.subject = btn.dataset.subject || inferSubjectFromSrc(btn.dataset.src || '');
   frame.src = btn.dataset.src;
@@ -198,6 +201,16 @@ function showSubject(btn, heading) {
   if (window.syncInkContext) window.syncInkContext();
 }
 
+function showVersionHistory(btn) {
+  setActive(btn);
+  document.body.classList.remove('subject-mode');
+  dashPanel.classList.remove('active');
+  framePanel.classList.remove('active');
+  if (versionPanel) versionPanel.classList.add('active');
+  title.textContent = '버전 기록';
+  desc.textContent = '학습 포털 변경 사항';
+  if (window.syncInkContext) window.syncInkContext();
+}
 
 function inferSubjectFromSrc(src) {
   const clean = String(src || '').split('/').pop().replace(/\.html(?:[#?].*)?$/, '');
@@ -289,7 +302,7 @@ function saveMemo() {
   }
 }
 
-function initToolbarDrag(toolbar) {
+function initToolbarDrag(toolbar, onDragEnd) {
   const grip = document.getElementById('inkGrip');
   if (!grip) return;
 
@@ -316,6 +329,7 @@ function initToolbarDrag(toolbar) {
     window.removeEventListener('pointerup', end);
     window.removeEventListener('pointercancel', end);
     try { grip.releasePointerCapture(e.pointerId); } catch (_) {}
+    if (typeof onDragEnd === 'function') onDragEnd();
   };
 
   grip.addEventListener('pointerdown', (e) => {
@@ -328,6 +342,7 @@ function initToolbarDrag(toolbar) {
     toolbar.style.top = `${rect.top}px`;
     toolbar.style.right = 'auto';
     toolbar.style.bottom = 'auto';
+    toolbar.style.transform = 'none';
     try { grip.setPointerCapture(e.pointerId); } catch (_) {}
     window.addEventListener('pointermove', move, { passive: false });
     window.addEventListener('pointerup', end);
@@ -363,6 +378,37 @@ function initGlobalInk() {
   let currentStroke = null;
   let strokes = [];
   let redoStack = [];
+  const INK_TOOLBAR_POSITION_KEY = 'studymax_ink_toolbar_position_v1';
+
+  function placeToolbarTopCenter() {
+    toolbar.style.left = '50%';
+    toolbar.style.top = '8px';
+    toolbar.style.right = 'auto';
+    toolbar.style.bottom = 'auto';
+    toolbar.style.transform = 'translateX(-50%)';
+  }
+
+  function persistToolbarPosition() {
+    const rect = toolbar.getBoundingClientRect();
+    localStorage.setItem(INK_TOOLBAR_POSITION_KEY, JSON.stringify({ x: rect.left, y: rect.top }));
+  }
+
+  function applySavedToolbarPosition() {
+    try {
+      const pos = JSON.parse(localStorage.getItem(INK_TOOLBAR_POSITION_KEY) || 'null');
+      if (!pos || !Number.isFinite(pos.x) || !Number.isFinite(pos.y)) return;
+      const maxX = Math.max(0, window.innerWidth - toolbar.offsetWidth);
+      const maxY = Math.max(0, window.innerHeight - toolbar.offsetHeight);
+      toolbar.style.left = `${Math.max(0, Math.min(pos.x, maxX))}px`;
+      toolbar.style.top = `${Math.max(0, Math.min(pos.y, maxY))}px`;
+      toolbar.style.right = 'auto';
+      toolbar.style.bottom = 'auto';
+      toolbar.style.transform = 'none';
+    } catch (_) {}
+  }
+
+  initToolbarDrag(toolbar, persistToolbarPosition);
+  requestAnimationFrame(applySavedToolbarPosition);
 
   let activeInkScope = getCurrentInkScope();
   toolbar.dataset.inkScope = activeInkScope;
@@ -501,7 +547,9 @@ function initGlobalInk() {
   const inkMinBtn = document.getElementById('inkMinBtn');
   if (inkMinBtn) {
     inkMinBtn.addEventListener('click', () => {
-      setMsg('손글씨 도구는 상단에 고정되어 있습니다.');
+      localStorage.removeItem(INK_TOOLBAR_POSITION_KEY);
+      placeToolbarTopCenter();
+      setMsg('손글씨 도구를 상단 중앙으로 옮겼습니다.');
     });
   }
 
@@ -528,7 +576,7 @@ function initGlobalInk() {
   loadStrokes();
   resizeCanvas();
   updateUndoRedoUI();
-  window.addEventListener('resize', resizeCanvas);
+  window.addEventListener('resize', () => { resizeCanvas(); applySavedToolbarPosition(); });
   window.addEventListener('beforeunload', persistStrokes);
 }
 
@@ -1113,3 +1161,4 @@ function initAiWidgetDrag(widget) {
 
 window.showDashboard = showDashboard;
 window.showSubject = showSubject;
+window.showVersionHistory = showVersionHistory;

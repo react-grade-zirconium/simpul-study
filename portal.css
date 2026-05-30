@@ -12,7 +12,7 @@ body.sidebar-collapsed .subject-toggle{left:0}
 .app-logo{display:block;width:100%;max-width:160px;margin:0 auto}
 .menu{padding:10px;display:grid;gap:6px}.menu button{border:0;border-radius:9px;padding:10px 12px;text-align:left;background:transparent;color:inherit;cursor:pointer}
 .menu button.active{background:var(--primary);color:#fff;font-weight:700}.menu button:hover{background:#1b2a44}
-.version-history{margin:4px 10px 10px;padding:10px;border:1px solid rgba(255,255,255,.14);border-radius:10px;background:rgba(15,23,42,.38);font-size:.76rem;line-height:1.45;color:#cbd5e1}.version-history strong{display:block;color:#fff;font-size:.82rem;margin-bottom:5px}.version-history ul{display:grid;gap:4px;margin:0;padding-left:16px}.version-history b{color:#bfdbfe}.home{margin-top:auto;padding:10px;border-top:1px solid rgba(255,255,255,.12)}.home a{display:block;text-align:center;text-decoration:none;color:#e2e8f0;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:10px}
+.home{margin-top:auto;padding:10px;border-top:1px solid rgba(255,255,255,.12)}.home a{display:block;text-align:center;text-decoration:none;color:#e2e8f0;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:10px}
 .main{flex:1;display:grid;grid-template-rows:auto 1fr;gap:12px;min-width:0;min-height:0}.header{padding:14px 16px;display:flex;justify-content:space-between;gap:12px;align-items:center}.header h1{font-size:1.15rem}.header p{color:var(--sub);margin-top:4px;font-size:.92rem}
 .profile-chip{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:8px 10px;background:#f8fbff}
 .profile-avatar-wrap{width:52px;height:52px;border-radius:999px;overflow:hidden;background:#dbe3ef;display:grid;place-items:center}
@@ -23,7 +23,7 @@ body.sidebar-collapsed .subject-toggle{left:0}
 .profile-texts span{font-size:.8rem;color:var(--sub)}
 .profile-texts button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:4px 8px;font-size:.78rem;cursor:pointer}
 .content{overflow:hidden;min-height:0}.panel{display:none;height:100%;min-height:0}.panel.active{display:block}body.subject-mode{padding:0;gap:0}body.subject-mode .header{display:none}body.subject-mode .sidebar{height:100vh;border-radius:0}body.subject-mode .main{grid-template-rows:1fr;height:100vh}body.subject-mode .content{height:100%;border:0;border-radius:0}
-.dashboard-grid{height:100%;overflow:auto;padding:14px;display:grid;gap:10px;grid-template-columns:repeat(3,1fr)}
+.dashboard-grid{height:100%;overflow:auto;padding:14px;display:grid;gap:10px;grid-template-columns:repeat(3,1fr)}.version-panel{height:100%;overflow:auto;margin:0;padding:22px;display:grid;align-content:start;gap:12px}.version-panel h2{font-size:1.25rem}.version-panel p{color:var(--sub);font-size:.92rem}.version-panel ol{display:grid;gap:10px;padding-left:20px}.version-panel li{line-height:1.5}.version-panel li strong{display:inline-block;min-width:48px;color:#1d4ed8}.version-panel li span{color:#334155}
 .card{padding:14px}.card h3{font-size:.86rem;color:var(--sub);margin-bottom:8px}.card .v{font-size:1.4rem;font-weight:800}
 .team-card p{font-size:.84rem;color:#334155;line-height:1.45}
 .goal{grid-column:1/-1;padding:14px}.goal h3{font-size:.92rem;margin-bottom:8px}
@@ -34,20 +34,20 @@ body.sidebar-collapsed .subject-toggle{left:0}
 .memo-actions{margin-top:8px;display:flex;justify-content:flex-end}
 .memo-actions button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:9px 12px;font-weight:600;cursor:pointer}
 iframe{display:block;width:100%;height:100%;border:0;background:#fff}
-.ink-toolbar{position:fixed;left:50%;top:8px;transform:translateX(-50%);display:flex;gap:6px;align-items:center;flex-wrap:wrap;max-width:min(96vw,920px);padding:8px 10px;z-index:1400;box-shadow:0 8px 22px rgba(15,23,42,.15);touch-action:none}
+.ink-toolbar{position:fixed;left:50%;top:8px;transform:translateX(-50%);display:flex;gap:6px;align-items:center;flex-wrap:nowrap;max-width:min(96vw,980px);padding:8px 10px;z-index:1400;box-shadow:0 8px 22px rgba(15,23,42,.15);touch-action:none;overflow-x:auto;white-space:nowrap}
 .ink-toolbar.dragging{opacity:.9}
 .ink-toolbar button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 10px;font-weight:600;cursor:pointer}
-.ink-toolbar-controls{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-.ink-min-btn{border:1px solid var(--line);background:#eff6ff;border-radius:8px;padding:7px 10px;font-size:1rem;cursor:default;flex-shrink:0;line-height:1}
-.ink-toolbar.minimized{padding:8px 10px;flex-wrap:wrap}
+.ink-toolbar-controls{display:flex;gap:6px;align-items:center;flex-wrap:nowrap}
+.ink-min-btn{border:1px solid var(--line);background:#eff6ff;border-radius:8px;padding:7px 10px;font-size:.82rem;cursor:pointer;flex-shrink:0;line-height:1;font-weight:800;color:#1d4ed8}
+.ink-toolbar.minimized{padding:8px 10px;flex-wrap:nowrap}
 .ink-toolbar.minimized .ink-toolbar-controls{display:flex}
-.ink-size-wrap,.ink-color-wrap{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;color:#475569}
+.ink-size-wrap,.ink-color-wrap{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;color:#475569;flex-shrink:0}
 .ink-size-wrap input[type="range"]{width:90px}
 .ink-color-wrap input[type="color"]{width:28px;height:28px;border:none;background:transparent;padding:0}
 .ink-toolbar button.active{background:#2563eb;color:#fff;border-color:#1d4ed8}
 .ink-toolbar button:disabled{opacity:.45;cursor:not-allowed}
-.ink-grip{display:inline-flex;align-items:center;justify-content:center;border:1px dashed #c5d1e3;border-radius:8px;padding:6px 8px;color:#64748b;font-size:.82rem;cursor:default;background:#f8fbff}
-.ink-msg{font-size:.82rem;color:#2563eb;min-width:90px}
+.ink-grip{display:inline-flex;align-items:center;justify-content:center;border:1px dashed #c5d1e3;border-radius:8px;padding:6px 8px;color:#64748b;font-size:.82rem;cursor:grab;background:#f8fbff;user-select:none;flex-shrink:0}
+.ink-msg{font-size:.82rem;color:#2563eb;min-width:90px;flex-shrink:0}
 #inkLayer{position:absolute;left:0;top:0;z-index:1100;pointer-events:none;touch-action:none}
 body.ink-on #inkLayer{pointer-events:auto;cursor:crosshair}
 .profile-modal{position:fixed;inset:0;background:rgba(2,6,23,.68);display:none;align-items:center;justify-content:center;z-index:1400}
