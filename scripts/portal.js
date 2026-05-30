@@ -44,6 +44,7 @@ const desc = document.getElementById('desc');
 const dashPanel = document.getElementById('dashPanel');
 const framePanel = document.getElementById('framePanel');
 const frame = document.getElementById('frame');
+const subjectToggleBtn = document.getElementById('subjectToggleBtn');
 const ddayEl = document.getElementById('ddayValue');
 const goalInput = document.getElementById('goalInput');
 const goalSaveBtn = document.getElementById('goalSaveBtn');
@@ -71,6 +72,7 @@ const PROFILE_PHOTO_KEY = 'studymax_profile_photo';
 const AI_CONTENT_BANK_KEY = 'studymax_ai_content_bank_v1';
 const AI_QUESTIONS_KEY = 'studymax_ai_questions_v1';
 const AI_WIDGET_POSITION_KEY = 'studymax_ai_widget_position_v1';
+const SIDEBAR_COLLAPSED_KEY = 'studymax_subject_sidebar_collapsed';
 
 function getClassNumberFromAccessCode() {
   const code = localStorage.getItem(ACCESS_CODE_KEY) || '';
@@ -153,14 +155,37 @@ function initProfileModal() {
 }
 
 function setActive(btn) { document.querySelectorAll('.menu button').forEach((b) => b.classList.remove('active')); btn.classList.add('active'); }
-function showDashboard(btn) { setActive(btn); dashPanel.classList.add('active'); framePanel.classList.remove('active'); title.textContent = '기말 학습 대시보드'; desc.textContent = ''; }
+function applySidebarState(collapsed) {
+  document.body.classList.toggle('sidebar-collapsed', collapsed);
+  if (subjectToggleBtn) {
+    subjectToggleBtn.setAttribute('aria-expanded', String(!collapsed));
+    subjectToggleBtn.textContent = collapsed ? '☰ 과목' : '× 과목';
+  }
+  localStorage.setItem(SIDEBAR_COLLAPSED_KEY, collapsed ? '1' : '0');
+}
+function initSubjectSidebarToggle() {
+  const saved = localStorage.getItem(SIDEBAR_COLLAPSED_KEY) === '1';
+  applySidebarState(saved);
+  subjectToggleBtn?.addEventListener('click', () => {
+    applySidebarState(!document.body.classList.contains('sidebar-collapsed'));
+  });
+}
+function showDashboard(btn) {
+  setActive(btn);
+  document.body.classList.remove('subject-mode');
+  dashPanel.classList.add('active');
+  framePanel.classList.remove('active');
+  title.textContent = '기말 학습 대시보드';
+  desc.textContent = '';
+}
 function showSubject(btn, heading) {
   setActive(btn);
+  document.body.classList.add('subject-mode');
   dashPanel.classList.remove('active');
   framePanel.classList.add('active');
   frame.src = btn.dataset.src;
   title.textContent = heading;
-  desc.textContent = '선택 과목만 집중해서 볼 수 있습니다.';
+  desc.textContent = '';
   const autoStatusEl = document.getElementById('aiAutoStatus');
   if (autoStatusEl) autoStatusEl.textContent = `${heading} 로딩 중...`;
   frame.onload = () => autoAnalyzeCurrentFrame(heading);
@@ -440,6 +465,7 @@ function initGlobalInk() {
 renderDday();
 loadGoal();
 loadMemo();
+initSubjectSidebarToggle();
 if (goalSaveBtn) goalSaveBtn.addEventListener('click', saveGoal);
 if (goalInput) goalInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') saveGoal(); });
 if (memoSaveBtn) memoSaveBtn.addEventListener('click', saveMemo);
