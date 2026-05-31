@@ -34,7 +34,6 @@ function isValidClassNumberCode(code) {
 
 
 async function enforceAccessCode() {
-  if (isMobileLiteMode()) return;
   const code = localStorage.getItem(ACCESS_CODE_KEY);
   if (code === MASTER_CODE) return;
   if (!code || !isValidClassNumberCode(code)) {
@@ -208,7 +207,7 @@ function showSubject(btn, heading) {
   const autoStatusEl = document.getElementById('aiAutoStatus');
   if (autoStatusEl) autoStatusEl.textContent = `${heading} 로딩 중...`;
   frame.onload = () => {
-    if (!isMobileLiteMode()) autoAnalyzeCurrentFrame(heading);
+    autoAnalyzeCurrentFrame(heading);
     bindFrameInkContextSync();
     if (window.syncInkContext) window.syncInkContext();
   };
@@ -236,14 +235,7 @@ function initMobileHomeClose() {
   homeLink.addEventListener('click', (event) => {
     if (!isMobileLiteMode()) return;
     event.preventDefault();
-    document.body.classList.add('mobile-nav-closed');
-    subjectToggleBtn.textContent = '과목';
-    subjectToggleBtn.setAttribute('aria-expanded', 'false');
-  });
-  subjectToggleBtn.addEventListener('click', () => {
-    if (!isMobileLiteMode()) return;
-    document.body.classList.remove('mobile-nav-closed');
-    subjectToggleBtn.setAttribute('aria-expanded', 'true');
+    applySidebarState(true);
   });
 }
 
@@ -546,9 +538,7 @@ renderDday();
 loadGoal();
 loadMemo();
 
-if (mobileLiteMode) {
-  initMobileLitePortal();
-} else {
+function initCorePortalFeatures() {
   initSubjectSidebarToggle();
   if (goalSaveBtn) goalSaveBtn.addEventListener('click', saveGoal);
   if (goalInput) goalInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') saveGoal(); });
@@ -557,6 +547,12 @@ if (mobileLiteMode) {
   initProfileModal();
   initGlobalInk();
   initMusicWidget();
+}
+
+initCorePortalFeatures();
+
+if (mobileLiteMode) {
+  initMobileLitePortal();
 }
 
 
@@ -859,7 +855,7 @@ function initMusicWidgetDrag(widget, onDragEnd) {
   }, { passive: false });
 }
 
-if (!mobileLiteMode) initAiCoach();
+initAiCoach();
 
 
 
