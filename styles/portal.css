@@ -22,7 +22,7 @@ body.sidebar-collapsed .subject-toggle,body.sidebar-collapsed .version-toggle{le
 .profile-texts strong{font-size:.9rem}
 .profile-texts span{font-size:.8rem;color:var(--sub)}
 .profile-texts button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:4px 8px;font-size:.78rem;cursor:pointer}
-.content{overflow:hidden;min-height:0}.panel{display:none;height:100%;min-height:0}.panel.active{display:block}body.subject-mode{padding:54px 0 0;gap:0}body.subject-mode .header{display:none}body.subject-mode .sidebar{height:calc(100vh - 54px);border-radius:0}body.subject-mode .main{grid-template-rows:1fr;height:calc(100vh - 54px)}body.subject-mode .content{height:100%;border:0;border-radius:0}
+.content{overflow:hidden;min-height:0}.panel{display:none;height:100%;min-height:0}.panel.active{display:block}
 .dashboard-grid{height:100%;overflow:auto;padding:14px;display:grid;gap:10px;grid-template-columns:repeat(3,1fr)}.version-panel{height:100%;overflow:auto;margin:0;padding:22px;display:grid;align-content:start;gap:12px}.version-panel h2{font-size:1.25rem}.version-panel p{color:var(--sub);font-size:.92rem}.version-list{list-style:none;display:grid;gap:10px;margin-top:4px}.version-list li{display:grid;grid-template-columns:64px 1fr;gap:10px;align-items:start;border:1px solid var(--line);border-radius:12px;background:#f8fbff;padding:12px}.version-list b{color:var(--primary);font-size:.9rem}.version-list span{color:#334155;font-size:.9rem;line-height:1.45}
 .card{padding:14px}.card h3{font-size:.86rem;color:var(--sub);margin-bottom:8px}.card .v{font-size:1.4rem;font-weight:800}
 .team-card p{font-size:.84rem;color:#334155;line-height:1.45}
@@ -120,12 +120,11 @@ body.ink-on #inkLayer{pointer-events:auto;cursor:crosshair}
 @media (max-width:760px){
   html,body{height:100%;min-height:100%}
   body{height:100svh;min-height:100svh;display:flex;flex-direction:column;gap:8px;padding:58px 8px 8px;overflow:hidden}
-  .subject-toggle{display:none}
+  .subject-toggle{display:block;position:fixed;left:8px;top:10px;z-index:1300;transform:none;writing-mode:horizontal-tb;letter-spacing:0;border:1px solid var(--line);border-radius:999px;padding:9px 12px;background:#fff;font-size:.86rem}
   .version-toggle{display:block;position:fixed;right:8px;left:auto;top:10px;z-index:1300;transform:none;writing-mode:horizontal-tb;letter-spacing:0;border:1px solid var(--line);border-radius:999px;padding:9px 12px;background:#fff;font-size:.86rem}
   .version-toggle.active{background:var(--primary);color:#fff;border-color:#1d4ed8}
   .sidebar{width:100%;height:auto;max-height:42svh;border-radius:14px;flex:0 0 auto;overflow:hidden}
   body.sidebar-collapsed .sidebar{display:none}
-  body.sidebar-collapsed .subject-toggle{display:block;position:fixed;left:8px;top:10px;z-index:1300;transform:none;writing-mode:horizontal-tb;letter-spacing:0;border:1px solid var(--line);border-radius:999px;padding:9px 12px;background:#fff}
   .logo{display:none}
   .menu{display:grid;grid-template-columns:1fr;gap:7px;overflow-y:auto;overflow-x:hidden;max-height:calc(42svh - 96px);padding:10px;min-height:0;scrollbar-width:thin}
   .menu button{width:100%;min-height:42px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.06);white-space:normal}
@@ -140,10 +139,6 @@ body.ink-on #inkLayer{pointer-events:auto;cursor:crosshair}
   .goal,.memo,.ai-quiz{grid-column:auto}.goal-form,.ai-api-row,.ai-actions{display:grid;grid-template-columns:1fr}.goal-form input,.ai-api-row input{min-width:0;width:100%;font-size:16px}
   .ai-quiz-cards{grid-template-columns:1fr}.memo textarea,.ai-coach textarea{font-size:16px}
   .version-panel{height:100%;padding:16px}.version-list li{grid-template-columns:54px 1fr}
-  body.subject-mode{height:100svh;min-height:100svh;padding:54px 0 0;gap:0;overflow:hidden}
-  body.subject-mode .version-toggle{top:10px;right:8px}
-  body.subject-mode .sidebar{display:flex;width:100%;height:auto;max-height:40svh;border-radius:0}
-  body.subject-mode .menu{max-height:40svh;padding:8px 10px}body.subject-mode .home{display:none}
-  body.subject-mode .header{display:none}body.subject-mode .main{height:auto;flex:1 1 auto;min-height:0}body.subject-mode .content{height:100%;border:0;border-radius:0}body.subject-mode #framePanel{height:100%}
+  body.subject-mode #framePanel{height:100%}
   iframe{min-height:100%}
 }

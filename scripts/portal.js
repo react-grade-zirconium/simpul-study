@@ -182,7 +182,7 @@ function initSubjectSidebarToggle() {
     applySidebarState(!document.body.classList.contains('sidebar-collapsed'));
   });
   sidebarCloseBtn?.addEventListener('click', () => {
-    applySidebarState(true);
+    showVersionHistory(versionToggleBtn);
   });
 }
 function showDashboard(btn) {
