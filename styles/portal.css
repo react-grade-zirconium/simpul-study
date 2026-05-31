@@ -62,7 +62,7 @@ body.ink-on #inkLayer{pointer-events:auto;cursor:crosshair}
 @media (max-width:940px){
   .ink-toolbar{justify-content:flex-start}
 }
-.music-widget{position:fixed;right:18px;top:18px;z-index:1250;width:min(92vw,320px);padding:12px;display:grid;gap:8px;box-shadow:0 8px 22px rgba(15,23,42,.12)}
+.music-widget{position:fixed;right:18px;top:72px;z-index:1250;width:min(92vw,320px);padding:12px;display:grid;gap:8px;box-shadow:0 8px 22px rgba(15,23,42,.12)}
 .music-widget h3{font-size:.94rem}
 .music-row{display:flex;gap:6px}
 .music-row input{flex:1;min-width:0;border:1px solid var(--line);border-radius:8px;padding:8px;font-family:inherit;font-size:.82rem}
@@ -73,7 +73,7 @@ body.ink-on #inkLayer{pointer-events:auto;cursor:crosshair}
 .music-playlist li{font-size:.8rem;color:#334155;cursor:pointer;line-height:1.35;word-break:break-all}
 .music-playlist li.active{color:#1d4ed8;font-weight:700}
 .music-msg{font-size:.78rem;color:#2563eb;min-height:1.2em}
-@media (max-width:940px){.music-widget{top:70px;right:0}.ai-widget{top:118px;right:0}}
+@media (max-width:940px){.music-widget{top:92px;right:0}.ai-widget{top:140px;right:0}}
 .logo-link{display:block;text-decoration:none;color:inherit}
 
 .music-header{display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -150,26 +150,7 @@ body.ink-on #inkLayer{pointer-events:auto;cursor:crosshair}
   .ink-toolbar button{padding:8px 10px;min-height:38px}
   .ink-tab-label{padding:8px 10px}
   .ink-msg{min-width:72px}
-  .music-widget{top:58px;right:8px;width:min(calc(100vw - 16px),320px);max-height:calc(100svh - 144px);overflow:auto}
-  .music-widget.minimized.dock-right{transform:translateX(calc(100% + 16px))}
-  .music-widget.minimized.dock-right .music-dock-toggle{left:-74px;width:74px;border-radius:10px 0 0 10px}
-  .music-widget.minimized.dock-right .music-mini-pause{left:-110px}
-  .profile-modal{align-items:flex-start;overflow:auto;padding:14px 10px 86px}
-  .profile-modal-card{width:100%;max-height:none}
-  .profile-grid{grid-template-columns:1fr}
-}
-@media (max-width:760px){
-  body.sidebar-collapsed .subject-toggle{left:8px;right:auto;top:10px;display:inline-flex;align-items:center;justify-content:center;background:#2563eb;color:#fff;border-color:#1d4ed8}
-  body.sidebar-collapsed .version-toggle{left:auto;right:8px;top:10px}
-}
-@media (max-width:760px){
-  body{padding-bottom:72px}
-  .ink-toolbar{top:auto;bottom:0;min-height:56px;padding:8px;z-index:1350;border-top:1px solid var(--line);box-shadow:0 -8px 22px rgba(15,23,42,.14)}
-  .ink-toolbar-controls{gap:5px}
-  .ink-toolbar button{padding:8px 10px;min-height:38px}
-  .ink-tab-label{padding:8px 10px}
-  .ink-msg{min-width:72px}
-  .music-widget{top:58px;right:8px;width:min(calc(100vw - 16px),320px);max-height:calc(100svh - 144px);overflow:auto}
+  .music-widget{top:96px;right:8px;width:min(calc(100vw - 16px),320px);max-height:calc(100svh - 144px);overflow:auto}
   .music-widget.minimized.dock-right{transform:translateX(calc(100% + 16px))}
   .music-widget.minimized.dock-right .music-dock-toggle{left:-74px;width:74px;border-radius:10px 0 0 10px}
   .music-widget.minimized.dock-right .music-mini-pause{left:-110px}

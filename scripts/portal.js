@@ -614,14 +614,27 @@ function initMusicWidget() {
     localStorage.setItem(MUSIC_POSITION_KEY, JSON.stringify({ x: rect.left, y: rect.top }));
   }
 
+  function getMusicWidgetMinTop() {
+    return isMobileLiteMode() ? 96 : 72;
+  }
+
+  function clampMusicWidgetPosition(x, y) {
+    const minTop = getMusicWidgetMinTop();
+    const maxX = Math.max(0, window.innerWidth - widget.offsetWidth);
+    const maxY = Math.max(minTop, window.innerHeight - widget.offsetHeight);
+    return {
+      x: Math.max(0, Math.min(x, maxX)),
+      y: Math.max(minTop, Math.min(y, maxY))
+    };
+  }
+
   function applySavedMusicPosition() {
     try {
       const pos = JSON.parse(localStorage.getItem(MUSIC_POSITION_KEY) || 'null');
       if (!pos || !Number.isFinite(pos.x) || !Number.isFinite(pos.y)) return;
-      const maxX = Math.max(0, window.innerWidth - widget.offsetWidth);
-      const maxY = Math.max(0, window.innerHeight - widget.offsetHeight);
-      widget.style.left = `${Math.max(0, Math.min(pos.x, maxX))}px`;
-      widget.style.top = `${Math.max(0, Math.min(pos.y, maxY))}px`;
+      const safe = clampMusicWidgetPosition(pos.x, pos.y);
+      widget.style.left = `${safe.x}px`;
+      widget.style.top = `${safe.y}px`;
       widget.style.right = 'auto';
       widget.style.bottom = 'auto';
       markCustomPosition(true);
@@ -844,10 +857,11 @@ function initMusicWidgetDrag(widget, onDragEnd) {
     if (!dragging) return;
     const nx = e.clientX - offsetX;
     const ny = e.clientY - offsetY;
-    const maxX = window.innerWidth - widget.offsetWidth;
-    const maxY = window.innerHeight - widget.offsetHeight;
+    const minTop = isMobileLiteMode() ? 96 : 72;
+    const maxX = Math.max(0, window.innerWidth - widget.offsetWidth);
+    const maxY = Math.max(minTop, window.innerHeight - widget.offsetHeight);
     widget.style.left = `${Math.max(0, Math.min(nx, maxX))}px`;
-    widget.style.top = `${Math.max(0, Math.min(ny, maxY))}px`;
+    widget.style.top = `${Math.max(minTop, Math.min(ny, maxY))}px`;
     e.preventDefault();
   };
 
