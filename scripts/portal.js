@@ -252,6 +252,7 @@ function initMobileLitePortal() {
   applySidebarState(false);
   document.querySelector('.mobile-logo-text')?.removeAttribute('hidden');
   initMobileHomeClose();
+  initMobileSubjectBarExpansion();
   const firstSubjectBtn = document.querySelector('.menu button[data-src]');
   if (!firstSubjectBtn) return;
   const label = firstSubjectBtn.textContent.replace(/^[^가-힣A-Za-z0-9]+/, '').trim() || '학습 내용';
