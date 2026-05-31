@@ -614,6 +614,10 @@ function initMusicWidget() {
     localStorage.setItem(MUSIC_POSITION_KEY, JSON.stringify({ x: rect.left, y: rect.top }));
   }
 
+  function persistDockedMusicTop(top) {
+    localStorage.setItem(MUSIC_POSITION_KEY, JSON.stringify({ docked: true, y: top }));
+  }
+
   function getMusicWidgetMinTop() {
     return isMobileLiteMode() ? 96 : 72;
   }
@@ -631,7 +635,17 @@ function initMusicWidget() {
   function applySavedMusicPosition() {
     try {
       const pos = JSON.parse(localStorage.getItem(MUSIC_POSITION_KEY) || 'null');
-      if (!pos || !Number.isFinite(pos.x) || !Number.isFinite(pos.y)) return;
+      if (!pos || !Number.isFinite(pos.y)) return;
+      if (pos.docked) {
+        const safe = clampMusicWidgetPosition(window.innerWidth - widget.offsetWidth, pos.y);
+        widget.style.top = `${safe.y}px`;
+        widget.style.left = '';
+        widget.style.right = '';
+        widget.style.bottom = '';
+        markCustomPosition(false);
+        return;
+      }
+      if (!Number.isFinite(pos.x)) return;
       const safe = clampMusicWidgetPosition(pos.x, pos.y);
       widget.style.left = `${safe.x}px`;
       widget.style.top = `${safe.y}px`;
@@ -816,6 +830,53 @@ function initMusicWidget() {
     });
   }
 
+
+  let suppressDockToggleClick = false;
+  function initMinimizedMusicVerticalDrag() {
+    let dragging = false;
+    let moved = false;
+    let startY = 0;
+    let startTop = 0;
+
+    const move = (e) => {
+      if (!dragging) return;
+      const dy = e.clientY - startY;
+      if (Math.abs(dy) > 4) moved = true;
+      const safe = clampMusicWidgetPosition(window.innerWidth - widget.offsetWidth, startTop + dy);
+      widget.style.top = `${safe.y}px`;
+      e.preventDefault();
+    };
+
+    const end = (e) => {
+      if (!dragging) return;
+      dragging = false;
+      widget.classList.remove('dragging-minimized');
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', end);
+      window.removeEventListener('pointercancel', end);
+      try { dockToggleBtn.releasePointerCapture(e.pointerId); } catch (_) {}
+      if (moved) {
+        const top = Number.parseFloat(widget.style.top || '0');
+        if (Number.isFinite(top)) persistDockedMusicTop(top);
+        suppressDockToggleClick = true;
+        setTimeout(() => { suppressDockToggleClick = false; }, 0);
+      }
+    };
+
+    dockToggleBtn.addEventListener('pointerdown', (e) => {
+      if (!widget.classList.contains('minimized') || widget.dataset.customPosition === '1') return;
+      dragging = true;
+      moved = false;
+      startY = e.clientY;
+      startTop = widget.getBoundingClientRect().top;
+      widget.classList.add('dragging-minimized');
+      try { dockToggleBtn.setPointerCapture(e.pointerId); } catch (_) {}
+      window.addEventListener('pointermove', move, { passive: false });
+      window.addEventListener('pointerup', end);
+      window.addEventListener('pointercancel', end);
+    }, { passive: false });
+  }
+
   function setDockState(minimized) {
     if (widget.dataset.customPosition !== '1') {
       widget.classList.remove('dock-left');
@@ -836,9 +897,12 @@ function initMusicWidget() {
   });
 
   dockToggleBtn.addEventListener('click', () => {
+    if (suppressDockToggleClick) return;
     const minimized = widget.classList.contains('minimized');
     setDockState(!minimized);
   });
+
+  initMinimizedMusicVerticalDrag();
 
   loadSaved();
   renderList();
@@ -1031,7 +1095,8 @@ function initAiCoach() {
   if (widget && minBtn && dockToggleBtn) {
     const restoreWidgetPosition = initAiWidgetDrag(widget);
 
-    function setDockState(minimized) {
+
+  function setDockState(minimized) {
       widget.classList.remove('dock-left');
       widget.classList.add('dock-right');
       widget.classList.toggle('minimized', minimized);
