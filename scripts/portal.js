@@ -165,11 +165,16 @@ function setActive(btn) {
   versionToggleBtn?.classList.remove('active');
   btn?.classList.add('active');
 }
+function getSubjectToggleText(collapsed) {
+  if (isMobileLiteMode()) return collapsed ? '과목 열기' : '과목 닫기';
+  return collapsed ? '과목' : '닫기';
+}
 function applySidebarState(collapsed) {
   document.body.classList.toggle('sidebar-collapsed', collapsed);
   if (subjectToggleBtn) {
     subjectToggleBtn.setAttribute('aria-expanded', String(!collapsed));
-    subjectToggleBtn.textContent = collapsed ? '과목' : '닫기';
+    subjectToggleBtn.setAttribute('aria-label', collapsed ? '과목 선택 영역 열기' : '과목 선택 영역 닫기');
+    subjectToggleBtn.textContent = getSubjectToggleText(collapsed);
   }
   localStorage.setItem(SIDEBAR_COLLAPSED_KEY, collapsed ? '1' : '0');
 }
@@ -241,7 +246,7 @@ function initMobileHomeClose() {
 
 function initMobileLitePortal() {
   document.body.classList.add('mobile-lite');
-  document.body.classList.remove('sidebar-collapsed');
+  applySidebarState(false);
   document.querySelector('.mobile-logo-text')?.removeAttribute('hidden');
   initMobileHomeClose();
   const firstSubjectBtn = document.querySelector('.menu button[data-src]');
