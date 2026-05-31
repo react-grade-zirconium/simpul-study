@@ -34,7 +34,6 @@ function isValidClassNumberCode(code) {
 
 
 async function enforceAccessCode() {
-  if (isMobileLiteMode()) return;
   const code = localStorage.getItem(ACCESS_CODE_KEY);
   if (code === MASTER_CODE) return;
   if (!code || !isValidClassNumberCode(code)) {
@@ -166,11 +165,16 @@ function setActive(btn) {
   versionToggleBtn?.classList.remove('active');
   btn?.classList.add('active');
 }
+function getSubjectToggleText(collapsed) {
+  if (isMobileLiteMode()) return collapsed ? '과목 열기' : '과목 닫기';
+  return collapsed ? '과목' : '닫기';
+}
 function applySidebarState(collapsed) {
   document.body.classList.toggle('sidebar-collapsed', collapsed);
   if (subjectToggleBtn) {
     subjectToggleBtn.setAttribute('aria-expanded', String(!collapsed));
-    subjectToggleBtn.textContent = collapsed ? '과목' : '닫기';
+    subjectToggleBtn.setAttribute('aria-label', collapsed ? '과목 선택 영역 열기' : '과목 선택 영역 닫기');
+    subjectToggleBtn.textContent = getSubjectToggleText(collapsed);
   }
   localStorage.setItem(SIDEBAR_COLLAPSED_KEY, collapsed ? '1' : '0');
 }
@@ -208,10 +212,12 @@ function showSubject(btn, heading) {
   const autoStatusEl = document.getElementById('aiAutoStatus');
   if (autoStatusEl) autoStatusEl.textContent = `${heading} 로딩 중...`;
   frame.onload = () => {
-    if (!isMobileLiteMode()) autoAnalyzeCurrentFrame(heading);
+    autoAnalyzeCurrentFrame(heading);
     bindFrameInkContextSync();
+    resizeSubjectFrameForMobile();
     if (window.syncInkContext) window.syncInkContext();
   };
+  resizeSubjectFrameForMobile();
   if (window.syncInkContext) window.syncInkContext();
 }
 
@@ -236,22 +242,39 @@ function initMobileHomeClose() {
   homeLink.addEventListener('click', (event) => {
     if (!isMobileLiteMode()) return;
     event.preventDefault();
-    document.body.classList.add('mobile-nav-closed');
-    subjectToggleBtn.textContent = '과목';
-    subjectToggleBtn.setAttribute('aria-expanded', 'false');
+    applySidebarState(true);
   });
-  subjectToggleBtn.addEventListener('click', () => {
-    if (!isMobileLiteMode()) return;
-    document.body.classList.remove('mobile-nav-closed');
-    subjectToggleBtn.setAttribute('aria-expanded', 'true');
-  });
+}
+
+
+function initMobileSubjectBarExpansion() {
+  const sidebar = document.getElementById('subjectSidebar');
+  if (!sidebar) return;
+  const EXPAND_DISTANCE = 180;
+
+  function update() {
+    if (!isMobileLiteMode()) {
+      document.body.classList.remove('mobile-subject-expanded');
+      sidebar.style.removeProperty('--subjectExpand');
+      return;
+    }
+    const y = Math.max(0, window.scrollY || document.documentElement.scrollTop || 0);
+    const progress = Math.max(0, Math.min(1, 1 - (y / EXPAND_DISTANCE)));
+    sidebar.style.setProperty('--subjectExpand', progress.toFixed(3));
+    document.body.classList.toggle('mobile-subject-expanded', progress > 0.05);
+  }
+
+  update();
+  window.addEventListener('scroll', () => window.requestAnimationFrame(update), { passive: true });
+  window.addEventListener('resize', update);
 }
 
 function initMobileLitePortal() {
   document.body.classList.add('mobile-lite');
-  document.body.classList.remove('sidebar-collapsed');
+  applySidebarState(false);
   document.querySelector('.mobile-logo-text')?.removeAttribute('hidden');
   initMobileHomeClose();
+  initMobileSubjectBarExpansion();
   const firstSubjectBtn = document.querySelector('.menu button[data-src]');
   if (!firstSubjectBtn) return;
   const label = firstSubjectBtn.textContent.replace(/^[^가-힣A-Za-z0-9]+/, '').trim() || '학습 내용';
@@ -291,13 +314,31 @@ function getCurrentInkScope() {
   return `subject:${subject}:tab:${tab}`;
 }
 
+function resizeSubjectFrameForMobile() {
+  if (!isMobileLiteMode() || !frame || !document.body.classList.contains('subject-mode')) {
+    if (frame) frame.style.height = '';
+    return;
+  }
+  window.requestAnimationFrame(() => {
+    const doc = getNestedFrameDocument(frame);
+    const docEl = doc?.documentElement;
+    const body = doc?.body;
+    const contentHeight = Math.max(docEl?.scrollHeight || 0, body?.scrollHeight || 0, docEl?.offsetHeight || 0, body?.offsetHeight || 0);
+    const minHeight = Math.max(520, window.innerHeight - 150);
+    frame.style.height = `${Math.max(contentHeight + 24, minHeight)}px`;
+  });
+}
+
 function bindFrameInkContextSync() {
   const doc = getNestedFrameDocument(frame);
   if (!doc || doc.body?.dataset.inkSyncBound === '1') return;
   if (doc.body) doc.body.dataset.inkSyncBound = '1';
   doc.querySelectorAll('.tab-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
-      setTimeout(() => { if (window.syncInkContext) window.syncInkContext(); }, 30);
+      setTimeout(() => {
+        resizeSubjectFrameForMobile();
+        if (window.syncInkContext) window.syncInkContext();
+      }, 30);
     });
   });
   const nested = frame?.contentDocument?.querySelector('iframe');
@@ -305,6 +346,7 @@ function bindFrameInkContextSync() {
     nested.dataset.inkSyncBound = '1';
     nested.addEventListener('load', () => {
       bindFrameInkContextSync();
+      resizeSubjectFrameForMobile();
       if (window.syncInkContext) window.syncInkContext();
     });
   }
@@ -546,9 +588,7 @@ renderDday();
 loadGoal();
 loadMemo();
 
-if (mobileLiteMode) {
-  initMobileLitePortal();
-} else {
+function initCorePortalFeatures() {
   initSubjectSidebarToggle();
   if (goalSaveBtn) goalSaveBtn.addEventListener('click', saveGoal);
   if (goalInput) goalInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') saveGoal(); });
@@ -557,6 +597,12 @@ if (mobileLiteMode) {
   initProfileModal();
   initGlobalInk();
   initMusicWidget();
+}
+
+initCorePortalFeatures();
+
+if (mobileLiteMode) {
+  initMobileLitePortal();
 }
 
 
@@ -592,14 +638,41 @@ function initMusicWidget() {
     localStorage.setItem(MUSIC_POSITION_KEY, JSON.stringify({ x: rect.left, y: rect.top }));
   }
 
+  function persistDockedMusicTop(top) {
+    localStorage.setItem(MUSIC_POSITION_KEY, JSON.stringify({ docked: true, y: top }));
+  }
+
+  function getMusicWidgetMinTop() {
+    return isMobileLiteMode() ? 96 : 72;
+  }
+
+  function clampMusicWidgetPosition(x, y) {
+    const minTop = getMusicWidgetMinTop();
+    const maxX = Math.max(0, window.innerWidth - widget.offsetWidth);
+    const maxY = Math.max(minTop, window.innerHeight - widget.offsetHeight);
+    return {
+      x: Math.max(0, Math.min(x, maxX)),
+      y: Math.max(minTop, Math.min(y, maxY))
+    };
+  }
+
   function applySavedMusicPosition() {
     try {
       const pos = JSON.parse(localStorage.getItem(MUSIC_POSITION_KEY) || 'null');
-      if (!pos || !Number.isFinite(pos.x) || !Number.isFinite(pos.y)) return;
-      const maxX = Math.max(0, window.innerWidth - widget.offsetWidth);
-      const maxY = Math.max(0, window.innerHeight - widget.offsetHeight);
-      widget.style.left = `${Math.max(0, Math.min(pos.x, maxX))}px`;
-      widget.style.top = `${Math.max(0, Math.min(pos.y, maxY))}px`;
+      if (!pos || !Number.isFinite(pos.y)) return;
+      if (pos.docked) {
+        const safe = clampMusicWidgetPosition(window.innerWidth - widget.offsetWidth, pos.y);
+        widget.style.top = `${safe.y}px`;
+        widget.style.left = '';
+        widget.style.right = '';
+        widget.style.bottom = '';
+        markCustomPosition(false);
+        return;
+      }
+      if (!Number.isFinite(pos.x)) return;
+      const safe = clampMusicWidgetPosition(pos.x, pos.y);
+      widget.style.left = `${safe.x}px`;
+      widget.style.top = `${safe.y}px`;
       widget.style.right = 'auto';
       widget.style.bottom = 'auto';
       markCustomPosition(true);
@@ -781,6 +854,53 @@ function initMusicWidget() {
     });
   }
 
+
+  let suppressDockToggleClick = false;
+  function initMinimizedMusicVerticalDrag() {
+    let dragging = false;
+    let moved = false;
+    let startY = 0;
+    let startTop = 0;
+
+    const move = (e) => {
+      if (!dragging) return;
+      const dy = e.clientY - startY;
+      if (Math.abs(dy) > 4) moved = true;
+      const safe = clampMusicWidgetPosition(window.innerWidth - widget.offsetWidth, startTop + dy);
+      widget.style.top = `${safe.y}px`;
+      e.preventDefault();
+    };
+
+    const end = (e) => {
+      if (!dragging) return;
+      dragging = false;
+      widget.classList.remove('dragging-minimized');
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', end);
+      window.removeEventListener('pointercancel', end);
+      try { dockToggleBtn.releasePointerCapture(e.pointerId); } catch (_) {}
+      if (moved) {
+        const top = Number.parseFloat(widget.style.top || '0');
+        if (Number.isFinite(top)) persistDockedMusicTop(top);
+        suppressDockToggleClick = true;
+        setTimeout(() => { suppressDockToggleClick = false; }, 0);
+      }
+    };
+
+    dockToggleBtn.addEventListener('pointerdown', (e) => {
+      if (!widget.classList.contains('minimized') || widget.dataset.customPosition === '1') return;
+      dragging = true;
+      moved = false;
+      startY = e.clientY;
+      startTop = widget.getBoundingClientRect().top;
+      widget.classList.add('dragging-minimized');
+      try { dockToggleBtn.setPointerCapture(e.pointerId); } catch (_) {}
+      window.addEventListener('pointermove', move, { passive: false });
+      window.addEventListener('pointerup', end);
+      window.addEventListener('pointercancel', end);
+    }, { passive: false });
+  }
+
   function setDockState(minimized) {
     if (widget.dataset.customPosition !== '1') {
       widget.classList.remove('dock-left');
@@ -801,9 +921,12 @@ function initMusicWidget() {
   });
 
   dockToggleBtn.addEventListener('click', () => {
+    if (suppressDockToggleClick) return;
     const minimized = widget.classList.contains('minimized');
     setDockState(!minimized);
   });
+
+  initMinimizedMusicVerticalDrag();
 
   loadSaved();
   renderList();
@@ -822,10 +945,11 @@ function initMusicWidgetDrag(widget, onDragEnd) {
     if (!dragging) return;
     const nx = e.clientX - offsetX;
     const ny = e.clientY - offsetY;
-    const maxX = window.innerWidth - widget.offsetWidth;
-    const maxY = window.innerHeight - widget.offsetHeight;
+    const minTop = isMobileLiteMode() ? 96 : 72;
+    const maxX = Math.max(0, window.innerWidth - widget.offsetWidth);
+    const maxY = Math.max(minTop, window.innerHeight - widget.offsetHeight);
     widget.style.left = `${Math.max(0, Math.min(nx, maxX))}px`;
-    widget.style.top = `${Math.max(0, Math.min(ny, maxY))}px`;
+    widget.style.top = `${Math.max(minTop, Math.min(ny, maxY))}px`;
     e.preventDefault();
   };
 
@@ -859,7 +983,7 @@ function initMusicWidgetDrag(widget, onDragEnd) {
   }, { passive: false });
 }
 
-if (!mobileLiteMode) initAiCoach();
+initAiCoach();
 
 
 
@@ -995,7 +1119,8 @@ function initAiCoach() {
   if (widget && minBtn && dockToggleBtn) {
     const restoreWidgetPosition = initAiWidgetDrag(widget);
 
-    function setDockState(minimized) {
+
+  function setDockState(minimized) {
       widget.classList.remove('dock-left');
       widget.classList.add('dock-right');
       widget.classList.toggle('minimized', minimized);
