@@ -1,3 +1,8 @@
+const MOBILE_LITE_QUERY = '(max-width: 900px), (pointer: coarse) and (max-width: 1024px)';
+if (window.matchMedia?.(MOBILE_LITE_QUERY).matches && !new URLSearchParams(window.location.search).has('desktop')) {
+  window.location.replace('./portal.html');
+}
+
 const line1 = document.getElementById('line1');
 const line2 = document.getElementById('line2');
 const finalLine = document.getElementById('finalLine');
