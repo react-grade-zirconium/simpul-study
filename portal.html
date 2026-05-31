@@ -13,16 +13,17 @@
   <aside id="subjectSidebar" class="sidebar box">
     <div class="logo">
       <a href="./index.html" class="logo-link" aria-label="처음으로 돌아가기">
-        <img src="./simpul-logo.png" alt="SIMPUL 로고" class="app-logo" onerror="this.style.display='none'; this.parentNode.textContent='SIMPUL STUDY';" />
+        <img src="./simpul-logo.png" alt="SIMPUL 로고" class="app-logo" onerror="this.style.display='none'; this.parentNode.querySelector('.mobile-logo-text').hidden=false;" />
+        <span class="mobile-logo-text" hidden>Simpul Study</span>
       </a>
     </div>
     <nav class="menu">
-      <button class="active" onclick="showDashboard(this)">🏁 대시보드</button>
-      <button data-src="korean_hub.html" data-subject="korean" onclick="showSubject(this,'국어 학습')">📖 국어</button>
-      <button data-src="english_hub.html" data-subject="english" onclick="showSubject(this,'영어 학습')">📝 영어</button>
-      <button data-src="science_hub.html" data-subject="science" onclick="showSubject(this,'통합과학 학습')">🧪 통합과학</button>
-      <button data-src="society_hub.html" data-subject="society" onclick="showSubject(this,'통합사회 학습')">🌍 통합사회</button>
-      <button data-src="mega_study.html" data-subject="info" onclick="showSubject(this,'정보 학습')">💻 정보</button>
+      <button class="active desktop-only-menu" onclick="showDashboard(this)">🏁 대시보드</button>
+      <button class="subject-menu-button" data-src="korean_hub.html" data-subject="korean" onclick="showSubject(this,'국어 학습')">📖 국어</button>
+      <button class="subject-menu-button" data-src="english_hub.html" data-subject="english" onclick="showSubject(this,'영어 학습')">📝 영어</button>
+      <button class="subject-menu-button" data-src="science_hub.html" data-subject="science" onclick="showSubject(this,'통합과학 학습')">🧪 통합과학</button>
+      <button class="subject-menu-button" data-src="society_hub.html" data-subject="society" onclick="showSubject(this,'통합사회 학습')">🌍 통합사회</button>
+      <button class="subject-menu-button" data-src="mega_study.html" data-subject="info" onclick="showSubject(this,'정보 학습')">💻 정보</button>
     </nav>
     <div class="home"><button id="sidebarCloseBtn" type="button">버전 기록</button><a href="./index.html">처음으로</a></div>
   </aside>
