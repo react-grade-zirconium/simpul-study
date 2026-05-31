@@ -1,3 +1,8 @@
+const MOBILE_LITE_QUERY = '(max-width: 900px), (pointer: coarse) and (max-width: 1024px)';
+function isMobileLiteMode() {
+  return Boolean(window.matchMedia?.(MOBILE_LITE_QUERY).matches);
+}
+
 const line1 = document.getElementById('line1');
 const line2 = document.getElementById('line2');
 const finalLine = document.getElementById('finalLine');
@@ -148,7 +153,7 @@ codeSaveBtn?.addEventListener('click', () => { saveCode(); });
 classInput?.addEventListener('keydown', (e) => { if (e.key === 'Enter') saveCode(); });
 numberInput?.addEventListener('keydown', (e) => { if (e.key === 'Enter') saveCode(); });
 startBtn?.addEventListener('click', async (e) => {
-  if (await hasValidCodeForThisDevice()) return;
+  if (isMobileLiteMode() || await hasValidCodeForThisDevice()) return;
   e.preventDefault();
   codeMsg.textContent = '이 기기에 1:1로 등록된 유효 코드가 필요합니다.';
   window.scrollTo({ top: 0, behavior: 'smooth' });
