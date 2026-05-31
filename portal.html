@@ -13,25 +13,18 @@
   <aside id="subjectSidebar" class="sidebar box">
     <div class="logo">
       <a href="./index.html" class="logo-link" aria-label="처음으로 돌아가기">
-        <img src="./simpul-logo.png" alt="SIMPUL 로고" class="app-logo" onerror="this.style.display='none'; this.parentNode.textContent='SIMPUL STUDY';" />
+        <img src="./simpul-logo.png" alt="SIMPUL 로고" class="app-logo" onerror="this.style.display='none'; this.parentNode.querySelector('.mobile-logo-text').hidden=false;" />
+        <span class="mobile-logo-text" hidden>Simpul Study</span>
       </a>
     </div>
     <nav class="menu">
-      <button class="active" onclick="showDashboard(this)">🏁 대시보드</button>
-      <button data-src="korean_hub.html" data-subject="korean" onclick="showSubject(this,'국어 학습')">📖 국어</button>
-      <button data-src="english_hub.html" data-subject="english" onclick="showSubject(this,'영어 학습')">📝 영어</button>
-      <button data-src="science_hub.html" data-subject="science" onclick="showSubject(this,'통합과학 학습')">🧪 통합과학</button>
-      <button data-src="society_hub.html" data-subject="society" onclick="showSubject(this,'통합사회 학습')">🌍 통합사회</button>
-      <button data-src="mega_study.html" data-subject="info" onclick="showSubject(this,'정보 학습')">💻 정보</button>
+      <button class="active desktop-only-menu" onclick="showDashboard(this)">🏁 대시보드</button>
+      <button class="subject-menu-button" data-src="korean_hub.html" data-subject="korean" onclick="showSubject(this,'국어 학습')">📖 국어</button>
+      <button class="subject-menu-button" data-src="english_hub.html" data-subject="english" onclick="showSubject(this,'영어 학습')">📝 영어</button>
+      <button class="subject-menu-button" data-src="science_hub.html" data-subject="science" onclick="showSubject(this,'통합과학 학습')">🧪 통합과학</button>
+      <button class="subject-menu-button" data-src="society_hub.html" data-subject="society" onclick="showSubject(this,'통합사회 학습')">🌍 통합사회</button>
+      <button class="subject-menu-button" data-src="mega_study.html" data-subject="info" onclick="showSubject(this,'정보 학습')">💻 정보</button>
     </nav>
-    <section class="version-history" aria-label="버전 기록">
-      <strong>버전 기록</strong>
-      <ul>
-        <li><b>v0.3</b> 국어 탭별 필기 저장, BGM 이동 안정화</li>
-        <li><b>v0.2</b> 과목 선택창 접기/펼치기</li>
-        <li><b>v0.1</b> 학습 포털 기본 화면</li>
-      </ul>
-    </section>
     <div class="home"><a href="./index.html">처음으로</a></div>
   </aside>
 
@@ -111,7 +104,12 @@
       <div id="versionPanel" class="panel">
         <article class="version-panel box">
           <h2>업데이트 내역</h2>
-          <p>관리자가 등록한 변경 내역이 여기에 표시됩니다.</p>
+          <p>학습 포털 변경 사항을 버전별로 정리했습니다.</p>
+          <ul class="version-list" aria-label="버전 기록">
+            <li><b>v0.3</b><span>국어 탭별 필기 저장, BGM 이동 안정화</span></li>
+            <li><b>v0.2</b><span>과목 선택창 접기/펼치기</span></li>
+            <li><b>v0.1</b><span>학습 포털 기본 화면</span></li>
+          </ul>
         </article>
       </div>
       <div id="framePanel" class="panel">
