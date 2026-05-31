@@ -223,10 +223,31 @@ function showVersionHistory(btn) {
 }
 
 
+
+function initMobileHomeClose() {
+  const homeLink = document.querySelector('.home a');
+  if (!homeLink || !subjectToggleBtn) return;
+  homeLink.textContent = '닫기';
+  homeLink.setAttribute('aria-label', '모바일 과목 선택 영역 닫기');
+  homeLink.addEventListener('click', (event) => {
+    if (!isMobileLiteMode()) return;
+    event.preventDefault();
+    document.body.classList.add('mobile-nav-closed');
+    subjectToggleBtn.textContent = '과목';
+    subjectToggleBtn.setAttribute('aria-expanded', 'false');
+  });
+  subjectToggleBtn.addEventListener('click', () => {
+    if (!isMobileLiteMode()) return;
+    document.body.classList.remove('mobile-nav-closed');
+    subjectToggleBtn.setAttribute('aria-expanded', 'true');
+  });
+}
+
 function initMobileLitePortal() {
   document.body.classList.add('mobile-lite');
   document.body.classList.remove('sidebar-collapsed');
   document.querySelector('.mobile-logo-text')?.removeAttribute('hidden');
+  initMobileHomeClose();
   const firstSubjectBtn = document.querySelector('.menu button[data-src]');
   if (!firstSubjectBtn) return;
   const label = firstSubjectBtn.textContent.replace(/^[^가-힣A-Za-z0-9]+/, '').trim() || '학습 내용';
