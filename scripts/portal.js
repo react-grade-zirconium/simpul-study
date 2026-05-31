@@ -214,8 +214,10 @@ function showSubject(btn, heading) {
   frame.onload = () => {
     autoAnalyzeCurrentFrame(heading);
     bindFrameInkContextSync();
+    resizeSubjectFrameForMobile();
     if (window.syncInkContext) window.syncInkContext();
   };
+  resizeSubjectFrameForMobile();
   if (window.syncInkContext) window.syncInkContext();
 }
 
@@ -288,13 +290,31 @@ function getCurrentInkScope() {
   return `subject:${subject}:tab:${tab}`;
 }
 
+function resizeSubjectFrameForMobile() {
+  if (!isMobileLiteMode() || !frame || !document.body.classList.contains('subject-mode')) {
+    if (frame) frame.style.height = '';
+    return;
+  }
+  window.requestAnimationFrame(() => {
+    const doc = getNestedFrameDocument(frame);
+    const docEl = doc?.documentElement;
+    const body = doc?.body;
+    const contentHeight = Math.max(docEl?.scrollHeight || 0, body?.scrollHeight || 0, docEl?.offsetHeight || 0, body?.offsetHeight || 0);
+    const minHeight = Math.max(520, window.innerHeight - 150);
+    frame.style.height = `${Math.max(contentHeight + 24, minHeight)}px`;
+  });
+}
+
 function bindFrameInkContextSync() {
   const doc = getNestedFrameDocument(frame);
   if (!doc || doc.body?.dataset.inkSyncBound === '1') return;
   if (doc.body) doc.body.dataset.inkSyncBound = '1';
   doc.querySelectorAll('.tab-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
-      setTimeout(() => { if (window.syncInkContext) window.syncInkContext(); }, 30);
+      setTimeout(() => {
+        resizeSubjectFrameForMobile();
+        if (window.syncInkContext) window.syncInkContext();
+      }, 30);
     });
   });
   const nested = frame?.contentDocument?.querySelector('iframe');
@@ -302,6 +322,7 @@ function bindFrameInkContextSync() {
     nested.dataset.inkSyncBound = '1';
     nested.addEventListener('load', () => {
       bindFrameInkContextSync();
+      resizeSubjectFrameForMobile();
       if (window.syncInkContext) window.syncInkContext();
     });
   }
