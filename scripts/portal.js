@@ -171,9 +171,13 @@ function applySidebarState(collapsed) {
 }
 function initSubjectSidebarToggle() {
   const saved = localStorage.getItem(SIDEBAR_COLLAPSED_KEY) === '1';
+  const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
   applySidebarState(saved);
   subjectToggleBtn?.addEventListener('click', () => {
     applySidebarState(!document.body.classList.contains('sidebar-collapsed'));
+  });
+  sidebarCloseBtn?.addEventListener('click', () => {
+    showVersionHistory(versionToggleBtn);
   });
 }
 function showDashboard(btn) {
