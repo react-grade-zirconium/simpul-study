@@ -34,7 +34,6 @@ function isValidClassNumberCode(code) {
 
 
 async function enforceAccessCode() {
-  if (isMobileLiteMode()) return;
   const code = localStorage.getItem(ACCESS_CODE_KEY);
   if (code === MASTER_CODE) return;
   if (!code || !isValidClassNumberCode(code)) {
@@ -166,11 +165,16 @@ function setActive(btn) {
   versionToggleBtn?.classList.remove('active');
   btn?.classList.add('active');
 }
+function getSubjectToggleText(collapsed) {
+  if (isMobileLiteMode()) return collapsed ? '과목 열기' : '과목 닫기';
+  return collapsed ? '과목' : '닫기';
+}
 function applySidebarState(collapsed) {
   document.body.classList.toggle('sidebar-collapsed', collapsed);
   if (subjectToggleBtn) {
     subjectToggleBtn.setAttribute('aria-expanded', String(!collapsed));
-    subjectToggleBtn.textContent = collapsed ? '과목' : '닫기';
+    subjectToggleBtn.setAttribute('aria-label', collapsed ? '과목 선택 영역 열기' : '과목 선택 영역 닫기');
+    subjectToggleBtn.textContent = getSubjectToggleText(collapsed);
   }
   localStorage.setItem(SIDEBAR_COLLAPSED_KEY, collapsed ? '1' : '0');
 }
@@ -208,7 +212,7 @@ function showSubject(btn, heading) {
   const autoStatusEl = document.getElementById('aiAutoStatus');
   if (autoStatusEl) autoStatusEl.textContent = `${heading} 로딩 중...`;
   frame.onload = () => {
-    if (!isMobileLiteMode()) autoAnalyzeCurrentFrame(heading);
+    autoAnalyzeCurrentFrame(heading);
     bindFrameInkContextSync();
     if (window.syncInkContext) window.syncInkContext();
   };
@@ -236,20 +240,13 @@ function initMobileHomeClose() {
   homeLink.addEventListener('click', (event) => {
     if (!isMobileLiteMode()) return;
     event.preventDefault();
-    document.body.classList.add('mobile-nav-closed');
-    subjectToggleBtn.textContent = '과목';
-    subjectToggleBtn.setAttribute('aria-expanded', 'false');
-  });
-  subjectToggleBtn.addEventListener('click', () => {
-    if (!isMobileLiteMode()) return;
-    document.body.classList.remove('mobile-nav-closed');
-    subjectToggleBtn.setAttribute('aria-expanded', 'true');
+    applySidebarState(true);
   });
 }
 
 function initMobileLitePortal() {
   document.body.classList.add('mobile-lite');
-  document.body.classList.remove('sidebar-collapsed');
+  applySidebarState(false);
   document.querySelector('.mobile-logo-text')?.removeAttribute('hidden');
   initMobileHomeClose();
   const firstSubjectBtn = document.querySelector('.menu button[data-src]');
@@ -546,9 +543,7 @@ renderDday();
 loadGoal();
 loadMemo();
 
-if (mobileLiteMode) {
-  initMobileLitePortal();
-} else {
+function initCorePortalFeatures() {
   initSubjectSidebarToggle();
   if (goalSaveBtn) goalSaveBtn.addEventListener('click', saveGoal);
   if (goalInput) goalInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') saveGoal(); });
@@ -557,6 +552,12 @@ if (mobileLiteMode) {
   initProfileModal();
   initGlobalInk();
   initMusicWidget();
+}
+
+initCorePortalFeatures();
+
+if (mobileLiteMode) {
+  initMobileLitePortal();
 }
 
 
@@ -859,7 +860,7 @@ function initMusicWidgetDrag(widget, onDragEnd) {
   }, { passive: false });
 }
 
-if (!mobileLiteMode) initAiCoach();
+initAiCoach();
 
 
 
