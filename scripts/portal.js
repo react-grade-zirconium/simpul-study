@@ -34,7 +34,6 @@ function isValidClassNumberCode(code) {
 
 
 async function enforceAccessCode() {
-  if (isMobileLiteMode()) return;
   const code = localStorage.getItem(ACCESS_CODE_KEY);
   if (code === MASTER_CODE) return;
   if (!code || !isValidClassNumberCode(code)) {
@@ -166,11 +165,16 @@ function setActive(btn) {
   versionToggleBtn?.classList.remove('active');
   btn?.classList.add('active');
 }
+function getSubjectToggleText(collapsed) {
+  if (isMobileLiteMode()) return collapsed ? '과목 열기' : '과목 닫기';
+  return collapsed ? '과목' : '닫기';
+}
 function applySidebarState(collapsed) {
   document.body.classList.toggle('sidebar-collapsed', collapsed);
   if (subjectToggleBtn) {
     subjectToggleBtn.setAttribute('aria-expanded', String(!collapsed));
-    subjectToggleBtn.textContent = collapsed ? '과목' : '닫기';
+    subjectToggleBtn.setAttribute('aria-label', collapsed ? '과목 선택 영역 열기' : '과목 선택 영역 닫기');
+    subjectToggleBtn.textContent = getSubjectToggleText(collapsed);
   }
   localStorage.setItem(SIDEBAR_COLLAPSED_KEY, collapsed ? '1' : '0');
 }
@@ -208,10 +212,12 @@ function showSubject(btn, heading) {
   const autoStatusEl = document.getElementById('aiAutoStatus');
   if (autoStatusEl) autoStatusEl.textContent = `${heading} 로딩 중...`;
   frame.onload = () => {
-    if (!isMobileLiteMode()) autoAnalyzeCurrentFrame(heading);
+    autoAnalyzeCurrentFrame(heading);
     bindFrameInkContextSync();
+    resizeSubjectFrameForMobile();
     if (window.syncInkContext) window.syncInkContext();
   };
+  resizeSubjectFrameForMobile();
   if (window.syncInkContext) window.syncInkContext();
 }
 
@@ -236,20 +242,13 @@ function initMobileHomeClose() {
   homeLink.addEventListener('click', (event) => {
     if (!isMobileLiteMode()) return;
     event.preventDefault();
-    document.body.classList.add('mobile-nav-closed');
-    subjectToggleBtn.textContent = '과목';
-    subjectToggleBtn.setAttribute('aria-expanded', 'false');
-  });
-  subjectToggleBtn.addEventListener('click', () => {
-    if (!isMobileLiteMode()) return;
-    document.body.classList.remove('mobile-nav-closed');
-    subjectToggleBtn.setAttribute('aria-expanded', 'true');
+    applySidebarState(true);
   });
 }
 
 function initMobileLitePortal() {
   document.body.classList.add('mobile-lite');
-  document.body.classList.remove('sidebar-collapsed');
+  applySidebarState(false);
   document.querySelector('.mobile-logo-text')?.removeAttribute('hidden');
   initMobileHomeClose();
   const firstSubjectBtn = document.querySelector('.menu button[data-src]');
@@ -291,13 +290,31 @@ function getCurrentInkScope() {
   return `subject:${subject}:tab:${tab}`;
 }
 
+function resizeSubjectFrameForMobile() {
+  if (!isMobileLiteMode() || !frame || !document.body.classList.contains('subject-mode')) {
+    if (frame) frame.style.height = '';
+    return;
+  }
+  window.requestAnimationFrame(() => {
+    const doc = getNestedFrameDocument(frame);
+    const docEl = doc?.documentElement;
+    const body = doc?.body;
+    const contentHeight = Math.max(docEl?.scrollHeight || 0, body?.scrollHeight || 0, docEl?.offsetHeight || 0, body?.offsetHeight || 0);
+    const minHeight = Math.max(520, window.innerHeight - 150);
+    frame.style.height = `${Math.max(contentHeight + 24, minHeight)}px`;
+  });
+}
+
 function bindFrameInkContextSync() {
   const doc = getNestedFrameDocument(frame);
   if (!doc || doc.body?.dataset.inkSyncBound === '1') return;
   if (doc.body) doc.body.dataset.inkSyncBound = '1';
   doc.querySelectorAll('.tab-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
-      setTimeout(() => { if (window.syncInkContext) window.syncInkContext(); }, 30);
+      setTimeout(() => {
+        resizeSubjectFrameForMobile();
+        if (window.syncInkContext) window.syncInkContext();
+      }, 30);
     });
   });
   const nested = frame?.contentDocument?.querySelector('iframe');
@@ -305,6 +322,7 @@ function bindFrameInkContextSync() {
     nested.dataset.inkSyncBound = '1';
     nested.addEventListener('load', () => {
       bindFrameInkContextSync();
+      resizeSubjectFrameForMobile();
       if (window.syncInkContext) window.syncInkContext();
     });
   }
@@ -546,9 +564,7 @@ renderDday();
 loadGoal();
 loadMemo();
 
-if (mobileLiteMode) {
-  initMobileLitePortal();
-} else {
+function initCorePortalFeatures() {
   initSubjectSidebarToggle();
   if (goalSaveBtn) goalSaveBtn.addEventListener('click', saveGoal);
   if (goalInput) goalInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') saveGoal(); });
@@ -557,6 +573,12 @@ if (mobileLiteMode) {
   initProfileModal();
   initGlobalInk();
   initMusicWidget();
+}
+
+initCorePortalFeatures();
+
+if (mobileLiteMode) {
+  initMobileLitePortal();
 }
 
 
@@ -592,14 +614,27 @@ function initMusicWidget() {
     localStorage.setItem(MUSIC_POSITION_KEY, JSON.stringify({ x: rect.left, y: rect.top }));
   }
 
+  function getMusicWidgetMinTop() {
+    return isMobileLiteMode() ? 96 : 72;
+  }
+
+  function clampMusicWidgetPosition(x, y) {
+    const minTop = getMusicWidgetMinTop();
+    const maxX = Math.max(0, window.innerWidth - widget.offsetWidth);
+    const maxY = Math.max(minTop, window.innerHeight - widget.offsetHeight);
+    return {
+      x: Math.max(0, Math.min(x, maxX)),
+      y: Math.max(minTop, Math.min(y, maxY))
+    };
+  }
+
   function applySavedMusicPosition() {
     try {
       const pos = JSON.parse(localStorage.getItem(MUSIC_POSITION_KEY) || 'null');
       if (!pos || !Number.isFinite(pos.x) || !Number.isFinite(pos.y)) return;
-      const maxX = Math.max(0, window.innerWidth - widget.offsetWidth);
-      const maxY = Math.max(0, window.innerHeight - widget.offsetHeight);
-      widget.style.left = `${Math.max(0, Math.min(pos.x, maxX))}px`;
-      widget.style.top = `${Math.max(0, Math.min(pos.y, maxY))}px`;
+      const safe = clampMusicWidgetPosition(pos.x, pos.y);
+      widget.style.left = `${safe.x}px`;
+      widget.style.top = `${safe.y}px`;
       widget.style.right = 'auto';
       widget.style.bottom = 'auto';
       markCustomPosition(true);
@@ -822,10 +857,11 @@ function initMusicWidgetDrag(widget, onDragEnd) {
     if (!dragging) return;
     const nx = e.clientX - offsetX;
     const ny = e.clientY - offsetY;
-    const maxX = window.innerWidth - widget.offsetWidth;
-    const maxY = window.innerHeight - widget.offsetHeight;
+    const minTop = isMobileLiteMode() ? 96 : 72;
+    const maxX = Math.max(0, window.innerWidth - widget.offsetWidth);
+    const maxY = Math.max(minTop, window.innerHeight - widget.offsetHeight);
     widget.style.left = `${Math.max(0, Math.min(nx, maxX))}px`;
-    widget.style.top = `${Math.max(0, Math.min(ny, maxY))}px`;
+    widget.style.top = `${Math.max(minTop, Math.min(ny, maxY))}px`;
     e.preventDefault();
   };
 
@@ -859,7 +895,7 @@ function initMusicWidgetDrag(widget, onDragEnd) {
   }, { passive: false });
 }
 
-if (!mobileLiteMode) initAiCoach();
+initAiCoach();
 
 
 
