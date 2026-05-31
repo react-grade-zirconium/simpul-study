@@ -46,6 +46,7 @@ const framePanel = document.getElementById('framePanel');
 const versionPanel = document.getElementById('versionPanel');
 const frame = document.getElementById('frame');
 const subjectToggleBtn = document.getElementById('subjectToggleBtn');
+const versionToggleBtn = document.getElementById('versionToggleBtn');
 const ddayEl = document.getElementById('ddayValue');
 const goalInput = document.getElementById('goalInput');
 const goalSaveBtn = document.getElementById('goalSaveBtn');
@@ -155,7 +156,11 @@ function initProfileModal() {
   }
 }
 
-function setActive(btn) { document.querySelectorAll('.menu button').forEach((b) => b.classList.remove('active')); btn.classList.add('active'); }
+function setActive(btn) {
+  document.querySelectorAll('.menu button').forEach((b) => b.classList.remove('active'));
+  versionToggleBtn?.classList.remove('active');
+  btn?.classList.add('active');
+}
 function applySidebarState(collapsed) {
   document.body.classList.toggle('sidebar-collapsed', collapsed);
   if (subjectToggleBtn) {
@@ -202,7 +207,7 @@ function showSubject(btn, heading) {
 }
 
 function showVersionHistory(btn) {
-  setActive(btn);
+  setActive(btn || versionToggleBtn);
   document.body.classList.remove('subject-mode');
   dashPanel.classList.remove('active');
   framePanel.classList.remove('active');
@@ -302,54 +307,6 @@ function saveMemo() {
   }
 }
 
-function initToolbarDrag(toolbar, onDragEnd) {
-  const grip = document.getElementById('inkGrip');
-  if (!grip) return;
-
-  let dragging = false;
-  let pointerOffsetX = 0;
-  let pointerOffsetY = 0;
-
-  const move = (e) => {
-    if (!dragging) return;
-    const nx = e.clientX - pointerOffsetX;
-    const ny = e.clientY - pointerOffsetY;
-    const maxX = window.innerWidth - toolbar.offsetWidth;
-    const maxY = window.innerHeight - toolbar.offsetHeight;
-    toolbar.style.left = `${Math.max(0, Math.min(nx, maxX))}px`;
-    toolbar.style.top = `${Math.max(0, Math.min(ny, maxY))}px`;
-    e.preventDefault();
-  };
-
-  const end = (e) => {
-    if (!dragging) return;
-    dragging = false;
-    toolbar.classList.remove('dragging');
-    window.removeEventListener('pointermove', move);
-    window.removeEventListener('pointerup', end);
-    window.removeEventListener('pointercancel', end);
-    try { grip.releasePointerCapture(e.pointerId); } catch (_) {}
-    if (typeof onDragEnd === 'function') onDragEnd();
-  };
-
-  grip.addEventListener('pointerdown', (e) => {
-    dragging = true;
-    toolbar.classList.add('dragging');
-    const rect = toolbar.getBoundingClientRect();
-    pointerOffsetX = e.clientX - rect.left;
-    pointerOffsetY = e.clientY - rect.top;
-    toolbar.style.left = `${rect.left}px`;
-    toolbar.style.top = `${rect.top}px`;
-    toolbar.style.right = 'auto';
-    toolbar.style.bottom = 'auto';
-    toolbar.style.transform = 'none';
-    try { grip.setPointerCapture(e.pointerId); } catch (_) {}
-    window.addEventListener('pointermove', move, { passive: false });
-    window.addEventListener('pointerup', end);
-    window.addEventListener('pointercancel', end);
-    e.preventDefault();
-  }, { passive: false });
-}
 
 
 function initGlobalInk() {
@@ -378,37 +335,7 @@ function initGlobalInk() {
   let currentStroke = null;
   let strokes = [];
   let redoStack = [];
-  const INK_TOOLBAR_POSITION_KEY = 'studymax_ink_toolbar_position_v1';
-
-  function placeToolbarTopCenter() {
-    toolbar.style.left = '50%';
-    toolbar.style.top = '8px';
-    toolbar.style.right = 'auto';
-    toolbar.style.bottom = 'auto';
-    toolbar.style.transform = 'translateX(-50%)';
-  }
-
-  function persistToolbarPosition() {
-    const rect = toolbar.getBoundingClientRect();
-    localStorage.setItem(INK_TOOLBAR_POSITION_KEY, JSON.stringify({ x: rect.left, y: rect.top }));
-  }
-
-  function applySavedToolbarPosition() {
-    try {
-      const pos = JSON.parse(localStorage.getItem(INK_TOOLBAR_POSITION_KEY) || 'null');
-      if (!pos || !Number.isFinite(pos.x) || !Number.isFinite(pos.y)) return;
-      const maxX = Math.max(0, window.innerWidth - toolbar.offsetWidth);
-      const maxY = Math.max(0, window.innerHeight - toolbar.offsetHeight);
-      toolbar.style.left = `${Math.max(0, Math.min(pos.x, maxX))}px`;
-      toolbar.style.top = `${Math.max(0, Math.min(pos.y, maxY))}px`;
-      toolbar.style.right = 'auto';
-      toolbar.style.bottom = 'auto';
-      toolbar.style.transform = 'none';
-    } catch (_) {}
-  }
-
-  initToolbarDrag(toolbar, persistToolbarPosition);
-  requestAnimationFrame(applySavedToolbarPosition);
+  localStorage.removeItem('studymax_ink_toolbar_position_v1');
 
   let activeInkScope = getCurrentInkScope();
   toolbar.dataset.inkScope = activeInkScope;
@@ -544,15 +471,6 @@ function initGlobalInk() {
     drawAll(); persistStrokes(); updateUndoRedoUI();
   }
 
-  const inkMinBtn = document.getElementById('inkMinBtn');
-  if (inkMinBtn) {
-    inkMinBtn.addEventListener('click', () => {
-      localStorage.removeItem(INK_TOOLBAR_POSITION_KEY);
-      placeToolbarTopCenter();
-      setMsg('손글씨 도구를 상단 중앙으로 옮겼습니다.');
-    });
-  }
-
   toggleBtn.addEventListener('click', () => {
     document.body.classList.toggle('ink-on');
     const on = document.body.classList.contains('ink-on');
@@ -576,7 +494,7 @@ function initGlobalInk() {
   loadStrokes();
   resizeCanvas();
   updateUndoRedoUI();
-  window.addEventListener('resize', () => { resizeCanvas(); applySavedToolbarPosition(); });
+  window.addEventListener('resize', resizeCanvas);
   window.addEventListener('beforeunload', persistStrokes);
 }
 

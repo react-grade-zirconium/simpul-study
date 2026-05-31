@@ -9,6 +9,7 @@
 </head>
 <body>
   <button id="subjectToggleBtn" class="subject-toggle" type="button" aria-expanded="true" aria-controls="subjectSidebar">과목</button>
+  <button id="versionToggleBtn" class="version-toggle" type="button" onclick="showVersionHistory(this)">버전</button>
   <aside id="subjectSidebar" class="sidebar box">
     <div class="logo">
       <a href="./index.html" class="logo-link" aria-label="처음으로 돌아가기">
@@ -22,7 +23,6 @@
       <button data-src="science_hub.html" data-subject="science" onclick="showSubject(this,'통합과학 학습')">🧪 통합과학</button>
       <button data-src="society_hub.html" data-subject="society" onclick="showSubject(this,'통합사회 학습')">🌍 통합사회</button>
       <button data-src="mega_study.html" data-subject="info" onclick="showSubject(this,'정보 학습')">💻 정보</button>
-      <button onclick="showVersionHistory(this)">🕘 버전 기록</button>
     </nav>
     <section class="version-history" aria-label="버전 기록">
       <strong>버전 기록</strong>
@@ -127,8 +127,7 @@
   </main>
 
   <div id="inkToolbar" class="ink-toolbar box" role="toolbar" aria-label="손글씨 도구">
-    <button type="button" id="inkMinBtn" class="ink-min-btn" title="상단 중앙으로 이동">상단</button>
-    <span id="inkGrip" class="ink-grip" title="드래그해서 손글씨 도구 이동">이동</span>
+    <span class="ink-tab-label">✍️ 손글씨</span>
     <div class="ink-toolbar-controls">
     <button type="button" id="inkToggleBtn">✍️ 손글씨 모드</button>
     <button type="button" id="inkPenBtn" class="active">펜</button>
