@@ -123,18 +123,14 @@ body.ink-on #inkLayer{pointer-events:auto;cursor:crosshair}
   .subject-toggle{display:block;position:fixed;left:8px;top:10px;z-index:1300;transform:none;writing-mode:horizontal-tb;letter-spacing:0;border:1px solid var(--line);border-radius:999px;padding:9px 12px;background:#fff;font-size:.86rem}
   .version-toggle{display:block;position:fixed;right:8px;left:auto;top:10px;z-index:1300;transform:none;writing-mode:horizontal-tb;letter-spacing:0;border:1px solid var(--line);border-radius:999px;padding:9px 12px;background:#fff;font-size:.86rem}
   .version-toggle.active{background:var(--primary);color:#fff;border-color:#1d4ed8}
-  .sidebar{--subjectExpand:0;position:sticky;top:52px;z-index:1180;width:100%;height:auto;max-height:none;border-radius:calc(999px - (985px * var(--subjectExpand)));flex:0 0 auto;display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:calc(6px + (4px * var(--subjectExpand)));padding:calc(6px + (4px * var(--subjectExpand)));overflow:hidden;box-shadow:0 8px 22px rgba(15,23,42,.16);transition:border-radius .18s ease,padding .18s ease,gap .18s ease}
+  .sidebar{position:sticky;top:52px;z-index:1180;width:100%;height:auto;max-height:none;border-radius:999px;flex:0 0 auto;display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:6px;padding:6px;overflow:hidden;box-shadow:0 8px 22px rgba(15,23,42,.16)}
   body.sidebar-collapsed .sidebar{display:none}
-  .logo{display:flex;align-items:center;margin-top:0;padding:0 6px;border-bottom:0;background:transparent;min-width:calc(70px + (34px * var(--subjectExpand)));transition:min-width .18s ease}
-  .app-logo{max-width:calc(64px + (34px * var(--subjectExpand)));transition:max-width .18s ease}
-  .menu{display:flex;gap:calc(6px + (2px * var(--subjectExpand)));overflow-x:auto;overflow-y:hidden;max-height:none;padding:0;min-height:0;scrollbar-width:none;-webkit-overflow-scrolling:touch;transition:gap .18s ease}
+  .logo{display:flex;align-items:center;margin-top:0;padding:0 6px;border-bottom:0;background:transparent;min-width:70px}
+  .app-logo{max-width:64px}
+  .menu{display:flex;gap:6px;overflow-x:auto;overflow-y:hidden;max-height:none;padding:0;min-height:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
   .menu::-webkit-scrollbar{display:none}
-  .menu button{width:auto;min-width:max-content;min-height:calc(34px + (6px * var(--subjectExpand)));padding:calc(8px + (2px * var(--subjectExpand))) calc(11px + (3px * var(--subjectExpand)));border-radius:999px;background:rgba(255,255,255,.08);white-space:nowrap;font-size:calc(.82rem + (.03rem * var(--subjectExpand)));transition:min-height .18s ease,padding .18s ease,font-size .18s ease}
+  .menu button{width:auto;min-width:max-content;min-height:34px;padding:8px 11px;border-radius:999px;background:rgba(255,255,255,.08);white-space:nowrap;font-size:.82rem}
   .home{display:none}
-  body.mobile-subject-expanded .sidebar{grid-template-columns:1fr;align-items:stretch}
-  body.mobile-subject-expanded .logo{justify-content:center}
-  body.mobile-subject-expanded .menu{flex-wrap:wrap;overflow:visible}
-  body.mobile-subject-expanded .menu button{flex:1 1 calc(50% - 6px);text-align:center}
   .main{flex:1 1 auto;min-height:0;display:grid;grid-template-rows:auto auto;gap:8px}
   .header{padding:10px 12px;gap:8px;align-items:flex-start;flex-direction:column}
   .header h1{font-size:1rem}.header p{font-size:.82rem}

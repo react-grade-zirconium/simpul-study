@@ -247,28 +247,6 @@ function initMobileHomeClose() {
 }
 
 
-function initMobileSubjectBarExpansion() {
-  const sidebar = document.getElementById('subjectSidebar');
-  if (!sidebar) return;
-  const EXPAND_DISTANCE = 180;
-
-  function update() {
-    if (!isMobileLiteMode()) {
-      document.body.classList.remove('mobile-subject-expanded');
-      sidebar.style.removeProperty('--subjectExpand');
-      return;
-    }
-    const y = Math.max(0, window.scrollY || document.documentElement.scrollTop || 0);
-    const progress = Math.max(0, Math.min(1, 1 - (y / EXPAND_DISTANCE)));
-    sidebar.style.setProperty('--subjectExpand', progress.toFixed(3));
-    document.body.classList.toggle('mobile-subject-expanded', progress > 0.72);
-  }
-
-  update();
-  window.addEventListener('scroll', () => window.requestAnimationFrame(update), { passive: true });
-  window.addEventListener('resize', update);
-}
-
 function initMobileLitePortal() {
   document.body.classList.add('mobile-lite');
   applySidebarState(false);
