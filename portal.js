@@ -212,7 +212,7 @@ function showVersionHistory(btn) {
   dashPanel.classList.remove('active');
   framePanel.classList.remove('active');
   if (versionPanel) versionPanel.classList.add('active');
-  title.textContent = '버전 기록';
+  title.textContent = '업데이트 내역';
   desc.textContent = '학습 포털 변경 사항';
   if (window.syncInkContext) window.syncInkContext();
 }
