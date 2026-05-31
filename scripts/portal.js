@@ -15,6 +15,10 @@ const ACCESS_SERVER_CODE_KEY = 'studymax_access_server_code';
 const ACCESS_BIND_MODE_KEY = 'studymax_access_bind_mode';
 
 const MASTER_CODE = 'simpul';
+const MOBILE_LITE_QUERY = '(max-width: 900px), (pointer: coarse) and (max-width: 1024px)';
+function isMobileLiteMode() {
+  return Boolean(window.matchMedia?.(MOBILE_LITE_QUERY).matches);
+}
 const CLASS_MIN = 1;
 const CLASS_MAX = 8;
 const NUMBER_MIN = 1;
@@ -30,6 +34,7 @@ function isValidClassNumberCode(code) {
 
 
 async function enforceAccessCode() {
+  if (isMobileLiteMode()) return;
   const code = localStorage.getItem(ACCESS_CODE_KEY);
   if (code === MASTER_CODE) return;
   if (!code || !isValidClassNumberCode(code)) {
@@ -199,7 +204,7 @@ function showSubject(btn, heading) {
   const autoStatusEl = document.getElementById('aiAutoStatus');
   if (autoStatusEl) autoStatusEl.textContent = `${heading} 로딩 중...`;
   frame.onload = () => {
-    autoAnalyzeCurrentFrame(heading);
+    if (!isMobileLiteMode()) autoAnalyzeCurrentFrame(heading);
     bindFrameInkContextSync();
     if (window.syncInkContext) window.syncInkContext();
   };
@@ -215,6 +220,17 @@ function showVersionHistory(btn) {
   title.textContent = '업데이트 내역';
   desc.textContent = '학습 포털 변경 사항';
   if (window.syncInkContext) window.syncInkContext();
+}
+
+
+function initMobileLitePortal() {
+  document.body.classList.add('mobile-lite');
+  document.body.classList.remove('sidebar-collapsed');
+  document.querySelector('.mobile-logo-text')?.removeAttribute('hidden');
+  const firstSubjectBtn = document.querySelector('.menu button[data-src]');
+  if (!firstSubjectBtn) return;
+  const label = firstSubjectBtn.textContent.replace(/^[^가-힣A-Za-z0-9]+/, '').trim() || '학습 내용';
+  showSubject(firstSubjectBtn, label);
 }
 
 function inferSubjectFromSrc(src) {
@@ -499,17 +515,24 @@ function initGlobalInk() {
 }
 
 
+const mobileLiteMode = isMobileLiteMode();
+
 renderDday();
 loadGoal();
 loadMemo();
-initSubjectSidebarToggle();
-if (goalSaveBtn) goalSaveBtn.addEventListener('click', saveGoal);
-if (goalInput) goalInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') saveGoal(); });
-if (memoSaveBtn) memoSaveBtn.addEventListener('click', saveMemo);
-if (memoInput) memoInput.addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') saveMemo(); });
-initProfileModal();
-initGlobalInk();
-initMusicWidget();
+
+if (mobileLiteMode) {
+  initMobileLitePortal();
+} else {
+  initSubjectSidebarToggle();
+  if (goalSaveBtn) goalSaveBtn.addEventListener('click', saveGoal);
+  if (goalInput) goalInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') saveGoal(); });
+  if (memoSaveBtn) memoSaveBtn.addEventListener('click', saveMemo);
+  if (memoInput) memoInput.addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') saveMemo(); });
+  initProfileModal();
+  initGlobalInk();
+  initMusicWidget();
+}
 
 
 function initMusicWidget() {
@@ -811,7 +834,7 @@ function initMusicWidgetDrag(widget, onDragEnd) {
   }, { passive: false });
 }
 
-initAiCoach();
+if (!mobileLiteMode) initAiCoach();
 
 
 
