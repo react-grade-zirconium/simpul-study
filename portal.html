@@ -104,14 +104,24 @@
             <h2>스마트 AI 학습 코치</h2>
             <p class="ai-sub">과목 구분 없이 들어온 학습 내용을 자동 분석해서 문제와 학습 계획을 만듭니다.</p>
           </div>
-          <div class="ai-api-row">
-            <input type="password" placeholder="API Key (선택)" aria-label="AI API Key" />
-            <button type="button">API 저장</button>
+          <div class="ai-subject-picker">
+            <label for="aiSubjectSelect">문제를 만들 과목 선택</label>
+            <div class="ai-subject-row">
+              <select id="aiSubjectSelect" aria-label="AI 문제 생성 과목 선택">
+                <option value="korean">국어</option>
+                <option value="english">영어</option>
+                <option value="science">통합과학</option>
+                <option value="society">통합사회</option>
+                <option value="info">정보</option>
+              </select>
+              <button type="button" id="aiGenerateSubjectBtn">선택 과목 문제 자동 생성</button>
+            </div>
+            <p class="ai-sub">선택한 과목 페이지 내용을 읽어 AI가 바로 자기점검 문제를 만듭니다.</p>
           </div>
-          <textarea id="aiSourceInput" placeholder="학습 내용을 붙여넣거나, 과목 페이지로 이동하면 자동 분석됩니다."></textarea>
+          <textarea id="aiSourceInput" placeholder="직접 분석할 학습 내용을 붙여넣거나, 위에서 과목을 선택해 자동 생성하세요."></textarea>
           <div class="ai-actions">
             <button type="button" id="aiAnalyzeFrameBtn">현재 학습 페이지 자동 분석</button>
-            <button type="button" id="aiAnalyzeBtn">자동 학습 시작</button>
+            <button type="button" id="aiAnalyzeBtn">붙여넣은 내용으로 문제 생성</button>
           </div>
           <p id="aiMsg" class="ai-msg-line"></p>
           <div id="aiSummary" class="ai-summary"></div>
@@ -180,6 +190,7 @@
 
 
 
+  <script src="./scripts/ai-config.js"></script>
   <script src="./scripts/portal.js"></script>
 </body>
 </html>
