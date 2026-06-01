@@ -1014,7 +1014,7 @@ initAiCoach();
 function extractTextFromCurrentFrame() {
   const doc = getNestedFrameDocument(frame);
   if (!doc) return '';
-  const bodyText = doc.body ? doc.body.innerText : '';
+  const bodyText = doc.body ? (doc.body.textContent || doc.body.innerText || '') : '';
   return (bodyText || '').replace(/\s+/g, ' ').trim();
 }
 
@@ -1109,22 +1109,33 @@ function getSelectedAiSubject() {
 
 function htmlToPlainText(html) {
   const doc = new DOMParser().parseFromString(String(html || ''), 'text/html');
-  doc.querySelectorAll('script, style, noscript, iframe, canvas').forEach((el) => el.remove());
-  return (doc.body?.innerText || '').replace(/\s+/g, ' ').trim();
+  doc.querySelectorAll('script, style, noscript, canvas').forEach((el) => el.remove());
+  return (doc.body?.textContent || doc.body?.innerText || '').replace(/\s+/g, ' ').trim();
+}
+
+async function fetchHtmlTextWithIframes(src, depth = 0) {
+  if (!src || depth > 3) return '';
+  const response = await fetch(src, { cache: 'no-store' });
+  if (!response.ok) return '';
+  const html = await response.text();
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  const frameTexts = await Promise.all(Array.from(doc.querySelectorAll('iframe[src]')).map((iframe) => {
+    const childSrc = new URL(iframe.getAttribute('src'), response.url || window.location.href).href;
+    return fetchHtmlTextWithIframes(childSrc, depth + 1);
+  }));
+  doc.querySelectorAll('iframe').forEach((iframe) => iframe.remove());
+  return [htmlToPlainText(doc.documentElement.outerHTML), ...frameTexts].filter(Boolean).join(' ');
 }
 
 async function loadSubjectText(subjectKey) {
   const subject = AI_SUBJECTS[subjectKey] || AI_SUBJECTS.korean;
   if (frame?.dataset?.subject === subjectKey) {
     const currentText = extractTextFromCurrentFrame();
-    if (currentText) return currentText;
+    if (currentText && currentText.length > 80) return currentText;
   }
   try {
-    const response = await fetch(subject.src, { cache: 'no-store' });
-    if (response.ok) {
-      const text = htmlToPlainText(await response.text());
-      if (text) return text;
-    }
+    const text = await fetchHtmlTextWithIframes(subject.src);
+    if (text) return text;
   } catch (_) {}
   return subject.fallback;
 }
@@ -1134,7 +1145,7 @@ function buildSubjectPrompt(subjectKey, bodyText, previousQuestions = []) {
   const history = previousQuestions.length
     ? `\n\n이미 나온 문제(절대 반복 금지):\n${previousQuestions.map((q, i) => `${i + 1}. ${q}`).join('\n')}`
     : '';
-  return `[과목: ${subject.label}]\n다음 iframe 과목 파일의 모든 개념을 빠짐없이 훑으면서 시험 대비 자기점검 문제를 만들어 주세요.\n이번에는 아직 다루지 않은 개념을 우선 사용하고, 버튼을 다시 누를 때마다 이어서 새 연습문제를 만들 수 있게 서로 다르게 만드세요. 각 문제는 학생이 개념을 배우도록 '개념 설명 → 연습문제 → 풀이 방향'을 한 카드에 함께 담으세요.${history}\n\niframe 과목 파일 내용:\n${bodyText}`;
+  return `[과목: ${subject.label}]\n다음 iframe 과목 파일에서 실제로 추출한 학습 개념을 빠짐없이 훑으면서 시험 대비 연습문제를 만들어 주세요.\n이번에는 아직 다루지 않은 개념을 우선 사용하고, 버튼을 다시 누를 때마다 이어서 새 연습문제를 만들 수 있게 서로 다르게 만드세요. 각 문제는 학생이 개념을 배우도록 '개념 설명 → 연습문제 → 풀이 방향'을 한 카드에 함께 담으세요.${history}\n\niframe에서 추출한 실제 학습 내용:\n${bodyText}`;
 }
 
 function getSavedAiQuestions() {
@@ -1330,7 +1341,7 @@ function initAiCoach() {
   const generateSelectedSubjectQuestions = async () => {
     const subjectKey = getSelectedAiSubject();
     const subject = AI_SUBJECTS[subjectKey] || AI_SUBJECTS.korean;
-    aiMsgEl.textContent = `${subject.label} iframe 파일 전체를 분석해서 카드 문제를 생성하는 중...`;
+    aiMsgEl.textContent = `${subject.label} 연결된 iframe 내용을 분석해서 연습문제를 생성하는 중...`;
     const subjectText = await loadSubjectText(subjectKey);
     saveActiveAiSource(subjectKey, subjectText);
     localStorage.setItem(AI_ROUND_KEY, '1');
