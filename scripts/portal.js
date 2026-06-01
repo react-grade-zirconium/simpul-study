@@ -69,6 +69,8 @@ const aiMsgEl = document.getElementById('aiMsg');
 const aiSummaryEl = document.getElementById('aiSummary');
 const aiQuestionListEl = document.getElementById('aiQuestionList');
 const aiQuizCardsEl = document.getElementById('aiQuizCards');
+const aiCoachQuizCardsEl = document.getElementById('aiCoachQuizCards');
+const aiMoreQuestionsBtn = document.getElementById('aiMoreQuestionsBtn');
 
 const FINAL_EXAM_DATE = '2026-06-29';
 const GOAL_STORAGE_KEY = 'studymax_personal_goal';
@@ -79,6 +81,9 @@ const PROFILE_NUMBER_KEY = 'studymax_profile_number';
 const PROFILE_PHOTO_KEY = 'studymax_profile_photo';
 const AI_CONTENT_BANK_KEY = 'studymax_ai_content_bank_v1';
 const AI_QUESTIONS_KEY = 'studymax_ai_questions_v1';
+const AI_ACTIVE_SOURCE_KEY = 'studymax_ai_active_source_v1';
+const AI_ACTIVE_SUBJECT_KEY = 'studymax_ai_active_subject_v1';
+const AI_ROUND_KEY = 'studymax_ai_round_v1';
 const AI_WIDGET_POSITION_KEY = 'studymax_ai_widget_position_v1';
 const SIDEBAR_COLLAPSED_KEY = 'studymax_subject_sidebar_collapsed';
 const SUBJECT_TAB_INK_SCOPE_NOTE = 'Dashboard, each subject, and each in-subject tab must keep separate ink storage whenever a subject adds tabbed content.';
@@ -1119,27 +1124,51 @@ async function loadSubjectText(subjectKey) {
   return subject.fallback;
 }
 
-function buildSubjectPrompt(subjectKey, bodyText) {
+function buildSubjectPrompt(subjectKey, bodyText, previousQuestions = []) {
   const subject = AI_SUBJECTS[subjectKey] || AI_SUBJECTS.korean;
-  return `[과목: ${subject.label}]\n다음 과목 학습 내용을 바탕으로 시험 대비 자기점검 문제를 만들어 주세요.\n\n${bodyText}`;
+  const history = previousQuestions.length
+    ? `\n\n이미 나온 문제(절대 반복 금지):\n${previousQuestions.map((q, i) => `${i + 1}. ${q}`).join('\n')}`
+    : '';
+  return `[과목: ${subject.label}]\n다음 iframe 과목 파일의 모든 개념을 빠짐없이 훑으면서 시험 대비 자기점검 문제를 만들어 주세요.\n이번에는 아직 묻지 않은 개념을 우선 사용하고, 버튼을 다시 누를 때마다 계속 이어서 새 문제를 만들 수 있게 문제를 서로 다르게 만드세요.${history}\n\niframe 과목 파일 내용:\n${bodyText}`;
 }
 
-function persistAiResult(summaryPoints, questions, sourceLength, subjectKey = '') {
+function getSavedAiQuestions() {
+  try {
+    const questions = JSON.parse(localStorage.getItem(AI_QUESTIONS_KEY) || '[]');
+    return Array.isArray(questions) ? questions.map(String).filter(Boolean) : [];
+  } catch (_) {
+    return [];
+  }
+}
+
+function persistAiResult(summaryPoints, questions, sourceLength, subjectKey = '', options = {}) {
   const bank = JSON.parse(localStorage.getItem(AI_CONTENT_BANK_KEY) || '[]');
   const subject = AI_SUBJECTS[subjectKey]?.label || subjectKey || '직접 입력';
-  bank.push({ date: new Date().toISOString().slice(0, 10), length: sourceLength, subject, points: summaryPoints });
+  const nextQuestions = options.append ? [...getSavedAiQuestions(), ...questions] : questions;
+  bank.push({ date: new Date().toISOString().slice(0, 10), length: sourceLength, subject, points: summaryPoints, totalQuestions: nextQuestions.length });
   localStorage.setItem(AI_CONTENT_BANK_KEY, JSON.stringify(bank.slice(-200)));
-  localStorage.setItem(AI_QUESTIONS_KEY, JSON.stringify(questions));
+  localStorage.setItem(AI_QUESTIONS_KEY, JSON.stringify(nextQuestions));
 }
 
-async function runAiLearning(raw, subjectKey = getSelectedAiSubject()) {
+function saveActiveAiSource(subjectKey, sourceText) {
+  localStorage.setItem(AI_ACTIVE_SUBJECT_KEY, subjectKey);
+  localStorage.setItem(AI_ACTIVE_SOURCE_KEY, sourceText.slice(0, 12000));
+}
+
+function getActiveAiSource() {
+  const subjectKey = localStorage.getItem(AI_ACTIVE_SUBJECT_KEY) || getSelectedAiSubject();
+  const sourceText = localStorage.getItem(AI_ACTIVE_SOURCE_KEY) || '';
+  return { subjectKey: AI_SUBJECTS[subjectKey] ? subjectKey : getSelectedAiSubject(), sourceText };
+}
+
+async function runAiLearning(raw, subjectKey = getSelectedAiSubject(), options = {}) {
   try {
     const apiResult = await requestAiFromApi(raw, subjectKey);
     if (apiResult && Array.isArray(apiResult.questions)) {
       const points = Array.isArray(apiResult.summary_points) ? apiResult.summary_points.slice(0, 3) : [];
-      persistAiResult(points, apiResult.questions, raw.length, subjectKey);
+      persistAiResult(points, apiResult.questions, raw.length, subjectKey, options);
       const subjectLabel = AI_SUBJECTS[subjectKey]?.label || '직접 입력';
-      aiMsgEl.textContent = `${subjectLabel} API 문제 생성 완료: 핵심 포인트 ${points.length}개, 문제 ${apiResult.questions.length}개`;
+      aiMsgEl.textContent = `${subjectLabel} API 문제 생성 완료: 새 문제 ${apiResult.questions.length}개 · 누적 ${getSavedAiQuestions().length}개`;
       renderAiCoach();
       renderAiQuizCards();
       return;
@@ -1150,9 +1179,9 @@ async function runAiLearning(raw, subjectKey = getSelectedAiSubject()) {
 
   const summary = summarizeForAi(raw);
   const questions = buildQuestionsFromText(raw);
-  persistAiResult(summary.points, questions, summary.totalLength, subjectKey);
+  persistAiResult(summary.points, questions, summary.totalLength, subjectKey, options);
   const subjectLabel = AI_SUBJECTS[subjectKey]?.label || '직접 입력';
-  aiMsgEl.textContent = `${subjectLabel} 로컬 문제 생성 완료: 핵심 포인트 ${summary.points.length}개, 문제 ${questions.length}개`;
+  aiMsgEl.textContent = `${subjectLabel} 로컬 문제 생성 완료: 새 문제 ${questions.length}개 · 누적 ${getSavedAiQuestions().length}개`;
   renderAiCoach();
   renderAiQuizCards();
 }
@@ -1198,37 +1227,42 @@ function renderAiCoach() {
   }
 }
 
+function createAiQuizCard(q, idx) {
+  const card = document.createElement('article');
+  card.className = 'ai-quiz-card';
+  const title = document.createElement('h4');
+  title.textContent = `문제 ${idx + 1}`;
+  const body = document.createElement('p');
+  body.textContent = String(q);
+  const answer = document.createElement('textarea');
+  answer.placeholder = '여기에 답안을 입력하세요.';
+  const checkBtn = document.createElement('button');
+  checkBtn.type = 'button';
+  checkBtn.textContent = '답안 저장';
+  const feedback = document.createElement('div');
+  feedback.className = 'ai-feedback';
+  checkBtn.addEventListener('click', () => {
+    const v = (answer.value || '').trim();
+    feedback.textContent = v ? '답안이 저장되었습니다. (자가점검용)' : '답안을 입력해 주세요.';
+  });
+  card.append(title, body, answer, checkBtn, feedback);
+  return card;
+}
+
 function renderAiQuizCards() {
-  if (!aiQuizCardsEl) return;
-  const questions = JSON.parse(localStorage.getItem(AI_QUESTIONS_KEY) || '[]');
-  aiQuizCardsEl.innerHTML = '';
-  if (!Array.isArray(questions) || !questions.length) {
-    const empty = document.createElement('p');
-    empty.className = 'ai-sub';
-    empty.textContent = '아직 생성된 문제가 없습니다.';
-    aiQuizCardsEl.appendChild(empty);
-    return;
-  }
-  questions.forEach((q, idx) => {
-    const card = document.createElement('article');
-    card.className = 'ai-quiz-card';
-    const title = document.createElement('h4');
-    title.textContent = `문제 ${idx + 1}`;
-    const body = document.createElement('p');
-    body.textContent = String(q);
-    const answer = document.createElement('textarea');
-    answer.placeholder = '여기에 답안을 입력하세요.';
-    const checkBtn = document.createElement('button');
-    checkBtn.type = 'button';
-    checkBtn.textContent = '답안 저장';
-    const feedback = document.createElement('div');
-    feedback.className = 'ai-feedback';
-    checkBtn.addEventListener('click', () => {
-      const v = (answer.value || '').trim();
-      feedback.textContent = v ? '답안이 저장되었습니다. (자가점검용)' : '답안을 입력해 주세요.';
-    });
-    card.append(title, body, answer, checkBtn, feedback);
-    aiQuizCardsEl.appendChild(card);
+  const targets = [aiQuizCardsEl, aiCoachQuizCardsEl].filter(Boolean);
+  if (!targets.length) return;
+  const questions = getSavedAiQuestions();
+  targets.forEach((target) => {
+    target.innerHTML = '';
+    if (!questions.length) {
+      const empty = document.createElement('p');
+      empty.className = 'ai-sub';
+      empty.textContent = '아직 생성된 문제가 없습니다.';
+      target.appendChild(empty);
+      return;
+    }
+    questions.forEach((q, idx) => target.appendChild(createAiQuizCard(q, idx)));
   });
 }
 
@@ -1265,19 +1299,41 @@ function initAiCoach() {
   renderAiCoach();
   renderAiQuizCards();
 
-  aiGenerateSubjectBtn?.addEventListener('click', async () => {
+  const generateSelectedSubjectQuestions = async () => {
     const subjectKey = getSelectedAiSubject();
     const subject = AI_SUBJECTS[subjectKey] || AI_SUBJECTS.korean;
-    aiMsgEl.textContent = `${subject.label} 과목 내용을 불러와 문제를 생성하는 중...`;
+    aiMsgEl.textContent = `${subject.label} iframe 파일 전체를 분석해서 카드 문제를 생성하는 중...`;
     const subjectText = await loadSubjectText(subjectKey);
-    await runAiLearning(buildSubjectPrompt(subjectKey, subjectText), subjectKey);
+    saveActiveAiSource(subjectKey, subjectText);
+    localStorage.setItem(AI_ROUND_KEY, '1');
+    await runAiLearning(buildSubjectPrompt(subjectKey, subjectText), subjectKey, { append: false });
+  };
+
+  aiSubjectSelect?.addEventListener('change', generateSelectedSubjectQuestions);
+  aiGenerateSubjectBtn?.addEventListener('click', generateSelectedSubjectQuestions);
+
+  aiMoreQuestionsBtn?.addEventListener('click', async () => {
+    let { subjectKey, sourceText } = getActiveAiSource();
+    if (!sourceText) {
+      subjectKey = getSelectedAiSubject();
+      sourceText = await loadSubjectText(subjectKey);
+      saveActiveAiSource(subjectKey, sourceText);
+    }
+    const subject = AI_SUBJECTS[subjectKey] || AI_SUBJECTS.korean;
+    const previousQuestions = getSavedAiQuestions();
+    const round = Number(localStorage.getItem(AI_ROUND_KEY) || 1) + 1;
+    localStorage.setItem(AI_ROUND_KEY, String(round));
+    aiMsgEl.textContent = `${subject.label} ${round}번째 카드 묶음을 생성하는 중...`;
+    await runAiLearning(buildSubjectPrompt(subjectKey, sourceText, previousQuestions), subjectKey, { append: true });
   });
 
   aiAnalyzeBtn.addEventListener('click', () => {
     const raw = (aiSourceInput.value || '').trim();
     if (!raw) { aiMsgEl.textContent = '학습 내용을 입력해 주세요.'; return; }
     const subjectKey = getSelectedAiSubject();
-    runAiLearning(buildSubjectPrompt(subjectKey, raw), subjectKey);
+    saveActiveAiSource(subjectKey, raw);
+    localStorage.setItem(AI_ROUND_KEY, '1');
+    runAiLearning(buildSubjectPrompt(subjectKey, raw), subjectKey, { append: false });
     aiSourceInput.value = '';
   });
 
@@ -1286,7 +1342,9 @@ function initAiCoach() {
     if (!raw) { aiMsgEl.textContent = '현재 학습 페이지에서 분석할 텍스트를 찾지 못했습니다.'; return; }
     const subjectKey = frame?.dataset?.subject || getSelectedAiSubject();
     if (aiSubjectSelect && AI_SUBJECTS[subjectKey]) aiSubjectSelect.value = subjectKey;
-    runAiLearning(buildSubjectPrompt(subjectKey, raw), subjectKey);
+    saveActiveAiSource(subjectKey, raw);
+    localStorage.setItem(AI_ROUND_KEY, '1');
+    runAiLearning(buildSubjectPrompt(subjectKey, raw), subjectKey, { append: false });
   });
 }
 
