@@ -7,6 +7,15 @@ const model = process.env.OPENAI_MODEL || 'gpt-4.1-mini';
 const client = process.env.OPENAI_API_KEY ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY }) : null;
 
 app.use(express.json({ limit: '1mb' }));
+app.use((req, res, next) => {
+  if (req.path.startsWith('/api/')) {
+    res.setHeader('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGIN || '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    if (req.method === 'OPTIONS') return res.sendStatus(204);
+  }
+  next();
+});
 app.use(express.static(process.cwd()));
 
 function parseAiJson(text) {
@@ -30,6 +39,7 @@ app.post('/api/ai/analyze', async (req, res) => {
     }
 
     const rawText = String(req.body?.text || '').replace(/\s+/g, ' ').trim();
+    const subject = String(req.body?.subject || '선택 과목').replace(/\s+/g, ' ').trim().slice(0, 40);
     if (rawText.length < 10) {
       return res.status(400).json({ error: '분석할 학습 내용이 너무 짧습니다.' });
     }
@@ -39,10 +49,12 @@ app.post('/api/ai/analyze', async (req, res) => {
       model,
       instructions: [
         '너는 한국어로 답하는 중고등학생용 학습 코치다.',
-        '입력된 학습 내용을 바탕으로 핵심 포인트와 자기점검 문제를 만든다.',
+        '입력된 학습 내용을 바탕으로 개념을 익히게 하는 연습문제를 만든다.',
+        '각 문제는 짧은 개념 설명, 적용 문제, 풀이 방향을 함께 담아 학습용으로 만든다.',
+        '과목명이 있으면 해당 과목 시험 대비에 맞는 연습문제로 만든다.',
         '반드시 JSON만 출력한다. 형식: {"summary_points":["..."],"questions":["..."]}'
       ].join(' '),
-      input: `학습 내용:\n${input}\n\n요구사항:\n- summary_points는 3개 이하\n- questions는 4~5개\n- 질문은 짧고 명확하게\n- 한국어로 작성`,
+      input: `과목: ${subject || '선택 과목'}\n학습 내용:\n${input}\n\n요구사항:\n- summary_points는 3개 이하\n- questions는 5개\n- 각 questions 항목은 '개념 설명 → 연습문제 → 풀이 방향' 순서로 구성\n- 한국어로 작성`,
       text: {
         format: {
           type: 'json_schema',
