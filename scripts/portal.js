@@ -247,6 +247,17 @@ function initMobileHomeClose() {
 }
 
 
+
+function initMobileSubjectBarExpansion() {
+  const menu = document.querySelector('.menu');
+  if (!menu) return;
+  menu.querySelectorAll('.subject-menu-button').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    });
+  });
+}
+
 function initMobileLitePortal() {
   document.body.classList.add('mobile-lite');
   applySidebarState(false);
