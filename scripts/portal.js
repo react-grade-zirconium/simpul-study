@@ -48,6 +48,7 @@ const desc = document.getElementById('desc');
 const dashPanel = document.getElementById('dashPanel');
 const framePanel = document.getElementById('framePanel');
 const versionPanel = document.getElementById('versionPanel');
+const aiCoachPanel = document.getElementById('aiCoachPanel');
 const frame = document.getElementById('frame');
 const subjectToggleBtn = document.getElementById('subjectToggleBtn');
 const versionToggleBtn = document.getElementById('versionToggleBtn');
@@ -195,6 +196,7 @@ function showDashboard(btn) {
   dashPanel.classList.add('active');
   framePanel.classList.remove('active');
   if (versionPanel) versionPanel.classList.remove('active');
+  if (aiCoachPanel) aiCoachPanel.classList.remove('active');
   title.textContent = '기말 학습 대시보드';
   desc.textContent = '';
   if (window.syncInkContext) window.syncInkContext();
@@ -204,6 +206,7 @@ function showSubject(btn, heading) {
   document.body.classList.add('subject-mode');
   dashPanel.classList.remove('active');
   if (versionPanel) versionPanel.classList.remove('active');
+  if (aiCoachPanel) aiCoachPanel.classList.remove('active');
   framePanel.classList.add('active');
   frame.dataset.subject = btn.dataset.subject || inferSubjectFromSrc(btn.dataset.src || '');
   frame.src = btn.dataset.src;
@@ -221,12 +224,26 @@ function showSubject(btn, heading) {
   if (window.syncInkContext) window.syncInkContext();
 }
 
+
+function showAiCoachPanel(btn) {
+  setActive(btn);
+  document.body.classList.remove('subject-mode');
+  dashPanel.classList.remove('active');
+  framePanel.classList.remove('active');
+  if (versionPanel) versionPanel.classList.remove('active');
+  if (aiCoachPanel) aiCoachPanel.classList.add('active');
+  title.textContent = '스마트 AI 학습 코치';
+  desc.textContent = '학습 내용을 분석해 문제와 계획을 만드는 AI 코치';
+  if (window.syncInkContext) window.syncInkContext();
+}
+
 function showVersionHistory(btn) {
   setActive(btn || versionToggleBtn);
   document.body.classList.remove('subject-mode');
   dashPanel.classList.remove('active');
   framePanel.classList.remove('active');
   if (versionPanel) versionPanel.classList.add('active');
+  if (aiCoachPanel) aiCoachPanel.classList.remove('active');
   title.textContent = '업데이트 내역';
   desc.textContent = '학습 포털 변경 사항';
   if (window.syncInkContext) window.syncInkContext();
@@ -1242,3 +1259,4 @@ function initAiWidgetDrag(widget) {
 window.showDashboard = showDashboard;
 window.showSubject = showSubject;
 window.showVersionHistory = showVersionHistory;
+window.showAiCoachPanel = showAiCoachPanel;
