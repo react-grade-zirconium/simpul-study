@@ -103,7 +103,8 @@ body.ink-on #inkLayer{pointer-events:auto;cursor:crosshair}
 
 .music-head-actions{display:flex;align-items:center;gap:6px}.music-min-btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:4px 8px;cursor:pointer;font-weight:700}.music-youtube{width:100%;height:170px;border:0;border-radius:10px;display:none;background:#000;pointer-events:none}.music-widget.minimized .music-row,.music-widget.minimized .music-controls,.music-widget.minimized .music-youtube,.music-widget.minimized #musicPlaylist,.music-widget.minimized #musicMsg,.music-widget.minimized #musicAudio,.music-widget.minimized .music-ad-tip{display:none}
 
-.ai-api-row{display:flex;gap:8px;flex-wrap:wrap}.ai-api-row input{flex:1;min-width:260px;border:1px solid var(--line);border-radius:8px;padding:9px;font-family:inherit}.ai-api-row button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:9px 12px;font-weight:600;cursor:pointer}
+.ai-subject-picker{display:grid;gap:8px;border:1px solid #bfdbfe;background:#eff6ff;border-radius:12px;padding:12px}.ai-subject-picker label{font-size:.86rem;font-weight:800;color:#1e3a8a}.ai-subject-row{display:flex;gap:8px;flex-wrap:wrap}.ai-subject-row select{flex:1;min-width:180px;border:1px solid var(--line);border-radius:9px;padding:10px;font-family:inherit;background:#fff}.ai-subject-row button{border:1px solid #1d4ed8;background:#2563eb;color:#fff;border-radius:9px;padding:10px 12px;font-weight:800;cursor:pointer}.ai-practice-viewer{display:grid;gap:10px;border:1px solid var(--line);border-radius:14px;background:#fff;padding:14px}.ai-practice-head{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#334155}.ai-practice-head span{font-size:.82rem;color:#64748b;font-weight:800}.ai-practice-card .ai-quiz-card{border:0;padding:0}.ai-practice-card .ai-quiz-card textarea,.ai-practice-card .ai-quiz-card button,.ai-practice-card .ai-feedback{display:none}.ai-practice-card .ai-quiz-card p{font-size:1rem;line-height:1.65;white-space:pre-line}.ai-practice-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}.ai-practice-actions button{border:1px solid #1d4ed8;background:#2563eb;color:#fff;border-radius:9px;padding:10px 12px;font-weight:800;cursor:pointer}.ai-practice-actions button:disabled{border-color:var(--line);background:#f1f5f9;color:#94a3b8;cursor:not-allowed}
+.ai-coach-panel{height:100%;margin:0;padding:22px;display:grid;grid-template-rows:auto auto minmax(160px,1fr) auto auto auto auto;align-content:start;gap:12px;overflow:auto}.ai-coach-heading{display:grid;gap:6px}.ai-coach-heading h2{font-size:1.3rem}.ai-coach-badge{width:max-content;border:1px solid #bfdbfe;background:#eff6ff;color:#1d4ed8;border-radius:999px;padding:5px 10px;font-size:.78rem;font-weight:800}.ai-coach-panel textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-family:inherit;resize:vertical;font-size:.9rem;line-height:1.5}.ai-coach-panel .ai-summary{border:1px solid var(--line);border-radius:10px;background:#f8fbff;padding:10px;min-height:44px}.ai-coach-panel .ai-question-list{border:1px solid var(--line);border-radius:10px;background:#fff;padding:10px 10px 10px 28px;min-height:44px}
 
 .music-dock-toggle{position:absolute;top:14px;width:78px;height:34px;border:1px solid var(--line);background:#fff;cursor:pointer;font-weight:800;display:none;font-size:.75rem;touch-action:none}
 .music-widget.minimized{transition:transform .22s ease}
@@ -137,8 +138,11 @@ body.ink-on #inkLayer{pointer-events:auto;cursor:crosshair}
   .profile-chip{width:100%;padding:7px}.profile-avatar-wrap{width:40px;height:40px}.profile-texts{min-width:0}.profile-texts strong,.profile-texts span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .content{min-height:0;overflow:visible}.panel{height:auto;min-height:0}.panel.active{display:block}
   .dashboard-grid{height:auto;grid-template-columns:1fr;overflow:visible;padding:10px;gap:8px}
-  .goal,.memo,.ai-quiz{grid-column:auto}.goal-form,.ai-api-row,.ai-actions{display:grid;grid-template-columns:1fr}.goal-form input,.ai-api-row input{min-width:0;width:100%;font-size:16px}
+  .goal,.memo,.ai-quiz{grid-column:auto}.goal-form,.ai-actions,.ai-subject-row,.ai-practice-actions{display:grid;grid-template-columns:1fr}.goal-form input,.ai-subject-row select{min-width:0;width:100%;font-size:16px}
   .ai-quiz-cards{grid-template-columns:1fr}.memo textarea,.ai-coach textarea{font-size:16px}
+  .ai-coach-panel{height:auto;overflow:visible;padding:16px;grid-template-rows:none}
+  .ai-coach-heading h2{font-size:1.08rem}
+  .ai-coach-panel textarea{min-height:130px}
   .version-panel{height:auto;overflow:visible;padding:16px}.version-list li{grid-template-columns:54px 1fr}
   body.subject-mode #framePanel{height:auto}
   iframe{min-height:calc(100svh - 150px)}
@@ -161,13 +165,4 @@ body.ink-on #inkLayer{pointer-events:auto;cursor:crosshair}
 @media (max-width:900px){
   body.sidebar-collapsed .subject-toggle{left:8px;right:auto;top:10px;display:inline-flex;align-items:center;justify-content:center;background:#2563eb;color:#fff;border-color:#1d4ed8}
   body.sidebar-collapsed .version-toggle{left:auto;right:8px;top:10px}
-}
-.sidebar-ai{margin:0 10px 10px;padding:10px;display:grid;gap:8px;color:var(--text);background:#f8fbff;max-height:38vh;overflow:auto;flex-shrink:0}.sidebar-ai h3{font-size:.92rem}.sidebar-ai textarea{width:100%;min-height:96px;border:1px solid var(--line);border-radius:8px;padding:9px;font-family:inherit;resize:vertical;font-size:.84rem}.sidebar-ai .ai-api-row{display:grid;grid-template-columns:1fr;gap:6px}.sidebar-ai .ai-api-row input{min-width:0;width:100%;font-size:.82rem}.sidebar-ai .ai-api-row button,.sidebar-ai .ai-actions button{width:100%;padding:8px 9px}.sidebar-ai .ai-actions{display:grid;grid-template-columns:1fr;gap:6px}.sidebar-ai .ai-summary,.sidebar-ai .ai-question-list{max-height:120px;overflow:auto}
-@media (max-width:900px){
-  .sidebar-ai{display:grid;margin:8px 2px 0;padding:9px 10px;border-radius:14px;max-height:178px;gap:7px}
-  .sidebar-ai h3{font-size:.86rem}
-  .sidebar-ai .ai-sub,.sidebar-ai .ai-api-row,.sidebar-ai .ai-summary,.sidebar-ai .ai-question-list{display:none}
-  .sidebar-ai textarea{min-height:46px;font-size:16px;resize:vertical}
-  .sidebar-ai .ai-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-  .sidebar-ai .ai-actions button{padding:8px 6px;font-size:.74rem}
 }
