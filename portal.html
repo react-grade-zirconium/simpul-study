@@ -116,7 +116,7 @@
               </select>
               <button type="button" id="aiGenerateSubjectBtn">선택 과목 문제 자동 생성</button>
             </div>
-            <p class="ai-sub">과목을 선택하면 iframe 파일 전체를 분석해 카드형 문제를 계속 만듭니다.</p>
+            <p class="ai-sub">과목을 선택하면 iframe 파일 전체를 분석해 연습문제를 한 문제씩 보여줍니다.</p>
           </div>
           <textarea id="aiSourceInput" placeholder="직접 분석할 학습 내용을 붙여넣거나, 위에서 과목을 선택해 자동 생성하세요."></textarea>
           <div class="ai-actions">
@@ -125,10 +125,18 @@
           </div>
           <p id="aiMsg" class="ai-msg-line"></p>
           <div id="aiSummary" class="ai-summary"></div>
-          <div id="aiCoachQuizCards" class="ai-quiz-cards ai-coach-quiz-cards"></div>
-          <div class="ai-more-actions">
-            <button type="button" id="aiMoreQuestionsBtn">다음 문제 계속 만들기</button>
-          </div>
+          <section class="ai-practice-viewer" aria-label="AI 연습문제">
+            <div class="ai-practice-head">
+              <strong>연습문제</strong>
+              <span id="aiPracticeProgress">0 / 0</span>
+            </div>
+            <div id="aiPracticeCard" class="ai-practice-card"></div>
+            <div class="ai-practice-actions">
+              <button type="button" id="aiPrevQuestionBtn">이전 문제</button>
+              <button type="button" id="aiNextQuestionBtn">다음 문제</button>
+              <button type="button" id="aiMoreQuestionsBtn">새 연습문제 더 만들기</button>
+            </div>
+          </section>
           <ol id="aiQuestionList" class="ai-question-list" hidden></ol>
         </article>
       </div>

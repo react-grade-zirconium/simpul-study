@@ -69,7 +69,10 @@ const aiMsgEl = document.getElementById('aiMsg');
 const aiSummaryEl = document.getElementById('aiSummary');
 const aiQuestionListEl = document.getElementById('aiQuestionList');
 const aiQuizCardsEl = document.getElementById('aiQuizCards');
-const aiCoachQuizCardsEl = document.getElementById('aiCoachQuizCards');
+const aiPracticeCardEl = document.getElementById('aiPracticeCard');
+const aiPracticeProgressEl = document.getElementById('aiPracticeProgress');
+const aiPrevQuestionBtn = document.getElementById('aiPrevQuestionBtn');
+const aiNextQuestionBtn = document.getElementById('aiNextQuestionBtn');
 const aiMoreQuestionsBtn = document.getElementById('aiMoreQuestionsBtn');
 
 const FINAL_EXAM_DATE = '2026-06-29';
@@ -84,6 +87,7 @@ const AI_QUESTIONS_KEY = 'studymax_ai_questions_v1';
 const AI_ACTIVE_SOURCE_KEY = 'studymax_ai_active_source_v1';
 const AI_ACTIVE_SUBJECT_KEY = 'studymax_ai_active_subject_v1';
 const AI_ROUND_KEY = 'studymax_ai_round_v1';
+const AI_ACTIVE_INDEX_KEY = 'studymax_ai_active_index_v1';
 const AI_WIDGET_POSITION_KEY = 'studymax_ai_widget_position_v1';
 const SIDEBAR_COLLAPSED_KEY = 'studymax_subject_sidebar_collapsed';
 const SUBJECT_TAB_INK_SCOPE_NOTE = 'Dashboard, each subject, and each in-subject tab must keep separate ink storage whenever a subject adds tabbed content.';
@@ -1062,11 +1066,12 @@ async function requestAiDirectlyFromOpenAi(raw, subject) {
       model: getOpenAiModel(),
       instructions: [
         '너는 한국어로 답하는 중고등학생용 학습 코치다.',
-        '입력된 학습 내용을 바탕으로 핵심 포인트와 자기점검 문제를 만든다.',
-        '과목명이 있으면 해당 과목 시험 대비에 맞는 질문으로 만든다.',
+        '입력된 학습 내용을 바탕으로 개념을 익히게 하는 연습문제를 만든다.',
+        '각 문제는 짧은 개념 설명, 적용 문제, 풀이 방향을 함께 담아 학습용으로 만든다.',
+        '과목명이 있으면 해당 과목 시험 대비에 맞는 연습문제로 만든다.',
         '반드시 JSON만 출력한다. 형식: {"summary_points":["..."],"questions":["..."]}'
       ].join(' '),
-      input: `과목: ${subject || '선택 과목'}\n학습 내용:\n${raw.slice(0, 12000)}\n\n요구사항:\n- summary_points는 3개 이하\n- questions는 5개\n- 질문은 과목 개념 이해, 적용, 오답 점검을 섞어서 짧고 명확하게\n- 한국어로 작성`,
+      input: `과목: ${subject || '선택 과목'}\n학습 내용:\n${raw.slice(0, 12000)}\n\n요구사항:\n- summary_points는 3개 이하\n- questions는 5개\n- 각 questions 항목은 '개념 설명 → 연습문제 → 풀이 방향' 순서로 구성\n- 한국어로 작성`,
       text: {
         format: {
           type: 'json_schema',
@@ -1129,7 +1134,7 @@ function buildSubjectPrompt(subjectKey, bodyText, previousQuestions = []) {
   const history = previousQuestions.length
     ? `\n\n이미 나온 문제(절대 반복 금지):\n${previousQuestions.map((q, i) => `${i + 1}. ${q}`).join('\n')}`
     : '';
-  return `[과목: ${subject.label}]\n다음 iframe 과목 파일의 모든 개념을 빠짐없이 훑으면서 시험 대비 자기점검 문제를 만들어 주세요.\n이번에는 아직 묻지 않은 개념을 우선 사용하고, 버튼을 다시 누를 때마다 계속 이어서 새 문제를 만들 수 있게 문제를 서로 다르게 만드세요.${history}\n\niframe 과목 파일 내용:\n${bodyText}`;
+  return `[과목: ${subject.label}]\n다음 iframe 과목 파일의 모든 개념을 빠짐없이 훑으면서 시험 대비 자기점검 문제를 만들어 주세요.\n이번에는 아직 다루지 않은 개념을 우선 사용하고, 버튼을 다시 누를 때마다 이어서 새 연습문제를 만들 수 있게 서로 다르게 만드세요. 각 문제는 학생이 개념을 배우도록 '개념 설명 → 연습문제 → 풀이 방향'을 한 카드에 함께 담으세요.${history}\n\niframe 과목 파일 내용:\n${bodyText}`;
 }
 
 function getSavedAiQuestions() {
@@ -1148,7 +1153,9 @@ function persistAiResult(summaryPoints, questions, sourceLength, subjectKey = ''
   bank.push({ date: new Date().toISOString().slice(0, 10), length: sourceLength, subject, points: summaryPoints, totalQuestions: nextQuestions.length });
   localStorage.setItem(AI_CONTENT_BANK_KEY, JSON.stringify(bank.slice(-200)));
   localStorage.setItem(AI_QUESTIONS_KEY, JSON.stringify(nextQuestions));
+  if (!options.append) setActiveAiQuestionIndex(0);
 }
+
 
 function saveActiveAiSource(subjectKey, sourceText) {
   localStorage.setItem(AI_ACTIVE_SUBJECT_KEY, subjectKey);
@@ -1231,39 +1238,60 @@ function createAiQuizCard(q, idx) {
   const card = document.createElement('article');
   card.className = 'ai-quiz-card';
   const title = document.createElement('h4');
-  title.textContent = `문제 ${idx + 1}`;
+  title.textContent = `연습문제 ${idx + 1}`;
   const body = document.createElement('p');
   body.textContent = String(q);
-  const answer = document.createElement('textarea');
-  answer.placeholder = '여기에 답안을 입력하세요.';
-  const checkBtn = document.createElement('button');
-  checkBtn.type = 'button';
-  checkBtn.textContent = '답안 저장';
-  const feedback = document.createElement('div');
-  feedback.className = 'ai-feedback';
-  checkBtn.addEventListener('click', () => {
-    const v = (answer.value || '').trim();
-    feedback.textContent = v ? '답안이 저장되었습니다. (자가점검용)' : '답안을 입력해 주세요.';
-  });
-  card.append(title, body, answer, checkBtn, feedback);
+  card.append(title, body);
   return card;
 }
 
+function getActiveAiQuestionIndex(total) {
+  const raw = Number(localStorage.getItem(AI_ACTIVE_INDEX_KEY) || 0);
+  if (!Number.isFinite(raw) || raw < 0) return 0;
+  return Math.min(raw, Math.max(0, total - 1));
+}
+
+function setActiveAiQuestionIndex(index) {
+  localStorage.setItem(AI_ACTIVE_INDEX_KEY, String(Math.max(0, index)));
+}
+
+function renderAiPracticeViewer(questions) {
+  if (!aiPracticeCardEl) return;
+  aiPracticeCardEl.innerHTML = '';
+  const total = questions.length;
+  const activeIndex = getActiveAiQuestionIndex(total);
+  if (aiPracticeProgressEl) aiPracticeProgressEl.textContent = total ? `${activeIndex + 1} / ${total}` : '0 / 0';
+  if (aiPrevQuestionBtn) aiPrevQuestionBtn.disabled = !total || activeIndex <= 0;
+  if (aiNextQuestionBtn) aiNextQuestionBtn.disabled = !total || activeIndex >= total - 1;
+
+  if (!total) {
+    const empty = document.createElement('p');
+    empty.className = 'ai-sub';
+    empty.textContent = '과목을 선택하면 연습문제가 한 문제씩 표시됩니다.';
+    aiPracticeCardEl.appendChild(empty);
+    return;
+  }
+
+  aiPracticeCardEl.appendChild(createAiQuizCard(questions[activeIndex], activeIndex));
+}
+
+function renderDashboardAiQuizCards(questions) {
+  if (!aiQuizCardsEl) return;
+  aiQuizCardsEl.innerHTML = '';
+  if (!questions.length) {
+    const empty = document.createElement('p');
+    empty.className = 'ai-sub';
+    empty.textContent = '아직 생성된 문제가 없습니다.';
+    aiQuizCardsEl.appendChild(empty);
+    return;
+  }
+  questions.slice(0, 3).forEach((q, idx) => aiQuizCardsEl.appendChild(createAiQuizCard(q, idx)));
+}
+
 function renderAiQuizCards() {
-  const targets = [aiQuizCardsEl, aiCoachQuizCardsEl].filter(Boolean);
-  if (!targets.length) return;
   const questions = getSavedAiQuestions();
-  targets.forEach((target) => {
-    target.innerHTML = '';
-    if (!questions.length) {
-      const empty = document.createElement('p');
-      empty.className = 'ai-sub';
-      empty.textContent = '아직 생성된 문제가 없습니다.';
-      target.appendChild(empty);
-      return;
-    }
-    questions.forEach((q, idx) => target.appendChild(createAiQuizCard(q, idx)));
-  });
+  renderDashboardAiQuizCards(questions);
+  renderAiPracticeViewer(questions);
 }
 
 function initAiCoach() {
@@ -1312,6 +1340,16 @@ function initAiCoach() {
   aiSubjectSelect?.addEventListener('change', generateSelectedSubjectQuestions);
   aiGenerateSubjectBtn?.addEventListener('click', generateSelectedSubjectQuestions);
 
+  aiPrevQuestionBtn?.addEventListener('click', () => {
+    setActiveAiQuestionIndex(getActiveAiQuestionIndex(getSavedAiQuestions().length) - 1);
+    renderAiQuizCards();
+  });
+
+  aiNextQuestionBtn?.addEventListener('click', () => {
+    setActiveAiQuestionIndex(getActiveAiQuestionIndex(getSavedAiQuestions().length) + 1);
+    renderAiQuizCards();
+  });
+
   aiMoreQuestionsBtn?.addEventListener('click', async () => {
     let { subjectKey, sourceText } = getActiveAiSource();
     if (!sourceText) {
@@ -1325,6 +1363,8 @@ function initAiCoach() {
     localStorage.setItem(AI_ROUND_KEY, String(round));
     aiMsgEl.textContent = `${subject.label} ${round}번째 카드 묶음을 생성하는 중...`;
     await runAiLearning(buildSubjectPrompt(subjectKey, sourceText, previousQuestions), subjectKey, { append: true });
+    setActiveAiQuestionIndex(previousQuestions.length);
+    renderAiQuizCards();
   });
 
   aiAnalyzeBtn.addEventListener('click', () => {
