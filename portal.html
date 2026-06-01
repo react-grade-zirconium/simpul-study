@@ -24,24 +24,8 @@
       <button class="subject-menu-button" data-src="science_hub.html" data-subject="science" onclick="showSubject(this,'통합과학 학습')">🧪 통합과학</button>
       <button class="subject-menu-button" data-src="society_hub.html" data-subject="society" onclick="showSubject(this,'통합사회 학습')">🌍 통합사회</button>
       <button class="subject-menu-button" data-src="mega_study.html" data-subject="info" onclick="showSubject(this,'정보 학습')">💻 정보</button>
+      <button class="subject-menu-button ai-menu-button" type="button" onclick="showAiCoachPanel(this)">🤖 스마트 AI</button>
     </nav>
-
-    <article class="ai-coach sidebar-ai box">
-      <h3>스마트 AI 학습 코치</h3>
-      <p class="ai-sub">과목 구분 없이 들어온 학습 내용을 자동 분석해서 문제와 학습 계획을 만듭니다.</p>
-      <div class="ai-api-row">
-        <input type="password" placeholder="API Key (선택)" aria-label="AI API Key" />
-        <button type="button">API 저장</button>
-      </div>
-      <textarea id="aiSourceInput" placeholder="학습 내용을 붙여넣거나, 과목 페이지로 이동하면 자동 분석됩니다."></textarea>
-      <div class="ai-actions">
-        <button type="button" id="aiAnalyzeFrameBtn">현재 학습 페이지 자동 분석</button>
-        <button type="button" id="aiAnalyzeBtn">자동 학습 시작</button>
-      </div>
-      <p id="aiMsg" class="ai-msg-line"></p>
-      <div id="aiSummary" class="ai-summary"></div>
-      <ol id="aiQuestionList" class="ai-question-list"></ol>
-    </article>
     <div class="home"><button id="sidebarCloseBtn" type="button">버전 기록</button><a href="./index.html">처음으로</a></div>
   </aside>
 
@@ -113,6 +97,41 @@
           </ul>
         </article>
       </div>
+      <div id="aiCoachPanel" class="panel">
+        <article class="ai-coach ai-coach-panel box">
+          <div class="ai-coach-heading">
+            <span class="ai-coach-badge">스마트 AI</span>
+            <h2>스마트 AI 학습 코치</h2>
+            <p class="ai-sub">과목 구분 없이 들어온 학습 내용을 자동 분석해서 문제와 학습 계획을 만듭니다.</p>
+          </div>
+          <div class="ai-subject-picker">
+            <label for="aiSubjectSelect">문제를 만들 과목 선택</label>
+            <div class="ai-subject-row">
+              <select id="aiSubjectSelect" aria-label="AI 문제 생성 과목 선택">
+                <option value="korean">국어</option>
+                <option value="english">영어</option>
+                <option value="science">통합과학</option>
+                <option value="society">통합사회</option>
+                <option value="info">정보</option>
+              </select>
+              <button type="button" id="aiGenerateSubjectBtn">선택 과목 문제 자동 생성</button>
+            </div>
+            <p class="ai-sub">과목을 선택하면 iframe 파일 전체를 분석해 카드형 문제를 계속 만듭니다.</p>
+          </div>
+          <textarea id="aiSourceInput" placeholder="직접 분석할 학습 내용을 붙여넣거나, 위에서 과목을 선택해 자동 생성하세요."></textarea>
+          <div class="ai-actions">
+            <button type="button" id="aiAnalyzeFrameBtn">현재 학습 페이지 자동 분석</button>
+            <button type="button" id="aiAnalyzeBtn">붙여넣은 내용으로 문제 생성</button>
+          </div>
+          <p id="aiMsg" class="ai-msg-line"></p>
+          <div id="aiSummary" class="ai-summary"></div>
+          <div id="aiCoachQuizCards" class="ai-quiz-cards ai-coach-quiz-cards"></div>
+          <div class="ai-more-actions">
+            <button type="button" id="aiMoreQuestionsBtn">다음 문제 계속 만들기</button>
+          </div>
+          <ol id="aiQuestionList" class="ai-question-list" hidden></ol>
+        </article>
+      </div>
       <div id="framePanel" class="panel">
         <iframe id="frame" src="about:blank" title="학습 페이지"></iframe>
       </div>
@@ -175,6 +194,7 @@
 
 
 
+  <script src="./scripts/ai-config.js"></script>
   <script src="./scripts/portal.js"></script>
 </body>
 </html>
