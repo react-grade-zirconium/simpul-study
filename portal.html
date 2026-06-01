@@ -24,24 +24,8 @@
       <button class="subject-menu-button" data-src="science_hub.html" data-subject="science" onclick="showSubject(this,'통합과학 학습')">🧪 통합과학</button>
       <button class="subject-menu-button" data-src="society_hub.html" data-subject="society" onclick="showSubject(this,'통합사회 학습')">🌍 통합사회</button>
       <button class="subject-menu-button" data-src="mega_study.html" data-subject="info" onclick="showSubject(this,'정보 학습')">💻 정보</button>
+      <button class="subject-menu-button ai-menu-button" type="button" onclick="showAiCoachPanel(this)">🤖 스마트 AI</button>
     </nav>
-
-    <article class="ai-coach sidebar-ai box">
-      <h3>스마트 AI 학습 코치</h3>
-      <p class="ai-sub">과목 구분 없이 들어온 학습 내용을 자동 분석해서 문제와 학습 계획을 만듭니다.</p>
-      <div class="ai-api-row">
-        <input type="password" placeholder="API Key (선택)" aria-label="AI API Key" />
-        <button type="button">API 저장</button>
-      </div>
-      <textarea id="aiSourceInput" placeholder="학습 내용을 붙여넣거나, 과목 페이지로 이동하면 자동 분석됩니다."></textarea>
-      <div class="ai-actions">
-        <button type="button" id="aiAnalyzeFrameBtn">현재 학습 페이지 자동 분석</button>
-        <button type="button" id="aiAnalyzeBtn">자동 학습 시작</button>
-      </div>
-      <p id="aiMsg" class="ai-msg-line"></p>
-      <div id="aiSummary" class="ai-summary"></div>
-      <ol id="aiQuestionList" class="ai-question-list"></ol>
-    </article>
     <div class="home"><button id="sidebarCloseBtn" type="button">버전 기록</button><a href="./index.html">처음으로</a></div>
   </aside>
 
@@ -111,6 +95,27 @@
             <li><b>v0.2</b><span>과목 선택창 접기/펼치기</span></li>
             <li><b>v0.1</b><span>학습 포털 기본 화면</span></li>
           </ul>
+        </article>
+      </div>
+      <div id="aiCoachPanel" class="panel">
+        <article class="ai-coach ai-coach-panel box">
+          <div class="ai-coach-heading">
+            <span class="ai-coach-badge">스마트 AI</span>
+            <h2>스마트 AI 학습 코치</h2>
+            <p class="ai-sub">과목 구분 없이 들어온 학습 내용을 자동 분석해서 문제와 학습 계획을 만듭니다.</p>
+          </div>
+          <div class="ai-api-row">
+            <input type="password" placeholder="API Key (선택)" aria-label="AI API Key" />
+            <button type="button">API 저장</button>
+          </div>
+          <textarea id="aiSourceInput" placeholder="학습 내용을 붙여넣거나, 과목 페이지로 이동하면 자동 분석됩니다."></textarea>
+          <div class="ai-actions">
+            <button type="button" id="aiAnalyzeFrameBtn">현재 학습 페이지 자동 분석</button>
+            <button type="button" id="aiAnalyzeBtn">자동 학습 시작</button>
+          </div>
+          <p id="aiMsg" class="ai-msg-line"></p>
+          <div id="aiSummary" class="ai-summary"></div>
+          <ol id="aiQuestionList" class="ai-question-list"></ol>
         </article>
       </div>
       <div id="framePanel" class="panel">
