@@ -91,12 +91,13 @@ const AI_ACTIVE_INDEX_KEY = 'studymax_ai_active_index_v1';
 const AI_WIDGET_POSITION_KEY = 'studymax_ai_widget_position_v1';
 const SIDEBAR_COLLAPSED_KEY = 'studymax_subject_sidebar_collapsed';
 const SUBJECT_TAB_INK_SCOPE_NOTE = 'Dashboard, each subject, and each in-subject tab must keep separate ink storage whenever a subject adds tabbed content.';
+const subjectTextCache = new Map();
 const AI_SUBJECTS = {
-  korean: { label: '국어', src: 'korean_hub.html', fallback: '국어 문학, 독서, 문법 핵심 개념을 복습하고 지문 이해력과 표현력을 점검합니다.' },
-  english: { label: '영어', src: 'english_hub.html', fallback: '영어 어휘, 문법, 독해 핵심 개념을 복습하고 문장 해석과 내용 이해를 점검합니다.' },
-  science: { label: '통합과학', src: 'science_hub.html', fallback: '통합과학의 물질, 에너지, 생명, 지구 시스템 핵심 개념을 복습하고 원리 적용을 점검합니다.' },
-  society: { label: '통합사회', src: 'society_hub.html', fallback: '통합사회에서 다루는 인간, 사회, 공간, 윤리 핵심 개념을 복습하고 사례 적용을 점검합니다.' },
-  info: { label: '정보', src: 'mega_study.html', fallback: '정보 과목의 알고리즘, 프로그래밍, 자료 표현, 디지털 윤리 핵심 개념을 복습하고 문제 해결력을 점검합니다.' }
+  korean: { label: '국어', src: './subjects/korean_hub.html', fallback: '국어 문학, 독서, 문법 핵심 개념을 복습하고 지문 이해력과 표현력을 점검합니다.' },
+  english: { label: '영어', src: './subjects/english_hub.html', fallback: '영어 어휘, 문법, 독해 핵심 개념을 복습하고 문장 해석과 내용 이해를 점검합니다.' },
+  science: { label: '통합과학', src: './subjects/science_hub.html', fallback: '통합과학의 물질, 에너지, 생명, 지구 시스템 핵심 개념을 복습하고 원리 적용을 점검합니다.' },
+  society: { label: '통합사회', src: './subjects/society_hub.html', fallback: '통합사회에서 다루는 인간, 사회, 공간, 윤리 핵심 개념을 복습하고 사례 적용을 점검합니다.' },
+  info: { label: '정보', src: './subjects/mega_study.html', fallback: '정보 과목의 알고리즘, 프로그래밍, 자료 표현, 디지털 윤리 핵심 개념을 복습하고 문제 해결력을 점검합니다.' }
 };
 
 function getClassNumberFromAccessCode() {
@@ -1115,7 +1116,9 @@ function htmlToPlainText(html) {
 
 async function fetchHtmlTextWithIframes(src, depth = 0) {
   if (!src || depth > 3) return '';
-  const response = await fetch(src, { cache: 'no-store' });
+  const cacheKey = `${depth}:${new URL(src, window.location.href).href}`;
+  if (subjectTextCache.has(cacheKey)) return subjectTextCache.get(cacheKey);
+  const response = await fetch(src);
   if (!response.ok) return '';
   const html = await response.text();
   const doc = new DOMParser().parseFromString(html, 'text/html');
@@ -1124,7 +1127,9 @@ async function fetchHtmlTextWithIframes(src, depth = 0) {
     return fetchHtmlTextWithIframes(childSrc, depth + 1);
   }));
   doc.querySelectorAll('iframe').forEach((iframe) => iframe.remove());
-  return [htmlToPlainText(doc.documentElement.outerHTML), ...frameTexts].filter(Boolean).join(' ');
+  const text = [htmlToPlainText(doc.documentElement.outerHTML), ...frameTexts].filter(Boolean).join(' ');
+  subjectTextCache.set(cacheKey, text);
+  return text;
 }
 
 async function loadSubjectText(subjectKey) {

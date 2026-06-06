@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node server.mjs"
+    "start": "node server.mjs",
+    "check": "node --check server.mjs && node --check scripts/index.js && node --check scripts/portal.js && node scripts/validate-assets.mjs",
+    "test": "npm run check"
   },
   "dependencies": {
     "express": "^4.19.2",
