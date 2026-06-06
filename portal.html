@@ -15,7 +15,7 @@
   <aside id="subjectSidebar" class="sidebar box">
     <div class="logo">
       <a href="./index.html" class="logo-link" aria-label="처음으로 돌아가기">
-        <img src="./simpul-logo.png" alt="SIMPUL 로고" class="app-logo" width="160" height="160" fetchpriority="high" decoding="async" onerror="this.style.display='none'; this.parentNode.querySelector('.mobile-logo-text').hidden=false;" />
+        <img src="./simpul-logo.png" alt="SIMPUL 로고" class="app-logo" width="802" height="585" fetchpriority="high" decoding="async" onerror="this.style.display='none'; this.parentNode.querySelector('.mobile-logo-text').hidden=false;" />
         <span class="mobile-logo-text" hidden>Simpul Study</span>
       </a>
     </div>
@@ -186,19 +186,20 @@
     <button id="musicDockToggle" type="button" class="music-dock-toggle" title="펼치기">🎵 BGM</button>
     <div class="music-header"><h3>🎵 BGM</h3><div class="music-head-actions"><button id="musicMinBtn" type="button" class="music-min-btn" title="최소화">－</button><span id="musicGrip" class="music-grip" title="드래그해서 이동">이동</span></div></div>
     <div class="music-row">
-      <input id="musicUrlInput" type="url" placeholder="오디오 URL 붙여넣기 (mp3, ogg...)" />
+      <input id="musicUrlInput" type="url" placeholder="YouTube 또는 오디오 URL 붙여넣기" />
       <button id="musicAddBtn" type="button">추가</button>
     </div>
     <div class="music-controls">
       <button id="musicPrevBtn" type="button" title="이전">⏮</button>
       <button id="musicPlayBtn" type="button">▶️ 재생</button>
       <button id="musicNextBtn" type="button" title="다음">⏭</button>
+      <button id="musicYoutubeViewBtn" type="button" class="music-youtube-toggle" hidden>영상 확인</button>
     </div>
     <audio id="musicAudio" preload="metadata"></audio>
-    <iframe id="musicYoutubeFrame" class="music-youtube" title="YouTube player" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    <iframe id="musicYoutubeFrame" class="music-youtube" title="숨겨진 YouTube BGM 플레이어" aria-hidden="true" tabindex="-1" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe>
     <ol id="musicPlaylist" class="music-playlist"></ol>
     <p id="musicMsg" class="music-msg"></p>
-    <p class="music-ad-tip">💡 유튜브 광고가 나오면 직접 오디오 URL(mp3/ogg)을 사용하거나 YouTube Premium을 이용하세요.</p>
+    <p class="music-ad-tip">💡 YouTube 광고/재생 확인이 필요할 때만 영상 확인 버튼으로 열고, 5초간 조작이 없으면 자동으로 숨깁니다.</p>
   </div>
 
 
