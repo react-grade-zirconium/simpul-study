@@ -634,6 +634,9 @@ if (mobileLiteMode) {
 function initMusicWidget() {
   const urlInput = document.getElementById('musicUrlInput');
   const addBtn = document.getElementById('musicAddBtn');
+  const convertBtn = document.getElementById('musicConvertBtn');
+  const fileBtn = document.getElementById('musicFileBtn');
+  const fileInput = document.getElementById('musicFileInput');
   const playBtn = document.getElementById('musicPlayBtn');
   const minBtn = document.getElementById('musicMinBtn');
   const dockToggleBtn = document.getElementById('musicDockToggle');
@@ -644,18 +647,21 @@ function initMusicWidget() {
   const audio = document.getElementById('musicAudio');
   const youtubeFrame = document.getElementById('musicYoutubeFrame');
   const widget = document.getElementById('musicWidget');
-  if (!urlInput || !addBtn || !playBtn || !prevBtn || !nextBtn || !listEl || !msgEl || !audio || !widget || !minBtn || !youtubeFrame || !dockToggleBtn) return;
+  if (!urlInput || !addBtn || !convertBtn || !fileBtn || !fileInput || !playBtn || !prevBtn || !nextBtn || !listEl || !msgEl || !audio || !widget || !minBtn || !youtubeFrame || !dockToggleBtn) return;
 
   const MUSIC_LIST_KEY = 'studymax_music_playlist_v1';
   const MUSIC_INDEX_KEY = 'studymax_music_playlist_index_v1';
   const MUSIC_POSITION_KEY = 'studymax_music_position_v1';
   const RAGTAG_ORIGIN = 'https://archive.ragtag.moe';
+  const LOCAL_AUDIO_PREFIX = 'local-audio://';
   const ragtagAvailabilityCache = new Map();
+  const localAudioTracks = new Map();
   let playlist = [];
   let currentIndex = -1;
   let currentMode = 'audio';
   let currentVideoSource = '';
   let currentLoadToken = 0;
+  let localAudioCounter = 0;
 
   function markCustomPosition(custom) {
     widget.dataset.customPosition = custom ? '1' : '0';
@@ -717,16 +723,22 @@ function initMusicWidget() {
     setTimeout(() => { if (msgEl.textContent === text) msgEl.textContent = ''; }, 1800);
   }
 
+  function isLocalAudioUrl(url) {
+    return typeof url === 'string' && url.startsWith(LOCAL_AUDIO_PREFIX);
+  }
+
   function persist() {
-    localStorage.setItem(MUSIC_LIST_KEY, JSON.stringify(playlist));
-    localStorage.setItem(MUSIC_INDEX_KEY, String(currentIndex));
+    const persistentPlaylist = playlist.filter((url) => !isLocalAudioUrl(url));
+    const currentUrl = playlist[currentIndex] || '';
+    localStorage.setItem(MUSIC_LIST_KEY, JSON.stringify(persistentPlaylist));
+    localStorage.setItem(MUSIC_INDEX_KEY, isLocalAudioUrl(currentUrl) ? '-1' : String(persistentPlaylist.indexOf(currentUrl)));
   }
 
   function loadSaved() {
     try {
       const raw = localStorage.getItem(MUSIC_LIST_KEY);
       const parsed = raw ? JSON.parse(raw) : [];
-      if (Array.isArray(parsed)) playlist = parsed.filter((x) => typeof x === 'string' && x.trim());
+      if (Array.isArray(parsed)) playlist = parsed.filter((x) => typeof x === 'string' && x.trim() && !isLocalAudioUrl(x));
       const idx = Number(localStorage.getItem(MUSIC_INDEX_KEY));
       currentIndex = Number.isInteger(idx) && idx >= 0 && idx < playlist.length ? idx : (playlist.length ? 0 : -1);
     } catch (_) {
@@ -736,6 +748,7 @@ function initMusicWidget() {
   }
 
   function labelFromUrl(url) {
+    if (isLocalAudioUrl(url)) return localAudioTracks.get(url)?.name || '선택한 오디오 파일';
     try {
       const u = new URL(url);
       return decodeURIComponent(u.pathname.split('/').filter(Boolean).pop() || u.hostname);
@@ -846,6 +859,19 @@ function initMusicWidget() {
     audio.removeAttribute('src');
   }
 
+  function revokeLocalAudioTrack(url) {
+    const track = localAudioTracks.get(url);
+    if (!track) return;
+    URL.revokeObjectURL(track.objectUrl);
+    localAudioTracks.delete(url);
+  }
+
+  function clearStaleLocalAudioTracks() {
+    for (const url of localAudioTracks.keys()) {
+      if (!playlist.includes(url)) revokeLocalAudioTrack(url);
+    }
+  }
+
   function renderList() {
     listEl.innerHTML = '';
     playlist.forEach((url, i) => {
@@ -875,6 +901,29 @@ function initMusicWidget() {
       return;
     }
     const rawUrl = playlist[currentIndex];
+    if (isLocalAudioUrl(rawUrl)) {
+      const track = localAudioTracks.get(rawUrl);
+      currentMode = 'audio';
+      currentVideoSource = '';
+      stopYoutube();
+      if (!track) {
+        playlist.splice(currentIndex, 1);
+        if (currentIndex >= playlist.length) currentIndex = playlist.length - 1;
+        setMsg('선택했던 파일을 다시 찾을 수 없어 목록에서 제거했어요.');
+        loadCurrent(false);
+        return;
+      }
+      audio.src = track.objectUrl;
+      audio.load();
+      if (autoplay) {
+        audio.play().then(() => { playBtn.textContent = '⏸ 일시정지'; }).catch(() => {
+          setMsg('브라우저 정책으로 자동 재생이 차단될 수 있어요. 재생 버튼을 눌러주세요.');
+        });
+      }
+      renderList();
+      persist();
+      return;
+    }
     const ragtagId = parseRagtagVideoId(rawUrl);
     const youtubeId = parseYoutubeId(rawUrl);
     const videoId = ragtagId || youtubeId;
@@ -921,7 +970,73 @@ function initMusicWidget() {
     if (currentIndex === -1) currentIndex = 0;
     urlInput.value = '';
     loadCurrent(false);
-    setMsg('재생목록에 추가되었습니다.');
+    setMsg(parseYoutubeId(url) ? 'Ragtag 보관본을 먼저 확인한 뒤 재생합니다.' : '재생목록에 추가되었습니다.');
+  }
+
+  function addLocalAudioFile(file) {
+    if (!file) return;
+    if (!file.type.startsWith('audio/') && !/\.(mp3|wav|ogg|m4a)$/i.test(file.name)) {
+      setMsg('MP3/WAV/OGG/M4A 같은 오디오 파일만 선택해 주세요.');
+      return;
+    }
+    const localUrl = `${LOCAL_AUDIO_PREFIX}${Date.now()}-${localAudioCounter++}`;
+    localAudioTracks.set(localUrl, { name: file.name || '선택한 오디오 파일', objectUrl: URL.createObjectURL(file) });
+    playlist.push(localUrl);
+    currentIndex = playlist.length - 1;
+    clearStaleLocalAudioTracks();
+    loadCurrent(true);
+    setMsg('선택한 오디오 파일을 임시 재생목록에 추가했습니다.');
+  }
+
+  async function fetchJson(url, options) {
+    const response = await fetch(url, options);
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error || '요청에 실패했습니다.');
+    return data;
+  }
+
+  function addConvertedAudioUrl(url) {
+    playlist.push(url);
+    currentIndex = playlist.length - 1;
+    loadCurrent(true);
+    setMsg('변환된 MP3 URL을 재생목록에 추가했습니다.');
+  }
+
+  async function convertUrlToMp3() {
+    const url = (urlInput.value || playlist[currentIndex] || '').trim();
+    if (!url) { setMsg('변환할 URL을 입력해 주세요.'); return; }
+    try { new URL(url); } catch (_) { setMsg('유효한 URL 형식이 아닙니다.'); return; }
+    if (parseYoutubeId(url)) {
+      setMsg('YouTube 자동 MP3 변환은 지원하지 않아요. Ragtag 보관본이나 파일 버튼을 사용해 주세요.');
+      return;
+    }
+    convertBtn.disabled = true;
+    const previousText = convertBtn.textContent;
+    convertBtn.textContent = '변환중';
+    setMsg('FreeConvert API로 MP3 변환을 요청하는 중...');
+    try {
+      let result = await fetchJson('/api/music/convert-mp3', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url })
+      });
+      for (let i = 0; result.id && !result.downloadUrl && i < 4; i += 1) {
+        setMsg('MP3 변환이 진행 중입니다...');
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+        result = await fetchJson(`/api/music/convert-mp3/${encodeURIComponent(result.id)}`);
+      }
+      if (!result.downloadUrl) {
+        setMsg('변환은 시작됐지만 아직 완료되지 않았어요. 잠시 뒤 다시 시도해 주세요.');
+        return;
+      }
+      urlInput.value = '';
+      addConvertedAudioUrl(result.downloadUrl);
+    } catch (error) {
+      setMsg(error.message || 'MP3 변환에 실패했습니다.');
+    } finally {
+      convertBtn.disabled = false;
+      convertBtn.textContent = previousText;
+    }
   }
 
   function move(delta) {
@@ -937,10 +1052,16 @@ function initMusicWidget() {
   }
 
   addBtn.addEventListener('click', addUrl);
+  convertBtn.addEventListener('click', convertUrlToMp3);
+  fileBtn.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', () => {
+    addLocalAudioFile(fileInput.files?.[0]);
+    fileInput.value = '';
+  });
   urlInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') addUrl(); });
-  playBtn.addEventListener('click', () => {
+  playBtn.addEventListener('click', async () => {
     if (!playlist.length) { setMsg('먼저 URL을 추가해 주세요.'); return; }
-    if (!audio.src) loadCurrent(false);
+    if (!audio.src && currentMode !== 'youtube') await loadCurrent(false);
     if (currentMode === 'youtube') {
       const rawUrl = playlist[currentIndex] || '';
       const yid = parseRagtagVideoId(rawUrl) || parseYoutubeId(rawUrl);
