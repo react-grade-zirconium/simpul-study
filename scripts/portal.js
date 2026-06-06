@@ -91,6 +91,7 @@ const AI_ACTIVE_INDEX_KEY = 'studymax_ai_active_index_v1';
 const AI_WIDGET_POSITION_KEY = 'studymax_ai_widget_position_v1';
 const SIDEBAR_COLLAPSED_KEY = 'studymax_subject_sidebar_collapsed';
 const SUBJECT_TAB_INK_SCOPE_NOTE = 'Dashboard, each subject, and each in-subject tab must keep separate ink storage whenever a subject adds tabbed content.';
+const subjectTextCache = new Map();
 const AI_SUBJECTS = {
   korean: { label: '국어', src: 'korean_hub.html', fallback: '국어 문학, 독서, 문법 핵심 개념을 복습하고 지문 이해력과 표현력을 점검합니다.' },
   english: { label: '영어', src: 'english_hub.html', fallback: '영어 어휘, 문법, 독해 핵심 개념을 복습하고 문장 해석과 내용 이해를 점검합니다.' },
@@ -1115,7 +1116,9 @@ function htmlToPlainText(html) {
 
 async function fetchHtmlTextWithIframes(src, depth = 0) {
   if (!src || depth > 3) return '';
-  const response = await fetch(src, { cache: 'no-store' });
+  const cacheKey = `${depth}:${new URL(src, window.location.href).href}`;
+  if (subjectTextCache.has(cacheKey)) return subjectTextCache.get(cacheKey);
+  const response = await fetch(src);
   if (!response.ok) return '';
   const html = await response.text();
   const doc = new DOMParser().parseFromString(html, 'text/html');
@@ -1124,7 +1127,9 @@ async function fetchHtmlTextWithIframes(src, depth = 0) {
     return fetchHtmlTextWithIframes(childSrc, depth + 1);
   }));
   doc.querySelectorAll('iframe').forEach((iframe) => iframe.remove());
-  return [htmlToPlainText(doc.documentElement.outerHTML), ...frameTexts].filter(Boolean).join(' ');
+  const text = [htmlToPlainText(doc.documentElement.outerHTML), ...frameTexts].filter(Boolean).join(' ');
+  subjectTextCache.set(cacheKey, text);
+  return text;
 }
 
 async function loadSubjectText(subjectKey) {
