@@ -9,7 +9,7 @@ body:not(.sidebar-collapsed) .subject-toggle,body:not(.sidebar-collapsed) .versi
 body.sidebar-collapsed .sidebar{width:0;opacity:0;transform:translateX(-16px);border-width:0;pointer-events:none}
 body.sidebar-collapsed .subject-toggle,body.sidebar-collapsed .version-toggle{left:0}
 .logo{padding:14px 10px;text-align:center;font-weight:800;color:#fff;border-bottom:1px solid rgba(255,255,255,.1);background:#04070d;margin-top:42px}
-.app-logo{display:block;width:100%;max-width:160px;margin:0 auto}
+.app-logo{display:block;width:100%;max-width:160px;height:auto;margin:0 auto;object-fit:contain}
 .menu{padding:10px 10px 6px;display:grid;gap:6px;overflow-y:auto;min-height:0}.menu button{border:0;border-radius:9px;padding:9px 12px;text-align:left;background:transparent;color:inherit;cursor:pointer}
 .menu button.active{background:var(--primary);color:#fff;font-weight:700}.menu button:hover{background:#1b2a44}
 .home{margin-top:auto;padding:10px;border-top:1px solid rgba(255,255,255,.12);display:grid;gap:8px;flex-shrink:0}.home a,.home button{display:block;width:100%;text-align:center;text-decoration:none;color:#e2e8f0;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:10px;background:transparent;font:inherit;font-weight:700;cursor:pointer}.home button{background:rgba(37,99,235,.18);border-color:rgba(147,197,253,.38);color:#dbeafe}
