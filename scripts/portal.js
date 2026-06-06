@@ -649,9 +649,13 @@ function initMusicWidget() {
   const MUSIC_LIST_KEY = 'studymax_music_playlist_v1';
   const MUSIC_INDEX_KEY = 'studymax_music_playlist_index_v1';
   const MUSIC_POSITION_KEY = 'studymax_music_position_v1';
+  const RAGTAG_ORIGIN = 'https://archive.ragtag.moe';
+  const ragtagAvailabilityCache = new Map();
   let playlist = [];
   let currentIndex = -1;
   let currentMode = 'audio';
+  let currentVideoSource = '';
+  let currentLoadToken = 0;
 
   function markCustomPosition(custom) {
     widget.dataset.customPosition = custom ? '1' : '0';
@@ -741,6 +745,72 @@ function initMusicWidget() {
   }
 
 
+  function parseRagtagVideoId(url) {
+    try {
+      const u = new URL(url);
+      const host = u.hostname.replace(/^www\./, '');
+      if (host !== 'archive.ragtag.moe') return '';
+      if (u.pathname.startsWith('/embed/')) return u.pathname.split('/').filter(Boolean)[1] || '';
+      if (u.pathname.startsWith('/watch')) return u.searchParams.get('v') || '';
+      return '';
+    } catch (_) { return ''; }
+  }
+
+  function normalizeYoutubeId(id) {
+    return /^[A-Za-z0-9_-]{6,}$/.test(id || '') ? id : '';
+  }
+
+  function resultHasVideo(result) {
+    if (Array.isArray(result)) return result.length > 0;
+    if (!result || typeof result !== 'object') return Boolean(result);
+    if (typeof result.total === 'number') return result.total > 0;
+    if (typeof result.count === 'number') return result.count > 0;
+    if (typeof result.hits === 'number') return result.hits > 0;
+    if (Array.isArray(result.results)) return result.results.length > 0;
+    if (Array.isArray(result.items)) return result.items.length > 0;
+    if (Array.isArray(result.data)) return result.data.length > 0;
+    return Object.keys(result).length > 0;
+  }
+
+  async function hasRagtagArchive(videoId) {
+    const normalized = normalizeYoutubeId(videoId);
+    if (!normalized) return false;
+    if (ragtagAvailabilityCache.has(normalized)) return ragtagAvailabilityCache.get(normalized);
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 3500);
+    try {
+      const params = new URLSearchParams({ v: normalized, size: '1' });
+      const response = await fetch(`${RAGTAG_ORIGIN}/api/v1/search?${params.toString()}`, {
+        cache: 'force-cache',
+        signal: controller.signal
+      });
+      if (!response.ok) throw new Error('Ragtag API unavailable');
+      const data = await response.json();
+      const available = resultHasVideo(data);
+      ragtagAvailabilityCache.set(normalized, available);
+      return available;
+    } catch (_) {
+      ragtagAvailabilityCache.set(normalized, false);
+      return false;
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+
+  function ragtagEmbedUrl(videoId, autoplay = false) {
+    const params = new URLSearchParams({ autoplay: autoplay ? '1' : '0' });
+    return `${RAGTAG_ORIGIN}/embed/${encodeURIComponent(videoId)}?${params.toString()}`;
+  }
+
+  function videoEmbedUrl(videoId, source, autoplay = false) {
+    return source === 'ragtag' ? ragtagEmbedUrl(videoId, autoplay) : youtubeEmbedUrl(videoId, autoplay);
+  }
+
+  async function resolveVideoSource(videoId, preferredSource) {
+    if (preferredSource === 'ragtag') return 'ragtag';
+    return (await hasRagtagArchive(videoId)) ? 'ragtag' : 'youtube';
+  }
+
   function parseYoutubeId(url) {
     try {
       const u = new URL(url);
@@ -791,33 +861,53 @@ function initMusicWidget() {
     });
   }
 
-  function loadCurrent(autoplay = false) {
+  async function loadCurrent(autoplay = false) {
+    const loadToken = ++currentLoadToken;
     if (currentIndex < 0 || currentIndex >= playlist.length) {
-      audio.removeAttribute('src');
+      stopAudio();
+      stopYoutube();
+      currentMode = 'audio';
+      currentVideoSource = '';
       playBtn.textContent = '▶️ 재생';
+      syncMiniPause(false);
       renderList();
       persist();
       return;
     }
     const rawUrl = playlist[currentIndex];
-    const yid = parseYoutubeId(rawUrl);
-    if (yid) {
+    const ragtagId = parseRagtagVideoId(rawUrl);
+    const youtubeId = parseYoutubeId(rawUrl);
+    const videoId = ragtagId || youtubeId;
+    if (videoId) {
       currentMode = 'youtube';
+      currentVideoSource = ragtagId ? 'ragtag' : 'checking';
       stopAudio();
-      youtubeFrame.src = youtubeEmbedUrl(yid, autoplay);
       playBtn.textContent = autoplay ? '⏸ 일시정지' : '▶️ 재생';
       syncMiniPause(autoplay);
-      setMsg('YouTube 영상은 숨기고 BGM만 재생합니다.');
-    } else {
-      currentMode = 'audio';
-      stopYoutube();
-      audio.src = rawUrl;
-      audio.load();
-      if (autoplay) {
-        audio.play().then(() => { playBtn.textContent = '⏸ 일시정지'; }).catch(() => {
-          setMsg('브라우저 정책으로 자동 재생이 차단될 수 있어요. 재생 버튼을 눌러주세요.');
-        });
+      setMsg(ragtagId ? 'Ragtag Archive BGM으로 재생합니다.' : 'Ragtag Archive에서 광고 없는 사본을 확인하는 중...');
+      renderList();
+      persist();
+      if (ragtagId) {
+        youtubeFrame.src = videoEmbedUrl(videoId, 'ragtag', autoplay);
+        return;
       }
+      stopYoutube();
+      const resolvedSource = await resolveVideoSource(videoId, '');
+      if (loadToken !== currentLoadToken || currentIndex < 0 || playlist[currentIndex] !== rawUrl) return;
+      currentVideoSource = resolvedSource;
+      youtubeFrame.src = videoEmbedUrl(videoId, resolvedSource, autoplay);
+      setMsg(resolvedSource === 'ragtag' ? 'Ragtag Archive 사본으로 광고 없이 재생합니다.' : 'Ragtag Archive 사본이 없어 YouTube로 재생합니다.');
+      return;
+    }
+    currentMode = 'audio';
+    currentVideoSource = '';
+    stopYoutube();
+    audio.src = rawUrl;
+    audio.load();
+    if (autoplay) {
+      audio.play().then(() => { playBtn.textContent = '⏸ 일시정지'; }).catch(() => {
+        setMsg('브라우저 정책으로 자동 재생이 차단될 수 있어요. 재생 버튼을 눌러주세요.');
+      });
     }
     renderList();
     persist();
@@ -852,10 +942,13 @@ function initMusicWidget() {
     if (!playlist.length) { setMsg('먼저 URL을 추가해 주세요.'); return; }
     if (!audio.src) loadCurrent(false);
     if (currentMode === 'youtube') {
-      const yid = parseYoutubeId(playlist[currentIndex] || '');
+      const rawUrl = playlist[currentIndex] || '';
+      const yid = parseRagtagVideoId(rawUrl) || parseYoutubeId(rawUrl);
       if (!yid) return;
+      if (currentVideoSource === 'checking') { setMsg('Ragtag Archive 확인 중입니다. 잠시 후 다시 눌러주세요.'); return; }
+      const source = currentVideoSource === 'ragtag' ? 'ragtag' : 'youtube';
       const isPaused = playBtn.textContent.includes('재생');
-      youtubeFrame.src = isPaused ? youtubeEmbedUrl(yid, true) : 'about:blank';
+      youtubeFrame.src = isPaused ? videoEmbedUrl(yid, source, true) : 'about:blank';
       playBtn.textContent = isPaused ? '⏸ 일시정지' : '▶️ 재생';
       syncMiniPause(isPaused);
       if (isPaused) scheduleAutoMinimize();
@@ -885,10 +978,13 @@ function initMusicWidget() {
       e.stopPropagation();
       if (!playlist.length) return;
       if (currentMode === 'youtube') {
-        const yid = parseYoutubeId(playlist[currentIndex] || '');
+        const rawUrl = playlist[currentIndex] || '';
+        const yid = parseRagtagVideoId(rawUrl) || parseYoutubeId(rawUrl);
         if (!yid) return;
+        if (currentVideoSource === 'checking') { setMsg('Ragtag Archive 확인 중입니다. 잠시 후 다시 눌러주세요.'); return; }
+        const source = currentVideoSource === 'ragtag' ? 'ragtag' : 'youtube';
         const isPlaying = miniPauseBtn.textContent === '⏸';
-        youtubeFrame.src = isPlaying ? 'about:blank' : youtubeEmbedUrl(yid, true);
+        youtubeFrame.src = isPlaying ? 'about:blank' : videoEmbedUrl(yid, source, true);
         playBtn.textContent = isPlaying ? '▶️ 재생' : '⏸ 일시정지';
         syncMiniPause(!isPlaying);
       } else if (!audio.paused) {

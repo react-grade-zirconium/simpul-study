@@ -186,7 +186,7 @@
     <button id="musicDockToggle" type="button" class="music-dock-toggle" title="펼치기">🎵 BGM</button>
     <div class="music-header"><h3>🎵 BGM</h3><div class="music-head-actions"><button id="musicMinBtn" type="button" class="music-min-btn" title="최소화">－</button><span id="musicGrip" class="music-grip" title="드래그해서 이동">이동</span></div></div>
     <div class="music-row">
-      <input id="musicUrlInput" type="url" placeholder="YouTube 또는 오디오 URL 붙여넣기" />
+      <input id="musicUrlInput" type="url" placeholder="YouTube, Ragtag Archive 또는 오디오 URL 붙여넣기" />
       <button id="musicAddBtn" type="button">추가</button>
     </div>
     <div class="music-controls">
@@ -195,10 +195,10 @@
       <button id="musicNextBtn" type="button" title="다음">⏭</button>
     </div>
     <audio id="musicAudio" preload="metadata"></audio>
-    <iframe id="musicYoutubeFrame" class="music-youtube" title="숨겨진 YouTube BGM 플레이어" aria-hidden="true" tabindex="-1" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    <iframe id="musicYoutubeFrame" class="music-youtube" title="숨겨진 BGM 플레이어" aria-hidden="true" tabindex="-1" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe>
     <ol id="musicPlaylist" class="music-playlist"></ol>
     <p id="musicMsg" class="music-msg"></p>
-    <p class="music-ad-tip">💡 YouTube 영상 화면은 숨겨지고 BGM만 백그라운드로 재생됩니다.</p>
+    <p class="music-ad-tip">💡 YouTube URL은 Ragtag Archive 사본을 먼저 찾아 광고 없는 BGM으로 재생하고, 없으면 기존 YouTube 방식으로 재생합니다.</p>
   </div>
 
 
