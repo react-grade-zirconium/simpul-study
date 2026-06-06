@@ -33,11 +33,5 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Validate frontend script syntax (index)
-        run: node --check scripts/index.js
-
-      - name: Validate frontend script syntax (portal)
-        run: node --check scripts/portal.js
-
-      - name: Validate server syntax
-        run: node --check server.mjs
+      - name: Run checks
+        run: npm test

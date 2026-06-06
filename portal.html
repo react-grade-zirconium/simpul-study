@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SIMPUL STUDY — 학습 포털</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./styles/portal.css" />
 </head>
@@ -13,7 +15,7 @@
   <aside id="subjectSidebar" class="sidebar box">
     <div class="logo">
       <a href="./index.html" class="logo-link" aria-label="처음으로 돌아가기">
-        <img src="./simpul-logo.png" alt="SIMPUL 로고" class="app-logo" onerror="this.style.display='none'; this.parentNode.querySelector('.mobile-logo-text').hidden=false;" />
+        <img src="./simpul-logo.png" alt="SIMPUL 로고" class="app-logo" width="160" height="160" fetchpriority="high" decoding="async" onerror="this.style.display='none'; this.parentNode.querySelector('.mobile-logo-text').hidden=false;" />
         <span class="mobile-logo-text" hidden>Simpul Study</span>
       </a>
     </div>
@@ -202,7 +204,7 @@
 
 
 
-  <script src="./scripts/ai-config.js"></script>
-  <script src="./scripts/portal.js"></script>
+  <script src="./scripts/ai-config.js" defer></script>
+  <script src="./scripts/portal.js" defer></script>
 </body>
 </html>

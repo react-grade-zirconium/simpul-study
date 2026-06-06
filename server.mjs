@@ -1,10 +1,14 @@
 import express from 'express';
 import OpenAI from 'openai';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const app = express();
 const port = Number(process.env.PORT || 3000);
 const model = process.env.OPENAI_MODEL || 'gpt-4.1-mini';
+const rootDir = path.dirname(fileURLToPath(import.meta.url));
 const client = process.env.OPENAI_API_KEY ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY }) : null;
+const staticAssetPattern = /\.(?:css|js|png|jpg|jpeg|gif|svg|ico|webp|woff2?)$/i;
 
 app.use(express.json({ limit: '1mb' }));
 app.use((req, res, next) => {
@@ -16,7 +20,16 @@ app.use((req, res, next) => {
   }
   next();
 });
-app.use(express.static(process.cwd()));
+app.use(express.static(rootDir, {
+  extensions: ['html'],
+  setHeaders(res, filePath) {
+    if (staticAssetPattern.test(filePath)) {
+      res.setHeader('Cache-Control', 'public, max-age=86400');
+    } else {
+      res.setHeader('Cache-Control', 'no-cache');
+    }
+  }
+}));
 
 function parseAiJson(text) {
   const cleaned = String(text || '').trim().replace(/^```json\s*/i, '').replace(/```$/i, '').trim();
