@@ -744,14 +744,32 @@ function initMusicWidget() {
   function parseYoutubeId(url) {
     try {
       const u = new URL(url);
-      if (u.hostname.includes('youtu.be')) return u.pathname.slice(1) || '';
-      if (u.hostname.includes('youtube.com')) return u.searchParams.get('v') || '';
-      return '';
+      const host = u.hostname.replace(/^www\./, '');
+      if (host === 'youtu.be') return u.pathname.split('/').filter(Boolean)[0] || '';
+      if (!host.endsWith('youtube.com')) return '';
+      if (u.pathname.startsWith('/shorts/') || u.pathname.startsWith('/embed/')) {
+        return u.pathname.split('/').filter(Boolean)[1] || '';
+      }
+      return u.searchParams.get('v') || '';
     } catch (_) { return ''; }
   }
+
+  function youtubeEmbedUrl(videoId, autoplay = false) {
+    const params = new URLSearchParams({
+      autoplay: autoplay ? '1' : '0',
+      controls: '0',
+      disablekb: '1',
+      fs: '0',
+      iv_load_policy: '3',
+      modestbranding: '1',
+      playsinline: '1',
+      rel: '0'
+    });
+    return `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?${params.toString()}`;
+  }
+
   function stopYoutube() {
     youtubeFrame.src = 'about:blank';
-    youtubeFrame.style.display = 'none';
   }
   function stopAudio() {
     audio.pause();
@@ -786,9 +804,10 @@ function initMusicWidget() {
     if (yid) {
       currentMode = 'youtube';
       stopAudio();
-      youtubeFrame.style.display = 'block';
-      youtubeFrame.src = `https://www.youtube.com/embed/${yid}?autoplay=${autoplay ? 1 : 0}&rel=0`;
+      youtubeFrame.src = youtubeEmbedUrl(yid, autoplay);
       playBtn.textContent = autoplay ? '⏸ 일시정지' : '▶️ 재생';
+      syncMiniPause(autoplay);
+      setMsg('YouTube 영상은 숨기고 BGM만 재생합니다.');
     } else {
       currentMode = 'audio';
       stopYoutube();
@@ -836,8 +855,9 @@ function initMusicWidget() {
       const yid = parseYoutubeId(playlist[currentIndex] || '');
       if (!yid) return;
       const isPaused = playBtn.textContent.includes('재생');
-      youtubeFrame.src = `https://www.youtube.com/embed/${yid}?autoplay=${isPaused ? 1 : 0}&rel=0`;
+      youtubeFrame.src = isPaused ? youtubeEmbedUrl(yid, true) : 'about:blank';
       playBtn.textContent = isPaused ? '⏸ 일시정지' : '▶️ 재생';
+      syncMiniPause(isPaused);
       if (isPaused) scheduleAutoMinimize();
       return;
     }
@@ -868,7 +888,7 @@ function initMusicWidget() {
         const yid = parseYoutubeId(playlist[currentIndex] || '');
         if (!yid) return;
         const isPlaying = miniPauseBtn.textContent === '⏸';
-        youtubeFrame.src = `https://www.youtube.com/embed/${yid}?autoplay=${isPlaying ? 0 : 1}&rel=0`;
+        youtubeFrame.src = isPlaying ? 'about:blank' : youtubeEmbedUrl(yid, true);
         playBtn.textContent = isPlaying ? '▶️ 재생' : '⏸ 일시정지';
         syncMiniPause(!isPlaying);
       } else if (!audio.paused) {
