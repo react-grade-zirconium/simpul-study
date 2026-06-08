@@ -60,6 +60,8 @@ const AI_ACTIVE_SUBJECT_KEY = 'studymax_ai_active_subject_v1';
 const AI_ROUND_KEY = 'studymax_ai_round_v1';
 const AI_ACTIVE_INDEX_KEY = 'studymax_ai_active_index_v1';
 const AI_WIDGET_POSITION_KEY = 'studymax_ai_widget_position_v1';
+const AI_BATCH_SIZE = 10;
+const AI_LOCAL_MAX_QUESTIONS = 40;
 const SIDEBAR_COLLAPSED_KEY = 'studymax_subject_sidebar_collapsed';
 const SUBJECT_TAB_INK_SCOPE_NOTE = 'Dashboard, each subject, and each in-subject tab must keep separate ink storage whenever a subject adds tabbed content.';
 const subjectTextCache = new Map();
@@ -625,7 +627,7 @@ function getAiJsonSchema() {
     additionalProperties: false,
     properties: {
       summary_points: { type: 'array', items: { type: 'string' }, minItems: 1, maxItems: 3 },
-      questions: { type: 'array', items: { type: 'string' }, minItems: 4, maxItems: 5 }
+      questions: { type: 'array', items: { type: 'string' }, minItems: 6, maxItems: AI_BATCH_SIZE }
     },
     required: ['summary_points', 'questions']
   };
@@ -639,7 +641,7 @@ function parseOpenAiJsonResponse(data) {
   const parsed = JSON.parse(cleaned);
   return {
     summary_points: (Array.isArray(parsed.summary_points) ? parsed.summary_points : []).map(String).filter(Boolean).slice(0, 3),
-    questions: (Array.isArray(parsed.questions) ? parsed.questions : []).map(String).filter(Boolean).slice(0, 5)
+    questions: (Array.isArray(parsed.questions) ? parsed.questions : []).map(String).filter(Boolean).slice(0, AI_BATCH_SIZE)
   };
 }
 
@@ -659,7 +661,7 @@ async function requestAiDirectlyFromOpenAi(raw, subject) {
         '과목명이 있으면 해당 과목 시험 대비에 맞는 연습문제로 만든다.',
         '반드시 JSON만 출력한다. 형식: {"summary_points":["..."],"questions":["..."]}'
       ].join(' '),
-      input: `과목: ${subject || '선택 과목'}\n학습 내용:\n${raw.slice(0, 12000)}\n\n요구사항:\n- summary_points는 3개 이하\n- questions는 5개\n- 각 questions 항목은 '개념 설명 → 연습문제 → 풀이 방향' 순서로 구성\n- 한국어로 작성`,
+      input: `과목: ${subject || '선택 과목'}\n학습 내용:\n${raw.slice(0, 12000)}\n\n요구사항:\n- summary_points는 3개 이하\n- questions는 ${AI_BATCH_SIZE}개\n- 각 questions 항목은 서로 다른 개념·자료·사례를 다룬다\n- 이미 나온 문제와 같은 틀/표현을 반복하지 않는다\n- 각 questions 항목은 '개념 설명 → 연습문제 → 풀이 방향' 순서로 구성\n- 한국어로 작성`,
       text: {
         format: {
           type: 'json_schema',
@@ -678,16 +680,19 @@ async function requestAiDirectlyFromOpenAi(raw, subject) {
 
 async function requestAiFromApi(raw, subjectKey = '') {
   const subject = AI_SUBJECTS[subjectKey]?.label || subjectKey || '';
-  if (getBrowserOpenAiKey()) return requestAiDirectlyFromOpenAi(raw, subject);
-
   const apiUrl = getAiApiUrl();
-  const response = await fetch(apiUrl, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text: raw, subject, lang: 'ko', mode: 'study_coach' })
-  });
-  if (!response.ok) throw new Error(`API ${response.status}`);
-  return response.json();
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: raw, subject, lang: 'ko', mode: 'study_coach' })
+    });
+    if (response.ok) return response.json();
+    if (!getBrowserOpenAiKey()) throw new Error(`API ${response.status}`);
+  } catch (error) {
+    if (!getBrowserOpenAiKey()) throw error;
+  }
+  return requestAiDirectlyFromOpenAi(raw, subject);
 }
 
 function getSelectedAiSubject() {
@@ -735,9 +740,9 @@ async function loadSubjectText(subjectKey) {
 function buildSubjectPrompt(subjectKey, bodyText, previousQuestions = []) {
   const subject = AI_SUBJECTS[subjectKey] || AI_SUBJECTS.korean;
   const history = previousQuestions.length
-    ? `\n\n이미 나온 문제(절대 반복 금지):\n${previousQuestions.map((q, i) => `${i + 1}. ${q}`).join('\n')}`
+    ? `\n\n이미 출제한 문제 목록입니다. 같은 개념·질문 형태·보기 구성을 반복하지 말고, 아직 출제하지 않은 문단과 세부 개념을 우선 사용하세요:\n${previousQuestions.slice(-30).map((q, i) => `${i + 1}. ${q}`).join('\n')}`
     : '';
-  return `[과목: ${subject.label}]\n다음 iframe 과목 파일에서 실제로 추출한 학습 개념을 빠짐없이 훑으면서 시험 대비 연습문제를 만들어 주세요.\n이번에는 아직 다루지 않은 개념을 우선 사용하고, 버튼을 다시 누를 때마다 이어서 새 연습문제를 만들 수 있게 서로 다르게 만드세요. 각 문제는 학생이 개념을 배우도록 '개념 설명 → 연습문제 → 풀이 방향'을 한 카드에 함께 담으세요.${history}\n\niframe에서 추출한 실제 학습 내용:\n${bodyText}`;
+  return `[과목: ${subject.label}]\n아래 iframe 학습 문서에서 실제 추출한 내용을 시험 범위로 삼아, 문서 전체를 훑는 누적 연습문제를 생성하세요.\n목표는 학생이 한 문제씩 계속 풀면서 모든 핵심 개념을 빠짐없이 복습하는 것입니다.\n요구사항:\n- 이번 응답에서는 ${AI_BATCH_SIZE}개 문제를 만드세요.\n- 각 문제는 서로 다른 문단/개념/자료를 근거로 해야 합니다.\n- 단순 요약 질문만 반복하지 말고 빈칸, 사례 판단, 비교, 원인-결과, 자료 해석, 오개념 찾기 등 유형을 섞으세요.\n- 각 문제는 반드시 '개념 설명 → 연습문제 → 풀이 방향' 형식으로 쓰세요.\n- 학습 내용 밖의 지식으로 과도하게 확장하지 마세요.${history}\n\niframe에서 추출한 실제 학습 내용:\n${bodyText}`;
 }
 
 function getSavedAiQuestions() {
@@ -749,14 +754,36 @@ function getSavedAiQuestions() {
   }
 }
 
+function normalizeQuestionKey(question) {
+  return String(question || '')
+    .replace(/개념 설명|연습문제|풀이 방향|[0-9]+[.)]/g, '')
+    .replace(/[^0-9a-zA-Z가-힣]/g, '')
+    .slice(0, 120);
+}
+
+function mergeUniqueQuestions(baseQuestions, newQuestions) {
+  const seen = new Set(baseQuestions.map(normalizeQuestionKey));
+  const merged = [...baseQuestions];
+  for (const question of newQuestions.map(String).map((q) => q.trim()).filter(Boolean)) {
+    const key = normalizeQuestionKey(question);
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    merged.push(question);
+  }
+  return merged;
+}
+
 function persistAiResult(summaryPoints, questions, sourceLength, subjectKey = '', options = {}) {
   const bank = JSON.parse(localStorage.getItem(AI_CONTENT_BANK_KEY) || '[]');
   const subject = AI_SUBJECTS[subjectKey]?.label || subjectKey || '직접 입력';
-  const nextQuestions = options.append ? [...getSavedAiQuestions(), ...questions] : questions;
-  bank.push({ date: new Date().toISOString().slice(0, 10), length: sourceLength, subject, points: summaryPoints, totalQuestions: nextQuestions.length });
+  const previousQuestions = options.append ? getSavedAiQuestions() : [];
+  const nextQuestions = mergeUniqueQuestions(previousQuestions, questions);
+  const addedCount = Math.max(0, nextQuestions.length - previousQuestions.length);
+  bank.push({ date: new Date().toISOString().slice(0, 10), length: sourceLength, subject, points: summaryPoints, totalQuestions: nextQuestions.length, addedCount });
   localStorage.setItem(AI_CONTENT_BANK_KEY, JSON.stringify(bank.slice(-200)));
   localStorage.setItem(AI_QUESTIONS_KEY, JSON.stringify(nextQuestions));
   if (!options.append) setActiveAiQuestionIndex(0);
+  return { totalQuestions: nextQuestions.length, addedCount };
 }
 
 
@@ -776,9 +803,12 @@ async function runAiLearning(raw, subjectKey = getSelectedAiSubject(), options =
     const apiResult = await requestAiFromApi(raw, subjectKey);
     if (apiResult && Array.isArray(apiResult.questions)) {
       const points = Array.isArray(apiResult.summary_points) ? apiResult.summary_points.slice(0, 3) : [];
-      persistAiResult(points, apiResult.questions, raw.length, subjectKey, options);
+      let saved = persistAiResult(points, apiResult.questions, raw.length, subjectKey, options);
+      if (options.append && saved.addedCount === 0) {
+        saved = persistAiResult(points, buildQuestionsFromText(raw, getSavedAiQuestions()), raw.length, subjectKey, { append: true });
+      }
       const subjectLabel = AI_SUBJECTS[subjectKey]?.label || '직접 입력';
-      aiMsgEl.textContent = `${subjectLabel} API 문제 생성 완료: 새 문제 ${apiResult.questions.length}개 · 누적 ${getSavedAiQuestions().length}개`;
+      aiMsgEl.textContent = `${subjectLabel} AI 분석 완료: 새 문제 ${saved.addedCount}개 · 누적 ${saved.totalQuestions}개`;
       renderAiCoach();
       renderAiQuizCards();
       return;
@@ -788,39 +818,81 @@ async function runAiLearning(raw, subjectKey = getSelectedAiSubject(), options =
   }
 
   const summary = summarizeForAi(raw);
-  const questions = buildQuestionsFromText(raw);
-  persistAiResult(summary.points, questions, summary.totalLength, subjectKey, options);
+  const questions = buildQuestionsFromText(raw, options.append ? getSavedAiQuestions() : []);
+  const saved = persistAiResult(summary.points, questions, summary.totalLength, subjectKey, options);
   const subjectLabel = AI_SUBJECTS[subjectKey]?.label || '직접 입력';
-  aiMsgEl.textContent = `${subjectLabel} 로컬 문제 생성 완료: 새 문제 ${questions.length}개 · 누적 ${getSavedAiQuestions().length}개`;
+  aiMsgEl.textContent = `${subjectLabel} 로컬 분석 완료: 새 문제 ${saved.addedCount}개 · 누적 ${saved.totalQuestions}개`;
   renderAiCoach();
   renderAiQuizCards();
 }
 
+function splitLearningUnits(raw) {
+  const cleaned = String(raw || '').replace(/\s+/g, ' ').trim();
+  if (!cleaned) return [];
+  const sentenceUnits = cleaned
+    .split(/(?<=[.!?。？！]|다\.|요\.)\s+|(?=\d+\.\s)|(?=[가-힣A-Za-z ]{2,18}[:：])/g)
+    .map((part) => part.trim())
+    .filter((part) => part.length >= 35);
+  const units = [];
+  for (let i = 0; i < sentenceUnits.length; i += 2) {
+    const unit = sentenceUnits.slice(i, i + 2).join(' ').slice(0, 520);
+    if (unit.length >= 35) units.push(unit);
+    if (units.length >= AI_LOCAL_MAX_QUESTIONS) break;
+  }
+  if (units.length) return units;
+  const fallback = [];
+  for (let i = 0; i < cleaned.length; i += 420) {
+    const unit = cleaned.slice(i, i + 520).trim();
+    if (unit.length >= 20) fallback.push(unit);
+  }
+  return fallback.slice(0, AI_LOCAL_MAX_QUESTIONS);
+}
+
+function extractKeywords(text, limit = 5) {
+  const stopwords = new Set(['그리고', '하지만', '그러나', '대한', '통해', '위해', '있는', '한다', '되어', '에서', '으로', '에게', '이다', '내용', '학습', '문제', '정리']);
+  const counts = new Map();
+  String(text || '').replace(/[^0-9a-zA-Z가-힣\s]/g, ' ').split(/\s+/).forEach((word) => {
+    const clean = word.trim();
+    if (clean.length < 2 || stopwords.has(clean)) return;
+    counts.set(clean, (counts.get(clean) || 0) + 1);
+  });
+  return Array.from(counts.entries()).sort((a, b) => b[1] - a[1] || b[0].length - a[0].length).map(([word]) => word).slice(0, limit);
+}
+
 function summarizeForAi(raw) {
   const cleaned = raw.replace(/\s+/g, ' ').trim();
-  const pieces = cleaned.split(/[.!?]/).map((s) => s.trim()).filter(Boolean);
-  const points = pieces.slice(0, 3);
+  const units = splitLearningUnits(cleaned);
+  const points = units.slice(0, 3).map((unit) => unit.slice(0, 120));
   return {
     totalLength: cleaned.length,
-    points
+    points: points.length ? points : [cleaned.slice(0, 120)].filter(Boolean)
   };
 }
 
-function buildQuestionsFromText(raw) {
-  const words = raw
-    .replace(/[^0-9a-zA-Z가-힣\s]/g, ' ')
-    .split(/\s+/)
-    .map((w) => w.trim())
-    .filter((w) => w.length >= 2);
-  const uniq = [];
-  for (const w of words) { if (!uniq.includes(w)) uniq.push(w); if (uniq.length >= 6) break; }
-  if (!uniq.length) return [];
-  const q = [];
-  q.push(`핵심 키워드 3개를 고르고 각 키워드의 의미를 설명해 보세요. (후보: ${uniq.slice(0, 6).join(', ')})`);
-  q.push(`위 내용의 흐름을 3단계(시작-핵심-정리)로 요약해 보세요.`);
-  q.push(`오늘 학습 후 바로 복습이 필요한 부분 1개를 고르고 이유를 쓰세요.`);
-  if (uniq[0]) q.push(`"${uniq[0]}"를 처음 배우는 친구에게 2문장으로 설명해 보세요.`);
-  return q;
+function buildQuestionsFromText(raw, previousQuestions = []) {
+  const units = splitLearningUnits(raw);
+  const previousKeys = new Set(previousQuestions.map(normalizeQuestionKey));
+  const types = [
+    { label: '빈칸 완성', prompt: (keys) => `${keys[0] || '핵심 개념'}의 의미와 관련 내용을 빈칸 없이 완성해 보세요.` },
+    { label: '사례 판단', prompt: (keys) => `${keys.slice(0, 2).join('·') || '핵심 개념'}이 실제 사례에서 어떻게 나타나는지 판단하고 근거를 쓰세요.` },
+    { label: '비교 설명', prompt: (keys) => `${keys[0] || '개념'}과(와) ${keys[1] || '관련 개념'}의 차이 또는 관계를 비교해 보세요.` },
+    { label: '원인-결과', prompt: (keys) => `${keys[0] || '현상'}이 나타나는 원인과 결과를 학습 내용에 근거해 연결하세요.` },
+    { label: '오개념 찾기', prompt: (keys) => `${keys[0] || '핵심 내용'}에 대해 친구가 할 법한 오해 1가지를 고치듯 설명하세요.` },
+    { label: '자료 해석', prompt: (keys) => `${keys.slice(0, 3).join(', ') || '제시 내용'}을 근거로 자료나 지문이 말하는 핵심 결론을 도출하세요.` }
+  ];
+  const questions = [];
+  const startIndex = previousQuestions.length % Math.max(1, units.length);
+  for (let step = 0; step < units.length && questions.length < AI_BATCH_SIZE; step += 1) {
+    const unitIndex = (startIndex + step) % units.length;
+    const unit = units[unitIndex];
+    const keywords = extractKeywords(unit, 5);
+    const type = types[(previousQuestions.length + step) % types.length];
+    const concept = unit.slice(0, 150);
+    const question = `개념 설명 → ${concept}${concept.length >= 150 ? '...' : ''}\n연습문제 → [${type.label}] ${type.prompt(keywords)}\n풀이 방향 → 답안에는 ${keywords.slice(0, 3).join(', ') || '핵심 근거'}를 반드시 포함하고, 학습 내용의 문장 또는 사례와 연결해 2~3문장으로 설명하세요.`;
+    const key = normalizeQuestionKey(question);
+    if (!previousKeys.has(key)) questions.push(question);
+  }
+  return questions;
 }
 
 function renderAiCoach() {
@@ -837,14 +909,36 @@ function renderAiCoach() {
   }
 }
 
+function parseAiQuestionParts(question) {
+  const text = String(question || '');
+  const concept = text.match(/개념 설명\s*→\s*([\s\S]*?)(?=연습문제\s*→|$)/)?.[1]?.trim() || '';
+  const prompt = text.match(/연습문제\s*→\s*([\s\S]*?)(?=풀이 방향\s*→|$)/)?.[1]?.trim() || text;
+  const guide = text.match(/풀이 방향\s*→\s*([\s\S]*)/)?.[1]?.trim() || '학습 내용의 핵심어와 근거 문장을 연결해 답안을 점검하세요.';
+  return { concept, prompt, guide };
+}
+
 function createAiQuizCard(q, idx) {
   const card = document.createElement('article');
   card.className = 'ai-quiz-card';
   const title = document.createElement('h4');
   title.textContent = `연습문제 ${idx + 1}`;
+  const parts = parseAiQuestionParts(q);
+  const concept = document.createElement('p');
+  concept.textContent = parts.concept ? `개념 설명: ${parts.concept}` : '개념 설명: 학습 내용에서 핵심 근거를 찾아보세요.';
   const body = document.createElement('p');
-  body.textContent = String(q);
-  card.append(title, body);
+  body.textContent = `문제: ${parts.prompt}`;
+  const answer = document.createElement('textarea');
+  answer.placeholder = '내 답안을 써 보세요. 풀이 방향 버튼으로 핵심 근거를 확인할 수 있습니다.';
+  const checkBtn = document.createElement('button');
+  checkBtn.type = 'button';
+  checkBtn.textContent = '풀이 방향 보기';
+  const feedback = document.createElement('p');
+  feedback.className = 'ai-feedback';
+  checkBtn.addEventListener('click', () => {
+    const answerText = answer.value.trim();
+    feedback.textContent = `${answerText ? '내 답안 확인 완료. ' : ''}풀이 방향: ${parts.guide}`;
+  });
+  card.append(title, concept, body, answer, checkBtn, feedback);
   return card;
 }
 
