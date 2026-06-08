@@ -9,6 +9,7 @@ const port = Number(process.env.PORT || 3000);
 const model = process.env.OPENAI_MODEL || 'gpt-4.1-mini';
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
 const client = process.env.OPENAI_API_KEY ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY }) : null;
+const aiBatchSize = 10;
 const staticAssetPattern = /\.(?:css|js|png|jpg|jpeg|gif|svg|ico|webp|woff2?)$/i;
 const societyOriginalHtmlPath = process.env.SIMPUL_SOCIETY_HTML_PATH || 'C:/Users/a3327/Downloads/통합사회_4단원_정리.html';
 
@@ -43,7 +44,7 @@ function normalizeAiResult(result) {
   const questions = Array.isArray(result?.questions) ? result.questions : [];
   return {
     summary_points: summaryPoints.map(String).filter(Boolean).slice(0, 3),
-    questions: questions.map(String).filter(Boolean).slice(0, 5)
+    questions: questions.map(String).filter(Boolean).slice(0, aiBatchSize)
   };
 }
 
@@ -69,7 +70,7 @@ app.post('/api/ai/analyze', async (req, res) => {
         '과목명이 있으면 해당 과목 시험 대비에 맞는 연습문제로 만든다.',
         '반드시 JSON만 출력한다. 형식: {"summary_points":["..."],"questions":["..."]}'
       ].join(' '),
-      input: `과목: ${subject || '선택 과목'}\n학습 내용:\n${input}\n\n요구사항:\n- summary_points는 3개 이하\n- questions는 5개\n- 각 questions 항목은 '개념 설명 → 연습문제 → 풀이 방향' 순서로 구성\n- 한국어로 작성`,
+      input: `과목: ${subject || '선택 과목'}\n학습 내용:\n${input}\n\n요구사항:\n- summary_points는 3개 이하\n- questions는 ${aiBatchSize}개\n- 각 questions 항목은 서로 다른 개념·자료·사례를 다룬다\n- 단순 요약 질문만 반복하지 말고 빈칸, 사례 판단, 비교, 원인-결과, 자료 해석, 오개념 찾기 등 유형을 섞는다\n- 각 questions 항목은 '개념 설명 → 연습문제 → 풀이 방향' 순서로 구성\n- 한국어로 작성`,
       text: {
         format: {
           type: 'json_schema',
@@ -88,8 +89,8 @@ app.post('/api/ai/analyze', async (req, res) => {
               questions: {
                 type: 'array',
                 items: { type: 'string' },
-                minItems: 4,
-                maxItems: 5
+                minItems: 6,
+                maxItems: aiBatchSize
               }
             },
             required: ['summary_points', 'questions']
