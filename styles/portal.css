@@ -62,37 +62,8 @@ body.ink-on #inkLayer{pointer-events:auto;cursor:crosshair}
 @media (max-width:940px){
   .ink-toolbar{justify-content:flex-start}
 }
-@media (max-width:940px){.ai-widget{top:140px;right:0}}
 .logo-link{display:block;text-decoration:none;color:inherit}
 
-
-.ai-sub{font-size:.84rem;color:#64748b}.ai-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}.ai-actions button{border:1px solid #1d4ed8;background:#2563eb;color:#fff;border-radius:8px;padding:8px 11px;font-weight:700;cursor:pointer;font-size:.84rem}.ai-summary{font-size:.82rem;color:#334155;line-height:1.4;margin-top:2px}.ai-question-list{padding-left:18px;display:grid;gap:4px}.ai-question-list li{font-size:.82rem;line-height:1.45}
-.ai-widget{position:fixed;right:18px;top:340px;z-index:1240;width:min(92vw,340px);padding:12px;display:grid;gap:8px;box-shadow:0 8px 24px rgba(15,23,42,.16);touch-action:none}
-.ai-widget-header{display:flex;align-items:center;justify-content:space-between;gap:8px}.ai-widget-header h3{font-size:.94rem}
-.ai-head-actions{display:flex;align-items:center;gap:6px}
-.ai-grip{display:inline-flex;align-items:center;justify-content:center;border:1px dashed #c5d1e3;border-radius:8px;padding:5px 8px;color:#64748b;font-size:.78rem;cursor:grab;background:#f8fbff;user-select:none}
-.ai-min-btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:4px 8px;cursor:pointer;font-weight:700}
-.ai-dock-toggle{position:absolute;top:14px;width:76px;height:32px;border:1px solid var(--line);background:#fff;cursor:pointer;font-weight:800;display:none;font-size:.75rem}
-.ai-auto-status{font-size:.8rem;color:#2563eb;min-height:1em;font-weight:600}
-.ai-widget-body{display:grid;gap:8px;overflow-y:auto;max-height:55vh}
-.ai-widget-body textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:8px;padding:9px;font-family:inherit;resize:vertical;font-size:.84rem}
-.ai-msg-line{font-size:.82rem;color:#2563eb;min-height:1.2em}
-.ai-quiz-cards-widget{display:grid;gap:8px}.ai-quiz-card{border:1px solid var(--line);border-radius:10px;padding:10px;background:#fff;display:grid;gap:6px}.ai-quiz-card h4{font-size:.82rem;color:#475569}.ai-quiz-card p{font-size:.84rem;line-height:1.45}.ai-quiz-card textarea{width:100%;min-height:72px;border:1px solid var(--line);border-radius:8px;padding:8px;font-family:inherit;resize:vertical;font-size:.82rem}.ai-quiz-card button{justify-self:end;border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 10px;cursor:pointer;font-weight:600;font-size:.8rem}.ai-quiz-card .ai-feedback{font-size:.78rem;color:#2563eb;min-height:1.2em}
-.ai-widget.minimized{transition:transform .22s ease}
-.ai-widget.minimized.dock-left{transform:translateX(calc(-100% - 22px))}
-.ai-widget.minimized.dock-right{transform:translateX(calc(100% + 22px))}
-.ai-widget.minimized .ai-widget-body,.ai-widget.minimized .ai-auto-status{display:none}
-.ai-widget.minimized .ai-min-btn{display:none}
-.ai-widget.minimized.dock-left .ai-dock-toggle{display:block;right:-76px;border-left:none;border-radius:0 10px 10px 0}
-.ai-widget.minimized.dock-right .ai-dock-toggle{display:block;left:-76px;border-right:none;border-radius:10px 0 0 10px}
-.ai-widget.dragging{opacity:.92}
-
-
-.ai-subject-picker{display:grid;gap:8px;border:1px solid #bfdbfe;background:#eff6ff;border-radius:12px;padding:12px}.ai-subject-picker label{font-size:.86rem;font-weight:800;color:#1e3a8a}.ai-subject-row{display:flex;gap:8px;flex-wrap:wrap}.ai-subject-row select{flex:1;min-width:180px;border:1px solid var(--line);border-radius:9px;padding:10px;font-family:inherit;background:#fff}.ai-subject-row button{border:1px solid #1d4ed8;background:#2563eb;color:#fff;border-radius:9px;padding:10px 12px;font-weight:800;cursor:pointer}.ai-practice-viewer{display:grid;gap:10px;border:1px solid var(--line);border-radius:14px;background:#fff;padding:14px}.ai-practice-head{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#334155}.ai-practice-head span{font-size:.82rem;color:#64748b;font-weight:800}.ai-practice-card .ai-quiz-card{border:0;padding:0}.ai-practice-card .ai-quiz-card textarea,.ai-practice-card .ai-quiz-card button,.ai-practice-card .ai-feedback{display:none}.ai-practice-card .ai-quiz-card p{font-size:1rem;line-height:1.65;white-space:pre-line}.ai-practice-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}.ai-practice-actions button{border:1px solid #1d4ed8;background:#2563eb;color:#fff;border-radius:9px;padding:10px 12px;font-weight:800;cursor:pointer}.ai-practice-actions button:disabled{border-color:var(--line);background:#f1f5f9;color:#94a3b8;cursor:not-allowed}
-.ai-coach-panel{height:100%;margin:0;padding:22px;display:grid;grid-template-rows:auto auto minmax(160px,1fr) auto auto auto auto;align-content:start;gap:12px;overflow:auto}.ai-coach-heading{display:grid;gap:6px}.ai-coach-heading h2{font-size:1.3rem}.ai-coach-badge{width:max-content;border:1px solid #bfdbfe;background:#eff6ff;color:#1d4ed8;border-radius:999px;padding:5px 10px;font-size:.78rem;font-weight:800}.ai-coach-panel textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-family:inherit;resize:vertical;font-size:.9rem;line-height:1.5}.ai-coach-panel .ai-summary{border:1px solid var(--line);border-radius:10px;background:#f8fbff;padding:10px;min-height:44px}.ai-coach-panel .ai-question-list{border:1px solid var(--line);border-radius:10px;background:#fff;padding:10px 10px 10px 28px;min-height:44px}
-
-
-.ai-quiz{grid-column:1/-1;padding:14px;display:grid;gap:8px}.ai-quiz-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}.ai-quiz-card{border:1px solid var(--line);border-radius:10px;padding:10px;background:#fff;display:grid;gap:8px}.ai-quiz-card h4{font-size:.86rem;color:#475569}.ai-quiz-card p{font-size:.88rem;line-height:1.45}.ai-quiz-card textarea{width:100%;min-height:84px;border:1px solid var(--line);border-radius:8px;padding:8px;font-family:inherit;resize:vertical}.ai-quiz-card button{justify-self:end;border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 10px;cursor:pointer;font-weight:600}.ai-quiz-card .ai-feedback{font-size:.8rem;color:#2563eb;min-height:1.2em}
 @media (max-width:900px){
   html,body{height:auto;min-height:100%}
   body{height:auto;min-height:100svh;display:flex;flex-direction:column;gap:8px;padding:58px 8px 8px;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch}
@@ -113,11 +84,7 @@ body.ink-on #inkLayer{pointer-events:auto;cursor:crosshair}
   .profile-chip{width:100%;padding:7px}.profile-avatar-wrap{width:40px;height:40px}.profile-texts{min-width:0}.profile-texts strong,.profile-texts span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .content{min-height:0;overflow:visible}.panel{height:auto;min-height:0}.panel.active{display:block}
   .dashboard-grid{height:auto;grid-template-columns:1fr;overflow:visible;padding:10px;gap:8px}
-  .goal,.memo,.ai-quiz{grid-column:auto}.goal-form,.ai-actions,.ai-subject-row,.ai-practice-actions{display:grid;grid-template-columns:1fr}.goal-form input,.ai-subject-row select{min-width:0;width:100%;font-size:16px}
-  .ai-quiz-cards{grid-template-columns:1fr}.memo textarea,.ai-coach textarea{font-size:16px}
-  .ai-coach-panel{height:auto;overflow:visible;padding:16px;grid-template-rows:none}
-  .ai-coach-heading h2{font-size:1.08rem}
-  .ai-coach-panel textarea{min-height:130px}
+  .goal,.memo{grid-column:auto}.goal-form{display:grid;grid-template-columns:1fr}.goal-form input{min-width:0;width:100%;font-size:16px}.memo textarea{font-size:16px}
   .version-panel{height:auto;overflow:visible;padding:16px}.version-list li{grid-template-columns:54px 1fr}
   body.subject-mode #framePanel{height:auto}
   iframe{min-height:calc(100svh - 150px)}
