@@ -302,21 +302,8 @@ function getCurrentInkScope() {
 let subjectFrameResizeId = 0;
 
 function resizeSubjectFrameForContent() {
-  if (!frame || !document.body.classList.contains('subject-mode') || !isMobileLiteMode()) {
-    if (frame) frame.style.height = '';
-    return;
-  }
-  const doc = getNestedFrameDocument(frame);
-  const docEl = doc?.documentElement;
-  const body = doc?.body;
-  const contentHeight = Math.max(docEl?.scrollHeight || 0, body?.scrollHeight || 0, docEl?.offsetHeight || 0, body?.offsetHeight || 0);
-  const minHeight = Math.max(520, window.innerHeight - 150);
-  const nextHeight = Math.max(contentHeight + 24, minHeight);
-  const currentHeight = Number.parseFloat(frame.style.height || '0');
-  if (!Number.isFinite(currentHeight) || Math.abs(currentHeight - nextHeight) > 2) {
-    frame.style.height = `${nextHeight}px`;
-    if (window.resizeInkCanvas) window.resizeInkCanvas();
-  }
+  if (frame && frame.style.height) frame.style.height = '';
+  if (window.resizeInkCanvas) window.resizeInkCanvas();
 }
 
 function scheduleSubjectFrameResize() {
