@@ -31,6 +31,7 @@ app.use(express.static(rootDir, {
   }
 }));
 
+
 function parseAiJson(text) {
   const cleaned = String(text || '').trim().replace(/^```json\s*/i, '').replace(/```$/i, '').trim();
   return JSON.parse(cleaned);

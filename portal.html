@@ -93,7 +93,7 @@
           <h2>업데이트 내역</h2>
           <p>학습 포털 변경 사항을 버전별로 정리했습니다.</p>
           <ul class="version-list" aria-label="버전 기록">
-            <li><b>v0.3</b><span>국어 탭별 필기 저장, BGM 이동 안정화</span></li>
+            <li><b>v0.3</b><span>국어 탭별 필기 저장 안정화</span></li>
             <li><b>v0.2</b><span>과목 선택창 접기/펼치기</span></li>
             <li><b>v0.1</b><span>학습 포털 기본 화면</span></li>
           </ul>
@@ -180,26 +180,6 @@
     </div>
   </div>
 
-
-  <div id="musicWidget" class="music-widget box minimized dock-right" aria-label="배경 음악 플레이어">
-    <button id="musicMiniPauseBtn" type="button" class="music-mini-pause" title="재생/정지">⏸</button>
-    <button id="musicDockToggle" type="button" class="music-dock-toggle" title="펼치기">🎵 BGM</button>
-    <div class="music-header"><h3>🎵 BGM</h3><div class="music-head-actions"><button id="musicMinBtn" type="button" class="music-min-btn" title="최소화">－</button><span id="musicGrip" class="music-grip" title="드래그해서 이동">이동</span></div></div>
-    <div class="music-row">
-      <input id="musicUrlInput" type="url" placeholder="YouTube 또는 오디오 URL 붙여넣기" />
-      <button id="musicAddBtn" type="button">추가</button>
-    </div>
-    <div class="music-controls">
-      <button id="musicPrevBtn" type="button" title="이전">⏮</button>
-      <button id="musicPlayBtn" type="button">▶️ 재생</button>
-      <button id="musicNextBtn" type="button" title="다음">⏭</button>
-    </div>
-    <audio id="musicAudio" preload="metadata"></audio>
-    <iframe id="musicYoutubeFrame" class="music-youtube" title="숨겨진 YouTube BGM 플레이어" aria-hidden="true" tabindex="-1" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-    <ol id="musicPlaylist" class="music-playlist"></ol>
-    <p id="musicMsg" class="music-msg"></p>
-    <p class="music-ad-tip">💡 YouTube 영상 화면은 숨겨지고 BGM만 백그라운드로 재생됩니다.</p>
-  </div>
 
 
 
