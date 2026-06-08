@@ -127,6 +127,18 @@ function initAdminUsageWidget() {
     messageEl.classList.toggle('error', isError);
   }
 
+  function renderLocalStatsFallback() {
+    const localStats = window.SimpulUsage?.getLocalStats?.();
+    if (!localStats) {
+      setMessage('이용 현황을 불러올 수 없습니다.', true);
+      statsPanel.hidden = true;
+      return;
+    }
+    renderUsageStats(localStats);
+    statsPanel.hidden = false;
+    setMessage('전체 학생 통계 서버에 연결되지 않아 이 기기의 기록만 표시 중입니다.', true);
+  }
+
   async function loadStats() {
     if (!adminPassword) return;
     setMessage('이용 현황을 불러오는 중입니다...');
@@ -142,10 +154,9 @@ function initAdminUsageWidget() {
       }
       renderUsageStats(stats);
       statsPanel.hidden = false;
-      setMessage(`최근 업데이트: ${new Date(stats.generatedAt).toLocaleString('ko-KR')}`);
+      setMessage(`전체 학생 통계 · 최근 업데이트: ${new Date(stats.generatedAt).toLocaleString('ko-KR')}`);
     } catch (_) {
-      setMessage('서버 실행 환경에서만 이용 현황을 확인할 수 있습니다.', true);
-      statsPanel.hidden = true;
+      renderLocalStatsFallback();
     }
   }
 

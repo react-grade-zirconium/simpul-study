@@ -4,16 +4,17 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const app = express();
-const port = Number(process.env.PORT || 3000);
+const port = Number(process.env.PORT || 5000);
+const host = process.env.HOST || '0.0.0.0';
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
-const usageDir = path.join(rootDir, 'data');
-const usageFile = path.join(usageDir, 'usage-stats.json');
+const usageDir = path.resolve(rootDir, process.env.USAGE_DATA_DIR || 'data');
+const usageFile = path.resolve(usageDir, process.env.USAGE_DATA_FILE || 'usage-stats.json');
 const staticAssetPattern = /\.(?:css|js|png|jpg|jpeg|gif|svg|ico|webp|woff2?)$/i;
 const adminPassword = process.env.ADMIN_PASSWORD || 'simpul-admin';
 const MAX_RECENT_EVENTS = 80;
 const MAX_STUDY_MS_PER_EVENT = 6 * 60 * 60 * 1000;
 
-app.use(express.json({ limit: '20kb' }));
+app.use(express.json({ limit: '20kb', type: ['application/json', 'text/plain'] }));
 
 function createEmptyUsageStats() {
   return {
@@ -30,6 +31,16 @@ function createEmptyUsageStats() {
     visitorIds: {},
     recentEvents: []
   };
+}
+
+async function ensureUsageStorage() {
+  await fs.mkdir(usageDir, { recursive: true });
+  try {
+    await fs.access(usageFile);
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+    await writeUsageStats(createEmptyUsageStats());
+  }
 }
 
 async function readUsageStats() {
@@ -59,6 +70,15 @@ function getDayKey(date = new Date()) {
 function normalizeEventType(type) {
   const allowed = new Set(['page_view', 'start_study', 'portal_view', 'subject_open', 'active_time']);
   return allowed.has(type) ? type : 'custom';
+}
+
+function normalizeRequestBody(body) {
+  if (typeof body !== 'string') return body || {};
+  try {
+    return JSON.parse(body);
+  } catch (_) {
+    return {};
+  }
 }
 
 function sanitizeText(value, fallback = '') {
@@ -165,8 +185,17 @@ function summarizeUsageStats(stats) {
   };
 }
 
+app.get('/api/health', async (req, res) => {
+  try {
+    await ensureUsageStorage();
+    res.json({ ok: true, service: 'simpul-study', storage: 'ready' });
+  } catch (_) {
+    res.status(500).json({ ok: false, service: 'simpul-study', storage: 'error' });
+  }
+});
+
 app.post('/api/usage-event', (req, res) => {
-  const body = req.body || {};
+  const body = normalizeRequestBody(req.body);
   const type = normalizeEventType(body.type);
   const event = {
     type,
@@ -196,6 +225,17 @@ app.use(express.static(rootDir, {
   }
 }));
 
-app.listen(port, () => {
-  console.log(`SIMPUL server listening on http://localhost:${port}`);
+async function startServer() {
+  await ensureUsageStorage();
+  if (adminPassword === 'simpul-admin') {
+    console.warn('ADMIN_PASSWORD is not set. Using the local default password: simpul-admin');
+  }
+  app.listen(port, host, () => {
+    console.log(`SIMPUL server listening on http://${host}:${port}`);
+  });
+}
+
+startServer().catch((error) => {
+  console.error('Failed to start SIMPUL server:', error);
+  process.exit(1);
 });
