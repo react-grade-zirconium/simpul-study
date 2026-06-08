@@ -299,8 +299,8 @@ function getCurrentInkScope() {
   return `subject:${subject}:tab:${tab}`;
 }
 
-function resizeSubjectFrameForMobile() {
-  if (!isMobileLiteMode() || !frame || !document.body.classList.contains('subject-mode')) {
+function resizeSubjectFrameForContent() {
+  if (!frame || !document.body.classList.contains('subject-mode')) {
     if (frame) frame.style.height = '';
     return;
   }
@@ -309,9 +309,17 @@ function resizeSubjectFrameForMobile() {
     const docEl = doc?.documentElement;
     const body = doc?.body;
     const contentHeight = Math.max(docEl?.scrollHeight || 0, body?.scrollHeight || 0, docEl?.offsetHeight || 0, body?.offsetHeight || 0);
-    const minHeight = Math.max(520, window.innerHeight - 150);
+    const reservedSpace = isMobileLiteMode() ? 150 : 170;
+    const minHeight = Math.max(520, window.innerHeight - reservedSpace);
     frame.style.height = `${Math.max(contentHeight + 24, minHeight)}px`;
+    window.requestAnimationFrame(() => {
+      if (window.resizeInkCanvas) window.resizeInkCanvas();
+    });
   });
+}
+
+function resizeSubjectFrameForMobile() {
+  resizeSubjectFrameForContent();
 }
 
 function bindFrameInkContextSync() {
@@ -492,6 +500,7 @@ function initGlobalInk() {
     setMsg(activeInkScope === 'dashboard' ? '대시보드 필기 불러옴' : '현재 탭 필기 불러옴');
   }
   window.syncInkContext = syncInkContext;
+  window.resizeInkCanvas = resizeCanvas;
   function beginStroke(e) {
     if (!document.body.classList.contains('ink-on')) return;
     if (e.target.closest && e.target.closest('#inkToolbar')) return;
@@ -562,7 +571,7 @@ function initGlobalInk() {
   loadStrokes();
   resizeCanvas();
   updateUndoRedoUI();
-  window.addEventListener('resize', resizeCanvas);
+  window.addEventListener('resize', () => { resizeSubjectFrameForContent(); resizeCanvas(); });
   window.addEventListener('beforeunload', persistStrokes);
 }
 
