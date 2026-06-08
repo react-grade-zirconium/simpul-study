@@ -10,6 +10,7 @@
     "import:society": "node scripts/import-society-html.mjs"
   },
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "openai": "^4.103.0"
   }
 }
