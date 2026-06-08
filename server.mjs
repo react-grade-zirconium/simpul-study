@@ -1,6 +1,7 @@
 import express from 'express';
 import OpenAI from 'openai';
 import path from 'node:path';
+import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
 const app = express();
@@ -9,6 +10,7 @@ const model = process.env.OPENAI_MODEL || 'gpt-4.1-mini';
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
 const client = process.env.OPENAI_API_KEY ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY }) : null;
 const staticAssetPattern = /\.(?:css|js|png|jpg|jpeg|gif|svg|ico|webp|woff2?)$/i;
+const societyOriginalHtmlPath = process.env.SIMPUL_SOCIETY_HTML_PATH || 'C:/Users/a3327/Downloads/통합사회_4단원_정리.html';
 
 app.use(express.json({ limit: '1mb' }));
 app.use((req, res, next) => {
