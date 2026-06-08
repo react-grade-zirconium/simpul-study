@@ -25,7 +25,13 @@ HOST=0.0.0.0
 ADMIN_PASSWORD=원하는_관리자_비밀번호
 USAGE_DATA_DIR=data
 USAGE_DATA_FILE=usage-stats.json
+ALLOWED_ORIGINS=*
 ```
+
+서버와 화면 연결 방식:
+
+- `index.html`과 `portal.html`의 `simpul-api-base` 메타값이 기본적으로 `./api`라서, `npm start`로 같은 서버에서 열면 바로 `/api/usage-event`와 `/api/usage-stats`에 연결됩니다.
+- 만약 화면 파일과 API 서버를 서로 다른 도메인에 배포한다면 `simpul-api-base` 값을 API 서버 주소로 바꾸고, 서버 환경변수 `ALLOWED_ORIGINS`에 화면 도메인을 넣어 주세요.
 
 서버 확인:
 

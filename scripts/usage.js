@@ -1,6 +1,6 @@
 const USAGE_VISITOR_KEY = 'simpul_usage_visitor_id_v1';
 const USAGE_LOCAL_STATS_KEY = 'simpul_usage_local_stats_v1';
-const USAGE_ENDPOINT = './api/usage-event';
+const DEFAULT_USAGE_API_BASE = './api';
 const MAX_LOCAL_RECENT_EVENTS = 40;
 
 function createEmptyLocalUsageStats() {
@@ -132,6 +132,21 @@ function summarizeLocalUsageStats() {
   };
 }
 
+function getUsageApiBase() {
+  const configured = document.querySelector('meta[name="simpul-api-base"]')?.content?.trim();
+  return configured || window.SIMPUL_API_BASE || DEFAULT_USAGE_API_BASE;
+}
+
+function getUsageApiUrl(path) {
+  return `${String(getUsageApiBase()).replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
+}
+
+async function checkUsageServer() {
+  const response = await fetch(getUsageApiUrl('health'), { cache: 'no-store' });
+  if (!response.ok) throw new Error('Usage server health check failed');
+  return response.json();
+}
+
 function sendUsageEvent(type, details = {}) {
   const payload = {
     type,
@@ -144,10 +159,10 @@ function sendUsageEvent(type, details = {}) {
 
   if (navigator.sendBeacon) {
     const blob = new Blob([body], { type: 'application/json' });
-    if (navigator.sendBeacon(USAGE_ENDPOINT, blob)) return;
+    if (navigator.sendBeacon(getUsageApiUrl('usage-event'), blob)) return;
   }
 
-  fetch(USAGE_ENDPOINT, {
+  fetch(getUsageApiUrl('usage-event'), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body,
@@ -181,6 +196,8 @@ function initUsageTracking() {
 }
 
 window.SimpulUsage = {
+  checkServer: checkUsageServer,
+  getApiUrl: getUsageApiUrl,
   getLocalStats: summarizeLocalUsageStats,
   track: sendUsageEvent
 };

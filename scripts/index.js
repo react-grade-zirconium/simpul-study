@@ -141,9 +141,12 @@ function initAdminUsageWidget() {
 
   async function loadStats() {
     if (!adminPassword) return;
-    setMessage('이용 현황을 불러오는 중입니다...');
+    setMessage('서버 연결을 확인하는 중입니다...');
     try {
-      const response = await fetch('./api/usage-stats', {
+      await window.SimpulUsage?.checkServer?.();
+      setMessage('서버 연결 완료 · 이용 현황을 불러오는 중입니다...');
+      const statsUrl = window.SimpulUsage?.getApiUrl?.('usage-stats') || './api/usage-stats';
+      const response = await fetch(statsUrl, {
         headers: { 'x-admin-password': adminPassword }
       });
       const stats = await response.json();
