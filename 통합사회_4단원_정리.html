@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>통합사회 4단원 정리</title>
+  <style>
+    :root{
+      color-scheme:light;
+      --bg:#f5f7fb;
+      --paper:#ffffff;
+      --ink:#172033;
+      --muted:#64748b;
+      --line:#d7e0ec;
+      --blue:#2563eb;
+      --blue-soft:#dbeafe;
+      --green:#16a34a;
+      --green-soft:#dcfce7;
+      --purple:#7c3aed;
+      --purple-soft:#ede9fe;
+      --orange:#ea580c;
+      --orange-soft:#ffedd5;
+      font-family:Pretendard,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    }
+    *{box-sizing:border-box}
+    html{background:var(--bg)}
+    body{margin:0;min-height:100vh;color:var(--ink);background:linear-gradient(180deg,#f8fbff 0%,var(--bg) 44%,#eef4ff 100%)}
+    main{width:min(100%,1080px);margin:0 auto;padding:28px;display:grid;gap:18px}
+    section{background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 14px 34px rgba(15,23,42,.08)}
+    h1,h2,h3{margin:0;color:#0f172a;letter-spacing:-.03em}
+    h1{font-size:clamp(1.8rem,5vw,3.2rem);line-height:1.13}
+    h2{font-size:clamp(1.14rem,3vw,1.45rem);margin-bottom:12px;color:#1d4ed8}
+    h3{font-size:1rem;margin-bottom:8px;color:#334155}
+    p,li{line-height:1.72;font-size:.98rem}
+    ul,ol{margin:0;padding-left:1.2rem}
+    strong{color:#1e3a8a}
+    mark{background:#fef3c7;border-radius:6px;padding:0 4px;color:#92400e}
+    .hero{position:relative;overflow:hidden;padding:30px;background:linear-gradient(135deg,#1d4ed8,#2563eb 52%,#7c3aed);color:#fff;border:0}
+    .hero::after{content:"";position:absolute;right:-90px;top:-90px;width:260px;height:260px;border-radius:999px;background:rgba(255,255,255,.18)}
+    .badge{position:relative;z-index:1;display:inline-flex;align-items:center;margin-bottom:12px;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.18);font-weight:900;font-size:.84rem;letter-spacing:.04em}
+    .hero h1,.hero p{position:relative;z-index:1;color:#fff}.hero p{max-width:720px;margin:12px 0 0;color:#e0ecff;font-weight:650}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .card{border:1px solid var(--line);border-radius:16px;padding:16px;background:#fff;display:grid;gap:8px}
+    .chip-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .chip{display:inline-flex;padding:7px 10px;border-radius:999px;background:var(--blue-soft);color:#1e40af;font-weight:800;font-size:.84rem}
+    .term-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;list-style:none;padding:0}
+    .term-list li{border-left:5px solid var(--blue);background:#f8fbff;border-radius:12px;padding:12px}
+    .flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;counter-reset:flow}
+    .flow div{position:relative;border-radius:16px;padding:14px;background:var(--green-soft);border:1px solid #bbf7d0;min-height:110px}
+    .flow div::before{counter-increment:flow;content:counter(flow);display:inline-grid;place-items:center;width:26px;height:26px;margin-bottom:8px;border-radius:999px;background:var(--green);color:#fff;font-weight:900}
+    .compare{width:100%;border-collapse:collapse;overflow:hidden;border-radius:14px;font-size:.94rem}
+    .compare th,.compare td{border:1px solid var(--line);padding:12px;vertical-align:top;line-height:1.62}
+    .compare th{background:#eff6ff;color:#1e3a8a;text-align:left}
+    .note{background:var(--orange-soft);border-color:#fed7aa}.note h2{color:#c2410c}
+    .quiz{display:grid;gap:10px}.quiz li{background:#f8fbff;border:1px solid var(--line);border-radius:12px;padding:12px}
+    .summary{background:#f8f5ff;border-color:#ddd6fe}.summary h2{color:var(--purple)}
+    @media (max-width:780px){main{padding:14px}.grid,.term-list,.flow{grid-template-columns:1fr}.hero{padding:24px 18px}.compare{font-size:.88rem}.compare th,.compare td{padding:10px}}
+    @media print{body{background:#fff}main{padding:0;width:100%}section{box-shadow:none;break-inside:avoid}.hero{background:#1d4ed8!important;color:#fff!important}}
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <span class="badge">SIMPUL STUDY · 통합사회</span>
+      <h1>4단원 인권 보장과 헌법 정리</h1>
+      <p>인권의 의미, 헌법의 역할, 기본권 제한의 원칙, 시민 참여까지 한 번에 복습하는 시험 대비 요약본입니다.</p>
+      <div class="chip-row" aria-label="핵심 키워드">
+        <span class="chip">인권</span><span class="chip">헌법</span><span class="chip">기본권</span><span class="chip">권력 분립</span><span class="chip">시민 참여</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>1. 단원 한눈에 보기</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>핵심 질문</h3>
+          <p>인간답게 살 권리는 어떻게 보장되고, 국가 권력은 어떤 기준으로 제한되어야 할까?</p>
+        </article>
+        <article class="card">
+          <h3>시험 포인트</h3>
+          <p><strong>인권의 보편성</strong>, <strong>헌법의 최고 규범성</strong>, <strong>기본권 제한 요건</strong>, <strong>권력 분립</strong>을 사례에 적용할 수 있어야 합니다.</p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. 핵심 개념어</h2>
+      <ul class="term-list">
+        <li><strong>인권</strong><br />인간이라면 누구나 태어나면서부터 가지는 기본적 권리입니다.</li>
+        <li><strong>헌법</strong><br />국가 운영의 기본 원리와 국민의 기본권을 정한 최고 법입니다.</li>
+        <li><strong>기본권</strong><br />헌법이 보장하는 국민의 권리로 자유권, 평등권, 참정권, 사회권, 청구권 등이 있습니다.</li>
+        <li><strong>권력 분립</strong><br />국가 권력을 나누어 서로 견제하게 함으로써 국민의 자유와 권리를 보호하는 원리입니다.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>3. 인권 보장의 흐름</h2>
+      <div class="flow">
+        <div><h3>인권 의식 형성</h3><p>차별과 억압을 극복하는 과정에서 인간 존엄성의 가치가 강조되었습니다.</p></div>
+        <div><h3>법과 제도 마련</h3><p>헌법과 법률, 국제 인권 규범이 인권 보장의 기준을 제시합니다.</p></div>
+        <div><h3>국가기관의 보장</h3><p>입법·행정·사법 기관이 권리 침해를 예방하고 구제합니다.</p></div>
+        <div><h3>시민의 참여</h3><p>권리를 알고 행사하며 타인의 권리도 존중할 때 인권이 확장됩니다.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. 기본권 종류 비교</h2>
+      <table class="compare">
+        <thead><tr><th>구분</th><th>의미</th><th>대표 사례</th></tr></thead>
+        <tbody>
+          <tr><th>자유권</th><td>국가 권력의 간섭을 받지 않고 자유롭게 생활할 권리</td><td>신체의 자유, 표현의 자유, 종교의 자유</td></tr>
+          <tr><th>평등권</th><td>합리적 이유 없이 차별받지 않을 권리</td><td>성별·장애·출신 등에 따른 부당한 차별 금지</td></tr>
+          <tr><th>참정권</th><td>국가 의사 형성에 참여할 권리</td><td>선거권, 공무 담임권, 국민 투표권</td></tr>
+          <tr><th>사회권</th><td>인간다운 생활을 국가에 요구할 수 있는 권리</td><td>교육을 받을 권리, 근로의 권리, 환경권</td></tr>
+          <tr><th>청구권</th><td>다른 기본권 보장을 위해 국가에 일정한 행위를 요구할 권리</td><td>재판 청구권, 청원권, 국가 배상 청구권</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="note">
+      <h2>5. 기본권 제한은 아무 때나 가능할까?</h2>
+      <p>기본권은 <mark>국가 안전 보장, 질서 유지, 공공복리</mark>를 위해 필요한 경우 법률로 제한할 수 있습니다. 하지만 제한하더라도 자유와 권리의 <strong>본질적인 내용</strong>은 침해할 수 없습니다.</p>
+      <ul>
+        <li>반드시 법률에 근거해야 합니다.</li>
+        <li>목적이 정당하고 방법이 적절해야 합니다.</li>
+        <li>침해를 최소화하고, 얻는 공익이 침해되는 사익보다 커야 합니다.</li>
+      </ul>
+    </section>
+
+    <section class="summary">
+      <h2>6. 서술형 답안 틀</h2>
+      <p><strong>개념 제시 → 사례 적용 → 판단 근거</strong> 순서로 쓰면 안정적입니다.</p>
+      <p>예시: “헌법은 국민의 기본권을 보장하고 국가 권력을 제한하는 최고 법이다. 따라서 ○○ 사례에서 국가는 공공복리를 이유로 권리를 제한할 수 있지만, 법률에 근거해야 하며 권리의 본질적 내용은 침해하면 안 된다.”</p>
+    </section>
+
+    <section>
+      <h2>7. 확인 문제</h2>
+      <ol class="quiz">
+        <li>인권이 모든 사람에게 적용된다는 성격을 무엇이라고 하는가?</li>
+        <li>헌법이 국가 권력을 제한하는 이유를 인권 보장과 연결해 설명하시오.</li>
+        <li>기본권을 제한할 수 있는 세 가지 목적을 쓰시오.</li>
+        <li>자유권과 사회권의 차이를 예시와 함께 비교하시오.</li>
+        <li>권력 분립이 국민의 기본권 보장에 도움이 되는 이유를 쓰시오.</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>
