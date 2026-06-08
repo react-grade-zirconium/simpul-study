@@ -1,22 +1,3662 @@
 <!DOCTYPE html>
+
 <html lang="ko">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>통합사회 4단원 정리 원본</title>
-  <style>
-    body{margin:0;padding:28px;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.7;color:#0f172a;background:#f8fafc}
-    main{max-width:780px;margin:0 auto;background:#fff;border:1px solid #dbe3ef;border-radius:18px;padding:24px;box-shadow:0 12px 28px rgba(15,23,42,.08)}
-    h1{margin:0 0 10px;font-size:1.45rem}p{margin:10px 0}code{display:inline-block;background:#f1f5f9;border-radius:7px;padding:2px 7px}.path{word-break:break-all}
-  </style>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>통합사회 IV. 문화와 다양성</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+<style>
+
+:root{--primary:#1a73e8;--primary-light:#e8f0fe;--accent:#34a853;--accent2:#ea4335;--accent3:#fbbc04;--bg:#f8f9fa;--surface:#fff;--border:#dadce0;--text:#202124;--text-sec:#5f6368;--shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.08);--shadow-md:0 4px 12px rgba(0,0,0,.10)}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* ─ header ─ */
+
+.page-header{background:var(--surface);border-bottom:1px solid var(--border);padding:20px 32px 0;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
+
+.subject-label{font-size:12px;font-weight:500;color:var(--primary);letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px}
+
+.page-title{font-family:'Noto Serif KR',serif;font-size:22px;font-weight:700;color:var(--text);margin-bottom:16px}
+
+/* ─ main tab ─ */
+
+.tab-bar{display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+
+.tab-bar::-webkit-scrollbar{display:none}
+
+.tab-btn{flex-shrink:0;padding:10px 20px;border:none;background:transparent;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:500;color:var(--text-sec);cursor:pointer;border-bottom:3px solid transparent;transition:color .2s,border-color .2s;white-space:nowrap}
+
+.tab-btn:hover{color:var(--primary);background:var(--primary-light);border-radius:4px 4px 0 0}
+
+.tab-btn.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:700}
+
+.tab-number{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:var(--primary-light);color:var(--primary);font-size:11px;font-weight:700;margin-right:6px}
+
+.tab-btn.active .tab-number{background:var(--primary);color:#fff}
+
+/* ─ content ─ */
+
+.content-wrap{max-width:960px;margin:0 auto;padding:32px 24px 80px}
+
+.tab-panel{display:none;animation:fadeIn .25s ease}
+
+.tab-panel.active{display:block}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─ typography ─ */
+
+.section-title{font-family:'Noto Serif KR',serif;font-size:20px;font-weight:700;color:var(--text);margin:32px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--primary);display:flex;align-items:center;gap:8px}
+
+.subsection-title{font-size:15px;font-weight:700;color:var(--primary);margin:20px 0 10px;padding-left:10px;border-left:3px solid var(--primary)}
+
+/* ─ card ─ */
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:16px;box-shadow:var(--shadow)}
+
+.card-title{font-size:14px;font-weight:700;color:var(--text-sec);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+
+/* ─ def-box ─ */
+
+.def-box{background:var(--primary-light);border-left:4px solid var(--primary);border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:16px;font-size:14.5px;line-height:1.7}
+
+.def-box strong{color:var(--primary)}
+
+/* ─ factor grid ─ */
+
+.factor-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+
+@media(max-width:600px){.factor-grid{grid-template-columns:1fr}}
+
+.factor-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;box-shadow:var(--shadow)}
+
+.factor-card .fc-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+
+/* ─ badge ─ */
+
+.badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:.3px}
+
+.badge-blue{background:#e8f0fe;color:#1a73e8}.badge-green{background:#e6f4ea;color:#34a853}
+
+.badge-red{background:#fce8e6;color:#ea4335}.badge-yellow{background:#fef9e0;color:#b5860a}
+
+.badge-purple{background:#f3e8fd;color:#8430ce}.badge-teal{background:#e4f7f5;color:#1e7b73}
+
+/* ─ fc-sub ─ */
+
+.fc-sub{font-size:13px;color:var(--text-sec);line-height:1.6}
+
+.fc-sub li{margin-left:16px;list-style:disc;margin-bottom:3px}
+
+.fc-sub .ex{color:#1a73e8;font-weight:500}
+
+/* ─ info-list ─ */
+
+.info-list{list-style:none;padding:0}
+
+.info-list li{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--bg);font-size:14px;line-height:1.6}
+
+.info-list li:last-child{border-bottom:none}
+
+.info-list .num{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--primary);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+
+/* ─ table ─ */
+
+.cmp-table{width:100%;border-collapse:collapse;font-size:13.5px;margin-bottom:12px;border-radius:10px;overflow:hidden;box-shadow:var(--shadow)}
+
+.cmp-table thead tr{background:var(--primary);color:#fff}
+
+.cmp-table thead th{padding:10px 14px;text-align:left;font-weight:600;font-size:13px}
+
+.cmp-table tbody tr{background:var(--surface);border-bottom:1px solid var(--border)}
+
+.cmp-table tbody tr:nth-child(even){background:#f8f9fa}
+
+.cmp-table td{padding:9px 14px;vertical-align:top;line-height:1.55}
+
+.cmp-table td:first-child{font-weight:600;color:var(--primary);white-space:nowrap}
+
+/* ─ note/warning ─ */
+
+.note{background:#fffde7;border:1px solid #ffe082;border-radius:8px;padding:12px 16px;font-size:13px;line-height:1.65;color:#5d4037;margin-top:10px}
+
+.note::before{content:'📝 '}
+
+.warning{background:#fce8e6;border:1px solid #f28b82;border-radius:8px;padding:12px 16px;font-size:13px;line-height:1.65;color:#b31412;margin-top:10px}
+
+.warning::before{content:'⚠️ '}
+
+/* ─ chart ─ */
+
+.chart-wrap{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:var(--shadow)}
+
+.chart-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px}
+
+.chart-sub{font-size:12px;color:var(--text-sec);margin-bottom:16px}
+
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+@media(max-width:660px){.chart-grid{grid-template-columns:1fr}}
+
+/* ─ flow ─ */
+
+.flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:8px 0}
+
+.flow-item{padding:5px 12px;border-radius:20px;font-size:13px;font-weight:600;background:var(--primary-light);color:var(--primary)}
+
+.flow-arrow{color:var(--text-sec);font-size:16px}
+
+/* ─ golden-rule ─ */
+
+.gr-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+@media(max-width:540px){.gr-grid{grid-template-columns:1fr}}
+
+.gr-item{background:var(--bg);border-radius:8px;padding:10px 14px;font-size:13px;line-height:1.55;border:1px solid var(--border)}
+
+.gr-item .gr-rel{font-weight:700;color:var(--primary);margin-bottom:3px;font-size:12px}
+
+/* ─ policy ─ */
+
+.policy-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
+
+@media(max-width:600px){.policy-grid{grid-template-columns:1fr}}
+
+.policy-card{border-radius:10px;padding:16px 18px;font-size:13.5px;line-height:1.6}
+
+.policy-melting{background:#fff3e0;border:1px solid #ffcc02}
+
+.policy-salad{background:#e6f4ea;border:1px solid #81c995}
+
+.policy-card .pc-title{font-weight:700;font-size:14px;margin-bottom:6px}
+
+.policy-melting .pc-title{color:#e65100}
+
+.policy-salad .pc-title{color:#1e7b45}
+
+/* ─ to-top ─ */
+
+.totop{position:fixed;bottom:28px;right:28px;width:40px;height:40px;border-radius:50%;background:var(--primary);color:#fff;border:none;font-size:18px;cursor:pointer;box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:center;transition:transform .2s;z-index:200}
+
+.totop:hover{transform:translateY(-3px)}
+
+
+
+/* ════════════════════════════════
+
+   QUIZ SYSTEM
+
+════════════════════════════════ */
+
+.quiz-section{margin-top:56px;padding-top:32px;border-top:3px solid var(--primary)}
+
+/* ─ quiz header ─ */
+
+.quiz-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px}
+
+.quiz-main-title{font-family:'Noto Serif KR',serif;font-size:19px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px}
+
+/* ─ score board ─ */
+
+.quiz-scoreboard{display:flex;gap:8px;flex-wrap:wrap}
+
+.score-chip{padding:4px 13px;border-radius:20px;font-size:12px;font-weight:700;border:1.5px solid;cursor:default}
+
+.score-chip.ox{background:#e8f0fe;color:#1a73e8;border-color:#1a73e8}
+
+.score-chip.mc{background:#e6f4ea;color:#34a853;border-color:#34a853}
+
+.score-chip.sa{background:#fef9e0;color:#b5860a;border-color:#fbbc04}
+
+.score-chip.hard{background:#fce8e6;color:#ea4335;border-color:#ea4335}
+
+/* ─ quiz type sub-tab ─ */
+
+.quiz-type-bar{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:24px;overflow-x:auto;scrollbar-width:none}
+
+.quiz-type-bar::-webkit-scrollbar{display:none}
+
+.qtype-btn{flex-shrink:0;padding:9px 20px;border:none;background:transparent;font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:500;color:var(--text-sec);cursor:pointer;border-bottom:3px solid transparent;transition:color .18s,border-color .18s;white-space:nowrap;margin-bottom:-2px}
+
+.qtype-btn:hover{color:var(--primary);background:#f0f4ff;border-radius:4px 4px 0 0}
+
+.qtype-btn.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:700}
+
+.qtype-icon{margin-right:5px;font-size:14px}
+
+/* ─ quiz panel ─ */
+
+.qpanel{display:none}
+
+.qpanel.active{display:block;animation:fadeIn .2s ease}
+
+/* ─ progress bar ─ */
+
+.q-progress-wrap{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+
+.q-progress-bar{flex:1;height:6px;background:#e0e0e0;border-radius:3px;overflow:hidden}
+
+.q-progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .4s ease}
+
+.q-progress-label{font-size:12px;color:var(--text-sec);white-space:nowrap;font-weight:500}
+
+/* ─ question card ─ */
+
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin-bottom:14px;box-shadow:var(--shadow);transition:border-color .2s}
+
+.q-card.answered-correct{border-color:#34a853;background:#f6fef8}
+
+.q-card.answered-wrong{border-color:#ea4335;background:#fff7f7}
+
+.q-card.answered-shown{border-color:var(--primary);background:#f5f9ff}
+
+/* ─ q-meta ─ */
+
+.q-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+
+.q-num{font-size:11px;font-weight:700;color:var(--text-sec);background:#f1f3f4;padding:2px 8px;border-radius:10px}
+
+.q-difficulty{font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px}
+
+.diff-basic{background:#e8f0fe;color:#1a73e8}
+
+.diff-mid{background:#e6f4ea;color:#34a853}
+
+.diff-hard{background:#fce8e6;color:#ea4335}
+
+/* ─ question text ─ */
+
+.q-text{font-size:15px;font-weight:500;line-height:1.65;color:var(--text);margin-bottom:14px}
+
+.q-text em{font-style:normal;font-weight:700;color:var(--primary);background:#e8f0fe;padding:1px 5px;border-radius:4px}
+
+/* ─ OX buttons ─ */
+
+.ox-row{display:flex;gap:12px;margin-bottom:4px}
+
+.ox-btn{flex:1;padding:14px;border-radius:12px;border:2px solid var(--border);background:var(--surface);font-size:28px;cursor:pointer;transition:all .18s;font-family:inherit}
+
+.ox-btn:hover:not(:disabled){transform:scale(1.04);border-color:var(--primary);background:var(--primary-light)}
+
+.ox-btn.selected-correct{background:#e6f4ea;border-color:#34a853;box-shadow:0 0 0 3px #c8e6c9}
+
+.ox-btn.selected-wrong{background:#fce8e6;border-color:#ea4335;box-shadow:0 0 0 3px #ffcdd2}
+
+.ox-btn.reveal-correct{background:#e6f4ea;border-color:#34a853}
+
+.ox-btn:disabled{cursor:default}
+
+/* ─ MC options ─ */
+
+.mc-options{display:flex;flex-direction:column;gap:8px;margin-bottom:4px}
+
+.mc-opt{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-size:14px;cursor:pointer;transition:all .18s;text-align:left;font-family:inherit;line-height:1.5;color:var(--text)}
+
+.mc-opt:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light)}
+
+.mc-opt.selected-correct{background:#e6f4ea;border-color:#34a853;font-weight:600}
+
+.mc-opt.selected-wrong{background:#fce8e6;border-color:#ea4335}
+
+.mc-opt.reveal-correct{background:#e6f4ea;border-color:#34a853}
+
+.mc-opt:disabled{cursor:default}
+
+.mc-opt-letter{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:#f1f3f4;color:var(--text-sec);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+
+.mc-opt.selected-correct .mc-opt-letter{background:#34a853;color:#fff}
+
+.mc-opt.selected-wrong .mc-opt-letter{background:#ea4335;color:#fff}
+
+.mc-opt.reveal-correct .mc-opt-letter{background:#34a853;color:#fff}
+
+/* ─ Short Answer ─ */
+
+/* ─ hint button ─ */
+
+/* ─ feedback ─ */
+
+.q-feedback{border-radius:10px;padding:12px 16px;font-size:13.5px;line-height:1.65;margin-top:10px;animation:fadeIn .25s ease}
+
+.q-feedback.correct{background:#e6f4ea;border:1px solid #81c995;color:#1e6b35}
+
+.q-feedback.wrong{background:#fce8e6;border:1px solid #f28b82;color:#b31412}
+
+.q-feedback.shown{background:#e8f0fe;border:1px solid #a8c5f8;color:#1a4a8a}
+
+.q-feedback strong{font-weight:700}
+
+.fb-answer{display:inline-block;background:#fff;border:1.5px solid currentColor;border-radius:6px;padding:1px 8px;margin:0 3px;font-weight:700}
+
+/* ─ result summary ─ */
+
+.quiz-result{background:var(--surface);border:2px solid var(--primary);border-radius:16px;padding:24px;margin-top:20px;text-align:center;display:none}
+
+.quiz-result.visible{display:block;animation:fadeIn .3s ease}
+
+.result-score-big{font-size:48px;font-weight:700;color:var(--primary);line-height:1}
+
+.result-score-label{font-size:14px;color:var(--text-sec);margin-bottom:16px;margin-top:4px}
+
+.result-bar-wrap{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+
+.result-bar-item{text-align:center;font-size:12px;color:var(--text-sec)}
+
+.result-bar-fill{width:40px;background:var(--border);border-radius:4px;height:60px;display:flex;align-items:flex-end;overflow:hidden;margin:0 auto 4px}
+
+.result-bar-fill-inner{width:100%;border-radius:4px;transition:height .6s ease}
+
+.reset-btn{padding:10px 24px;border-radius:10px;border:none;background:var(--primary);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .18s}
+
+.reset-btn:hover{background:#1558b0}
+
+/* ─ answered checkmark ─ */
+
+.q-answered-mark{float:right;font-size:18px;margin-left:8px}
+
+
+
+/* ── OX 버튼 새 스타일 ── */
+
+.ox-row{display:flex;gap:12px;margin-bottom:4px}
+
+.ox-btn{flex:1;padding:14px 10px;border-radius:12px;border:2px solid var(--border);background:var(--surface);font-size:14px;font-weight:600;cursor:pointer;transition:all .18s;font-family:inherit;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--text)}
+
+.ox-sym{font-size:26px;line-height:1}
+
+.ox-lbl{font-size:12px;color:var(--text-sec)}
+
+.ox-btn:hover:not(:disabled){transform:scale(1.03);border-color:var(--primary);background:var(--primary-light)}
+
+.ox-btn.ox-correct-picked{background:#e6f4ea;border-color:#34a853;box-shadow:0 0 0 3px #c8e6c9}
+
+.ox-btn.ox-correct-picked .ox-lbl{color:#34a853}
+
+.ox-btn.ox-wrong-picked{background:#fce8e6;border-color:#ea4335;box-shadow:0 0 0 3px #ffcdd2}
+
+.ox-btn.ox-wrong-picked .ox-lbl{color:#ea4335}
+
+.ox-btn.ox-correct-reveal{background:#e6f4ea;border-color:#34a853;opacity:.75}
+
+.ox-btn:disabled{cursor:default}
+
+/* ── MC 옵션 새 스타일 ── */
+
+.mc-options{display:flex;flex-direction:column;gap:8px;margin-bottom:4px}
+
+.mc-opt{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-size:14px;cursor:pointer;transition:all .18s;text-align:left;font-family:inherit;line-height:1.55;color:var(--text);width:100%}
+
+.mc-opt:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light)}
+
+.mc-opt.mc-correct{background:#e6f4ea;border-color:#34a853;font-weight:600}
+
+.mc-opt.mc-wrong{background:#fce8e6;border-color:#ea4335}
+
+.mc-opt:disabled{cursor:default}
+
+.mc-opt-letter{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:#f1f3f4;color:var(--text-sec);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+
+.mc-opt.mc-correct .mc-opt-letter{background:#34a853;color:#fff}
+
+.mc-opt.mc-wrong .mc-opt-letter{background:#ea4335;color:#fff}
+
+.mc-opt-text{flex:1}
+
+/* ── 타입 탭 카운트 뱃지 ── */
+
+.qtype-count{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.07);color:inherit;font-size:11px;font-weight:700;margin-left:6px}
+
+.qtype-btn.active .qtype-count{background:rgba(26,115,232,.15)}
+
+/* ── score chip 업데이트 ── */
+
+.score-chip.hard{background:#fce8e6;color:#ea4335;border-color:#ea4335}
+
+</style>
+
 </head>
+
 <body>
-  <main>
-    <h1>통합사회 4단원 원본 HTML을 아직 가져오지 않았습니다.</h1>
-    <p>원본을 변형하지 않기 위해 이 파일은 자리 표시자입니다.</p>
-    <p>사용자 PC에서 아래 명령을 실행하면 로컬 원본 HTML 소스가 이 파일로 <strong>그대로 복사</strong>됩니다.</p>
-    <p><code>npm run import:society</code></p>
-    <p class="path">기본 원본 경로: <code>C:/Users/a3327/Downloads/통합사회_4단원_정리.html</code></p>
-  </main>
+
+<!-- ─────────── PAGE HEADER ─────────── -->
+
+<div class="page-header">
+
+  <div class="subject-label">통합사회 · IV. 문화와 다양성</div>
+
+  <div class="page-title">단원 핵심 정리 노트</div>
+
+  <div class="tab-bar" id="tabBar">
+
+    <button class="tab-btn active" onclick="switchTab(0)"><span class="tab-number">1</span>문화 변동</button>
+
+    <button class="tab-btn" onclick="switchTab(1)"><span class="tab-number">2</span>문화 변동의 양상</button>
+
+    <button class="tab-btn" onclick="switchTab(2)"><span class="tab-number">3</span>문화 상대주의와 보편 윤리</button>
+
+    <button class="tab-btn" onclick="switchTab(3)"><span class="tab-number">4</span>다문화 사회와 문화적 다양성</button>
+
+  </div>
+
+</div>
+
+
+
+<div class="content-wrap">
+
+
+
+<!-- ══════ TAB 0 · 문화 변동 ══════ -->
+
+<div class="tab-panel active" id="panel-0">
+
+  <div class="section-title"><span>🔄</span>문화 변동 (4-2)</div>
+
+  <div class="def-box"><strong>의미</strong>: 한 사회의 문화가 새로운 문화 요소의 등장이나 다른 사회의 문화와 접촉하면서 크게 변화하는 양상</div>
+
+
+
+  <div class="subsection-title">문화 변동의 요인</div>
+
+  <div class="factor-grid">
+
+    <div class="factor-card">
+
+      <div class="fc-head"><span class="badge badge-blue">내재적 요인</span></div>
+
+      <ul class="fc-sub">
+
+        <li><strong>발명</strong> (無→有): 없던 것을 새로 만들어냄<br><span class="ex">ex) 1차(바퀴)→2차(자동차), 자전거, 세탁기, 백열전구, 나일론, 컴퓨터</span></li>
+
+        <li style="margin-top:8px"><strong>발견</strong>: 이미 존재하던 것을 찾아내 세상에 알림<br><span class="ex">ex) 페니실린, 흑점, 세포, X선, 비타민, 전기, 중력</span></li>
+
+      </ul>
+
+    </div>
+
+    <div class="factor-card">
+
+      <div class="fc-head"><span class="badge badge-green">외재적 요인 (문화 전파)</span></div>
+
+      <ul class="fc-sub">
+
+        <li><strong>직접 전파</strong>: 교역·전쟁 등 직접 접촉<br><span class="ex">ex) 목화(문익점), 사탕수수(알렉산드로스)</span></li>
+
+        <li style="margin-top:6px"><strong>간접 전파</strong>: 매개체(인터넷·인쇄물)를 통한 전파<br><span class="ex">ex) 드라마를 통한 한류 전파</span></li>
+
+        <li style="margin-top:6px"><strong>자극 전파</strong>: 다른 문화 아이디어 → 새 문화 요소 창조<br><span class="ex">ex) 신라 이두문자, 체로키족 문자</span></li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="subsection-title">발명 vs 발견 비교</div>
+
+  <table class="cmp-table">
+
+    <thead><tr><th>구분</th><th>발명</th><th>발견</th></tr></thead>
+
+    <tbody>
+
+      <tr><td>개념</td><td>이전에 없던 것을 새로 만들어냄</td><td>이미 존재하던 것을 찾아내 세상에 알림</td></tr>
+
+      <tr><td>기존 존재</td><td>존재하지 않음 (無→有)</td><td>이미 존재함</td></tr>
+
+      <tr><td>예시</td><td>자전거, 컴퓨터, 나일론</td><td>페니실린, 중력, X선, 세포</td></tr>
+
+    </tbody>
+
+  </table>
+
+
+
+  <div class="subsection-title">문화 전파의 3가지 유형</div>
+
+  <table class="cmp-table">
+
+    <thead><tr><th>유형</th><th>의미</th><th>예시</th></tr></thead>
+
+    <tbody>
+
+      <tr><td>직접 전파</td><td>교역·전쟁 등 두 문화의 직접 접촉</td><td>목화(문익점), 사탕수수</td></tr>
+
+      <tr><td>간접 전파</td><td>인터넷·인쇄물 등 매개체를 통한 전파</td><td>드라마를 통한 한류 전파</td></tr>
+
+      <tr><td>자극 전파</td><td>다른 문화 아이디어 → 새 문화 요소 탄생</td><td>신라 이두문자, 체로키족 문자</td></tr>
+
+    </tbody>
+
+  </table>
+
+  <div class="note">자극 전파는 다른 사회의 문화에서 <strong>아이디어만</strong> 빌려 새로운 문화 요소를 창조하는 것으로, 직접 문화 요소가 전달되는 직접·간접 전파와 구별됩니다.</div>
+
+
+
+  <!-- QUIZ 0 -->
+
+  <div class="quiz-section" id="quiz-0"></div>
+
+</div>
+
+
+
+<!-- ══════ TAB 1 · 문화 변동의 양상 ══════ -->
+
+<div class="tab-panel" id="panel-1">
+
+  <div class="section-title"><span>🌐</span>문화 변동의 양상 (4-2 이어서)</div>
+
+  <div class="def-box"><strong>문화 접변</strong>: 전파에 의해 서로 다른 사회 두 문화가 오랫동안 전면적인 접촉을 하면서 발생하는 문화 변동</div>
+
+
+
+  <div class="subsection-title">① 문화 접변의 3가지 양상</div>
+
+  <div class="factor-grid" style="grid-template-columns:1fr 1fr 1fr">
+
+    <div class="factor-card" style="border-top:3px solid #1a73e8">
+
+      <div class="fc-head"><span class="badge badge-blue">문화 병존</span></div>
+
+      <div class="flow"><span class="flow-item">A+B</span><span class="flow-arrow">→</span><span class="flow-item">A+B</span></div>
+
+      <ul class="fc-sub">
+
+        <li>고유한 정체성을 유지하며 공존</li>
+
+        <li class="ex" style="list-style:none;margin-left:0">ex) 인도 힌디어·영어 공용, 한국 양의학·한의학, 인천 차이나타운</li>
+
+      </ul>
+
+      <div class="note" style="font-size:12px;margin-top:8px">기존 문화 정체성 보존 ✅ 한 문화만 중시하면 갈등 ⚠️</div>
+
+    </div>
+
+    <div class="factor-card" style="border-top:3px solid #34a853">
+
+      <div class="fc-head"><span class="badge badge-green">문화 융합</span></div>
+
+      <div class="flow"><span class="flow-item">A+B</span><span class="flow-arrow">→</span><span class="flow-item">C</span></div>
+
+      <ul class="fc-sub">
+
+        <li>기존 문화+다른 문화 → 새로운 문화 형성</li>
+
+        <li class="ex" style="list-style:none;margin-left:0">ex) 멕시코 과달루페 성모상, 성공회 강화 성당</li>
+
+      </ul>
+
+      <div class="note" style="font-size:12px;margin-top:8px">정체성 유지하며 새 문화 창조 → 다양성 실현 ✅</div>
+
+    </div>
+
+    <div class="factor-card" style="border-top:3px solid #ea4335">
+
+      <div class="fc-head"><span class="badge badge-red">문화 동화</span></div>
+
+      <div class="flow"><span class="flow-item">A+B</span><span class="flow-arrow">→</span><span class="flow-item">A</span></div>
+
+      <ul class="fc-sub">
+
+        <li>기존 문화가 흡수·대체되어 소멸</li>
+
+        <li class="ex" style="list-style:none;margin-left:0">ex) 유럽 식민지배로 호주·아메리카 원주민 언어·신앙 소멸</li>
+
+      </ul>
+
+      <div class="warning" style="font-size:12px;margin-top:8px">문화 정체성 상실, 다양성 훼손 ⚠️</div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="subsection-title">② 자발성에 따른 분류</div>
+
+  <table class="cmp-table">
+
+    <thead><tr><th>구분</th><th>의미</th><th>사례</th></tr></thead>
+
+    <tbody>
+
+      <tr><td>강제적 문화 접변</td><td>전달 측 힘 > 수용 측 힘 → 문화 요소 강제 이식</td><td>일제 강점기 일본어 강요, 우리 문화 말살</td></tr>
+
+      <tr><td>자발적 문화 접변</td><td>수용 측이 유용·바람직하다 여겨 자발적 수용</td><td>나바호족이 에스파냐인 은세공 기술 자발적 수용</td></tr>
+
+    </tbody>
+
+  </table>
+
+
+
+  <div class="subsection-title">⚠️ 자극 전파 vs 문화 융합</div>
+
+  <table class="cmp-table">
+
+    <thead><tr><th>구분</th><th>자극 전파</th><th>문화 융합</th></tr></thead>
+
+    <tbody>
+
+      <tr><td>위치</td><td>원인 (문화 변동의 요인)</td><td>결과 (문화 변동의 양상)</td></tr>
+
+      <tr><td>직접성</td><td>아이디어만 빌림 → 낮음</td><td>요소 결합 → 상대적으로 높음</td></tr>
+
+      <tr><td>공통점</td><td colspan="2">문화 접변·전파 포함, 새로운 문화 요소 등장</td></tr>
+
+    </tbody>
+
+  </table>
+
+
+
+  <div class="section-title" style="margin-top:36px"><span>🏛️</span>전통 문화 &amp; 창조적 계승</div>
+
+  <div class="def-box"><strong>전통 문화의 의미</strong>: 한 사회에서 오랜 기간 유지되면서 그 사회의 고유한 가치를 인정받는 문화</div>
+
+
+
+  <div class="subsection-title">전통 문화의 의의 5가지</div>
+
+  <ul class="info-list">
+
+    <li><span class="num">1</span>문화 정체성·고유성 유지</li>
+
+    <li><span class="num">2</span>사회 유지와 통합</li>
+
+    <li><span class="num">3</span>세계 문화의 다양성 증진</li>
+
+    <li><span class="num">4</span>사회 구성원의 자긍심 고취</li>
+
+    <li><span class="num">5</span>국가 이미지를 높여 문화 산업 육성에 이바지</li>
+
+  </ul>
+
+
+
+  <div class="subsection-title">전통 문화의 창조적 계승과 발전</div>
+
+  <div class="def-box">과거의 것을 단순히 보존·유지하는 것이 아니라 전통이 지닌 고유한 가치를 재해석하여 창조하는 방안 모색<br><strong>헌법 제9조</strong>: "국가는 전통 문화의 계승·발전과 민족 문화의 창달에 노력해야 한다."</div>
+
+  <div class="factor-grid" style="grid-template-columns:1fr 1fr 1fr">
+
+    <div class="factor-card"><div class="fc-head"><span class="badge badge-blue">방안 ①</span></div><div class="fc-sub">전통 문화가 현대의 새로운 문화 요소와 조화를 이루도록 <strong>현대적 감각으로 재구성</strong></div></div>
+
+    <div class="factor-card"><div class="fc-head"><span class="badge badge-green">방안 ②</span></div><div class="fc-sub">고유성·독창성을 지키면서 비판적 관점에서 <strong>능동적으로 다른 사회의 문화 수용</strong></div></div>
+
+    <div class="factor-card"><div class="fc-head"><span class="badge badge-purple">방안 ③</span></div><div class="fc-sub">인류 문화 발전을 위해 우리 전통 문화를 알리고 타 문화를 존중하는 <strong>세계시민 자세</strong></div></div>
+
+  </div>
+
+  <div class="note">예시: 국립 중앙 박물관 굿즈, 밴드 이날치 &lt;범 내려온다&gt;</div>
+
+
+
+  <!-- QUIZ 1 -->
+
+  <div class="quiz-section" id="quiz-1"></div>
+
+</div>
+
+
+
+<!-- ══════ TAB 2 · 문화 상대주의와 보편 윤리 ══════ -->
+
+<div class="tab-panel" id="panel-2">
+
+  <div class="section-title"><span>⚖️</span>문화 상대주의와 보편 윤리 (4-3 ~ 4-5)</div>
+
+
+
+  <div class="subsection-title">1. 문화적 차이의 발생 원인</div>
+
+  <table class="cmp-table">
+
+    <thead><tr><th>환경</th><th>내용</th><th>예시</th></tr></thead>
+
+    <tbody>
+
+      <tr><td>자연환경</td><td>지형·기후 등에 따라 다른 생활 방식 형성</td><td>스위스: 목축→치즈 / 일본: 계절풍→해산물·쌀 / 더운 지방: 개방적 가옥</td></tr>
+
+      <tr><td>인문환경</td><td>종교·사회 등에 따라 다른 생활 방식 형성</td><td>서남아시아: 종교 교리로 돼지고기 금기 / 남태평양: 돼지를 신성하게 여겨 혼인 행사에 사용</td></tr>
+
+    </tbody>
+
+  </table>
+
+
+
+  <div class="subsection-title">2. 문화를 이해하는 태도</div>
+
+  <div class="factor-grid">
+
+    <div class="factor-card" style="border-top:3px solid #ea4335">
+
+      <div class="fc-head"><span class="badge badge-red">자문화 중심주의</span><span style="font-size:11px;color:#5f6368">(문화 절대주의)</span></div>
+
+      <ul class="fc-sub">
+
+        <li><strong>의미</strong>: 자신의 문화를 가장 우월하다고 여기고 다른 문화를 부정적으로 평가</li>
+
+        <li style="margin-top:4px"><strong>순기능</strong>: 사회 통합, 자기 문화 자긍심, 전통문화 보전</li>
+
+        <li style="margin-top:4px"><strong>한계</strong>: 다른 문화 차별·갈등, 국수주의, 문화 제국주의, 국제 고립</li>
+
+        <li style="margin-top:4px" class="ex"><strong>사례</strong>: 아마존 자파테크족(강제 의복 착용), 대명혼일도</li>
+
+      </ul>
+
+    </div>
+
+    <div class="factor-card" style="border-top:3px solid #fbbc04">
+
+      <div class="fc-head"><span class="badge badge-yellow">문화 사대주의</span><span style="font-size:11px;color:#5f6368">(등화 사대주의)</span></div>
+
+      <ul class="fc-sub">
+
+        <li><strong>의미</strong>: 다른 문화를 맹목적으로 동경하고 자기 문화를 열등하다고 여기는 태도</li>
+
+        <li style="margin-top:4px"><strong>순기능</strong>: 다른 문화의 우수한 점 학습, 선진 문화 수용 유리</li>
+
+        <li style="margin-top:4px"><strong>한계</strong>: 자기 문화 정체성·자부심 상실, 고유문화 소멸</li>
+
+        <li style="margin-top:4px" class="ex"><strong>사례</strong>: 한자 숭상에 따른 한글 멸시, 길거리 영어 간판 남용</li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="card" style="border-top:3px solid #34a853;margin-top:14px">
+
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><span class="badge badge-green" style="font-size:14px;padding:4px 14px">② 문화 상대주의</span></div>
+
+    <table class="cmp-table">
+
+      <thead><tr><th>항목</th><th>내용</th></tr></thead>
+
+      <tbody>
+
+        <tr><td>의미</td><td>특정 문화를 기준으로 우열을 가리지 않고, 그 사회의 특수한 환경과 역사적·사회적 맥락에서 문화를 이해하는 태도</td></tr>
+
+        <tr><td>특징</td><td>각 문화가 서로 다른 자연환경과 역사적·사회적 상황에 따라 다르게 형성된다는 점 고려</td></tr>
+
+        <tr><td>순기능</td><td>서로 다른 문화 존중, 갈등 방지 / 문화 다양성 보존·다문화 사회 이해</td></tr>
+
+        <tr><td>한계</td><td>지나치면 극단적 문화 상대주의 → 보편 가치를 훼손하는 문화까지 인정</td></tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+
+  <div class="subsection-title">3. 보편 윤리 차원의 문화 성찰</div>
+
+  <div class="factor-grid">
+
+    <div class="factor-card" style="border-top:3px solid #ea4335">
+
+      <div class="fc-head"><span class="badge badge-red">극단적 문화 상대주의</span></div>
+
+      <ul class="fc-sub">
+
+        <li><strong>의미</strong>: 문화의 특수성을 근거로 보편적 가치를 훼손하는 문화도 존중해야 한다는 입장</li>
+
+        <li style="margin-top:6px"><strong>문제점</strong>: 살인·폭력 등 받아들이기 어려운 문화까지 인정</li>
+
+      </ul>
+
+    </div>
+
+    <div class="factor-card" style="border-top:3px solid #34a853">
+
+      <div class="fc-head"><span class="badge badge-green">보편 윤리</span></div>
+
+      <ul class="fc-sub">
+
+        <li><strong>의미</strong>: 시대·사회를 초월해 모든 사람이 따라야 할 보편적 윤리 기준 (황금률, 보편적 도덕 원리)</li>
+
+        <li style="margin-top:6px"><strong>필요성</strong>: 극단적 상대주의 방지 / 인권·존엄성 존중 / 바람직한 문화 발전</li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="subsection-title">다양한 종교의 황금률</div>
+
+  <div class="gr-grid">
+
+    <div class="gr-item"><div class="gr-rel">불교</div>"어떤 일로 고통받은 적이 있다면 그 방식으로 남에게 상처를 주지 마라."</div>
+
+    <div class="gr-item"><div class="gr-rel">크리스트교</div>"남이 너에게 해 주기를 바라는 대로 너도 다른 사람을 대하라."</div>
+
+    <div class="gr-item"><div class="gr-rel">이슬람교</div>"나를 위하는 만큼 남을 위하지 않는 사람은 신앙인이 아니다."</div>
+
+    <div class="gr-item"><div class="gr-rel">힌두교</div>"너에게 고통스러운 일을 다른 사람에게 강요하지 마라."</div>
+
+    <div class="gr-item"><div class="gr-rel">유대교</div>"너에게 해로운 일을 이웃에게 행하지 마라."</div>
+
+    <div class="gr-item"><div class="gr-rel">유교</div>"네가 원하지 않는 바를 남에게 행하지 마라."</div>
+
+  </div>
+
+
+
+  <div class="subsection-title">보편 윤리 차원에서의 문화 성찰</div>
+
+  <table class="cmp-table">
+
+    <thead><tr><th>구분</th><th>항목</th><th>내용</th></tr></thead>
+
+    <tbody>
+
+      <tr><td rowspan="2">자문화 성찰</td><td>연고주의</td><td>혈연·지연·학연 우선 → 레거시 입학 등 / 긍정: 소속감·정체성 / 부정: 공정한 기회 박탈</td></tr>
+
+      <tr><td>지나친 권위주의</td><td>가부장적 전통의 영향 → 평등한 관계 침해, 인권 문제</td></tr>
+
+      <tr><td rowspan="2">타문화 성찰</td><td>인도 결혼 지참금 문화</td><td>가정 폭력·여성 생명 위협 → 보편 윤리에 부합하지 않음</td></tr>
+
+      <tr><td>명예 살인</td><td>집안 명예를 이유로 가족 살해 → 인간 존엄성 훼손 → 보편 윤리에 부합하지 않음</td></tr>
+
+    </tbody>
+
+  </table>
+
+
+
+  <!-- QUIZ 2 -->
+
+  <div class="quiz-section" id="quiz-2"></div>
+
+</div>
+
+
+
+<!-- ══════ TAB 3 · 다문화 사회 ══════ -->
+
+<div class="tab-panel" id="panel-3">
+
+  <div class="section-title"><span>🌍</span>다문화 사회와 문화적 다양성 존중 (4-4 ~ 4-5)</div>
+
+
+
+  <div class="subsection-title">1. 다문화 사회의 의미와 등장 배경</div>
+
+  <div class="def-box">
+
+    <strong>다문화 사회</strong>: 한 사회 내에서 인종이나 언어, 종교 등 문화적 배경이 다른 다양한 집단이 함께 살아가면서 여러 문화가 공존하는 사회<br><br>
+
+    <strong>등장 배경</strong>: 교통·통신의 발달과 세계화로 국가 간 인구 이동이 늘어나면서 서로 다른 문화권에 속한 사람들의 접촉 기회가 빈번해짐
+
+  </div>
+
+
+
+  <div class="subsection-title">우리나라의 다문화 현황 (그래프)</div>
+
+  <div class="chart-grid">
+
+    <div class="chart-wrap"><div class="chart-title">국내 거주 외국인 주민 수 및 비율 추이</div><div class="chart-sub">출처: 행정안전부 (2023)</div><canvas id="chartForeign" height="220"></canvas></div>
+
+    <div class="chart-wrap"><div class="chart-title">한국 국적이 아닌 외국인 주민 유형별 현황 (2022년)</div><div class="chart-sub">총 1,752,346명 / 출처: 행정안전부 (2023)</div><canvas id="chartType" height="220"></canvas></div>
+
+  </div>
+
+  <div class="chart-grid">
+
+    <div class="chart-wrap"><div class="chart-title">한국인의 다문화 수용성 지수 (2021년)</div><div class="chart-sub">성인·청소년 비교 / 출처: 여성가족부 (2021)</div><canvas id="chartAccept" height="220"></canvas></div>
+
+    <div class="chart-wrap"><div class="chart-title">자국민 우선 고용 찬성률 &amp; 외국인 이웃 기피 비율</div><div class="chart-sub">한국 vs 독일·미국·스웨덴 비교 (2021)</div><canvas id="chartCmp" height="220"></canvas></div>
+
+  </div>
+
+
+
+  <div class="subsection-title">2. 다문화 사회의 양상</div>
+
+  <div class="factor-grid">
+
+    <div class="factor-card" style="border-top:3px solid #34a853">
+
+      <div class="fc-head"><span class="badge badge-green">긍정적 측면</span></div>
+
+      <ul class="fc-sub">
+
+        <li>문화의 <strong>다양성</strong> 증진: 선택의 폭 확대</li>
+
+        <li>문화 발전 촉진: 상호 작용으로 창조적 문화 발전</li>
+
+        <li><strong>경제</strong> 활성화: 이주민의 경제 활동 참여 → 성장 기여</li>
+
+        <li>저출생·고령화로 발생한 <strong>노동력</strong> 부족 문제 해결</li>
+
+      </ul>
+
+    </div>
+
+    <div class="factor-card" style="border-top:3px solid #ea4335">
+
+      <div class="fc-head"><span class="badge badge-red">부정적 측면</span></div>
+
+      <ul class="fc-sub">
+
+        <li><strong>문화적 차이</strong>에 따른 가치관·생활방식 갈등</li>
+
+        <li>다른 문화에 대한 <strong>편견</strong> → <strong>제노포비아</strong>와 같은 심각한 갈등</li>
+
+        <li>이주민과 내국인 간 경제적 자원·일자리 경쟁</li>
+
+        <li>언어 차이로 의사소통 어려움, 가치관 차이 갈등</li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+  <div class="note">제노포비아(Xenophobia): 다른 문화권에서 온 사람을 혐오하거나 기피하는 현상 (Xenos: 낯선 사람 + Phobos: 공포)</div>
+
+
+
+  <div class="subsection-title">3. 다문화 사회의 갈등 해결 방안</div>
+
+  <div class="card">
+
+    <div class="card-title">① 개인의 노력</div>
+
+    <ul class="info-list">
+
+      <li><span class="num">1</span><strong>문화 상대주의</strong> 입장에서 문화 간 차이를 인정하고 이해</li>
+
+      <li><span class="num">2</span>편견·고정관념을 버리고 <strong>문화적 다양성</strong>을 존중하는 태도 함양</li>
+
+      <li><span class="num">3</span>다른 문화의 고유한 가치를 인정하는 <strong>관용</strong>의 자세 필요</li>
+
+      <li><span class="num">4</span>다문화 사회 구성원들과 지속적으로 <strong>소통</strong></li>
+
+    </ul>
+
+  </div>
+
+  <div class="card" style="margin-top:12px">
+
+    <div class="card-title">② 사회의 노력</div>
+
+    <table class="cmp-table" style="margin-top:8px">
+
+      <thead><tr><th>항목</th><th>내용</th></tr></thead>
+
+      <tbody>
+
+        <tr><td>다문화 교육 기회 제공</td><td>이주민 언어·취업·창업 교육 지원 / 가족·지역사회·학생 대상 다문화 교육 확대</td></tr>
+
+        <tr><td>법적·제도적 장치 강화</td><td>취업·의료·교육 분야 이주민 지원 정책 ㊟ 다문화 가족 지원법, 외국인 근로자 고용 등에 관한 법률</td></tr>
+
+        <tr><td>다문화 지원 사업 진행</td><td>직장 체험, 가족 캠프, 장학금 지급 등 다문화 가정 부모 취업·자녀 학습 지원</td></tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+
+  <div class="subsection-title">4. 다문화 사회를 바라보는 관점 (이민자 정책)</div>
+
+  <div class="policy-grid">
+
+    <div class="policy-card policy-melting">
+
+      <div class="pc-title">동화주의 (용광로 이론)</div>
+
+      <p style="font-size:13px;margin-bottom:6px"><strong>의미</strong>: 주류 문화를 중심으로 소수 문화를 흡수·통합시켜 사회를 통합하려는 입장</p>
+
+      <p style="font-size:13px;margin-bottom:6px">✅ <strong>순기능</strong>: 사회 통합·질서 유지, 이민자의 주류 사회 편입 원활</p>
+
+      <p style="font-size:13px">⚠️ <strong>한계</strong>: 소수 인종·민족 문화·고유성·인권 침해, 갈등 심화</p>
+
+    </div>
+
+    <div class="policy-card policy-salad">
+
+      <div class="pc-title">다문화주의 (샐러드 볼 이론)</div>
+
+      <p style="font-size:13px;margin-bottom:6px"><strong>의미</strong>: 다양한 문화가 대등하게 조화를 이루며 공존해야 한다는 입장</p>
+
+      <p style="font-size:13px;margin-bottom:6px">✅ <strong>순기능</strong>: 소수자 집단의 문화 고유성 인정, 다양한 문화가 대등하게 공존</p>
+
+      <p style="font-size:13px">⚠️ <strong>한계</strong>: 기존 주류 사회의 정체성·통합성 약화 가능</p>
+
+      <div class="note" style="margin-top:8px;font-size:12px">캐나다의 모자이크 정책(1971년 다문화주의 선언)</div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- QUIZ 3 -->
+
+  <div class="quiz-section" id="quiz-3"></div>
+
+</div>
+
+
+
+</div><!-- end content-wrap -->
+
+<button class="totop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+
+
+<script>
+
+
+
+const QUIZ_DATA = {
+
+0:{
+
+ ox:[
+
+  {q:"발명은 이미 존재하던 것을 찾아내 세상에 알리는 행위이다.",a:false,exp:"발명은 無→有, 없던 것을 새로 만들어내는 것입니다. 이미 존재하던 것을 찾아내 알리는 것은 '발견'입니다."},
+
+  {q:"자전거와 컴퓨터는 발명의 사례에 해당한다.",a:true,exp:"자전거, 컴퓨터, 세탁기, 나일론 등은 모두 발명(無→有)의 사례입니다."},
+
+  {q:"중력과 페니실린의 발견은 문화 변동의 내재적 요인에 해당한다.",a:true,exp:"발견은 내재적 요인 중 하나입니다. 중력, 페니실린, 세포, X선이 발견의 사례입니다."},
+
+  {q:"문화 전파는 문화 변동의 내재적 요인에 해당한다.",a:false,exp:"문화 전파는 다른 문화와 접촉·교류를 통한 외재적 요인입니다."},
+
+  {q:"직접 전파는 교역이나 전쟁 등 직접적 접촉 과정에서 이루어진다.",a:true,exp:"직접 전파는 서로 다른 문화에 있는 사람들이 교역이나 전쟁 같이 직접적인 접촉 과정에서 일어납니다."},
+
+  {q:"드라마를 통한 한류 전파는 직접 전파의 사례이다.",a:false,exp:"드라마는 매개체(영상 미디어)를 통한 간접 전파의 사례입니다."},
+
+  {q:"자극 전파는 다른 사회의 문화 요소 자체가 그대로 전달되는 방식이다.",a:false,exp:"자극 전파는 아이디어만 얻어 새로운 문화 요소를 창조하는 것입니다. 요소 자체가 전달되지 않습니다."},
+
+  {q:"신라 이두문자는 한자의 음·뜻에서 아이디어를 얻은 자극 전파의 사례이다.",a:true,exp:"신라 이두문자는 한자에서 아이디어를 얻어 만든 새로운 표기 체계로, 자극 전파의 대표 사례입니다."},
+
+  {q:"체로키족 문자는 영어 알파벳에서 아이디어를 얻어 만든 자극 전파의 사례이다.",a:true,exp:"체로키족은 영어 알파벳을 참고하여 독자적인 문자를 만들었습니다. 자극 전파의 전형적인 사례입니다."},
+
+  {q:"문화 변동의 외재적 요인은 직접 전파, 간접 전파, 자극 전파로 나뉜다.",a:true,exp:"외재적 요인(문화 전파)은 직접·간접·자극 전파 세 가지로 구분됩니다."}
+
+ ],
+
+ mc:[
+
+  {q:"다음 중 문화 변동의 <em>내재적 요인</em>에 해당하는 것은?",opts:["드라마를 통한 한류 전파","교역을 통한 면화 전달","컴퓨터의 발명","전쟁을 통한 문화 접촉"],a:2,exp:"컴퓨터의 발명(無→有)은 내재적 요인입니다. 나머지는 모두 외재적 요인(문화 전파)입니다."},
+
+  {q:"문화 변동의 요인 중 <em>발견</em>의 사례로 옳지 않은 것은?",opts:["세포","X선","나일론","중력"],a:2,exp:"나일론은 인공 합성한 발명입니다. 세포, X선, 중력은 이미 존재하던 것을 찾아낸 발견입니다."},
+
+  {q:"'한자의 음과 뜻에서 아이디어를 얻어 신라에서 우리말 표기 체계를 만들었다.' 이에 해당하는 문화 전파 유형은?",opts:["직접 전파","간접 전파","자극 전파","강제 전파"],a:2,exp:"다른 문화 요소에서 아이디어만 빌려 새로운 문화 요소를 창조한 것이므로 자극 전파입니다."},
+
+  {q:"문화 전파의 유형과 사례의 연결이 <em>옳은</em> 것은?",opts:["직접 전파 – 드라마를 통한 한류","간접 전파 – 알렉산드로스 정복으로 사탕수수 전달","자극 전파 – 영어 알파벳 참고하여 만든 체로키 문자","직접 전파 – 인터넷을 통한 K-pop 확산"],a:2,exp:"체로키 문자는 영어 알파벳에서 아이디어를 얻은 자극 전파입니다. ①은 간접, ②는 직접, ④는 간접 전파입니다."},
+
+  {q:"문화 변동의 내재적 요인에 대한 설명으로 <em>옳은</em> 것은?",opts:["발명과 발견 모두 새로운 것을 창조하는 과정이다.","발견은 이전에 없던 문화 요소를 만들어내는 것이다.","발명과 발견은 모두 외부 문화와의 접촉 없이 일어난다.","발명은 이미 존재하던 것을 찾아내는 것이다."],a:2,exp:"발명과 발견은 모두 다른 문화와의 접촉 없이 사회 내부에서 일어나는 내재적 요인입니다."},
+
+  {q:"다음 중 <em>간접 전파</em>의 사례로 가장 적절한 것은?",opts:["문익점이 원나라에서 목화씨를 가져와 재배","알렉산드로스 대왕의 정복으로 그리스 문화 전파","소셜 미디어를 통한 K-pop 세계 확산","신라에서 한자를 바탕으로 이두문자 창제"],a:2,exp:"소셜 미디어(인터넷)는 매개체이므로 간접 전파입니다. ①②는 직접 전파, ④는 자극 전파입니다."},
+
+  {q:"문화 변동의 요인 중 <em>외재적</em> 요인에 해당하는 것은?",opts:["발명","발견","직접 전파","발명과 발견"],a:2,exp:"직접 전파는 다른 문화와의 접촉을 통한 외재적 요인입니다. 발명과 발견은 내재적 요인입니다."},
+
+  {q:"다음 중 <em>발명</em>에 해당하지 않는 것은?",opts:["백열전구","자전거","세탁기","흑점"],a:3,exp:"흑점은 이미 존재하던 것을 관측·발견한 것으로 발명이 아닌 발견입니다."},
+
+  {q:"자극 전파와 간접 전파의 공통점으로 옳은 것은?",opts:["두 문화의 직접적인 사람 간 접촉이 필요하다.","매개체(미디어 등)를 통해 문화가 전달된다.","다른 사회의 문화를 계기로 새로운 문화 요소가 생겨난다.","문화 요소 자체가 그대로 전달된다."],a:2,exp:"두 유형 모두 다른 사회의 문화가 새로운 문화 요소 생성에 기여한다는 공통점이 있습니다."},
+
+  {q:"사례와 문화 변동 요인의 연결이 <em>모두 옳은</em> 것은?",opts:["페니실린–발명 / 컴퓨터–발견","세포–발명 / 나일론–발견","목화(문익점)–직접 전파 / 드라마 한류–간접 전파","이두문자–직접 전파 / 체로키 문자–간접 전파"],a:2,exp:"목화는 직접 접촉을 통한 직접 전파, 드라마 한류는 매개체를 통한 간접 전파입니다."}
+
+ ],
+
+ hard:[
+
+  {q:"다음 중 자극 전파와 직접·간접 전파의 <em>결정적 차이</em>로 가장 옳은 것은?",opts:["자극 전파는 사람 간 직접 접촉이 필수적이다.","자극 전파는 원래 문화 요소 자체는 전달되지 않고 아이디어만 차용해 새 문화 요소를 창조한다.","자극 전파는 세 유형 중 직접성이 가장 높다.","자극 전파는 반드시 강제적인 방식으로만 이루어진다."],a:1,exp:"자극 전파의 결정적 특징은 원래 문화 요소 자체가 전달되지 않는다는 것입니다. 아이디어·힌트만 빌려 전혀 다른 새로운 결과물을 독자적으로 만들어냅니다. 직접·간접 전파는 문화 요소 자체가 전달됩니다."},
+
+  {q:"'발명'과 '자극 전파'는 모두 새로운 문화 요소가 생겨난다는 공통점이 있다. 두 개념을 구분하는 핵심 기준에 대한 설명으로 가장 옳은 것은?",opts:["발명은 항상 의도적으로 이루어지고, 자극 전파는 우연히 발생한다.","발명은 내재적 요인이고, 자극 전파는 외재적 요인이다. 핵심 차이는 다른 사회 문화의 개입 여부이다.","발명은 결과물이 크고, 자극 전파는 결과물이 작다.","발명은 현대에만 나타나고, 자극 전파는 고대에만 나타난다."],a:1,exp:"핵심 구분 기준은 '다른 사회 문화의 개입 여부'입니다. 발명은 외부 문화의 개입 없이 사회 내부에서 자체 창출하는 내재적 요인, 자극 전파는 다른 문화에서 아이디어를 얻어 창조하는 외재적 요인입니다."},
+
+  {q:"문화 변동의 세 가지 전파 유형을 직접성이 높은 것부터 올바르게 나열한 것은?",opts:["자극 전파 > 직접 전파 > 간접 전파","간접 전파 > 자극 전파 > 직접 전파","직접 전파 > 간접 전파 > 자극 전파","직접 전파 > 자극 전파 > 간접 전파"],a:2,exp:"직접 전파(사람들이 직접 만나 문화 요소가 전달) > 간접 전파(매개체를 통해 전달, 직접 만남 불필요) > 자극 전파(문화 요소 자체가 아닌 아이디어만 차용, 직접성 가장 낮음)."},
+
+  {q:"'스마트폰의 발명'과 'SNS를 통한 문화 확산'을 각각 바르게 분류한 것은?",opts:["스마트폰 발명–외재적 요인 / SNS 확산–내재적 요인","스마트폰 발명–발견 / SNS 확산–직접 전파","스마트폰 발명–발명(내재적 요인) / SNS 확산–간접 전파(외재적 요인)","스마트폰 발명–자극 전파 / SNS 확산–발명"],a:2,exp:"스마트폰은 이전에 없던 것을 새로 만들어낸 발명(내재적 요인)입니다. SNS를 매개체로 문화가 전파되는 것은 간접 전파(외재적 요인)에 해당합니다."},
+
+  {q:"마리 퀴리의 라듐 확인을 '발명'이 아닌 '발견'으로 분류하는 이유로 가장 옳은 것은?",opts:["라듐을 처음으로 이름 붙였기 때문에","라듐은 퀴리가 실험하기 전에도 자연계에 이미 존재하고 있었기 때문에","퀴리가 단독으로 연구를 수행했기 때문에","실험실에서 합성했기 때문에"],a:1,exp:"발견은 '이미 존재하던 것을 찾아내 세상에 알리는 것'입니다. 라듐은 퀴리의 연구 이전부터 자연계에 존재했으므로 발명이 아닌 발견입니다."},
+
+  {q:"다음 중 현대 사회의 세 전파 유형과 사례의 연결이 <em>모두 옳은</em> 것은?",opts:["직접 전파–넷플릭스 K-드라마 / 간접 전파–해외 이민 / 자극 전파–이두문자","직접 전파–해외 유학 / 간접 전파–OTT 플랫폼 K-pop 확산 / 자극 전파–외래 종교 영향 받아 토착 종교 창시","직접 전파–소셜 미디어 / 간접 전파–국제 결혼 / 자극 전파–백열전구","직접 전파–이두문자 / 간접 전파–목화 전파 / 자극 전파–TV 드라마"],a:1,exp:"직접 전파: 해외 유학(직접 인적 접촉), 간접 전파: OTT 플랫폼(매개체), 자극 전파: 외래 종교에서 아이디어 얻어 토착 종교 창시(아이디어만 차용·독자 창조). 이것이 세 유형 모두 올바른 조합입니다."},
+
+  {q:"1차 발명(바퀴)이 2차 발명(자동차)의 기반이 되는 것처럼, 같은 방식의 현대적 사례로 가장 적절한 것은?",opts:["반도체 집적회로(1차 발명) → 스마트폰(2차 발명)","이두문자(1차) → 한글(2차)","목화 전파(1차) → 면직물(2차)","페니실린 발견(1차) → 항생제 처방(2차)"],a:0,exp:"반도체 집적회로라는 1차 발명을 기반으로 스마트폰이라는 2차 발명이 이루어졌습니다. 이는 발명이 연쇄적으로 이루어지는 '2차 발명'의 현대적 사례입니다."},
+
+  {q:"자극 전파가 일어나기 위한 조건과 특성을 가장 잘 설명한 것은?",opts:["두 사회의 직접적인 전쟁이 반드시 선행되어야 한다.","수용 사회가 다른 문화의 원리에서 영감을 받아 독자적으로 새 문화 요소를 창조할 능력이 있어야 한다.","전달되는 문화 요소의 완전성이 보장되어야 한다.","자극 전파는 강제적 문화 접변과 동일한 개념이다."],a:1,exp:"자극 전파는 ①두 문화 간 접촉(직접 또는 간접)이 선행되고, ②수용 사회가 다른 문화 요소의 원리에서 영감을 받아 독자적으로 새 문화 요소를 창조할 능력이 있을 때 일어납니다. 아이디어만 빌려 전혀 다른 결과물을 만든다는 것이 핵심입니다."},
+
+  {q:"다음 중 내재적 요인과 외재적 요인의 구분 기준으로 가장 옳은 것은?",opts:["변동의 속도가 빠른가 느린가","의도적으로 이루어졌는가 우연히 이루어졌는가","다른 사회 문화와의 접촉·교류가 있었는가 없었는가","변동의 결과가 긍정적인가 부정적인가"],a:2,exp:"내재적 요인(발명·발견)은 외부 문화의 개입 없이 사회 내부에서 자체 발생하고, 외재적 요인(문화 전파)은 다른 사회와의 접촉·교류를 통해 발생합니다. '다른 사회 문화와의 접촉 여부'가 핵심 구분 기준입니다."},
+
+  {q:"다음 진술 중 <em>옳은</em> 것은?",opts:["자극 전파는 직접 전파에 비해 직접성이 높다.","발명과 발견은 모두 외재적 요인이다.","간접 전파는 매개체 없이 두 사회가 직접 만나 문화가 전달되는 것이다.","발명과 발견의 차이는 이전에 존재하지 않던 것을 창조했는지의 여부에 달려 있다."],a:3,exp:"발명은 無→有(이전에 없던 것 창조), 발견은 이미 존재하던 것을 찾아내는 것입니다. 두 개념의 차이는 이전에 존재하지 않던 것을 창조했는지의 여부에 있습니다. ①자극 전파는 직접성이 가장 낮습니다. ②발명·발견은 내재적 요인입니다. ③간접 전파는 매개체를 통한 전파입니다."}
+
+ ]
+
+},
+
+1:{
+
+ ox:[
+
+  {q:"문화 접변은 두 문화가 단기간 부분적으로 접촉할 때 발생한다.",a:false,exp:"문화 접변은 두 문화가 오랫동안 전면적인 접촉을 하면서 발생하는 문화 변동입니다."},
+
+  {q:"문화 병존은 두 문화가 각자의 정체성을 유지하면서 공존하는 양상이다.",a:true,exp:"문화 병존(A+B→A+B)은 두 문화가 고유한 정체성을 유지하며 함께 공존하는 상태입니다."},
+
+  {q:"문화 융합은 기존 문화 요소와 외래 문화 요소가 결합하여 새로운 제3의 문화가 형성되는 것이다.",a:true,exp:"문화 융합(A+B→C)은 두 문화가 결합하여 기존의 어느 문화와도 다른 새로운 문화를 만들어냅니다."},
+
+  {q:"문화 동화는 기존 문화가 다른 문화에 흡수·대체되어 소멸하는 양상이다.",a:true,exp:"문화 동화(A+B→A)는 한 사회의 문화가 다른 사회의 문화에 흡수·대체되어 사라지는 현상입니다."},
+
+  {q:"강제적 문화 접변은 문화를 수용하는 주체의 힘이 전달하는 주체의 힘보다 강할 때 일어난다.",a:false,exp:"강제적 문화 접변은 문화를 전달하는 주체의 힘이 수용하는 주체의 힘보다 강할 때 강제로 문화 요소를 이식하는 것입니다."},
+
+  {q:"자발적 문화 접변은 수용 주체가 전달받은 문화를 유용하다고 여겨 스스로 수용하는 방식이다.",a:true,exp:"자발적 문화 접변은 수용 주체가 다른 문화를 유용하거나 바람직하다고 판단하여 자율적으로 받아들이는 것입니다."},
+
+  {q:"멕시코의 과달루페 성모상은 문화 동화의 사례이다.",a:false,exp:"유럽 종교와 원주민 문화가 결합해 새로운 형태의 성모상이 탄생한 것이므로 문화 융합(A+B→C)의 사례입니다."},
+
+  {q:"전통 문화는 한 사회에서 오랜 기간 유지되면서 그 사회의 고유한 가치를 인정받는 문화이다.",a:true,exp:"전통 문화의 정의입니다. 오랜 기간 유지되며 고유한 가치를 인정받는다는 두 가지 특징이 핵심입니다."},
+
+  {q:"전통 문화의 창조적 계승은 과거의 것을 원형 그대로 보존·유지하는 것을 의미한다.",a:false,exp:"창조적 계승은 단순 보존이 아니라 전통의 고유한 가치를 재해석하여 현대에 맞게 창조적으로 발전시키는 것입니다."},
+
+  {q:"헌법 제9조에는 국가가 전통 문화의 계승·발전과 민족 문화의 창달에 노력해야 한다는 내용이 있다.",a:true,exp:"헌법 제9조: '국가는 전통 문화의 계승·발전과 민족 문화의 창달에 노력하여야 한다.'"}
+
+ ],
+
+ mc:[
+
+  {q:"다음 도식이 나타내는 문화 변동의 양상은? <strong>A + B → C</strong>",opts:["문화 병존","문화 융합","문화 동화","문화 전파"],a:1,exp:"A+B→C는 두 문화가 결합하여 새로운 문화 C가 형성되는 문화 융합입니다."},
+
+  {q:"'유럽 식민지배로 호주 원주민의 언어와 토속 신앙이 소멸하였다.' 이에 해당하는 문화 접변 양상은?",opts:["문화 병존","문화 융합","문화 동화","자발적 문화 접변"],a:2,exp:"원주민 문화가 유럽 문화에 흡수·대체되어 소멸하였으므로 문화 동화(A+B→A)입니다."},
+
+  {q:"강제적 문화 접변과 자발적 문화 접변의 구분 기준으로 가장 적절한 것은?",opts:["두 문화의 접촉 기간","문화 수용 주체의 자발성 여부","문화 변동의 속도","접촉하는 문화의 수"],a:1,exp:"구분 기준은 수용 주체의 자발성 여부입니다. 강제적 접변은 힘의 차이로 강제 이식, 자발적 접변은 수용 주체가 자발적으로 받아들입니다."},
+
+  {q:"다음 중 문화 병존의 사례로 가장 적절한 것은?",opts:["멕시코 과달루페 성모상 탄생","우리나라 양의학과 한의학의 공존","청나라 만주족 풍속의 소멸","일제 강점기 일본어 강요"],a:1,exp:"양의학과 한의학이 각자의 정체성을 유지하며 함께 존재하는 것은 문화 병존의 사례입니다."},
+
+  {q:"자극 전파와 문화 융합의 관계로 옳은 것은?",opts:["자극 전파는 결과이고, 문화 융합은 원인이다.","자극 전파는 원인(요인)이고, 문화 융합은 결과(양상)이다.","두 개념은 동일한 것을 다르게 표현한 것이다.","두 개념은 아무런 관련이 없다."],a:1,exp:"자극 전파는 문화 변동의 요인(외재적 요인)이고, 문화 융합은 그 결과로 나타나는 문화 변동의 양상입니다."},
+
+  {q:"전통 문화의 의의로 옳지 않은 것은?",opts:["문화 정체성과 고유성 유지","사회 유지와 통합에 기여","세계 문화의 획일화 촉진","국가 이미지를 높여 문화 산업 육성에 이바지"],a:2,exp:"전통 문화는 세계 문화의 다양성을 증진하는 역할을 합니다. 획일화는 전통 문화의 의의와 반대되는 개념입니다."},
+
+  {q:"다음 중 문화 변동의 양상이 다른 하나는?",opts:["과달루페 성모상(유럽+원주민 문화)","성공회 강화 성당(한국+기독교 건축)","호주 원주민 언어 소멸","멕시코 음식과 스페인 요리의 결합"],a:2,exp:"호주 원주민 언어 소멸은 문화 동화(A+B→A)이고, 나머지는 모두 문화 융합(A+B→C)의 사례입니다."},
+
+  {q:"전통 문화의 창조적 계승 방안으로 옳지 않은 것은?",opts:["전통 문화를 현대적 감각으로 재구성","고유성을 지키면서 비판적 관점에서 다른 문화 수용","다른 사회의 전통 문화를 존중하는 세계시민의 자세 함양","전통 문화를 원형 그대로 보존하여 변형을 금지"],a:3,exp:"창조적 계승은 원형 고수가 아니라 재해석과 창조입니다. 원형 그대로 보존·변형 금지는 창조적 계승과 거리가 멉니다."},
+
+  {q:"다음 중 '강제적 문화 접변'에 해당하는 사례는?",opts:["나바호족이 에스파냐인의 은세공 기술을 자발적으로 도입","일제 강점기 조선인에게 일본어 사용을 강요","인천 차이나타운에서 중국·한국 문화가 공존","멕시코에서 유럽·원주민 문화가 융합된 성모상 탄생"],a:1,exp:"일제 강점기 일본어 강요는 전달 측(일본)의 힘이 수용 측(조선)보다 강해 강제적으로 문화를 이식한 강제적 문화 접변의 대표 사례입니다."},
+
+  {q:"문화 정체성에 대한 설명으로 가장 옳은 것은?",opts:["외국 문화와의 공통점을 찾아 동질감을 형성하는 것","한 사회에서 오랜 세월 형성된 고유한 문화 및 자기 문화에 대한 동질적 인식으로 타문화와 구별되는 특성","모든 문화에 공통적으로 나타나는 보편적 요소","문화 변동으로 인해 새롭게 형성된 문화적 특성"],a:1,exp:"문화 정체성이란 한 사회에서 오랜 세월 형성된 고유한 문화 및 자기 문화에 대한 동질적 인식과 감정으로 타문화와 구별되는 고유한 특성입니다."}
+
+ ],
+
+ hard:[
+
+  {q:"문화 병존·융합·동화를 도식(A+B→?)으로 표현할 때, <em>올바르게 모두 나열한</em> 것은?",opts:["병존:A+B→A / 융합:A+B→C / 동화:A+B→A+B","병존:A+B→C / 융합:A+B→A / 동화:A+B→A+B","병존:A+B→A+B / 융합:A+B→C / 동화:A+B→A","병존:A+B→A+B / 융합:A+B→A / 동화:A+B→C"],a:2,exp:"병존은 두 문화 모두 유지(A+B→A+B), 융합은 제3의 새 문화 생성(A+B→C), 동화는 한 문화가 소멸(A+B→A)입니다. 이 구분이 시험에서 자주 혼용되므로 정확히 암기해야 합니다."},
+
+  {q:"강제적 문화 접변이 자발적 문화 접변보다 더 심각한 사회 문제를 야기할 수 있는 이유로 가장 적절한 것은?",opts:["강제적 접변은 항상 전쟁을 동반하기 때문에","강제적 접변은 수용 주체의 의지와 무관하게 힘에 의해 문화가 이식되어 정체성 훼손과 인권 침해로 이어지기 때문에","강제적 접변은 문화 변동의 속도가 너무 빠르기 때문에","강제적 접변은 경제적 피해만 유발하기 때문에"],a:1,exp:"강제적 문화 접변은 수용 주체의 자발적 의지와 무관하게 힘에 의해 문화가 이식되어, 고유문화와 언어의 소멸, 민족 정체성 훼손, 자기결정권 침해라는 심각한 문제를 일으킵니다. 일제 강점기 창씨개명·일본어 강요가 대표 사례입니다."},
+
+  {q:"자극 전파와 문화 융합의 관계에 대한 설명으로 가장 옳은 것은?",opts:["자극 전파는 변동의 결과(양상)이고, 문화 융합은 변동의 원인(요인)이다.","자극 전파는 변동의 원인(외재적 요인)이고, 문화 융합은 변동의 결과(양상)이다. 자극 전파가 일어나 문화 융합으로 이어질 수 있다.","자극 전파와 문화 융합은 동일한 현상을 다른 이름으로 부르는 것이다.","자극 전파는 내재적 요인이고, 문화 융합은 외재적 요인이다."],a:1,exp:"자극 전파는 문화 변동의 외재적 요인(원인), 문화 융합은 그 결과로 나타나는 양상입니다. 예를 들어 타 문화에서 자극을 받아(자극 전파) 새로운 혼합 문화가 탄생하는 것(문화 융합)처럼 연결됩니다."},
+
+  {q:"전통 문화의 '창조적 계승'이 단순 보존과 구별되는 핵심 특징으로 가장 옳은 것은?",opts:["원형을 그대로 유지하는 것을 최우선으로 한다.","전통을 완전히 폐기하고 새로운 문화를 창조한다.","전통의 고유한 가치를 현대적 맥락에서 재해석하여 새로운 문화적 가치를 창출한다.","외국 문화를 무비판적으로 수용하여 전통을 대체한다."],a:2,exp:"창조적 계승은 단순히 원형을 보존하는 것도, 전통을 폐기하는 것도 아닙니다. 전통의 고유한 가치를 현대적 맥락에서 재해석하여 새로운 문화적 가치를 창출하는 것이 핵심입니다. 밴드 이날치의 '범 내려온다'가 좋은 사례입니다."},
+
+  {q:"일제 강점기 일본어 강요와 조선 시대 성리학 자발적 수용을 비교한 설명으로 가장 옳은 것은?",opts:["두 사례 모두 자발적 문화 접변에 해당한다.","일본어 강요는 자발적 접변, 성리학 수용은 강제적 접변이다.","일본어 강요는 강제적 문화 접변, 성리학 수용은 자발적 문화 접변이다. 핵심 차이는 수용 주체의 의지 유무이다.","두 사례 모두 강제적 문화 접변에 해당한다."],a:2,exp:"일본어 강요는 일본(전달 측)의 힘이 조선(수용 측)보다 강해 강제 이식된 강제적 접변입니다. 성리학 수용은 조선 학자들이 유용하다고 스스로 판단하여 받아들인 자발적 접변입니다. 핵심 차이는 수용 주체의 '의지와 자발성'의 유무입니다."},
+
+  {q:"문화 다양성 측면에서 가장 우려되는 문화 변동 양상과 그 이유로 옳은 것은?",opts:["문화 병존 — 두 문화가 공존하여 갈등이 발생하기 때문에","문화 융합 — 기존 두 문화의 정체성이 모두 사라지기 때문에","문화 동화 — 한 문화가 완전히 소멸되어 세계 문화 다양성이 줄어들기 때문에","문화 전파 — 새로운 문화 요소가 들어와 혼란이 생기기 때문에"],a:2,exp:"문화 동화(A+B→A)는 한 문화가 완전히 흡수·소멸되어 세계 문화 다양성이 줄어드는 가장 우려되는 양상입니다. 유럽 식민지배로 원주민 문화가 소멸된 것이 대표 사례입니다."},
+
+  {q:"성공회 강화 성당이 문화 병존이 아닌 문화 융합의 사례인 이유로 가장 옳은 것은?",opts:["한국 전통 건물과 서양 교회 건물이 각각 따로 나란히 존재하기 때문에","한국 전통 건축 양식과 서양 기독교 건축 양식이 결합하여 기존 어느 쪽과도 구별되는 새로운 형태의 건축물이 탄생했기 때문에","기독교 양식만 완전히 수용하고 한국 전통 양식이 소멸했기 때문에","건물 외형은 서양식이고 내부만 한국식이기 때문에"],a:1,exp:"문화 병존이라면 두 문화가 각각 따로 존재하는 것입니다. 그러나 강화 성당은 두 양식이 하나로 합쳐져 기존 어느 쪽과도 다른 새로운 독자적 문화(C)가 만들어진 문화 융합(A+B→C)의 사례입니다."},
+
+  {q:"전통 문화의 5가지 의의 중 K-pop·K-드라마·한식의 세계화와 가장 직접적으로 연결되는 두 가지는?",opts:["문화 정체성 유지 / 사회 유지와 통합","세계 문화의 다양성 증진 / 국가 이미지를 높여 문화 산업 육성에 이바지","사회 구성원의 자긍심 고취 / 사회 유지와 통합","문화 정체성 유지 / 사회 구성원의 자긍심 고취"],a:1,exp:"K-pop·K-드라마·한식의 세계화는 ①세계 문화에 한국 문화를 소개하여 문화적 다양성을 증진하고, ②국가 이미지를 높여 관광·문화 수출 등 문화 산업 육성에 기여한다는 두 가지 의의와 직접 연결됩니다."},
+
+  {q:"다음 중 문화 융합과 문화 동화의 차이를 가장 정확하게 설명한 것은?",opts:["문화 융합은 두 문화 중 하나가 완전히 소멸되지만, 문화 동화는 두 문화가 모두 남는다.","문화 융합은 A+B→C(새로운 제3의 문화 탄생), 문화 동화는 A+B→A(한 문화가 소멸)이다.","문화 융합은 강제적으로만, 문화 동화는 자발적으로만 이루어진다.","두 개념은 결과가 동일하며 단지 과정만 다르다."],a:1,exp:"문화 융합은 두 문화 요소가 결합하여 기존 어느 쪽과도 다른 새로운 문화(C)를 탄생시키는 것이고, 문화 동화는 한 문화가 다른 문화에 흡수·대체되어 소멸(A+B→A)하는 것입니다."},
+
+  {q:"다음 중 전통 문화의 창조적 계승 사례로 가장 적절하지 않은 것은?",opts:["판소리 선율을 현대 대중음악에 접목한 밴드의 공연","전통 한복 디자인을 현대적으로 재해석한 생활 한복","조선 시대 궁중 의상을 원형 그대로 복원하여 박물관에 전시","전통 장단을 활용하여 현대 게임 배경음악으로 제작"],a:2,exp:"원형 그대로 복원하여 박물관에 전시하는 것은 '보존'에 해당합니다. 창조적 계승은 전통의 고유한 가치를 현대적 맥락에서 재해석하여 새로운 가치를 창출하는 것이므로, 원형 그대로의 보존은 창조적 계승의 사례로 보기 어렵습니다."}
+
+ ]
+
+},
+
+2:{
+
+ ox:[
+
+  {q:"자문화 중심주의는 자신의 문화를 가장 우월하다고 여기고 다른 문화를 부정적으로 평가하는 태도이다.",a:true,exp:"자문화 중심주의(문화 절대주의)의 정확한 정의입니다."},
+
+  {q:"문화 사대주의는 자기 문화에 대한 문화적 정체성과 자부심을 강화하는 데 도움이 된다.",a:false,exp:"문화 사대주의의 한계 중 하나가 자기 문화에 대한 정체성과 자부심을 잃게 한다는 것입니다."},
+
+  {q:"문화 상대주의는 특정 문화를 기준으로 다른 문화의 우열을 판단하는 태도이다.",a:false,exp:"문화 상대주의는 특정 기준으로 우열을 가리지 않고, 각 문화를 그 사회의 고유한 환경과 역사적·사회적 맥락에서 이해하는 태도입니다."},
+
+  {q:"스위스의 치즈 요리 문화는 그 지역의 자연환경(목축 발달)과 관련이 깊다.",a:true,exp:"스위스는 산지가 많고 여름이 서늘해 목축이 발달하였고, 이에 따라 유제품(치즈)을 활용한 요리 문화가 형성되었습니다."},
+
+  {q:"극단적 문화 상대주의는 살인이나 폭력을 동반하는 문화도 존중해야 한다고 주장한다.",a:true,exp:"극단적 문화 상대주의는 문화의 특수성을 근거로 인류의 보편적 가치를 훼손하는 문화까지 인정해야 한다고 주장하는 것이 문제점입니다."},
+
+  {q:"보편 윤리는 특정 시대나 문화에만 적용되는 상대적인 윤리 기준이다.",a:false,exp:"보편 윤리는 시대와 사회를 초월하여 모든 사람이 따라야 할 보편적인 윤리 기준입니다."},
+
+  {q:"황금률은 다양한 종교에서 공통적으로 발견되는 보편 윤리의 원칙이다.",a:true,exp:"황금률은 불교, 크리스트교, 이슬람교, 힌두교, 유대교, 유교 등 다양한 종교에서 공통적으로 나타나는 보편 윤리의 원칙입니다."},
+
+  {q:"연고주의는 혈연·지연·학연을 우선시하는 사고방식으로 긍정적 측면만 있다.",a:false,exp:"연고주의는 소속감 강화라는 긍정적 측면도 있지만, 입학·채용 등에서 공정한 기회를 박탈하는 부정적 측면도 있습니다."},
+
+  {q:"인도의 결혼 지참금 문화는 보편 윤리의 관점에서 비판받을 수 있다.",a:true,exp:"지참금을 둘러싼 가정 폭력, 여성의 생명 위협 등은 인간 존엄성을 훼손하여 보편 윤리에 부합하지 않습니다."},
+
+  {q:"문화 상대주의의 태도는 다양한 문화적 차이로 인한 갈등을 예방하고 다문화 사회를 이해하는 데 도움이 된다.",a:true,exp:"문화 상대주의는 서로 다른 문화를 맥락에서 이해하고 존중하게 하여 갈등을 방지하고 문화 다양성 보존에 기여합니다."}
+
+ ],
+
+ mc:[
+
+  {q:"자문화 중심주의의 <em>한계</em>로 옳은 것을 모두 고른 것은?<br>ㄱ. 다른 문화를 차별하는 원인이 됨<br>ㄴ. 자기 문화에 대한 자긍심 제공<br>ㄷ. 문화 제국주의로 변질될 수 있음<br>ㄹ. 전통문화 계승에 유리함",opts:["ㄱ, ㄴ","ㄴ, ㄹ","ㄱ, ㄷ","ㄷ, ㄹ"],a:2,exp:"ㄱ(다른 문화 차별·갈등 유발)과 ㄷ(문화 제국주의)은 한계입니다. ㄴ(자긍심)과 ㄹ(전통문화 계승)은 순기능입니다."},
+
+  {q:"문화 사대주의에 대한 설명으로 가장 적절한 것은?",opts:["자기 문화를 가장 우월하다고 여기는 태도","다른 문화를 맹목적으로 동경하고 자기 문화를 열등하다고 여기는 태도","문화를 그 사회의 역사적·사회적 맥락에서 이해하는 태도","인류의 보편적 가치를 기준으로 문화를 평가하는 태도"],a:1,exp:"문화 사대주의는 다른 문화를 맹목적으로 동경하고 자기 문화를 열등하다고 여기는 태도입니다."},
+
+  {q:"'유럽 가톨릭 신부들이 나체로 사는 원주민들을 미개하다고 생각하여 강제로 유럽식 의복을 입게 하였다.' 이에 나타나는 태도는?",opts:["문화 상대주의","보편 윤리적 태도","자문화 중심주의","문화 사대주의"],a:2,exp:"자기 문화(유럽 의복)를 기준으로 다른 문화(자파테크족)를 미개하다고 평가하고 강제한 것이므로 자문화 중심주의입니다."},
+
+  {q:"문화 상대주의의 필요성으로 옳지 않은 것은?",opts:["편견 없이 다른 문화를 이해할 수 있다.","다른 문화를 객관적으로 이해하고 자기 문화 가치를 새롭게 발견할 수 있다.","인류가 받아들이기 어려운 문화(살인·폭력)까지 인정하게 된다.","문화적 차이로 인한 갈등을 방지하고 다양한 문화의 공존을 도모한다."],a:2,exp:"③은 문화 상대주의의 필요성이 아니라 극단적 문화 상대주의의 문제점입니다."},
+
+  {q:"시대와 사회를 초월하여 모든 사람이 따라야 할 보편적인 윤리 기준에 해당하는 개념은?",opts:["자문화 중심주의","문화 상대주의","보편 윤리","극단적 문화 상대주의"],a:2,exp:"시대·사회를 초월한 보편적 윤리 기준이 보편 윤리입니다. 황금률 등이 대표적입니다."},
+
+  {q:"다음 중 보편 윤리에 부합하지 않는 것은?",opts:["인간 존엄성 존중","자유와 평등의 보장","명예 살인 관행","황금률 준수"],a:2,exp:"명예 살인은 사람의 생명과 신체를 위협하여 인간 존엄성을 훼손하는 것으로 보편 윤리에 반합니다."},
+
+  {q:"티베트 천장(조장) 문화에 대한 올바른 이해 태도는?",opts:["시신을 독수리에게 던지는 것은 미개한 풍습이므로 금지해야 한다.","자연환경과 불교의 윤회 사상 등 고유한 배경에서 형성된 문화이므로 그 맥락에서 이해해야 한다.","자연을 오염시키므로 인류 공통의 기준으로 비판해야 한다.","이 문화가 우리보다 뛰어나므로 받아들여야 한다."],a:1,exp:"티베트 천장 문화는 건조·고원의 자연환경과 불교의 윤회·보시 사상에서 형성된 문화입니다. 문화 상대주의 입장에서 그 사회의 맥락으로 이해해야 합니다."},
+
+  {q:"연고주의에 대한 설명으로 옳은 것은?",opts:["연고주의는 사회 정의와 평등 실현에 항상 기여한다.","연고주의는 긍정적 측면(소속감)과 부정적 측면(공정성 훼손)을 모두 지닌다.","연고주의는 완전히 근절되어야 할 문화이다.","연고주의는 자문화 중심주의의 순기능 중 하나이다."],a:1,exp:"연고주의는 소속감·정체성을 강화하는 긍정적 측면이 있는 반면, 공정한 기회를 박탈하는 부정적 측면도 있습니다."},
+
+  {q:"다음 중 문화적 차이를 만드는 <em>인문환경</em>의 영향을 받은 사례는?",opts:["스위스의 산악 지형 → 치즈 요리 발달","일본의 계절풍 → 쌀과 해산물 요리 발달","서남아시아 이슬람교 → 돼지고기 금기 관행","더운 기후 → 개방적 가옥 구조 발달"],a:2,exp:"이슬람교는 인문환경(종교)의 영향입니다. ①②④는 모두 자연환경의 영향입니다."},
+
+  {q:"보편 윤리를 강조하는 이유로 가장 적절하지 않은 것은?",opts:["극단적 문화 상대주의를 방지하기 위해","문화 교류로 인한 사회적 혼란을 예방하기 위해","인간 존엄성·자유·평등 등 기본적 인권을 존중하기 위해","모든 문화를 하나의 기준으로 통일하기 위해"],a:3,exp:"보편 윤리는 문화를 획일화하려는 것이 아니라 인류 공통의 최소한의 도덕 기준을 제시하여 인권을 보호하는 것입니다."}
+
+ ],
+
+ hard:[
+
+  {q:"자문화 중심주의와 문화 사대주의의 공통점과 차이점에 대한 설명으로 가장 옳은 것은?",opts:["두 태도는 공통점이 없으며 완전히 상반된 개념이다.","두 태도 모두 문화에 우열이 있다는 문화 절대주의에 기반하지만, 자문화 중심주의는 자기 문화를, 사대주의는 다른 문화를 절대 기준으로 삼는다는 차이가 있다.","자문화 중심주의는 문화 다양성을 증진하지만, 사대주의는 문화 다양성을 해친다.","두 태도 모두 문화 상대주의의 하위 개념이다."],a:1,exp:"두 태도 모두 문화에 우열이 있다는 '문화 절대주의'에 기반합니다. 자문화 중심주의는 자기 문화를 절대 기준으로, 문화 사대주의는 다른 문화를 절대 기준으로 삼는다는 차이가 있을 뿐입니다. 둘 다 문화의 다양성과 고유한 가치를 인정하지 못한다는 공통된 한계가 있습니다."},
+
+  {q:"보편 윤리와 문화 상대주의의 관계에 대한 설명으로 가장 옳은 것은?",opts:["보편 윤리와 문화 상대주의는 완전히 대립하여 공존 불가능하다.","문화 상대주의만 있으면 명예 살인 같은 인권 침해 문화까지 허용하는 문제가 생기므로, 문화 상대주의로 다양성을 존중하되 보편 윤리로 최소한의 인권 기준을 유지하는 상호 보완적 관계가 필요하다.","보편 윤리만 있으면 문화적 차이를 충분히 존중할 수 있다.","문화 상대주의는 자문화 중심주의와 동일한 개념이다."],a:1,exp:"문화 상대주의만 강조하면 극단적 문화 상대주의로 이어져 인류 보편 가치를 훼손하는 문화까지 인정하게 됩니다. 따라서 문화 상대주의로 다양성을 존중하되, 보편 윤리로 인권·존엄성 등 최소한의 기준을 유지하는 상호 보완적 관계가 필요합니다."},
+
+  {q:"인도 결혼 지참금 문화와 명예 살인이 보편 윤리에 부합하지 않는 이유를 가장 정확하게 설명한 것은?",opts:["두 관행 모두 경제적 손실을 유발하기 때문에","두 관행 모두 특정 종교에만 국한된 문화이기 때문에","두 관행 모두 여성의 생명권·인간 존엄성이라는 보편적 가치를 침해하기 때문에","두 관행 모두 국가 법률에 위반되기 때문에"],a:2,exp:"인도 결혼 지참금 문화는 여성의 생명과 안전을 위협하여 인간 존엄성과 생명권을 훼손합니다. 명예 살인은 사람의 생명을 빼앗아 가장 기본적인 보편 가치인 생명권과 인간 존엄성을 심각하게 훼손합니다. 두 관행 모두 문화적 특수성을 내세우더라도 보편 윤리로 정당화될 수 없습니다."},
+
+  {q:"연고주의를 보편 윤리 차원에서 성찰했을 때 가장 적절한 평가는?",opts:["연고주의는 순수하게 긍정적인 문화이므로 장려해야 한다.","연고주의는 소속감을 강화하는 긍정적 측면이 있으나, 입학·취업 등에서 공정한 기회를 박탈하여 사회 정의와 평등이라는 보편 윤리에 어긋나는 부정적 측면도 있다.","연고주의는 사회 정의를 실현하는 수단이다.","연고주의는 완전히 폐지되어야 할 문화이다."],a:1,exp:"연고주의는 연고 집단 내 유대와 소속감을 강화하는 긍정적 측면도 있지만, 입학·취업 등에서 능력보다 연고를 우선하여 공정한 기회를 박탈하고 사회 정의와 평등이라는 보편 윤리에 어긋나는 부정적 측면도 있습니다."},
+
+  {q:"자문화 중심주의가 '문화 제국주의'로 발전하는 과정을 올바르게 나열한 것은?",opts:["타문화 학습 → 자문화 보완 → 문화 교류 → 상호 발전","자기 문화 우월 인식 → 타문화 폄하 → 강요·이식 → 문화 제국주의","문화 교류 → 문화 융합 → 문화 병존 → 문화 발전","보편 윤리 강조 → 타문화 비판 → 문화 획일화 → 문화 제국주의"],a:1,exp:"자문화 중심주의가 문화 제국주의로 발전하는 단계: ① 자기 문화가 가장 우월하다는 인식 형성 → ② 다른 문화를 미개하거나 열등하다고 폄하 → ③ 자기 문화로 교화해야 한다는 사명감 형성 → ④ 힘을 바탕으로 다른 문화에 강제 이식(문화 제국주의). 유럽 열강의 식민지 문화 강요가 역사적 사례입니다."},
+
+  {q:"황금률이 보편 윤리의 근거가 될 수 있는 이유로 가장 옳은 것은?",opts:["황금률은 특정 강대국의 문화에만 존재하기 때문에","황금률은 불교·기독교·이슬람교·유교 등 다양한 종교와 문화권에서 공통으로 발견되어 특정 문화에 국한되지 않는 보편성을 가지기 때문에","황금률은 현대에 새롭게 만들어진 원칙이기 때문에","황금률은 법적 강제력을 가지기 때문에"],a:1,exp:"황금률은 서로 다른 문화권의 종교(불교, 기독교, 이슬람교, 힌두교, 유대교, 유교)에서 공통으로 발견됩니다. 이는 특정 문화에 국한되지 않고 시대를 초월하여 적용되는 보편성을 지니기 때문에 보편 윤리의 근거가 될 수 있습니다."},
+
+  {q:"자문화 중심주의의 순기능(사회 통합, 자긍심)이 다문화 사회에서 오히려 문제가 될 수 있는 이유로 가장 옳은 것은?",opts:["다문화 사회에서는 사회 통합이 전혀 필요하지 않기 때문에","자문화 중심주의의 내집단 결속이 다문화 사회에서는 이주민·소수 집단에 대한 배타성·제노포비아·차별로 작용할 수 있기 때문에","자문화 중심주의는 다문화 사회에서 강화되기 때문에","다문화 사회에서 자국 문화 자긍심은 존재해서는 안 되기 때문에"],a:1,exp:"자문화 중심주의의 내집단 결속은 단일 문화 사회에서는 결속력을 높이지만, 다문화 사회에서는 다른 문화 배경의 이주민·소수 집단에 대한 배타성으로 작용할 수 있습니다. 자기 문화가 가장 옳다는 인식은 이주민 문화를 열등하게 보는 편견, 제노포비아, 차별로 이어져 다문화 사회의 갈등을 심화시킵니다."},
+
+  {q:"'지나친 권위주의'가 보편 윤리 차원에서 성찰의 대상이 되는 이유로 가장 옳은 것은?",opts:["권위주의는 경제 성장에 방해가 되기 때문에","권위주의는 사회 구성원 간 평등한 관계를 해치고 개인의 자유와 인권을 침해하여 인간 존엄성과 평등이라는 보편 윤리에 어긋나기 때문에","권위주의는 외국에서 들어온 문화이기 때문에","권위주의는 전통 문화와 아무런 관련이 없기 때문에"],a:1,exp:"지나친 권위주의는 상하 관계를 과도하게 강조하여 평등한 관계를 해치고 개인의 자유와 인권을 침해합니다. 직장 내 갑질, 과도한 복종 강요 등이 인간 존엄성을 훼손하며 인간 존엄성과 평등이라는 보편 윤리에 어긋납니다."},
+
+  {q:"'남태평양에서 돼지를 신성시하고 혼인 행사에서 먹는 것은 비위생적이고 미개한 풍습이다'라는 진술의 오류와 바른 이해 방식으로 가장 옳은 것은?",opts:["이 진술은 사실에 기반한 올바른 분석이다.","이 진술은 자문화 중심주의적 오류로, 자기 문화의 기준을 절대 잣대로 삼아 평가한 것이다. 문화 상대주의 입장에서 그 사회의 자연환경·종교·사회적 맥락에서 이해해야 한다.","이 진술은 문화 사대주의적 오류이다.","이 진술은 보편 윤리에 근거한 올바른 비판이다."],a:1,exp:"'비위생적', '미개한'이라는 판단은 자기 문화의 기준을 절대 잣대로 삼아 다른 문화를 평가한 자문화 중심주의적 오류입니다. 문화 상대주의 입장에서 그 사회의 기온·돼지 사육 환경·종교적·사회적 의례 맥락에서 이해하는 것이 바람직합니다."},
+
+  {q:"문화 상대주의 태도가 필요한 상황과 보편 윤리적 관점이 필요한 상황을 가장 적절하게 구분한 것은?",opts:["문화 상대주의: 인권 침해 문화 성찰 / 보편 윤리: 다른 장례 관습 이해","문화 상대주의: 다른 사회의 고유한 장례·식사 문화 이해 / 보편 윤리: 명예 살인·지참금 폭력 등 인권 침해 관행 성찰","두 관점 모두 동일한 상황에서 동일하게 적용된다.","문화 상대주의: 자국 문화 비판 / 보편 윤리: 타국 문화 무조건 수용"],a:1,exp:"문화 상대주의가 필요한 상황: 다른 사회의 고유한 장례·식사 문화처럼 우리와 다른 문화를 접할 때 그 사회의 맥락에서 이해해야 합니다. 보편 윤리적 관점이 필요한 상황: 명예 살인·지참금 폭력처럼 인간의 생명·존엄성을 침해하는 관행에 대해서는 문화적 특수성을 내세우더라도 보편 윤리의 기준으로 성찰해야 합니다."}
+
+ ]
+
+},
+
+3:{
+
+ ox:[
+
+  {q:"다문화 사회는 한 사회 내에서 문화적 배경이 다른 다양한 집단이 함께 살아가면서 여러 문화가 공존하는 사회이다.",a:true,exp:"다문화 사회의 정확한 정의입니다."},
+
+  {q:"다문화 사회의 등장은 교통·통신의 발달과 세계화로 국가 간 인구 이동이 감소하면서 나타났다.",a:false,exp:"다문화 사회의 등장 배경은 국가 간 인구 이동이 '증가'하여 서로 다른 문화권 사람들의 접촉 기회가 빈번해진 것입니다."},
+
+  {q:"다문화 사회는 문화의 다양성 증진과 경제 활성화라는 긍정적 측면을 가진다.",a:true,exp:"다양한 문화 경험 기회 확대와 이주민의 경제 활동 참여로 인한 경제 활성화는 다문화 사회의 긍정적 측면입니다."},
+
+  {q:"제노포비아(Xenophobia)는 다른 문화권 사람들에 대한 혐오·기피 현상으로 다문화 사회의 부정적 측면이다.",a:true,exp:"제노포비아는 다른 문화권에서 온 사람을 혐오하거나 기피하는 현상으로 다문화 사회의 부정적 측면입니다."},
+
+  {q:"동화주의(용광로 이론)는 다양한 문화가 대등하게 공존해야 한다고 보는 이민자 정책이다.",a:false,exp:"동화주의는 소수 문화를 주류 문화 안으로 흡수·통합하는 정책입니다. 다양한 문화의 대등한 공존을 추구하는 것은 다문화주의(샐러드 볼 이론)입니다."},
+
+  {q:"다문화주의(샐러드 볼 이론)는 소수자 집단의 문화 고유성을 인정하는 장점이 있다.",a:true,exp:"다문화주의는 소수자 집단의 문화 고유성을 인정하고, 다양한 문화가 대등하게 공존하도록 하는 것이 특징입니다."},
+
+  {q:"캐나다는 1971년에 다문화주의를 선언하여 모자이크 정책을 시행하였다.",a:true,exp:"캐나다는 1971년에 다문화주의를 선언하고, 각 문화의 고유한 특징이 드러날 수 있도록 다양한 인종·민족이 함께 어울리는 모자이크 정책을 시행하였습니다."},
+
+  {q:"다문화 사회에서 개인은 문화 상대주의 입장에서 문화 간 차이를 인정하고 이해해야 한다.",a:true,exp:"다문화 사회의 갈등 해결을 위한 개인의 노력으로 문화 상대주의 입장에서 문화 간 차이를 인정하고 이해하는 태도가 필요합니다."},
+
+  {q:"동화주의 정책은 소수 인종·민족의 문화 고유성과 인권이 침해될 수 있다는 한계가 있다.",a:true,exp:"동화주의는 소수 문화를 주류 문화로 흡수하는 과정에서 소수 집단의 고유한 문화, 정체성, 인권이 침해될 수 있다는 한계가 있습니다."},
+
+  {q:"다문화 수용성이란 다문화 사회로의 변화를 부정적으로 보고 자국 문화를 지키려는 태도를 말한다.",a:false,exp:"다문화 수용성이란 다문화 사회로의 변화를 긍정적으로 받아들이고 다양한 민족과 인종의 공존이라는 사회적 가치를 받아들이는 태도입니다."}
+
+ ],
+
+ mc:[
+
+  {q:"다문화 사회의 <em>긍정적</em> 측면으로 옳지 않은 것은?",opts:["문화의 다양성 증진","경제 활성화: 이주민의 경제 활동 참여","제노포비아와 같은 심각한 사회 갈등 발생","저출생·고령화로 인한 노동력 부족 문제 해결에 도움"],a:2,exp:"제노포비아는 다문화 사회의 부정적 측면입니다. ①②④는 모두 긍정적 측면입니다."},
+
+  {q:"다문화 사회의 이민자 정책 중 '동화주의(용광로 이론)'에 대한 설명으로 옳은 것은?",opts:["다양한 문화가 대등하게 조화를 이루며 공존해야 한다는 입장","소수 문화를 주류 문화 안으로 흡수·통합시켜 사회를 통합하려는 입장","소수자 집단의 문화 고유성을 최대한 인정하는 입장","각 문화의 차이를 인정하고 병존을 추구하는 입장"],a:1,exp:"동화주의는 주류 문화를 중심으로 소수 문화를 흡수·통합하는 입장입니다."},
+
+  {q:"캐나다의 모자이크 정책과 관련된 이민자 정책 관점은?",opts:["동화주의","다문화주의","자문화 중심주의","문화 상대주의"],a:1,exp:"캐나다의 모자이크 정책은 각 문화의 고유한 특징을 유지하면서 다양한 문화가 대등하게 공존하는 다문화주의의 대표적 사례입니다."},
+
+  {q:"다문화 사회의 갈등 해결을 위한 <em>사회적 노력</em>에 해당하지 않는 것은?",opts:["이주민을 위한 언어 교육 및 취업 관련 교육 지원","다문화 가족 지원법 시행","타문화에 대한 개인적 편견·고정관념 버리기","직장 체험, 가족 캠프 등 다문화 지원 사업 진행"],a:2,exp:"편견·고정관념을 버리는 것은 개인의 노력에 해당합니다. ①②④는 모두 사회적 노력입니다."},
+
+  {q:"다문화 사회 등장의 배경으로 가장 적절한 것은?",opts:["세계 각국의 문화 교류 감소","교통·통신의 발달과 세계화로 국가 간 인구 이동 증가","자국 내 이민자에 대한 배타적 정책 강화","단일 문화 정체성 강조 정책"],a:1,exp:"교통·통신의 발달과 세계화로 국가 간 인구 이동이 늘어나 서로 다른 문화권 사람들의 접촉 기회가 빈번해진 것이 등장 배경입니다."},
+
+  {q:"동화주의와 비교할 때, 다문화주의의 핵심 장점은?",opts:["사회 통합·질서 유지에 더 효과적","이민자가 주류 문화로 편입하기 쉬움","소수자 집단의 문화 고유성을 인정하고 다양한 문화 공존 추구","주류 문화와 가치를 중심으로 결속력 강화"],a:2,exp:"다문화주의는 소수자 집단의 고유한 문화와 정체성을 인정하고 다양한 문화가 대등하게 공존하는 것을 추구하는 것이 핵심 장점입니다."},
+
+  {q:"다문화 사회의 갈등 해결을 위한 개인의 노력으로 옳지 않은 것은?",opts:["문화 상대주의 입장에서 문화 간 차이 인정","타문화에 대한 편견·고정관념 버리기","다문화 가족 지원을 위한 법률 제정","다른 문화의 고유한 가치를 인정하는 관용의 자세"],a:2,exp:"법률 제정은 사회적 노력(제도적 장치 강화)에 해당합니다. ①②④는 모두 개인의 노력입니다."},
+
+  {q:"2022년 기준 우리나라 외국인 주민 유형 중 비율이 가장 높은 것은?",opts:["결혼 이민자","유학생","외국인 근로자","외국 국적 동포"],a:2,exp:"2022년 기준 외국인 근로자(23.0%)가 가장 높고, 외국 국적 동포(22.7%), 기타(33.5%), 유학생(10.8%), 결혼 이민자(10.0%) 순입니다."},
+
+  {q:"제노포비아(Xenophobia)에 대한 설명으로 옳은 것은?",opts:["자기 문화에 대한 지나친 자부심","다른 문화권에서 온 사람을 혐오하거나 기피하는 현상","외국 문화를 맹목적으로 동경하는 태도","다문화 사회로의 변화를 긍정적으로 받아들이는 태도"],a:1,exp:"제노포비아는 Xenos(낯선 사람)+Phobos(공포)의 합성어로, 다른 문화권에서 온 사람을 혐오하거나 기피하는 현상입니다."},
+
+  {q:"다문화주의(샐러드 볼 이론)의 한계로 가장 적절한 것은?",opts:["소수 인종·민족의 문화 고유성이 침해될 수 있다.","이민자가 주류 문화로 편입하기 어렵다.","기존 주류 사회의 정체성과 통합성이 약화될 수 있다.","사회 통합과 질서 유지에 어려움이 없다."],a:2,exp:"다문화주의의 한계는 기존 주류 사회의 정체성과 통합성이 약화될 수 있다는 것입니다. ①은 동화주의의 한계입니다."}
+
+ ],
+
+ hard:[
+
+  {q:"동화주의(용광로 이론)와 다문화주의(샐러드 볼 이론)의 비교로 가장 옳은 것은?",opts:["동화주의: 소수 문화 고유성 인정 / 다문화주의: 주류 문화로 통합","동화주의: 소수 문화를 주류로 흡수, 사회 통합에 유리하나 소수 집단 인권 침해 우려 / 다문화주의: 다양한 문화 대등 공존, 소수자 고유성 인정하나 주류 사회 통합성 약화 가능","동화주의: 문화 다양성 증진 / 다문화주의: 문화 획일화 추구","두 정책은 이민자의 권리를 동등하게 보장한다."],a:1,exp:"동화주의는 소수 문화를 주류로 흡수하여 사회 통합과 질서 유지에 유리하지만 소수 집단의 문화 고유성·인권이 침해될 수 있습니다. 다문화주의는 다양한 문화가 대등하게 공존하여 소수자 고유성을 인정하지만 주류 사회의 정체성·통합성이 약화될 수 있습니다."},
+
+  {q:"다문화 사회에서 발생하는 갈등의 원인과 해결 방안의 연결로 가장 옳은 것은?",opts:["경제적 경쟁 → 이주민 강제 추방","문화적 차이·편견 → 문화 상대주의 교육, 관용의 자세 / 언어 장벽 → 이주민 언어 교육 지원","갈등 원인은 오직 이주민에게만 있다.","제도적 차별 → 이주민의 자국 문화 포기"],a:1,exp:"다문화 갈등의 원인은 ①문화적 차이·편견(→문화 상대주의 교육, 관용), ②언어 장벽(→언어 교육 지원), ③경제적 경쟁(→공정한 고용 제도), ④제도적 차별(→법적 장치 강화) 등이 있습니다. 이에 맞는 개인·사회적 해결 방안이 필요합니다."},
+
+  {q:"한국인의 다문화 수용성 지수(성인 52.27, 청소년 71.39)와 자국민 우선 고용 찬성률(한국 79.6% vs 스웨덴 14.5%)에 대한 분석으로 가장 옳은 것은?",opts:["한국인의 다문화 수용성은 모든 면에서 스웨덴보다 높다.","청소년의 수용성이 성인보다 높으며, 한국의 높은 자국민 우선 고용 찬성률은 단순한 문화 혐오보다 경제적 불안에서 비롯된 측면이 크다.","성인의 다문화 수용성이 청소년보다 높다.","한국과 스웨덴의 다문화 수용성 지수는 비슷하다."],a:1,exp:"청소년(71.39)의 다문화 수용성이 성인(52.27)보다 높아 세대 간 차이가 있습니다. 한국의 자국민 우선 고용 찬성률(79.6%)이 스웨덴(14.5%)보다 월등히 높은 것은, 다문화 사회의 역사가 짧고 경제적 불안정 상황에서 이주민을 경쟁 상대로 인식하는 경향이 강하기 때문입니다."},
+
+  {q:"동화주의 정책을 시행하는 사회에서 소수 민족 문화가 소멸 위기에 처한 상황에 대한 분석으로 가장 옳은 것은?",opts:["이 상황은 자발적 문화 접변(문화 융합)의 긍정적 사례이다.","이 상황은 강제적 문화 동화로, 주류 사회의 자문화 중심주의와 동화주의 정책의 한계(소수 문화 고유성·인권 침해)를 보여준다.","이 상황은 문화 병존의 사례이다.","이 상황은 자발적 문화 접변이므로 문제가 없다."],a:1,exp:"소수 민족 문화가 주류 문화에 강제 흡수·소멸되는 것은 강제적 문화 동화(A+B→A)입니다. 이는 주류 사회의 자문화 중심주의가 기저에 있으며, 동화주의 정책의 한계(소수 집단 문화 고유성·정체성·인권 침해)를 극명하게 보여줍니다."},
+
+  {q:"이민자들에게 자국어 교육 의무화, 자국 역사·문화 교육 이수, 공공장소 자국 언어만 사용 권장 등을 시행하는 A국의 정책에 대한 평가로 가장 옳은 것은?",opts:["A국은 다문화주의 정책을 시행하고 있으며, 이민자의 고유 문화를 완전히 보장하고 있다.","A국은 동화주의 정책을 시행하고 있으며, 사회 통합에는 유리하나 이민자의 모국 문화·정체성을 억압할 수 있다는 한계가 있다.","A국의 정책은 보편 윤리에 완전히 부합한다.","A국의 정책은 다문화주의와 동화주의를 균형 있게 결합한 이상적 모델이다."],a:1,exp:"A국은 이민자를 주류 문화로 편입·동화시키려는 동화주의 정책을 시행하고 있습니다. 공통 언어를 통한 사회 통합에는 유리하지만, 이민자의 모국 언어와 문화가 억압·소멸되어 문화 정체성이 훼손되고 소수 집단의 고유성이 침해될 수 있다는 한계가 있습니다."},
+
+  {q:"다문화 사회에서 '관용(tolerance)'의 한계를 보편 윤리와 연결하여 가장 잘 설명한 것은?",opts:["관용은 모든 문화와 행위를 무조건 허용해야 함을 의미한다.","관용은 다름을 인정하는 것이지만, 인간 존엄성·생명권·평등을 침해하는 문화까지 허용하는 것은 아니다. 보편 윤리가 관용의 한계를 설정한다.","관용은 법적 강제력을 가진 개념이다.","관용은 자문화 중심주의와 같은 개념이다."],a:1,exp:"다문화 사회에서 관용이란 자신과 다른 문화를 존중하는 태도입니다. 그러나 명예 살인·지참금 폭력·아동 학대처럼 인간 존엄성·생명권·자유를 침해하는 문화까지 관용을 베푸는 것은 극단적 문화 상대주의의 오류입니다. 보편 윤리(인간 존엄성, 생명권, 평등)가 관용의 한계를 설정합니다."},
+
+  {q:"청소년의 다문화 수용성이 성인보다 높은 이유로 가장 적절한 것을 모두 고른 것은?<br>ㄱ. 학교 교육에서 다문화 이해 교육 강화<br>ㄴ. 인터넷·SNS를 통한 다양한 문화 자연스러운 접촉<br>ㄷ. 청소년은 경제적 일자리 경쟁에서 이주민과 직접 경쟁하지 않음<br>ㄹ. 청소년은 전통적 민족 정체성에 덜 얽매이는 경향",opts:["ㄱ, ㄴ","ㄱ, ㄴ, ㄷ","ㄱ, ㄷ, ㄹ","ㄱ, ㄴ, ㄷ, ㄹ"],a:3,exp:"ㄱ(다문화 이해 교육), ㄴ(디지털 환경에서 다양한 문화 접촉), ㄷ(일자리 경쟁에서 이주민과 직접 경쟁 적음), ㄹ(전통적 민족 정체성에 덜 얽매임) 모두 청소년의 다문화 수용성이 성인보다 높은 이유로 적절합니다."},
+
+  {q:"다문화 사회의 갈등이 단순히 '문화 차이' 때문만이 아닌 이유를 가장 잘 설명한 것은?",opts:["다문화 갈등은 항상 이주민의 잘못으로 발생한다.","다문화 갈등은 문화 차이 외에도 경제적 불평등·일자리 경쟁·제도적 차별 등 구조적 요인이 복합적으로 작용하여 발생한다.","다문화 갈등은 오직 언어 장벽 때문에 발생한다.","다문화 갈등은 동화주의 정책만 시행하면 완전히 해결된다."],a:1,exp:"다문화 갈등은 표면적으로는 언어·가치관의 문화적 차이에서 비롯되지만, 경제적 취약 계층에 집중된 이주민과 내국인 간의 일자리 경쟁, 제도적 차별, 사회 안전망 부족 등 구조적 불평등이 복합적으로 작용합니다. 한국의 높은 자국민 우선 고용 찬성률이 이를 잘 보여줍니다."},
+
+  {q:"다문화 교육이 다문화 사회의 갈등 해결에 기여할 수 있는 방법으로 적절하지 않은 것은?",opts:["이주민 대상 한국어 교육으로 의사소통 장벽 해소","내국인 학생들에게 다양한 문화를 소개하여 편견 해소","이주민이 자신의 모국 문화를 완전히 포기하도록 강제하는 교육","다문화 가정 자녀의 정체성 강화 지원"],a:2,exp:"이주민이 모국 문화를 완전히 포기하도록 강제하는 것은 동화주의의 극단적 형태로, 다문화 교육의 방법이 아닙니다. 다문화 교육은 상호 이해와 존중을 통해 공존을 도모하는 것이지, 한 문화를 포기하도록 강제하는 것이 아닙니다."},
+
+  {q:"다음 중 다문화 사회와 관련된 개념의 연결이 <em>모두 옳은</em> 것은?",opts:["동화주의 – 샐러드 볼 이론 / 다문화주의 – 용광로 이론","제노포비아 – 다른 문화를 존중하고 수용하는 태도 / 다문화 수용성 – 다문화 사회를 혐오하는 태도","동화주의 – 용광로 이론 / 다문화주의 – 샐러드 볼 이론 / 제노포비아 – 다른 문화권 사람 혐오·기피","캐나다 모자이크 정책 – 동화주의 / 다문화 수용성 – 주류 문화 중심 통합"],a:2,exp:"동화주의=용광로 이론(소수 문화를 주류로 흡수), 다문화주의=샐러드 볼 이론(다양한 문화 대등 공존), 제노포비아=다른 문화권 사람을 혐오·기피하는 현상. 세 가지 모두 올바른 연결입니다."}
+
+ ]
+
+}
+
+};
+
+
+
+
+
+// ══════════════════════════════════════
+
+//  QUIZ ENGINE
+
+// ══════════════════════════════════════
+
+const UNIT_LABELS=['문화 변동','문화 변동의 양상','문화 상대주의와 보편 윤리','다문화 사회와 문화적 다양성 존중'];
+
+const TYPE_CONFIG=[
+
+  {key:'ox',  label:'OX 퀴즈',  icon:'⭕', cls:'ox'},
+
+  {key:'mc',  label:'객관식',   icon:'📋', cls:'mc'},
+
+  {key:'hard',label:'고난이도', icon:'🔥', cls:'hard'}
+
+];
+
+const COLOR_MAP={ox:'#1a73e8',mc:'#34a853',hard:'#ea4335'};
+
+
+
+const state={};
+
+for(let u=0;u<4;u++){
+
+  state[u]={activeType:0,scores:{ox:[0,0],mc:[0,0],hard:[0,0]},answered:{ox:[],mc:[],hard:[]}};
+
+}
+
+
+
+function buildQuizSection(unitIdx){
+
+  const container=document.getElementById('quiz-'+unitIdx);
+
+  const d=QUIZ_DATA[unitIdx];
+
+  const s=state[unitIdx];
+
+  container.innerHTML='';
+
+
+
+  // ─ header ─
+
+  const hdr=document.createElement('div');
+
+  hdr.className='quiz-header';
+
+  hdr.innerHTML=`<div class="quiz-main-title">📝 개념 확인 문제 — ${UNIT_LABELS[unitIdx]}</div><div class="quiz-scoreboard" id="scoreboard-${unitIdx}"></div>`;
+
+  container.appendChild(hdr);
+
+
+
+  // ─ type tab bar ─
+
+  const bar=document.createElement('div');
+
+  bar.className='quiz-type-bar';
+
+  TYPE_CONFIG.forEach((t,ti)=>{
+
+    const btn=document.createElement('button');
+
+    btn.className='qtype-btn'+(ti===s.activeType?' active':'');
+
+    btn.innerHTML=`<span class="qtype-icon">${t.icon}</span>${t.label}<span class="qtype-count">10</span>`;
+
+    btn.onclick=()=>{s.activeType=ti;buildQuizSection(unitIdx);};
+
+    bar.appendChild(btn);
+
+  });
+
+  container.appendChild(bar);
+
+
+
+  const tc=TYPE_CONFIG[s.activeType];
+
+  const qs=d[tc.key];
+
+  const doneCount=s.answered[tc.key].filter(x=>x!==undefined).length;
+
+
+
+  // ─ progress bar ─
+
+  const prog=document.createElement('div');
+
+  prog.className='q-progress-wrap';
+
+  prog.innerHTML=`<div class="q-progress-bar"><div class="q-progress-fill" style="width:${doneCount/10*100}%"></div></div><div class="q-progress-label">${doneCount}/10 완료</div>`;
+
+  container.appendChild(prog);
+
+
+
+  // ─ question cards ─
+
+  qs.forEach((q,qi)=>{container.appendChild(buildQCard(unitIdx,tc.key,qi,q,s));});
+
+
+
+  // ─ result panel ─
+
+  const res=document.createElement('div');
+
+  res.className='quiz-result'+(doneCount===10?' visible':'');
+
+  const sc=s.scores[tc.key];
+
+  const pct=doneCount===10?Math.round(sc[0]/10*100):0;
+
+  res.innerHTML=`
+
+    <div class="result-score-big">${doneCount===10?sc[0]:'-'}<span style="font-size:24px">/10</span></div>
+
+    <div class="result-score-label">${doneCount===10?pct+'% · '+getGrade(pct):''}</div>
+
+    ${buildMiniBar(unitIdx)}
+
+    <button class="reset-btn" onclick="resetType(${unitIdx},'${tc.key}')">🔄 다시 풀기</button>`;
+
+  container.appendChild(res);
+
+
+
+  updateScoreboard(unitIdx);
+
+}
+
+
+
+function buildMiniBar(unitIdx){
+
+  let h='<div class="result-bar-wrap">';
+
+  TYPE_CONFIG.forEach(t=>{
+
+    const sc=state[unitIdx].scores[t.key];
+
+    const done=state[unitIdx].answered[t.key].filter(x=>x!==undefined).length;
+
+    const px=done===10?Math.round(sc[0]/10*60):0;
+
+    h+=`<div class="result-bar-item"><div class="result-bar-fill"><div class="result-bar-fill-inner" style="height:${px}px;background:${COLOR_MAP[t.key]}"></div></div>${t.icon}<br>${done===10?sc[0]+'/10':'미완'}</div>`;
+
+  });
+
+  return h+'</div>';
+
+}
+
+
+
+function getGrade(p){
+
+  if(p>=90)return'🏆 완벽!';
+
+  if(p>=70)return'👍 잘했어요!';
+
+  if(p>=50)return'📚 복습 필요';
+
+  return'💪 다시 도전!';
+
+}
+
+
+
+function buildQCard(unitIdx,typeKey,qi,qdata,s){
+
+  const card=document.createElement('div');
+
+  card.className='q-card';
+
+  card.id=`qcard-${unitIdx}-${typeKey}-${qi}`;
+
+  const ans=s.answered[typeKey][qi];
+
+  const done=ans!==undefined;
+
+
+
+  const isCorrect=(typeKey==='ox')?(ans===true):(ans===qdata.a);
+
+  if(done) card.classList.add(isCorrect?'answered-correct':'answered-wrong');
+
+
+
+  const diffCls=typeKey==='ox'?'diff-basic':typeKey==='mc'?'diff-mid':'diff-hard';
+
+  const diffLabel=typeKey==='ox'?'기초':typeKey==='mc'?'중급':'고난이도';
+
+
+
+  card.innerHTML=`<div class="q-meta"><span class="q-num">Q${qi+1}</span><span class="q-difficulty ${diffCls}">${diffLabel}</span>${done?(isCorrect?`<span class="q-answered-mark">✅</span>`:`<span class="q-answered-mark">❌</span>`):''}</div><div class="q-text">${qdata.q}</div>`;
+
+
+
+  // OX
+
+  if(typeKey==='ox'){
+
+    const row=document.createElement('div');
+
+    row.className='ox-row';
+
+    [['⭕','맞다'],['❌','틀리다']].forEach(([sym,lbl],si)=>{
+
+      const btn=document.createElement('button');
+
+      btn.className='ox-btn';
+
+      btn.innerHTML=`<span class="ox-sym">${sym}</span><span class="ox-lbl">${lbl}</span>`;
+
+      btn.disabled=done;
+
+      if(done){
+
+        const corr=qdata.a===true;
+
+        const picked=ans;
+
+        const isCorrectBtn=(si===0&&corr)||(si===1&&!corr);
+
+        const isPickedBtn=(si===0&&picked===true)||(si===1&&picked===false);
+
+        if(isCorrectBtn) btn.classList.add(isPickedBtn?'ox-correct-picked':'ox-correct-reveal');
+
+        else if(isPickedBtn) btn.classList.add('ox-wrong-picked');
+
+      }
+
+      btn.onclick=()=>submitOX(unitIdx,qi,si===0,qdata);
+
+      row.appendChild(btn);
+
+    });
+
+    card.appendChild(row);
+
+  }
+
+  // MC (일반 + 고난이도 모두 동일 렌더)
+
+  else {
+
+    const opts=document.createElement('div');
+
+    opts.className='mc-options';
+
+    qdata.opts.forEach((opt,oi)=>{
+
+      const btn=document.createElement('button');
+
+      btn.className='mc-opt';
+
+      btn.disabled=done;
+
+      if(done){
+
+        if(oi===qdata.a) btn.classList.add('mc-correct');
+
+        else if(oi===s.answered[typeKey][qi]) btn.classList.add('mc-wrong');
+
+      }
+
+      btn.innerHTML=`<span class="mc-opt-letter">${String.fromCharCode(65+oi)}</span><span class="mc-opt-text">${opt}</span>`;
+
+      btn.onclick=()=>submitMC(unitIdx,qi,oi,qdata,typeKey);
+
+      opts.appendChild(btn);
+
+    });
+
+    card.appendChild(opts);
+
+  }
+
+
+
+  // feedback
+
+  if(done){
+
+    const fb=document.createElement('div');
+
+    fb.className='q-feedback '+(isCorrect?'correct':'wrong');
+
+    fb.innerHTML=`<strong>${isCorrect?'✅ 정답!':'❌ 오답'}</strong>&nbsp;&nbsp;${qdata.exp}`;
+
+    card.appendChild(fb);
+
+  }
+
+  return card;
+
+}
+
+
+
+function submitOX(unitIdx,qi,chosen,qdata){
+
+  const s=state[unitIdx];
+
+  const correct=chosen===qdata.a;
+
+  s.answered['ox'][qi]=correct;
+
+  if(correct)s.scores['ox'][0]++;
+
+  s.scores['ox'][1]++;
+
+  afterSubmit(unitIdx,'ox');
+
+}
+
+function submitMC(unitIdx,qi,chosen,qdata,typeKey){
+
+  const s=state[unitIdx];
+
+  const correct=chosen===qdata.a;
+
+  s.answered[typeKey][qi]=chosen;
+
+  if(correct)s.scores[typeKey][0]++;
+
+  s.scores[typeKey][1]++;
+
+  afterSubmit(unitIdx,typeKey);
+
+}
+
+
+
+function afterSubmit(unitIdx,typeKey){
+
+  buildQuizSection(unitIdx);
+
+  const answered=state[unitIdx].answered[typeKey];
+
+  const nextIdx=answered.findIndex((v,i)=>v===undefined&&i<10);
+
+  if(nextIdx>=0){
+
+    const el=document.getElementById(`qcard-${unitIdx}-${typeKey}-${nextIdx}`);
+
+    if(el)setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'center'}),80);
+
+  }
+
+}
+
+
+
+function resetType(unitIdx,typeKey){
+
+  state[unitIdx].answered[typeKey]=[];
+
+  state[unitIdx].scores[typeKey]=[0,0];
+
+  buildQuizSection(unitIdx);
+
+  document.getElementById('quiz-'+unitIdx).scrollIntoView({behavior:'smooth'});
+
+}
+
+
+
+function updateScoreboard(unitIdx){
+
+  const sb=document.getElementById('scoreboard-'+unitIdx);
+
+  if(!sb)return;
+
+  sb.innerHTML='';
+
+  TYPE_CONFIG.forEach(t=>{
+
+    const done=state[unitIdx].answered[t.key].filter(x=>x!==undefined).length;
+
+    const sc=state[unitIdx].scores[t.key];
+
+    const chip=document.createElement('span');
+
+    chip.className='score-chip '+t.cls;
+
+    chip.textContent=`${t.icon} ${done}/10${done>0?' ('+sc[0]+'점)':''}`;
+
+    sb.appendChild(chip);
+
+  });
+
+}
+
+
+
+function switchTab(idx){
+
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
+
+  document.querySelectorAll('.tab-panel').forEach((p,i)=>p.classList.toggle('active',i===idx));
+
+  window.scrollTo({top:0,behavior:'smooth'});
+
+  if(!document.getElementById('quiz-'+idx).innerHTML.trim())buildQuizSection(idx);
+
+}
+
+
+
+// ─ Charts ─
+
+const cD={plugins:{legend:{labels:{font:{family:"'Noto Sans KR',sans-serif",size:12}}}}};
+
+new Chart(document.getElementById('chartForeign'),{type:'bar',data:{labels:['2009','2011','2013','2015','2017','2019','2021','2023'],datasets:[{label:'외국인 주민 수(만 명)',data:[110,126,157,174,176,222,214,245],backgroundColor:'rgba(26,115,232,0.75)',borderRadius:5,yAxisID:'y'},{label:'외국인 주민 비율(%)',data:[2.2,2.5,3.1,3.4,3.6,4.3,4.1,4.4],type:'line',borderColor:'#ea4335',backgroundColor:'rgba(234,67,53,0.1)',pointBackgroundColor:'#ea4335',tension:.35,yAxisID:'y2'}]},options:{responsive:true,interaction:{mode:'index'},scales:{y:{title:{display:true,text:'만 명'},beginAtZero:true,grid:{color:'#f0f0f0'}},y2:{title:{display:true,text:'%'},position:'right',min:0,max:6,grid:{drawOnChartArea:false}}},plugins:{...cD.plugins}}});
+
+new Chart(document.getElementById('chartType'),{type:'doughnut',data:{labels:['외국인 근로자(23.0%)','외국 국적 동포(22.7%)','유학생(10.8%)','결혼 이민자(10.0%)','기타 외국인(33.5%)'],datasets:[{data:[23.0,22.7,10.8,10.0,33.5],backgroundColor:['#1a73e8','#34a853','#fbbc04','#ea4335','#9c27b0'],borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,cutout:'58%',plugins:{...cD.plugins,legend:{position:'bottom',labels:{font:{family:"'Noto Sans KR',sans-serif",size:11},padding:10}}}}});
+
+new Chart(document.getElementById('chartAccept'),{type:'bar',data:{labels:['2015','2018','2021'],datasets:[{label:'성인',data:[53.95,52.81,52.27],backgroundColor:'rgba(26,115,232,0.8)',borderRadius:4},{label:'청소년',data:[67.63,71.22,71.39],backgroundColor:'rgba(52,168,83,0.8)',borderRadius:4}]},options:{responsive:true,scales:{y:{min:40,max:80,title:{display:true,text:'지수'},grid:{color:'#f0f0f0'}}},plugins:{...cD.plugins}}});
+
+new Chart(document.getElementById('chartCmp'),{type:'bar',data:{labels:['한국','미국','독일','스웨덴'],datasets:[{label:'자국민 우선 고용 찬성(%)',data:[79.6,50.5,41.5,14.5],backgroundColor:'rgba(234,67,53,0.8)',borderRadius:4},{label:'외국인 이웃 기피(%)',data:[29.4,13.7,21.5,3.5],backgroundColor:'rgba(251,188,4,0.85)',borderRadius:4}]},options:{responsive:true,scales:{y:{beginAtZero:true,max:100,title:{display:true,text:'%'},grid:{color:'#f0f0f0'}}},plugins:{...cD.plugins}}});
+
+
+
+buildQuizSection(0);
+
+
+
+</script>
+
 </body>
+
+</html>
+<!DOCTYPE html>
+
+<html lang="ko">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>통합사회 IV. 문화와 다양성</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+<style>
+
+:root{--primary:#1a73e8;--primary-light:#e8f0fe;--accent:#34a853;--accent2:#ea4335;--accent3:#fbbc04;--bg:#f8f9fa;--surface:#fff;--border:#dadce0;--text:#202124;--text-sec:#5f6368;--shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.08);--shadow-md:0 4px 12px rgba(0,0,0,.10)}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* ─ header ─ */
+
+.page-header{background:var(--surface);border-bottom:1px solid var(--border);padding:20px 32px 0;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
+
+.subject-label{font-size:12px;font-weight:500;color:var(--primary);letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px}
+
+.page-title{font-family:'Noto Serif KR',serif;font-size:22px;font-weight:700;color:var(--text);margin-bottom:16px}
+
+/* ─ main tab ─ */
+
+.tab-bar{display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+
+.tab-bar::-webkit-scrollbar{display:none}
+
+.tab-btn{flex-shrink:0;padding:10px 20px;border:none;background:transparent;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:500;color:var(--text-sec);cursor:pointer;border-bottom:3px solid transparent;transition:color .2s,border-color .2s;white-space:nowrap}
+
+.tab-btn:hover{color:var(--primary);background:var(--primary-light);border-radius:4px 4px 0 0}
+
+.tab-btn.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:700}
+
+.tab-number{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:var(--primary-light);color:var(--primary);font-size:11px;font-weight:700;margin-right:6px}
+
+.tab-btn.active .tab-number{background:var(--primary);color:#fff}
+
+/* ─ content ─ */
+
+.content-wrap{max-width:960px;margin:0 auto;padding:32px 24px 80px}
+
+.tab-panel{display:none;animation:fadeIn .25s ease}
+
+.tab-panel.active{display:block}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─ typography ─ */
+
+.section-title{font-family:'Noto Serif KR',serif;font-size:20px;font-weight:700;color:var(--text);margin:32px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--primary);display:flex;align-items:center;gap:8px}
+
+.subsection-title{font-size:15px;font-weight:700;color:var(--primary);margin:20px 0 10px;padding-left:10px;border-left:3px solid var(--primary)}
+
+/* ─ card ─ */
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:16px;box-shadow:var(--shadow)}
+
+.card-title{font-size:14px;font-weight:700;color:var(--text-sec);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+
+/* ─ def-box ─ */
+
+.def-box{background:var(--primary-light);border-left:4px solid var(--primary);border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:16px;font-size:14.5px;line-height:1.7}
+
+.def-box strong{color:var(--primary)}
+
+/* ─ factor grid ─ */
+
+.factor-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+
+@media(max-width:600px){.factor-grid{grid-template-columns:1fr}}
+
+.factor-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;box-shadow:var(--shadow)}
+
+.factor-card .fc-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+
+/* ─ badge ─ */
+
+.badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:.3px}
+
+.badge-blue{background:#e8f0fe;color:#1a73e8}.badge-green{background:#e6f4ea;color:#34a853}
+
+.badge-red{background:#fce8e6;color:#ea4335}.badge-yellow{background:#fef9e0;color:#b5860a}
+
+.badge-purple{background:#f3e8fd;color:#8430ce}.badge-teal{background:#e4f7f5;color:#1e7b73}
+
+/* ─ fc-sub ─ */
+
+.fc-sub{font-size:13px;color:var(--text-sec);line-height:1.6}
+
+.fc-sub li{margin-left:16px;list-style:disc;margin-bottom:3px}
+
+.fc-sub .ex{color:#1a73e8;font-weight:500}
+
+/* ─ info-list ─ */
+
+.info-list{list-style:none;padding:0}
+
+.info-list li{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--bg);font-size:14px;line-height:1.6}
+
+.info-list li:last-child{border-bottom:none}
+
+.info-list .num{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--primary);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+
+/* ─ table ─ */
+
+.cmp-table{width:100%;border-collapse:collapse;font-size:13.5px;margin-bottom:12px;border-radius:10px;overflow:hidden;box-shadow:var(--shadow)}
+
+.cmp-table thead tr{background:var(--primary);color:#fff}
+
+.cmp-table thead th{padding:10px 14px;text-align:left;font-weight:600;font-size:13px}
+
+.cmp-table tbody tr{background:var(--surface);border-bottom:1px solid var(--border)}
+
+.cmp-table tbody tr:nth-child(even){background:#f8f9fa}
+
+.cmp-table td{padding:9px 14px;vertical-align:top;line-height:1.55}
+
+.cmp-table td:first-child{font-weight:600;color:var(--primary);white-space:nowrap}
+
+/* ─ note/warning ─ */
+
+.note{background:#fffde7;border:1px solid #ffe082;border-radius:8px;padding:12px 16px;font-size:13px;line-height:1.65;color:#5d4037;margin-top:10px}
+
+.note::before{content:'📝 '}
+
+.warning{background:#fce8e6;border:1px solid #f28b82;border-radius:8px;padding:12px 16px;font-size:13px;line-height:1.65;color:#b31412;margin-top:10px}
+
+.warning::before{content:'⚠️ '}
+
+/* ─ chart ─ */
+
+.chart-wrap{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:var(--shadow)}
+
+.chart-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px}
+
+.chart-sub{font-size:12px;color:var(--text-sec);margin-bottom:16px}
+
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+@media(max-width:660px){.chart-grid{grid-template-columns:1fr}}
+
+/* ─ flow ─ */
+
+.flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:8px 0}
+
+.flow-item{padding:5px 12px;border-radius:20px;font-size:13px;font-weight:600;background:var(--primary-light);color:var(--primary)}
+
+.flow-arrow{color:var(--text-sec);font-size:16px}
+
+/* ─ golden-rule ─ */
+
+.gr-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+@media(max-width:540px){.gr-grid{grid-template-columns:1fr}}
+
+.gr-item{background:var(--bg);border-radius:8px;padding:10px 14px;font-size:13px;line-height:1.55;border:1px solid var(--border)}
+
+.gr-item .gr-rel{font-weight:700;color:var(--primary);margin-bottom:3px;font-size:12px}
+
+/* ─ policy ─ */
+
+.policy-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
+
+@media(max-width:600px){.policy-grid{grid-template-columns:1fr}}
+
+.policy-card{border-radius:10px;padding:16px 18px;font-size:13.5px;line-height:1.6}
+
+.policy-melting{background:#fff3e0;border:1px solid #ffcc02}
+
+.policy-salad{background:#e6f4ea;border:1px solid #81c995}
+
+.policy-card .pc-title{font-weight:700;font-size:14px;margin-bottom:6px}
+
+.policy-melting .pc-title{color:#e65100}
+
+.policy-salad .pc-title{color:#1e7b45}
+
+/* ─ to-top ─ */
+
+.totop{position:fixed;bottom:28px;right:28px;width:40px;height:40px;border-radius:50%;background:var(--primary);color:#fff;border:none;font-size:18px;cursor:pointer;box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:center;transition:transform .2s;z-index:200}
+
+.totop:hover{transform:translateY(-3px)}
+
+
+
+/* ════════════════════════════════
+
+   QUIZ SYSTEM
+
+════════════════════════════════ */
+
+.quiz-section{margin-top:56px;padding-top:32px;border-top:3px solid var(--primary)}
+
+/* ─ quiz header ─ */
+
+.quiz-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px}
+
+.quiz-main-title{font-family:'Noto Serif KR',serif;font-size:19px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px}
+
+/* ─ score board ─ */
+
+.quiz-scoreboard{display:flex;gap:8px;flex-wrap:wrap}
+
+.score-chip{padding:4px 13px;border-radius:20px;font-size:12px;font-weight:700;border:1.5px solid;cursor:default}
+
+.score-chip.ox{background:#e8f0fe;color:#1a73e8;border-color:#1a73e8}
+
+.score-chip.mc{background:#e6f4ea;color:#34a853;border-color:#34a853}
+
+.score-chip.sa{background:#fef9e0;color:#b5860a;border-color:#fbbc04}
+
+.score-chip.hard{background:#fce8e6;color:#ea4335;border-color:#ea4335}
+
+/* ─ quiz type sub-tab ─ */
+
+.quiz-type-bar{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:24px;overflow-x:auto;scrollbar-width:none}
+
+.quiz-type-bar::-webkit-scrollbar{display:none}
+
+.qtype-btn{flex-shrink:0;padding:9px 20px;border:none;background:transparent;font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:500;color:var(--text-sec);cursor:pointer;border-bottom:3px solid transparent;transition:color .18s,border-color .18s;white-space:nowrap;margin-bottom:-2px}
+
+.qtype-btn:hover{color:var(--primary);background:#f0f4ff;border-radius:4px 4px 0 0}
+
+.qtype-btn.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:700}
+
+.qtype-icon{margin-right:5px;font-size:14px}
+
+/* ─ quiz panel ─ */
+
+.qpanel{display:none}
+
+.qpanel.active{display:block;animation:fadeIn .2s ease}
+
+/* ─ progress bar ─ */
+
+.q-progress-wrap{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+
+.q-progress-bar{flex:1;height:6px;background:#e0e0e0;border-radius:3px;overflow:hidden}
+
+.q-progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .4s ease}
+
+.q-progress-label{font-size:12px;color:var(--text-sec);white-space:nowrap;font-weight:500}
+
+/* ─ question card ─ */
+
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin-bottom:14px;box-shadow:var(--shadow);transition:border-color .2s}
+
+.q-card.answered-correct{border-color:#34a853;background:#f6fef8}
+
+.q-card.answered-wrong{border-color:#ea4335;background:#fff7f7}
+
+.q-card.answered-shown{border-color:var(--primary);background:#f5f9ff}
+
+/* ─ q-meta ─ */
+
+.q-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+
+.q-num{font-size:11px;font-weight:700;color:var(--text-sec);background:#f1f3f4;padding:2px 8px;border-radius:10px}
+
+.q-difficulty{font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px}
+
+.diff-basic{background:#e8f0fe;color:#1a73e8}
+
+.diff-mid{background:#e6f4ea;color:#34a853}
+
+.diff-hard{background:#fce8e6;color:#ea4335}
+
+/* ─ question text ─ */
+
+.q-text{font-size:15px;font-weight:500;line-height:1.65;color:var(--text);margin-bottom:14px}
+
+.q-text em{font-style:normal;font-weight:700;color:var(--primary);background:#e8f0fe;padding:1px 5px;border-radius:4px}
+
+/* ─ OX buttons ─ */
+
+.ox-row{display:flex;gap:12px;margin-bottom:4px}
+
+.ox-btn{flex:1;padding:14px;border-radius:12px;border:2px solid var(--border);background:var(--surface);font-size:28px;cursor:pointer;transition:all .18s;font-family:inherit}
+
+.ox-btn:hover:not(:disabled){transform:scale(1.04);border-color:var(--primary);background:var(--primary-light)}
+
+.ox-btn.selected-correct{background:#e6f4ea;border-color:#34a853;box-shadow:0 0 0 3px #c8e6c9}
+
+.ox-btn.selected-wrong{background:#fce8e6;border-color:#ea4335;box-shadow:0 0 0 3px #ffcdd2}
+
+.ox-btn.reveal-correct{background:#e6f4ea;border-color:#34a853}
+
+.ox-btn:disabled{cursor:default}
+
+/* ─ MC options ─ */
+
+.mc-options{display:flex;flex-direction:column;gap:8px;margin-bottom:4px}
+
+.mc-opt{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-size:14px;cursor:pointer;transition:all .18s;text-align:left;font-family:inherit;line-height:1.5;color:var(--text)}
+
+.mc-opt:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light)}
+
+.mc-opt.selected-correct{background:#e6f4ea;border-color:#34a853;font-weight:600}
+
+.mc-opt.selected-wrong{background:#fce8e6;border-color:#ea4335}
+
+.mc-opt.reveal-correct{background:#e6f4ea;border-color:#34a853}
+
+.mc-opt:disabled{cursor:default}
+
+.mc-opt-letter{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:#f1f3f4;color:var(--text-sec);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+
+.mc-opt.selected-correct .mc-opt-letter{background:#34a853;color:#fff}
+
+.mc-opt.selected-wrong .mc-opt-letter{background:#ea4335;color:#fff}
+
+.mc-opt.reveal-correct .mc-opt-letter{background:#34a853;color:#fff}
+
+/* ─ Short Answer ─ */
+
+/* ─ hint button ─ */
+
+/* ─ feedback ─ */
+
+.q-feedback{border-radius:10px;padding:12px 16px;font-size:13.5px;line-height:1.65;margin-top:10px;animation:fadeIn .25s ease}
+
+.q-feedback.correct{background:#e6f4ea;border:1px solid #81c995;color:#1e6b35}
+
+.q-feedback.wrong{background:#fce8e6;border:1px solid #f28b82;color:#b31412}
+
+.q-feedback.shown{background:#e8f0fe;border:1px solid #a8c5f8;color:#1a4a8a}
+
+.q-feedback strong{font-weight:700}
+
+.fb-answer{display:inline-block;background:#fff;border:1.5px solid currentColor;border-radius:6px;padding:1px 8px;margin:0 3px;font-weight:700}
+
+/* ─ result summary ─ */
+
+.quiz-result{background:var(--surface);border:2px solid var(--primary);border-radius:16px;padding:24px;margin-top:20px;text-align:center;display:none}
+
+.quiz-result.visible{display:block;animation:fadeIn .3s ease}
+
+.result-score-big{font-size:48px;font-weight:700;color:var(--primary);line-height:1}
+
+.result-score-label{font-size:14px;color:var(--text-sec);margin-bottom:16px;margin-top:4px}
+
+.result-bar-wrap{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+
+.result-bar-item{text-align:center;font-size:12px;color:var(--text-sec)}
+
+.result-bar-fill{width:40px;background:var(--border);border-radius:4px;height:60px;display:flex;align-items:flex-end;overflow:hidden;margin:0 auto 4px}
+
+.result-bar-fill-inner{width:100%;border-radius:4px;transition:height .6s ease}
+
+.reset-btn{padding:10px 24px;border-radius:10px;border:none;background:var(--primary);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .18s}
+
+.reset-btn:hover{background:#1558b0}
+
+/* ─ answered checkmark ─ */
+
+.q-answered-mark{float:right;font-size:18px;margin-left:8px}
+
+
+
+/* ── OX 버튼 새 스타일 ── */
+
+.ox-row{display:flex;gap:12px;margin-bottom:4px}
+
+.ox-btn{flex:1;padding:14px 10px;border-radius:12px;border:2px solid var(--border);background:var(--surface);font-size:14px;font-weight:600;cursor:pointer;transition:all .18s;font-family:inherit;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--text)}
+
+.ox-sym{font-size:26px;line-height:1}
+
+.ox-lbl{font-size:12px;color:var(--text-sec)}
+
+.ox-btn:hover:not(:disabled){transform:scale(1.03);border-color:var(--primary);background:var(--primary-light)}
+
+.ox-btn.ox-correct-picked{background:#e6f4ea;border-color:#34a853;box-shadow:0 0 0 3px #c8e6c9}
+
+.ox-btn.ox-correct-picked .ox-lbl{color:#34a853}
+
+.ox-btn.ox-wrong-picked{background:#fce8e6;border-color:#ea4335;box-shadow:0 0 0 3px #ffcdd2}
+
+.ox-btn.ox-wrong-picked .ox-lbl{color:#ea4335}
+
+.ox-btn.ox-correct-reveal{background:#e6f4ea;border-color:#34a853;opacity:.75}
+
+.ox-btn:disabled{cursor:default}
+
+/* ── MC 옵션 새 스타일 ── */
+
+.mc-options{display:flex;flex-direction:column;gap:8px;margin-bottom:4px}
+
+.mc-opt{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-size:14px;cursor:pointer;transition:all .18s;text-align:left;font-family:inherit;line-height:1.55;color:var(--text);width:100%}
+
+.mc-opt:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light)}
+
+.mc-opt.mc-correct{background:#e6f4ea;border-color:#34a853;font-weight:600}
+
+.mc-opt.mc-wrong{background:#fce8e6;border-color:#ea4335}
+
+.mc-opt:disabled{cursor:default}
+
+.mc-opt-letter{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:#f1f3f4;color:var(--text-sec);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+
+.mc-opt.mc-correct .mc-opt-letter{background:#34a853;color:#fff}
+
+.mc-opt.mc-wrong .mc-opt-letter{background:#ea4335;color:#fff}
+
+.mc-opt-text{flex:1}
+
+/* ── 타입 탭 카운트 뱃지 ── */
+
+.qtype-count{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.07);color:inherit;font-size:11px;font-weight:700;margin-left:6px}
+
+.qtype-btn.active .qtype-count{background:rgba(26,115,232,.15)}
+
+/* ── score chip 업데이트 ── */
+
+.score-chip.hard{background:#fce8e6;color:#ea4335;border-color:#ea4335}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- ─────────── PAGE HEADER ─────────── -->
+
+<div class="page-header">
+
+  <div class="subject-label">통합사회 · IV. 문화와 다양성</div>
+
+  <div class="page-title">단원 핵심 정리 노트</div>
+
+  <div class="tab-bar" id="tabBar">
+
+    <button class="tab-btn active" onclick="switchTab(0)"><span class="tab-number">1</span>문화 변동</button>
+
+    <button class="tab-btn" onclick="switchTab(1)"><span class="tab-number">2</span>문화 변동의 양상</button>
+
+    <button class="tab-btn" onclick="switchTab(2)"><span class="tab-number">3</span>문화 상대주의와 보편 윤리</button>
+
+    <button class="tab-btn" onclick="switchTab(3)"><span class="tab-number">4</span>다문화 사회와 문화적 다양성</button>
+
+  </div>
+
+</div>
+
+
+
+<div class="content-wrap">
+
+
+
+<!-- ══════ TAB 0 · 문화 변동 ══════ -->
+
+<div class="tab-panel active" id="panel-0">
+
+  <div class="section-title"><span>🔄</span>문화 변동 (4-2)</div>
+
+  <div class="def-box"><strong>의미</strong>: 한 사회의 문화가 새로운 문화 요소의 등장이나 다른 사회의 문화와 접촉하면서 크게 변화하는 양상</div>
+
+
+
+  <div class="subsection-title">문화 변동의 요인</div>
+
+  <div class="factor-grid">
+
+    <div class="factor-card">
+
+      <div class="fc-head"><span class="badge badge-blue">내재적 요인</span></div>
+
+      <ul class="fc-sub">
+
+        <li><strong>발명</strong> (無→有): 없던 것을 새로 만들어냄<br><span class="ex">ex) 1차(바퀴)→2차(자동차), 자전거, 세탁기, 백열전구, 나일론, 컴퓨터</span></li>
+
+        <li style="margin-top:8px"><strong>발견</strong>: 이미 존재하던 것을 찾아내 세상에 알림<br><span class="ex">ex) 페니실린, 흑점, 세포, X선, 비타민, 전기, 중력</span></li>
+
+      </ul>
+
+    </div>
+
+    <div class="factor-card">
+
+      <div class="fc-head"><span class="badge badge-green">외재적 요인 (문화 전파)</span></div>
+
+      <ul class="fc-sub">
+
+        <li><strong>직접 전파</strong>: 교역·전쟁 등 직접 접촉<br><span class="ex">ex) 목화(문익점), 사탕수수(알렉산드로스)</span></li>
+
+        <li style="margin-top:6px"><strong>간접 전파</strong>: 매개체(인터넷·인쇄물)를 통한 전파<br><span class="ex">ex) 드라마를 통한 한류 전파</span></li>
+
+        <li style="margin-top:6px"><strong>자극 전파</strong>: 다른 문화 아이디어 → 새 문화 요소 창조<br><span class="ex">ex) 신라 이두문자, 체로키족 문자</span></li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="subsection-title">발명 vs 발견 비교</div>
+
+  <table class="cmp-table">
+
+    <thead><tr><th>구분</th><th>발명</th><th>발견</th></tr></thead>
+
+    <tbody>
+
+      <tr><td>개념</td><td>이전에 없던 것을 새로 만들어냄</td><td>이미 존재하던 것을 찾아내 세상에 알림</td></tr>
+
+      <tr><td>기존 존재</td><td>존재하지 않음 (無→有)</td><td>이미 존재함</td></tr>
+
+      <tr><td>예시</td><td>자전거, 컴퓨터, 나일론</td><td>페니실린, 중력, X선, 세포</td></tr>
+
+    </tbody>
+
+  </table>
+
+
+
+  <div class="subsection-title">문화 전파의 3가지 유형</div>
+
+  <table class="cmp-table">
+
+    <thead><tr><th>유형</th><th>의미</th><th>예시</th></tr></thead>
+
+    <tbody>
+
+      <tr><td>직접 전파</td><td>교역·전쟁 등 두 문화의 직접 접촉</td><td>목화(문익점), 사탕수수</td></tr>
+
+      <tr><td>간접 전파</td><td>인터넷·인쇄물 등 매개체를 통한 전파</td><td>드라마를 통한 한류 전파</td></tr>
+
+      <tr><td>자극 전파</td><td>다른 문화 아이디어 → 새 문화 요소 탄생</td><td>신라 이두문자, 체로키족 문자</td></tr>
+
+    </tbody>
+
+  </table>
+
+  <div class="note">자극 전파는 다른 사회의 문화에서 <strong>아이디어만</strong> 빌려 새로운 문화 요소를 창조하는 것으로, 직접 문화 요소가 전달되는 직접·간접 전파와 구별됩니다.</div>
+
+
+
+  <!-- QUIZ 0 -->
+
+  <div class="quiz-section" id="quiz-0"></div>
+
+</div>
+
+
+
+<!-- ══════ TAB 1 · 문화 변동의 양상 ══════ -->
+
+<div class="tab-panel" id="panel-1">
+
+  <div class="section-title"><span>🌐</span>문화 변동의 양상 (4-2 이어서)</div>
+
+  <div class="def-box"><strong>문화 접변</strong>: 전파에 의해 서로 다른 사회 두 문화가 오랫동안 전면적인 접촉을 하면서 발생하는 문화 변동</div>
+
+
+
+  <div class="subsection-title">① 문화 접변의 3가지 양상</div>
+
+  <div class="factor-grid" style="grid-template-columns:1fr 1fr 1fr">
+
+    <div class="factor-card" style="border-top:3px solid #1a73e8">
+
+      <div class="fc-head"><span class="badge badge-blue">문화 병존</span></div>
+
+      <div class="flow"><span class="flow-item">A+B</span><span class="flow-arrow">→</span><span class="flow-item">A+B</span></div>
+
+      <ul class="fc-sub">
+
+        <li>고유한 정체성을 유지하며 공존</li>
+
+        <li class="ex" style="list-style:none;margin-left:0">ex) 인도 힌디어·영어 공용, 한국 양의학·한의학, 인천 차이나타운</li>
+
+      </ul>
+
+      <div class="note" style="font-size:12px;margin-top:8px">기존 문화 정체성 보존 ✅ 한 문화만 중시하면 갈등 ⚠️</div>
+
+    </div>
+
+    <div class="factor-card" style="border-top:3px solid #34a853">
+
+      <div class="fc-head"><span class="badge badge-green">문화 융합</span></div>
+
+      <div class="flow"><span class="flow-item">A+B</span><span class="flow-arrow">→</span><span class="flow-item">C</span></div>
+
+      <ul class="fc-sub">
+
+        <li>기존 문화+다른 문화 → 새로운 문화 형성</li>
+
+        <li class="ex" style="list-style:none;margin-left:0">ex) 멕시코 과달루페 성모상, 성공회 강화 성당</li>
+
+      </ul>
+
+      <div class="note" style="font-size:12px;margin-top:8px">정체성 유지하며 새 문화 창조 → 다양성 실현 ✅</div>
+
+    </div>
+
+    <div class="factor-card" style="border-top:3px solid #ea4335">
+
+      <div class="fc-head"><span class="badge badge-red">문화 동화</span></div>
+
+      <div class="flow"><span class="flow-item">A+B</span><span class="flow-arrow">→</span><span class="flow-item">A</span></div>
+
+      <ul class="fc-sub">
+
+        <li>기존 문화가 흡수·대체되어 소멸</li>
+
+        <li class="ex" style="list-style:none;margin-left:0">ex) 유럽 식민지배로 호주·아메리카 원주민 언어·신앙 소멸</li>
+
+      </ul>
+
+      <div class="warning" style="font-size:12px;margin-top:8px">문화 정체성 상실, 다양성 훼손 ⚠️</div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="subsection-title">② 자발성에 따른 분류</div>
+
+  <table class="cmp-table">
+
+    <thead><tr><th>구분</th><th>의미</th><th>사례</th></tr></thead>
+
+    <tbody>
+
+      <tr><td>강제적 문화 접변</td><td>전달 측 힘 > 수용 측 힘 → 문화 요소 강제 이식</td><td>일제 강점기 일본어 강요, 우리 문화 말살</td></tr>
+
+      <tr><td>자발적 문화 접변</td><td>수용 측이 유용·바람직하다 여겨 자발적 수용</td><td>나바호족이 에스파냐인 은세공 기술 자발적 수용</td></tr>
+
+    </tbody>
+
+  </table>
+
+
+
+  <div class="subsection-title">⚠️ 자극 전파 vs 문화 융합</div>
+
+  <table class="cmp-table">
+
+    <thead><tr><th>구분</th><th>자극 전파</th><th>문화 융합</th></tr></thead>
+
+    <tbody>
+
+      <tr><td>위치</td><td>원인 (문화 변동의 요인)</td><td>결과 (문화 변동의 양상)</td></tr>
+
+      <tr><td>직접성</td><td>아이디어만 빌림 → 낮음</td><td>요소 결합 → 상대적으로 높음</td></tr>
+
+      <tr><td>공통점</td><td colspan="2">문화 접변·전파 포함, 새로운 문화 요소 등장</td></tr>
+
+    </tbody>
+
+  </table>
+
+
+
+  <div class="section-title" style="margin-top:36px"><span>🏛️</span>전통 문화 &amp; 창조적 계승</div>
+
+  <div class="def-box"><strong>전통 문화의 의미</strong>: 한 사회에서 오랜 기간 유지되면서 그 사회의 고유한 가치를 인정받는 문화</div>
+
+
+
+  <div class="subsection-title">전통 문화의 의의 5가지</div>
+
+  <ul class="info-list">
+
+    <li><span class="num">1</span>문화 정체성·고유성 유지</li>
+
+    <li><span class="num">2</span>사회 유지와 통합</li>
+
+    <li><span class="num">3</span>세계 문화의 다양성 증진</li>
+
+    <li><span class="num">4</span>사회 구성원의 자긍심 고취</li>
+
+    <li><span class="num">5</span>국가 이미지를 높여 문화 산업 육성에 이바지</li>
+
+  </ul>
+
+
+
+  <div class="subsection-title">전통 문화의 창조적 계승과 발전</div>
+
+  <div class="def-box">과거의 것을 단순히 보존·유지하는 것이 아니라 전통이 지닌 고유한 가치를 재해석하여 창조하는 방안 모색<br><strong>헌법 제9조</strong>: "국가는 전통 문화의 계승·발전과 민족 문화의 창달에 노력해야 한다."</div>
+
+  <div class="factor-grid" style="grid-template-columns:1fr 1fr 1fr">
+
+    <div class="factor-card"><div class="fc-head"><span class="badge badge-blue">방안 ①</span></div><div class="fc-sub">전통 문화가 현대의 새로운 문화 요소와 조화를 이루도록 <strong>현대적 감각으로 재구성</strong></div></div>
+
+    <div class="factor-card"><div class="fc-head"><span class="badge badge-green">방안 ②</span></div><div class="fc-sub">고유성·독창성을 지키면서 비판적 관점에서 <strong>능동적으로 다른 사회의 문화 수용</strong></div></div>
+
+    <div class="factor-card"><div class="fc-head"><span class="badge badge-purple">방안 ③</span></div><div class="fc-sub">인류 문화 발전을 위해 우리 전통 문화를 알리고 타 문화를 존중하는 <strong>세계시민 자세</strong></div></div>
+
+  </div>
+
+  <div class="note">예시: 국립 중앙 박물관 굿즈, 밴드 이날치 &lt;범 내려온다&gt;</div>
+
+
+
+  <!-- QUIZ 1 -->
+
+  <div class="quiz-section" id="quiz-1"></div>
+
+</div>
+
+
+
+<!-- ══════ TAB 2 · 문화 상대주의와 보편 윤리 ══════ -->
+
+<div class="tab-panel" id="panel-2">
+
+  <div class="section-title"><span>⚖️</span>문화 상대주의와 보편 윤리 (4-3 ~ 4-5)</div>
+
+
+
+  <div class="subsection-title">1. 문화적 차이의 발생 원인</div>
+
+  <table class="cmp-table">
+
+    <thead><tr><th>환경</th><th>내용</th><th>예시</th></tr></thead>
+
+    <tbody>
+
+      <tr><td>자연환경</td><td>지형·기후 등에 따라 다른 생활 방식 형성</td><td>스위스: 목축→치즈 / 일본: 계절풍→해산물·쌀 / 더운 지방: 개방적 가옥</td></tr>
+
+      <tr><td>인문환경</td><td>종교·사회 등에 따라 다른 생활 방식 형성</td><td>서남아시아: 종교 교리로 돼지고기 금기 / 남태평양: 돼지를 신성하게 여겨 혼인 행사에 사용</td></tr>
+
+    </tbody>
+
+  </table>
+
+
+
+  <div class="subsection-title">2. 문화를 이해하는 태도</div>
+
+  <div class="factor-grid">
+
+    <div class="factor-card" style="border-top:3px solid #ea4335">
+
+      <div class="fc-head"><span class="badge badge-red">자문화 중심주의</span><span style="font-size:11px;color:#5f6368">(문화 절대주의)</span></div>
+
+      <ul class="fc-sub">
+
+        <li><strong>의미</strong>: 자신의 문화를 가장 우월하다고 여기고 다른 문화를 부정적으로 평가</li>
+
+        <li style="margin-top:4px"><strong>순기능</strong>: 사회 통합, 자기 문화 자긍심, 전통문화 보전</li>
+
+        <li style="margin-top:4px"><strong>한계</strong>: 다른 문화 차별·갈등, 국수주의, 문화 제국주의, 국제 고립</li>
+
+        <li style="margin-top:4px" class="ex"><strong>사례</strong>: 아마존 자파테크족(강제 의복 착용), 대명혼일도</li>
+
+      </ul>
+
+    </div>
+
+    <div class="factor-card" style="border-top:3px solid #fbbc04">
+
+      <div class="fc-head"><span class="badge badge-yellow">문화 사대주의</span><span style="font-size:11px;color:#5f6368">(등화 사대주의)</span></div>
+
+      <ul class="fc-sub">
+
+        <li><strong>의미</strong>: 다른 문화를 맹목적으로 동경하고 자기 문화를 열등하다고 여기는 태도</li>
+
+        <li style="margin-top:4px"><strong>순기능</strong>: 다른 문화의 우수한 점 학습, 선진 문화 수용 유리</li>
+
+        <li style="margin-top:4px"><strong>한계</strong>: 자기 문화 정체성·자부심 상실, 고유문화 소멸</li>
+
+        <li style="margin-top:4px" class="ex"><strong>사례</strong>: 한자 숭상에 따른 한글 멸시, 길거리 영어 간판 남용</li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="card" style="border-top:3px solid #34a853;margin-top:14px">
+
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><span class="badge badge-green" style="font-size:14px;padding:4px 14px">② 문화 상대주의</span></div>
+
+    <table class="cmp-table">
+
+      <thead><tr><th>항목</th><th>내용</th></tr></thead>
+
+      <tbody>
+
+        <tr><td>의미</td><td>특정 문화를 기준으로 우열을 가리지 않고, 그 사회의 특수한 환경과 역사적·사회적 맥락에서 문화를 이해하는 태도</td></tr>
+
+        <tr><td>특징</td><td>각 문화가 서로 다른 자연환경과 역사적·사회적 상황에 따라 다르게 형성된다는 점 고려</td></tr>
+
+        <tr><td>순기능</td><td>서로 다른 문화 존중, 갈등 방지 / 문화 다양성 보존·다문화 사회 이해</td></tr>
+
+        <tr><td>한계</td><td>지나치면 극단적 문화 상대주의 → 보편 가치를 훼손하는 문화까지 인정</td></tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+
+  <div class="subsection-title">3. 보편 윤리 차원의 문화 성찰</div>
+
+  <div class="factor-grid">
+
+    <div class="factor-card" style="border-top:3px solid #ea4335">
+
+      <div class="fc-head"><span class="badge badge-red">극단적 문화 상대주의</span></div>
+
+      <ul class="fc-sub">
+
+        <li><strong>의미</strong>: 문화의 특수성을 근거로 보편적 가치를 훼손하는 문화도 존중해야 한다는 입장</li>
+
+        <li style="margin-top:6px"><strong>문제점</strong>: 살인·폭력 등 받아들이기 어려운 문화까지 인정</li>
+
+      </ul>
+
+    </div>
+
+    <div class="factor-card" style="border-top:3px solid #34a853">
+
+      <div class="fc-head"><span class="badge badge-green">보편 윤리</span></div>
+
+      <ul class="fc-sub">
+
+        <li><strong>의미</strong>: 시대·사회를 초월해 모든 사람이 따라야 할 보편적 윤리 기준 (황금률, 보편적 도덕 원리)</li>
+
+        <li style="margin-top:6px"><strong>필요성</strong>: 극단적 상대주의 방지 / 인권·존엄성 존중 / 바람직한 문화 발전</li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="subsection-title">다양한 종교의 황금률</div>
+
+  <div class="gr-grid">
+
+    <div class="gr-item"><div class="gr-rel">불교</div>"어떤 일로 고통받은 적이 있다면 그 방식으로 남에게 상처를 주지 마라."</div>
+
+    <div class="gr-item"><div class="gr-rel">크리스트교</div>"남이 너에게 해 주기를 바라는 대로 너도 다른 사람을 대하라."</div>
+
+    <div class="gr-item"><div class="gr-rel">이슬람교</div>"나를 위하는 만큼 남을 위하지 않는 사람은 신앙인이 아니다."</div>
+
+    <div class="gr-item"><div class="gr-rel">힌두교</div>"너에게 고통스러운 일을 다른 사람에게 강요하지 마라."</div>
+
+    <div class="gr-item"><div class="gr-rel">유대교</div>"너에게 해로운 일을 이웃에게 행하지 마라."</div>
+
+    <div class="gr-item"><div class="gr-rel">유교</div>"네가 원하지 않는 바를 남에게 행하지 마라."</div>
+
+  </div>
+
+
+
+  <div class="subsection-title">보편 윤리 차원에서의 문화 성찰</div>
+
+  <table class="cmp-table">
+
+    <thead><tr><th>구분</th><th>항목</th><th>내용</th></tr></thead>
+
+    <tbody>
+
+      <tr><td rowspan="2">자문화 성찰</td><td>연고주의</td><td>혈연·지연·학연 우선 → 레거시 입학 등 / 긍정: 소속감·정체성 / 부정: 공정한 기회 박탈</td></tr>
+
+      <tr><td>지나친 권위주의</td><td>가부장적 전통의 영향 → 평등한 관계 침해, 인권 문제</td></tr>
+
+      <tr><td rowspan="2">타문화 성찰</td><td>인도 결혼 지참금 문화</td><td>가정 폭력·여성 생명 위협 → 보편 윤리에 부합하지 않음</td></tr>
+
+      <tr><td>명예 살인</td><td>집안 명예를 이유로 가족 살해 → 인간 존엄성 훼손 → 보편 윤리에 부합하지 않음</td></tr>
+
+    </tbody>
+
+  </table>
+
+
+
+  <!-- QUIZ 2 -->
+
+  <div class="quiz-section" id="quiz-2"></div>
+
+</div>
+
+
+
+<!-- ══════ TAB 3 · 다문화 사회 ══════ -->
+
+<div class="tab-panel" id="panel-3">
+
+  <div class="section-title"><span>🌍</span>다문화 사회와 문화적 다양성 존중 (4-4 ~ 4-5)</div>
+
+
+
+  <div class="subsection-title">1. 다문화 사회의 의미와 등장 배경</div>
+
+  <div class="def-box">
+
+    <strong>다문화 사회</strong>: 한 사회 내에서 인종이나 언어, 종교 등 문화적 배경이 다른 다양한 집단이 함께 살아가면서 여러 문화가 공존하는 사회<br><br>
+
+    <strong>등장 배경</strong>: 교통·통신의 발달과 세계화로 국가 간 인구 이동이 늘어나면서 서로 다른 문화권에 속한 사람들의 접촉 기회가 빈번해짐
+
+  </div>
+
+
+
+  <div class="subsection-title">우리나라의 다문화 현황 (그래프)</div>
+
+  <div class="chart-grid">
+
+    <div class="chart-wrap"><div class="chart-title">국내 거주 외국인 주민 수 및 비율 추이</div><div class="chart-sub">출처: 행정안전부 (2023)</div><canvas id="chartForeign" height="220"></canvas></div>
+
+    <div class="chart-wrap"><div class="chart-title">한국 국적이 아닌 외국인 주민 유형별 현황 (2022년)</div><div class="chart-sub">총 1,752,346명 / 출처: 행정안전부 (2023)</div><canvas id="chartType" height="220"></canvas></div>
+
+  </div>
+
+  <div class="chart-grid">
+
+    <div class="chart-wrap"><div class="chart-title">한국인의 다문화 수용성 지수 (2021년)</div><div class="chart-sub">성인·청소년 비교 / 출처: 여성가족부 (2021)</div><canvas id="chartAccept" height="220"></canvas></div>
+
+    <div class="chart-wrap"><div class="chart-title">자국민 우선 고용 찬성률 &amp; 외국인 이웃 기피 비율</div><div class="chart-sub">한국 vs 독일·미국·스웨덴 비교 (2021)</div><canvas id="chartCmp" height="220"></canvas></div>
+
+  </div>
+
+
+
+  <div class="subsection-title">2. 다문화 사회의 양상</div>
+
+  <div class="factor-grid">
+
+    <div class="factor-card" style="border-top:3px solid #34a853">
+
+      <div class="fc-head"><span class="badge badge-green">긍정적 측면</span></div>
+
+      <ul class="fc-sub">
+
+        <li>문화의 <strong>다양성</strong> 증진: 선택의 폭 확대</li>
+
+        <li>문화 발전 촉진: 상호 작용으로 창조적 문화 발전</li>
+
+        <li><strong>경제</strong> 활성화: 이주민의 경제 활동 참여 → 성장 기여</li>
+
+        <li>저출생·고령화로 발생한 <strong>노동력</strong> 부족 문제 해결</li>
+
+      </ul>
+
+    </div>
+
+    <div class="factor-card" style="border-top:3px solid #ea4335">
+
+      <div class="fc-head"><span class="badge badge-red">부정적 측면</span></div>
+
+      <ul class="fc-sub">
+
+        <li><strong>문화적 차이</strong>에 따른 가치관·생활방식 갈등</li>
+
+        <li>다른 문화에 대한 <strong>편견</strong> → <strong>제노포비아</strong>와 같은 심각한 갈등</li>
+
+        <li>이주민과 내국인 간 경제적 자원·일자리 경쟁</li>
+
+        <li>언어 차이로 의사소통 어려움, 가치관 차이 갈등</li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+  <div class="note">제노포비아(Xenophobia): 다른 문화권에서 온 사람을 혐오하거나 기피하는 현상 (Xenos: 낯선 사람 + Phobos: 공포)</div>
+
+
+
+  <div class="subsection-title">3. 다문화 사회의 갈등 해결 방안</div>
+
+  <div class="card">
+
+    <div class="card-title">① 개인의 노력</div>
+
+    <ul class="info-list">
+
+      <li><span class="num">1</span><strong>문화 상대주의</strong> 입장에서 문화 간 차이를 인정하고 이해</li>
+
+      <li><span class="num">2</span>편견·고정관념을 버리고 <strong>문화적 다양성</strong>을 존중하는 태도 함양</li>
+
+      <li><span class="num">3</span>다른 문화의 고유한 가치를 인정하는 <strong>관용</strong>의 자세 필요</li>
+
+      <li><span class="num">4</span>다문화 사회 구성원들과 지속적으로 <strong>소통</strong></li>
+
+    </ul>
+
+  </div>
+
+  <div class="card" style="margin-top:12px">
+
+    <div class="card-title">② 사회의 노력</div>
+
+    <table class="cmp-table" style="margin-top:8px">
+
+      <thead><tr><th>항목</th><th>내용</th></tr></thead>
+
+      <tbody>
+
+        <tr><td>다문화 교육 기회 제공</td><td>이주민 언어·취업·창업 교육 지원 / 가족·지역사회·학생 대상 다문화 교육 확대</td></tr>
+
+        <tr><td>법적·제도적 장치 강화</td><td>취업·의료·교육 분야 이주민 지원 정책 ㊟ 다문화 가족 지원법, 외국인 근로자 고용 등에 관한 법률</td></tr>
+
+        <tr><td>다문화 지원 사업 진행</td><td>직장 체험, 가족 캠프, 장학금 지급 등 다문화 가정 부모 취업·자녀 학습 지원</td></tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+
+  <div class="subsection-title">4. 다문화 사회를 바라보는 관점 (이민자 정책)</div>
+
+  <div class="policy-grid">
+
+    <div class="policy-card policy-melting">
+
+      <div class="pc-title">동화주의 (용광로 이론)</div>
+
+      <p style="font-size:13px;margin-bottom:6px"><strong>의미</strong>: 주류 문화를 중심으로 소수 문화를 흡수·통합시켜 사회를 통합하려는 입장</p>
+
+      <p style="font-size:13px;margin-bottom:6px">✅ <strong>순기능</strong>: 사회 통합·질서 유지, 이민자의 주류 사회 편입 원활</p>
+
+      <p style="font-size:13px">⚠️ <strong>한계</strong>: 소수 인종·민족 문화·고유성·인권 침해, 갈등 심화</p>
+
+    </div>
+
+    <div class="policy-card policy-salad">
+
+      <div class="pc-title">다문화주의 (샐러드 볼 이론)</div>
+
+      <p style="font-size:13px;margin-bottom:6px"><strong>의미</strong>: 다양한 문화가 대등하게 조화를 이루며 공존해야 한다는 입장</p>
+
+      <p style="font-size:13px;margin-bottom:6px">✅ <strong>순기능</strong>: 소수자 집단의 문화 고유성 인정, 다양한 문화가 대등하게 공존</p>
+
+      <p style="font-size:13px">⚠️ <strong>한계</strong>: 기존 주류 사회의 정체성·통합성 약화 가능</p>
+
+      <div class="note" style="margin-top:8px;font-size:12px">캐나다의 모자이크 정책(1971년 다문화주의 선언)</div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- QUIZ 3 -->
+
+  <div class="quiz-section" id="quiz-3"></div>
+
+</div>
+
+
+
+</div><!-- end content-wrap -->
+
+<button class="totop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+
+
+<script>
+
+
+
+const QUIZ_DATA = {
+
+0:{
+
+ ox:[
+
+  {q:"발명은 이미 존재하던 것을 찾아내 세상에 알리는 행위이다.",a:false,exp:"발명은 無→有, 없던 것을 새로 만들어내는 것입니다. 이미 존재하던 것을 찾아내 알리는 것은 '발견'입니다."},
+
+  {q:"자전거와 컴퓨터는 발명의 사례에 해당한다.",a:true,exp:"자전거, 컴퓨터, 세탁기, 나일론 등은 모두 발명(無→有)의 사례입니다."},
+
+  {q:"중력과 페니실린의 발견은 문화 변동의 내재적 요인에 해당한다.",a:true,exp:"발견은 내재적 요인 중 하나입니다. 중력, 페니실린, 세포, X선이 발견의 사례입니다."},
+
+  {q:"문화 전파는 문화 변동의 내재적 요인에 해당한다.",a:false,exp:"문화 전파는 다른 문화와 접촉·교류를 통한 외재적 요인입니다."},
+
+  {q:"직접 전파는 교역이나 전쟁 등 직접적 접촉 과정에서 이루어진다.",a:true,exp:"직접 전파는 서로 다른 문화에 있는 사람들이 교역이나 전쟁 같이 직접적인 접촉 과정에서 일어납니다."},
+
+  {q:"드라마를 통한 한류 전파는 직접 전파의 사례이다.",a:false,exp:"드라마는 매개체(영상 미디어)를 통한 간접 전파의 사례입니다."},
+
+  {q:"자극 전파는 다른 사회의 문화 요소 자체가 그대로 전달되는 방식이다.",a:false,exp:"자극 전파는 아이디어만 얻어 새로운 문화 요소를 창조하는 것입니다. 요소 자체가 전달되지 않습니다."},
+
+  {q:"신라 이두문자는 한자의 음·뜻에서 아이디어를 얻은 자극 전파의 사례이다.",a:true,exp:"신라 이두문자는 한자에서 아이디어를 얻어 만든 새로운 표기 체계로, 자극 전파의 대표 사례입니다."},
+
+  {q:"체로키족 문자는 영어 알파벳에서 아이디어를 얻어 만든 자극 전파의 사례이다.",a:true,exp:"체로키족은 영어 알파벳을 참고하여 독자적인 문자를 만들었습니다. 자극 전파의 전형적인 사례입니다."},
+
+  {q:"문화 변동의 외재적 요인은 직접 전파, 간접 전파, 자극 전파로 나뉜다.",a:true,exp:"외재적 요인(문화 전파)은 직접·간접·자극 전파 세 가지로 구분됩니다."}
+
+ ],
+
+ mc:[
+
+  {q:"다음 중 문화 변동의 <em>내재적 요인</em>에 해당하는 것은?",opts:["드라마를 통한 한류 전파","교역을 통한 면화 전달","컴퓨터의 발명","전쟁을 통한 문화 접촉"],a:2,exp:"컴퓨터의 발명(無→有)은 내재적 요인입니다. 나머지는 모두 외재적 요인(문화 전파)입니다."},
+
+  {q:"문화 변동의 요인 중 <em>발견</em>의 사례로 옳지 않은 것은?",opts:["세포","X선","나일론","중력"],a:2,exp:"나일론은 인공 합성한 발명입니다. 세포, X선, 중력은 이미 존재하던 것을 찾아낸 발견입니다."},
+
+  {q:"'한자의 음과 뜻에서 아이디어를 얻어 신라에서 우리말 표기 체계를 만들었다.' 이에 해당하는 문화 전파 유형은?",opts:["직접 전파","간접 전파","자극 전파","강제 전파"],a:2,exp:"다른 문화 요소에서 아이디어만 빌려 새로운 문화 요소를 창조한 것이므로 자극 전파입니다."},
+
+  {q:"문화 전파의 유형과 사례의 연결이 <em>옳은</em> 것은?",opts:["직접 전파 – 드라마를 통한 한류","간접 전파 – 알렉산드로스 정복으로 사탕수수 전달","자극 전파 – 영어 알파벳 참고하여 만든 체로키 문자","직접 전파 – 인터넷을 통한 K-pop 확산"],a:2,exp:"체로키 문자는 영어 알파벳에서 아이디어를 얻은 자극 전파입니다. ①은 간접, ②는 직접, ④는 간접 전파입니다."},
+
+  {q:"문화 변동의 내재적 요인에 대한 설명으로 <em>옳은</em> 것은?",opts:["발명과 발견 모두 새로운 것을 창조하는 과정이다.","발견은 이전에 없던 문화 요소를 만들어내는 것이다.","발명과 발견은 모두 외부 문화와의 접촉 없이 일어난다.","발명은 이미 존재하던 것을 찾아내는 것이다."],a:2,exp:"발명과 발견은 모두 다른 문화와의 접촉 없이 사회 내부에서 일어나는 내재적 요인입니다."},
+
+  {q:"다음 중 <em>간접 전파</em>의 사례로 가장 적절한 것은?",opts:["문익점이 원나라에서 목화씨를 가져와 재배","알렉산드로스 대왕의 정복으로 그리스 문화 전파","소셜 미디어를 통한 K-pop 세계 확산","신라에서 한자를 바탕으로 이두문자 창제"],a:2,exp:"소셜 미디어(인터넷)는 매개체이므로 간접 전파입니다. ①②는 직접 전파, ④는 자극 전파입니다."},
+
+  {q:"문화 변동의 요인 중 <em>외재적</em> 요인에 해당하는 것은?",opts:["발명","발견","직접 전파","발명과 발견"],a:2,exp:"직접 전파는 다른 문화와의 접촉을 통한 외재적 요인입니다. 발명과 발견은 내재적 요인입니다."},
+
+  {q:"다음 중 <em>발명</em>에 해당하지 않는 것은?",opts:["백열전구","자전거","세탁기","흑점"],a:3,exp:"흑점은 이미 존재하던 것을 관측·발견한 것으로 발명이 아닌 발견입니다."},
+
+  {q:"자극 전파와 간접 전파의 공통점으로 옳은 것은?",opts:["두 문화의 직접적인 사람 간 접촉이 필요하다.","매개체(미디어 등)를 통해 문화가 전달된다.","다른 사회의 문화를 계기로 새로운 문화 요소가 생겨난다.","문화 요소 자체가 그대로 전달된다."],a:2,exp:"두 유형 모두 다른 사회의 문화가 새로운 문화 요소 생성에 기여한다는 공통점이 있습니다."},
+
+  {q:"사례와 문화 변동 요인의 연결이 <em>모두 옳은</em> 것은?",opts:["페니실린–발명 / 컴퓨터–발견","세포–발명 / 나일론–발견","목화(문익점)–직접 전파 / 드라마 한류–간접 전파","이두문자–직접 전파 / 체로키 문자–간접 전파"],a:2,exp:"목화는 직접 접촉을 통한 직접 전파, 드라마 한류는 매개체를 통한 간접 전파입니다."}
+
+ ],
+
+ hard:[
+
+  {q:"다음 중 자극 전파와 직접·간접 전파의 <em>결정적 차이</em>로 가장 옳은 것은?",opts:["자극 전파는 사람 간 직접 접촉이 필수적이다.","자극 전파는 원래 문화 요소 자체는 전달되지 않고 아이디어만 차용해 새 문화 요소를 창조한다.","자극 전파는 세 유형 중 직접성이 가장 높다.","자극 전파는 반드시 강제적인 방식으로만 이루어진다."],a:1,exp:"자극 전파의 결정적 특징은 원래 문화 요소 자체가 전달되지 않는다는 것입니다. 아이디어·힌트만 빌려 전혀 다른 새로운 결과물을 독자적으로 만들어냅니다. 직접·간접 전파는 문화 요소 자체가 전달됩니다."},
+
+  {q:"'발명'과 '자극 전파'는 모두 새로운 문화 요소가 생겨난다는 공통점이 있다. 두 개념을 구분하는 핵심 기준에 대한 설명으로 가장 옳은 것은?",opts:["발명은 항상 의도적으로 이루어지고, 자극 전파는 우연히 발생한다.","발명은 내재적 요인이고, 자극 전파는 외재적 요인이다. 핵심 차이는 다른 사회 문화의 개입 여부이다.","발명은 결과물이 크고, 자극 전파는 결과물이 작다.","발명은 현대에만 나타나고, 자극 전파는 고대에만 나타난다."],a:1,exp:"핵심 구분 기준은 '다른 사회 문화의 개입 여부'입니다. 발명은 외부 문화의 개입 없이 사회 내부에서 자체 창출하는 내재적 요인, 자극 전파는 다른 문화에서 아이디어를 얻어 창조하는 외재적 요인입니다."},
+
+  {q:"문화 변동의 세 가지 전파 유형을 직접성이 높은 것부터 올바르게 나열한 것은?",opts:["자극 전파 > 직접 전파 > 간접 전파","간접 전파 > 자극 전파 > 직접 전파","직접 전파 > 간접 전파 > 자극 전파","직접 전파 > 자극 전파 > 간접 전파"],a:2,exp:"직접 전파(사람들이 직접 만나 문화 요소가 전달) > 간접 전파(매개체를 통해 전달, 직접 만남 불필요) > 자극 전파(문화 요소 자체가 아닌 아이디어만 차용, 직접성 가장 낮음)."},
+
+  {q:"'스마트폰의 발명'과 'SNS를 통한 문화 확산'을 각각 바르게 분류한 것은?",opts:["스마트폰 발명–외재적 요인 / SNS 확산–내재적 요인","스마트폰 발명–발견 / SNS 확산–직접 전파","스마트폰 발명–발명(내재적 요인) / SNS 확산–간접 전파(외재적 요인)","스마트폰 발명–자극 전파 / SNS 확산–발명"],a:2,exp:"스마트폰은 이전에 없던 것을 새로 만들어낸 발명(내재적 요인)입니다. SNS를 매개체로 문화가 전파되는 것은 간접 전파(외재적 요인)에 해당합니다."},
+
+  {q:"마리 퀴리의 라듐 확인을 '발명'이 아닌 '발견'으로 분류하는 이유로 가장 옳은 것은?",opts:["라듐을 처음으로 이름 붙였기 때문에","라듐은 퀴리가 실험하기 전에도 자연계에 이미 존재하고 있었기 때문에","퀴리가 단독으로 연구를 수행했기 때문에","실험실에서 합성했기 때문에"],a:1,exp:"발견은 '이미 존재하던 것을 찾아내 세상에 알리는 것'입니다. 라듐은 퀴리의 연구 이전부터 자연계에 존재했으므로 발명이 아닌 발견입니다."},
+
+  {q:"다음 중 현대 사회의 세 전파 유형과 사례의 연결이 <em>모두 옳은</em> 것은?",opts:["직접 전파–넷플릭스 K-드라마 / 간접 전파–해외 이민 / 자극 전파–이두문자","직접 전파–해외 유학 / 간접 전파–OTT 플랫폼 K-pop 확산 / 자극 전파–외래 종교 영향 받아 토착 종교 창시","직접 전파–소셜 미디어 / 간접 전파–국제 결혼 / 자극 전파–백열전구","직접 전파–이두문자 / 간접 전파–목화 전파 / 자극 전파–TV 드라마"],a:1,exp:"직접 전파: 해외 유학(직접 인적 접촉), 간접 전파: OTT 플랫폼(매개체), 자극 전파: 외래 종교에서 아이디어 얻어 토착 종교 창시(아이디어만 차용·독자 창조). 이것이 세 유형 모두 올바른 조합입니다."},
+
+  {q:"1차 발명(바퀴)이 2차 발명(자동차)의 기반이 되는 것처럼, 같은 방식의 현대적 사례로 가장 적절한 것은?",opts:["반도체 집적회로(1차 발명) → 스마트폰(2차 발명)","이두문자(1차) → 한글(2차)","목화 전파(1차) → 면직물(2차)","페니실린 발견(1차) → 항생제 처방(2차)"],a:0,exp:"반도체 집적회로라는 1차 발명을 기반으로 스마트폰이라는 2차 발명이 이루어졌습니다. 이는 발명이 연쇄적으로 이루어지는 '2차 발명'의 현대적 사례입니다."},
+
+  {q:"자극 전파가 일어나기 위한 조건과 특성을 가장 잘 설명한 것은?",opts:["두 사회의 직접적인 전쟁이 반드시 선행되어야 한다.","수용 사회가 다른 문화의 원리에서 영감을 받아 독자적으로 새 문화 요소를 창조할 능력이 있어야 한다.","전달되는 문화 요소의 완전성이 보장되어야 한다.","자극 전파는 강제적 문화 접변과 동일한 개념이다."],a:1,exp:"자극 전파는 ①두 문화 간 접촉(직접 또는 간접)이 선행되고, ②수용 사회가 다른 문화 요소의 원리에서 영감을 받아 독자적으로 새 문화 요소를 창조할 능력이 있을 때 일어납니다. 아이디어만 빌려 전혀 다른 결과물을 만든다는 것이 핵심입니다."},
+
+  {q:"다음 중 내재적 요인과 외재적 요인의 구분 기준으로 가장 옳은 것은?",opts:["변동의 속도가 빠른가 느린가","의도적으로 이루어졌는가 우연히 이루어졌는가","다른 사회 문화와의 접촉·교류가 있었는가 없었는가","변동의 결과가 긍정적인가 부정적인가"],a:2,exp:"내재적 요인(발명·발견)은 외부 문화의 개입 없이 사회 내부에서 자체 발생하고, 외재적 요인(문화 전파)은 다른 사회와의 접촉·교류를 통해 발생합니다. '다른 사회 문화와의 접촉 여부'가 핵심 구분 기준입니다."},
+
+  {q:"다음 진술 중 <em>옳은</em> 것은?",opts:["자극 전파는 직접 전파에 비해 직접성이 높다.","발명과 발견은 모두 외재적 요인이다.","간접 전파는 매개체 없이 두 사회가 직접 만나 문화가 전달되는 것이다.","발명과 발견의 차이는 이전에 존재하지 않던 것을 창조했는지의 여부에 달려 있다."],a:3,exp:"발명은 無→有(이전에 없던 것 창조), 발견은 이미 존재하던 것을 찾아내는 것입니다. 두 개념의 차이는 이전에 존재하지 않던 것을 창조했는지의 여부에 있습니다. ①자극 전파는 직접성이 가장 낮습니다. ②발명·발견은 내재적 요인입니다. ③간접 전파는 매개체를 통한 전파입니다."}
+
+ ]
+
+},
+
+1:{
+
+ ox:[
+
+  {q:"문화 접변은 두 문화가 단기간 부분적으로 접촉할 때 발생한다.",a:false,exp:"문화 접변은 두 문화가 오랫동안 전면적인 접촉을 하면서 발생하는 문화 변동입니다."},
+
+  {q:"문화 병존은 두 문화가 각자의 정체성을 유지하면서 공존하는 양상이다.",a:true,exp:"문화 병존(A+B→A+B)은 두 문화가 고유한 정체성을 유지하며 함께 공존하는 상태입니다."},
+
+  {q:"문화 융합은 기존 문화 요소와 외래 문화 요소가 결합하여 새로운 제3의 문화가 형성되는 것이다.",a:true,exp:"문화 융합(A+B→C)은 두 문화가 결합하여 기존의 어느 문화와도 다른 새로운 문화를 만들어냅니다."},
+
+  {q:"문화 동화는 기존 문화가 다른 문화에 흡수·대체되어 소멸하는 양상이다.",a:true,exp:"문화 동화(A+B→A)는 한 사회의 문화가 다른 사회의 문화에 흡수·대체되어 사라지는 현상입니다."},
+
+  {q:"강제적 문화 접변은 문화를 수용하는 주체의 힘이 전달하는 주체의 힘보다 강할 때 일어난다.",a:false,exp:"강제적 문화 접변은 문화를 전달하는 주체의 힘이 수용하는 주체의 힘보다 강할 때 강제로 문화 요소를 이식하는 것입니다."},
+
+  {q:"자발적 문화 접변은 수용 주체가 전달받은 문화를 유용하다고 여겨 스스로 수용하는 방식이다.",a:true,exp:"자발적 문화 접변은 수용 주체가 다른 문화를 유용하거나 바람직하다고 판단하여 자율적으로 받아들이는 것입니다."},
+
+  {q:"멕시코의 과달루페 성모상은 문화 동화의 사례이다.",a:false,exp:"유럽 종교와 원주민 문화가 결합해 새로운 형태의 성모상이 탄생한 것이므로 문화 융합(A+B→C)의 사례입니다."},
+
+  {q:"전통 문화는 한 사회에서 오랜 기간 유지되면서 그 사회의 고유한 가치를 인정받는 문화이다.",a:true,exp:"전통 문화의 정의입니다. 오랜 기간 유지되며 고유한 가치를 인정받는다는 두 가지 특징이 핵심입니다."},
+
+  {q:"전통 문화의 창조적 계승은 과거의 것을 원형 그대로 보존·유지하는 것을 의미한다.",a:false,exp:"창조적 계승은 단순 보존이 아니라 전통의 고유한 가치를 재해석하여 현대에 맞게 창조적으로 발전시키는 것입니다."},
+
+  {q:"헌법 제9조에는 국가가 전통 문화의 계승·발전과 민족 문화의 창달에 노력해야 한다는 내용이 있다.",a:true,exp:"헌법 제9조: '국가는 전통 문화의 계승·발전과 민족 문화의 창달에 노력하여야 한다.'"}
+
+ ],
+
+ mc:[
+
+  {q:"다음 도식이 나타내는 문화 변동의 양상은? <strong>A + B → C</strong>",opts:["문화 병존","문화 융합","문화 동화","문화 전파"],a:1,exp:"A+B→C는 두 문화가 결합하여 새로운 문화 C가 형성되는 문화 융합입니다."},
+
+  {q:"'유럽 식민지배로 호주 원주민의 언어와 토속 신앙이 소멸하였다.' 이에 해당하는 문화 접변 양상은?",opts:["문화 병존","문화 융합","문화 동화","자발적 문화 접변"],a:2,exp:"원주민 문화가 유럽 문화에 흡수·대체되어 소멸하였으므로 문화 동화(A+B→A)입니다."},
+
+  {q:"강제적 문화 접변과 자발적 문화 접변의 구분 기준으로 가장 적절한 것은?",opts:["두 문화의 접촉 기간","문화 수용 주체의 자발성 여부","문화 변동의 속도","접촉하는 문화의 수"],a:1,exp:"구분 기준은 수용 주체의 자발성 여부입니다. 강제적 접변은 힘의 차이로 강제 이식, 자발적 접변은 수용 주체가 자발적으로 받아들입니다."},
+
+  {q:"다음 중 문화 병존의 사례로 가장 적절한 것은?",opts:["멕시코 과달루페 성모상 탄생","우리나라 양의학과 한의학의 공존","청나라 만주족 풍속의 소멸","일제 강점기 일본어 강요"],a:1,exp:"양의학과 한의학이 각자의 정체성을 유지하며 함께 존재하는 것은 문화 병존의 사례입니다."},
+
+  {q:"자극 전파와 문화 융합의 관계로 옳은 것은?",opts:["자극 전파는 결과이고, 문화 융합은 원인이다.","자극 전파는 원인(요인)이고, 문화 융합은 결과(양상)이다.","두 개념은 동일한 것을 다르게 표현한 것이다.","두 개념은 아무런 관련이 없다."],a:1,exp:"자극 전파는 문화 변동의 요인(외재적 요인)이고, 문화 융합은 그 결과로 나타나는 문화 변동의 양상입니다."},
+
+  {q:"전통 문화의 의의로 옳지 않은 것은?",opts:["문화 정체성과 고유성 유지","사회 유지와 통합에 기여","세계 문화의 획일화 촉진","국가 이미지를 높여 문화 산업 육성에 이바지"],a:2,exp:"전통 문화는 세계 문화의 다양성을 증진하는 역할을 합니다. 획일화는 전통 문화의 의의와 반대되는 개념입니다."},
+
+  {q:"다음 중 문화 변동의 양상이 다른 하나는?",opts:["과달루페 성모상(유럽+원주민 문화)","성공회 강화 성당(한국+기독교 건축)","호주 원주민 언어 소멸","멕시코 음식과 스페인 요리의 결합"],a:2,exp:"호주 원주민 언어 소멸은 문화 동화(A+B→A)이고, 나머지는 모두 문화 융합(A+B→C)의 사례입니다."},
+
+  {q:"전통 문화의 창조적 계승 방안으로 옳지 않은 것은?",opts:["전통 문화를 현대적 감각으로 재구성","고유성을 지키면서 비판적 관점에서 다른 문화 수용","다른 사회의 전통 문화를 존중하는 세계시민의 자세 함양","전통 문화를 원형 그대로 보존하여 변형을 금지"],a:3,exp:"창조적 계승은 원형 고수가 아니라 재해석과 창조입니다. 원형 그대로 보존·변형 금지는 창조적 계승과 거리가 멉니다."},
+
+  {q:"다음 중 '강제적 문화 접변'에 해당하는 사례는?",opts:["나바호족이 에스파냐인의 은세공 기술을 자발적으로 도입","일제 강점기 조선인에게 일본어 사용을 강요","인천 차이나타운에서 중국·한국 문화가 공존","멕시코에서 유럽·원주민 문화가 융합된 성모상 탄생"],a:1,exp:"일제 강점기 일본어 강요는 전달 측(일본)의 힘이 수용 측(조선)보다 강해 강제적으로 문화를 이식한 강제적 문화 접변의 대표 사례입니다."},
+
+  {q:"문화 정체성에 대한 설명으로 가장 옳은 것은?",opts:["외국 문화와의 공통점을 찾아 동질감을 형성하는 것","한 사회에서 오랜 세월 형성된 고유한 문화 및 자기 문화에 대한 동질적 인식으로 타문화와 구별되는 특성","모든 문화에 공통적으로 나타나는 보편적 요소","문화 변동으로 인해 새롭게 형성된 문화적 특성"],a:1,exp:"문화 정체성이란 한 사회에서 오랜 세월 형성된 고유한 문화 및 자기 문화에 대한 동질적 인식과 감정으로 타문화와 구별되는 고유한 특성입니다."}
+
+ ],
+
+ hard:[
+
+  {q:"문화 병존·융합·동화를 도식(A+B→?)으로 표현할 때, <em>올바르게 모두 나열한</em> 것은?",opts:["병존:A+B→A / 융합:A+B→C / 동화:A+B→A+B","병존:A+B→C / 융합:A+B→A / 동화:A+B→A+B","병존:A+B→A+B / 융합:A+B→C / 동화:A+B→A","병존:A+B→A+B / 융합:A+B→A / 동화:A+B→C"],a:2,exp:"병존은 두 문화 모두 유지(A+B→A+B), 융합은 제3의 새 문화 생성(A+B→C), 동화는 한 문화가 소멸(A+B→A)입니다. 이 구분이 시험에서 자주 혼용되므로 정확히 암기해야 합니다."},
+
+  {q:"강제적 문화 접변이 자발적 문화 접변보다 더 심각한 사회 문제를 야기할 수 있는 이유로 가장 적절한 것은?",opts:["강제적 접변은 항상 전쟁을 동반하기 때문에","강제적 접변은 수용 주체의 의지와 무관하게 힘에 의해 문화가 이식되어 정체성 훼손과 인권 침해로 이어지기 때문에","강제적 접변은 문화 변동의 속도가 너무 빠르기 때문에","강제적 접변은 경제적 피해만 유발하기 때문에"],a:1,exp:"강제적 문화 접변은 수용 주체의 자발적 의지와 무관하게 힘에 의해 문화가 이식되어, 고유문화와 언어의 소멸, 민족 정체성 훼손, 자기결정권 침해라는 심각한 문제를 일으킵니다. 일제 강점기 창씨개명·일본어 강요가 대표 사례입니다."},
+
+  {q:"자극 전파와 문화 융합의 관계에 대한 설명으로 가장 옳은 것은?",opts:["자극 전파는 변동의 결과(양상)이고, 문화 융합은 변동의 원인(요인)이다.","자극 전파는 변동의 원인(외재적 요인)이고, 문화 융합은 변동의 결과(양상)이다. 자극 전파가 일어나 문화 융합으로 이어질 수 있다.","자극 전파와 문화 융합은 동일한 현상을 다른 이름으로 부르는 것이다.","자극 전파는 내재적 요인이고, 문화 융합은 외재적 요인이다."],a:1,exp:"자극 전파는 문화 변동의 외재적 요인(원인), 문화 융합은 그 결과로 나타나는 양상입니다. 예를 들어 타 문화에서 자극을 받아(자극 전파) 새로운 혼합 문화가 탄생하는 것(문화 융합)처럼 연결됩니다."},
+
+  {q:"전통 문화의 '창조적 계승'이 단순 보존과 구별되는 핵심 특징으로 가장 옳은 것은?",opts:["원형을 그대로 유지하는 것을 최우선으로 한다.","전통을 완전히 폐기하고 새로운 문화를 창조한다.","전통의 고유한 가치를 현대적 맥락에서 재해석하여 새로운 문화적 가치를 창출한다.","외국 문화를 무비판적으로 수용하여 전통을 대체한다."],a:2,exp:"창조적 계승은 단순히 원형을 보존하는 것도, 전통을 폐기하는 것도 아닙니다. 전통의 고유한 가치를 현대적 맥락에서 재해석하여 새로운 문화적 가치를 창출하는 것이 핵심입니다. 밴드 이날치의 '범 내려온다'가 좋은 사례입니다."},
+
+  {q:"일제 강점기 일본어 강요와 조선 시대 성리학 자발적 수용을 비교한 설명으로 가장 옳은 것은?",opts:["두 사례 모두 자발적 문화 접변에 해당한다.","일본어 강요는 자발적 접변, 성리학 수용은 강제적 접변이다.","일본어 강요는 강제적 문화 접변, 성리학 수용은 자발적 문화 접변이다. 핵심 차이는 수용 주체의 의지 유무이다.","두 사례 모두 강제적 문화 접변에 해당한다."],a:2,exp:"일본어 강요는 일본(전달 측)의 힘이 조선(수용 측)보다 강해 강제 이식된 강제적 접변입니다. 성리학 수용은 조선 학자들이 유용하다고 스스로 판단하여 받아들인 자발적 접변입니다. 핵심 차이는 수용 주체의 '의지와 자발성'의 유무입니다."},
+
+  {q:"문화 다양성 측면에서 가장 우려되는 문화 변동 양상과 그 이유로 옳은 것은?",opts:["문화 병존 — 두 문화가 공존하여 갈등이 발생하기 때문에","문화 융합 — 기존 두 문화의 정체성이 모두 사라지기 때문에","문화 동화 — 한 문화가 완전히 소멸되어 세계 문화 다양성이 줄어들기 때문에","문화 전파 — 새로운 문화 요소가 들어와 혼란이 생기기 때문에"],a:2,exp:"문화 동화(A+B→A)는 한 문화가 완전히 흡수·소멸되어 세계 문화 다양성이 줄어드는 가장 우려되는 양상입니다. 유럽 식민지배로 원주민 문화가 소멸된 것이 대표 사례입니다."},
+
+  {q:"성공회 강화 성당이 문화 병존이 아닌 문화 융합의 사례인 이유로 가장 옳은 것은?",opts:["한국 전통 건물과 서양 교회 건물이 각각 따로 나란히 존재하기 때문에","한국 전통 건축 양식과 서양 기독교 건축 양식이 결합하여 기존 어느 쪽과도 구별되는 새로운 형태의 건축물이 탄생했기 때문에","기독교 양식만 완전히 수용하고 한국 전통 양식이 소멸했기 때문에","건물 외형은 서양식이고 내부만 한국식이기 때문에"],a:1,exp:"문화 병존이라면 두 문화가 각각 따로 존재하는 것입니다. 그러나 강화 성당은 두 양식이 하나로 합쳐져 기존 어느 쪽과도 다른 새로운 독자적 문화(C)가 만들어진 문화 융합(A+B→C)의 사례입니다."},
+
+  {q:"전통 문화의 5가지 의의 중 K-pop·K-드라마·한식의 세계화와 가장 직접적으로 연결되는 두 가지는?",opts:["문화 정체성 유지 / 사회 유지와 통합","세계 문화의 다양성 증진 / 국가 이미지를 높여 문화 산업 육성에 이바지","사회 구성원의 자긍심 고취 / 사회 유지와 통합","문화 정체성 유지 / 사회 구성원의 자긍심 고취"],a:1,exp:"K-pop·K-드라마·한식의 세계화는 ①세계 문화에 한국 문화를 소개하여 문화적 다양성을 증진하고, ②국가 이미지를 높여 관광·문화 수출 등 문화 산업 육성에 기여한다는 두 가지 의의와 직접 연결됩니다."},
+
+  {q:"다음 중 문화 융합과 문화 동화의 차이를 가장 정확하게 설명한 것은?",opts:["문화 융합은 두 문화 중 하나가 완전히 소멸되지만, 문화 동화는 두 문화가 모두 남는다.","문화 융합은 A+B→C(새로운 제3의 문화 탄생), 문화 동화는 A+B→A(한 문화가 소멸)이다.","문화 융합은 강제적으로만, 문화 동화는 자발적으로만 이루어진다.","두 개념은 결과가 동일하며 단지 과정만 다르다."],a:1,exp:"문화 융합은 두 문화 요소가 결합하여 기존 어느 쪽과도 다른 새로운 문화(C)를 탄생시키는 것이고, 문화 동화는 한 문화가 다른 문화에 흡수·대체되어 소멸(A+B→A)하는 것입니다."},
+
+  {q:"다음 중 전통 문화의 창조적 계승 사례로 가장 적절하지 않은 것은?",opts:["판소리 선율을 현대 대중음악에 접목한 밴드의 공연","전통 한복 디자인을 현대적으로 재해석한 생활 한복","조선 시대 궁중 의상을 원형 그대로 복원하여 박물관에 전시","전통 장단을 활용하여 현대 게임 배경음악으로 제작"],a:2,exp:"원형 그대로 복원하여 박물관에 전시하는 것은 '보존'에 해당합니다. 창조적 계승은 전통의 고유한 가치를 현대적 맥락에서 재해석하여 새로운 가치를 창출하는 것이므로, 원형 그대로의 보존은 창조적 계승의 사례로 보기 어렵습니다."}
+
+ ]
+
+},
+
+2:{
+
+ ox:[
+
+  {q:"자문화 중심주의는 자신의 문화를 가장 우월하다고 여기고 다른 문화를 부정적으로 평가하는 태도이다.",a:true,exp:"자문화 중심주의(문화 절대주의)의 정확한 정의입니다."},
+
+  {q:"문화 사대주의는 자기 문화에 대한 문화적 정체성과 자부심을 강화하는 데 도움이 된다.",a:false,exp:"문화 사대주의의 한계 중 하나가 자기 문화에 대한 정체성과 자부심을 잃게 한다는 것입니다."},
+
+  {q:"문화 상대주의는 특정 문화를 기준으로 다른 문화의 우열을 판단하는 태도이다.",a:false,exp:"문화 상대주의는 특정 기준으로 우열을 가리지 않고, 각 문화를 그 사회의 고유한 환경과 역사적·사회적 맥락에서 이해하는 태도입니다."},
+
+  {q:"스위스의 치즈 요리 문화는 그 지역의 자연환경(목축 발달)과 관련이 깊다.",a:true,exp:"스위스는 산지가 많고 여름이 서늘해 목축이 발달하였고, 이에 따라 유제품(치즈)을 활용한 요리 문화가 형성되었습니다."},
+
+  {q:"극단적 문화 상대주의는 살인이나 폭력을 동반하는 문화도 존중해야 한다고 주장한다.",a:true,exp:"극단적 문화 상대주의는 문화의 특수성을 근거로 인류의 보편적 가치를 훼손하는 문화까지 인정해야 한다고 주장하는 것이 문제점입니다."},
+
+  {q:"보편 윤리는 특정 시대나 문화에만 적용되는 상대적인 윤리 기준이다.",a:false,exp:"보편 윤리는 시대와 사회를 초월하여 모든 사람이 따라야 할 보편적인 윤리 기준입니다."},
+
+  {q:"황금률은 다양한 종교에서 공통적으로 발견되는 보편 윤리의 원칙이다.",a:true,exp:"황금률은 불교, 크리스트교, 이슬람교, 힌두교, 유대교, 유교 등 다양한 종교에서 공통적으로 나타나는 보편 윤리의 원칙입니다."},
+
+  {q:"연고주의는 혈연·지연·학연을 우선시하는 사고방식으로 긍정적 측면만 있다.",a:false,exp:"연고주의는 소속감 강화라는 긍정적 측면도 있지만, 입학·채용 등에서 공정한 기회를 박탈하는 부정적 측면도 있습니다."},
+
+  {q:"인도의 결혼 지참금 문화는 보편 윤리의 관점에서 비판받을 수 있다.",a:true,exp:"지참금을 둘러싼 가정 폭력, 여성의 생명 위협 등은 인간 존엄성을 훼손하여 보편 윤리에 부합하지 않습니다."},
+
+  {q:"문화 상대주의의 태도는 다양한 문화적 차이로 인한 갈등을 예방하고 다문화 사회를 이해하는 데 도움이 된다.",a:true,exp:"문화 상대주의는 서로 다른 문화를 맥락에서 이해하고 존중하게 하여 갈등을 방지하고 문화 다양성 보존에 기여합니다."}
+
+ ],
+
+ mc:[
+
+  {q:"자문화 중심주의의 <em>한계</em>로 옳은 것을 모두 고른 것은?<br>ㄱ. 다른 문화를 차별하는 원인이 됨<br>ㄴ. 자기 문화에 대한 자긍심 제공<br>ㄷ. 문화 제국주의로 변질될 수 있음<br>ㄹ. 전통문화 계승에 유리함",opts:["ㄱ, ㄴ","ㄴ, ㄹ","ㄱ, ㄷ","ㄷ, ㄹ"],a:2,exp:"ㄱ(다른 문화 차별·갈등 유발)과 ㄷ(문화 제국주의)은 한계입니다. ㄴ(자긍심)과 ㄹ(전통문화 계승)은 순기능입니다."},
+
+  {q:"문화 사대주의에 대한 설명으로 가장 적절한 것은?",opts:["자기 문화를 가장 우월하다고 여기는 태도","다른 문화를 맹목적으로 동경하고 자기 문화를 열등하다고 여기는 태도","문화를 그 사회의 역사적·사회적 맥락에서 이해하는 태도","인류의 보편적 가치를 기준으로 문화를 평가하는 태도"],a:1,exp:"문화 사대주의는 다른 문화를 맹목적으로 동경하고 자기 문화를 열등하다고 여기는 태도입니다."},
+
+  {q:"'유럽 가톨릭 신부들이 나체로 사는 원주민들을 미개하다고 생각하여 강제로 유럽식 의복을 입게 하였다.' 이에 나타나는 태도는?",opts:["문화 상대주의","보편 윤리적 태도","자문화 중심주의","문화 사대주의"],a:2,exp:"자기 문화(유럽 의복)를 기준으로 다른 문화(자파테크족)를 미개하다고 평가하고 강제한 것이므로 자문화 중심주의입니다."},
+
+  {q:"문화 상대주의의 필요성으로 옳지 않은 것은?",opts:["편견 없이 다른 문화를 이해할 수 있다.","다른 문화를 객관적으로 이해하고 자기 문화 가치를 새롭게 발견할 수 있다.","인류가 받아들이기 어려운 문화(살인·폭력)까지 인정하게 된다.","문화적 차이로 인한 갈등을 방지하고 다양한 문화의 공존을 도모한다."],a:2,exp:"③은 문화 상대주의의 필요성이 아니라 극단적 문화 상대주의의 문제점입니다."},
+
+  {q:"시대와 사회를 초월하여 모든 사람이 따라야 할 보편적인 윤리 기준에 해당하는 개념은?",opts:["자문화 중심주의","문화 상대주의","보편 윤리","극단적 문화 상대주의"],a:2,exp:"시대·사회를 초월한 보편적 윤리 기준이 보편 윤리입니다. 황금률 등이 대표적입니다."},
+
+  {q:"다음 중 보편 윤리에 부합하지 않는 것은?",opts:["인간 존엄성 존중","자유와 평등의 보장","명예 살인 관행","황금률 준수"],a:2,exp:"명예 살인은 사람의 생명과 신체를 위협하여 인간 존엄성을 훼손하는 것으로 보편 윤리에 반합니다."},
+
+  {q:"티베트 천장(조장) 문화에 대한 올바른 이해 태도는?",opts:["시신을 독수리에게 던지는 것은 미개한 풍습이므로 금지해야 한다.","자연환경과 불교의 윤회 사상 등 고유한 배경에서 형성된 문화이므로 그 맥락에서 이해해야 한다.","자연을 오염시키므로 인류 공통의 기준으로 비판해야 한다.","이 문화가 우리보다 뛰어나므로 받아들여야 한다."],a:1,exp:"티베트 천장 문화는 건조·고원의 자연환경과 불교의 윤회·보시 사상에서 형성된 문화입니다. 문화 상대주의 입장에서 그 사회의 맥락으로 이해해야 합니다."},
+
+  {q:"연고주의에 대한 설명으로 옳은 것은?",opts:["연고주의는 사회 정의와 평등 실현에 항상 기여한다.","연고주의는 긍정적 측면(소속감)과 부정적 측면(공정성 훼손)을 모두 지닌다.","연고주의는 완전히 근절되어야 할 문화이다.","연고주의는 자문화 중심주의의 순기능 중 하나이다."],a:1,exp:"연고주의는 소속감·정체성을 강화하는 긍정적 측면이 있는 반면, 공정한 기회를 박탈하는 부정적 측면도 있습니다."},
+
+  {q:"다음 중 문화적 차이를 만드는 <em>인문환경</em>의 영향을 받은 사례는?",opts:["스위스의 산악 지형 → 치즈 요리 발달","일본의 계절풍 → 쌀과 해산물 요리 발달","서남아시아 이슬람교 → 돼지고기 금기 관행","더운 기후 → 개방적 가옥 구조 발달"],a:2,exp:"이슬람교는 인문환경(종교)의 영향입니다. ①②④는 모두 자연환경의 영향입니다."},
+
+  {q:"보편 윤리를 강조하는 이유로 가장 적절하지 않은 것은?",opts:["극단적 문화 상대주의를 방지하기 위해","문화 교류로 인한 사회적 혼란을 예방하기 위해","인간 존엄성·자유·평등 등 기본적 인권을 존중하기 위해","모든 문화를 하나의 기준으로 통일하기 위해"],a:3,exp:"보편 윤리는 문화를 획일화하려는 것이 아니라 인류 공통의 최소한의 도덕 기준을 제시하여 인권을 보호하는 것입니다."}
+
+ ],
+
+ hard:[
+
+  {q:"자문화 중심주의와 문화 사대주의의 공통점과 차이점에 대한 설명으로 가장 옳은 것은?",opts:["두 태도는 공통점이 없으며 완전히 상반된 개념이다.","두 태도 모두 문화에 우열이 있다는 문화 절대주의에 기반하지만, 자문화 중심주의는 자기 문화를, 사대주의는 다른 문화를 절대 기준으로 삼는다는 차이가 있다.","자문화 중심주의는 문화 다양성을 증진하지만, 사대주의는 문화 다양성을 해친다.","두 태도 모두 문화 상대주의의 하위 개념이다."],a:1,exp:"두 태도 모두 문화에 우열이 있다는 '문화 절대주의'에 기반합니다. 자문화 중심주의는 자기 문화를 절대 기준으로, 문화 사대주의는 다른 문화를 절대 기준으로 삼는다는 차이가 있을 뿐입니다. 둘 다 문화의 다양성과 고유한 가치를 인정하지 못한다는 공통된 한계가 있습니다."},
+
+  {q:"보편 윤리와 문화 상대주의의 관계에 대한 설명으로 가장 옳은 것은?",opts:["보편 윤리와 문화 상대주의는 완전히 대립하여 공존 불가능하다.","문화 상대주의만 있으면 명예 살인 같은 인권 침해 문화까지 허용하는 문제가 생기므로, 문화 상대주의로 다양성을 존중하되 보편 윤리로 최소한의 인권 기준을 유지하는 상호 보완적 관계가 필요하다.","보편 윤리만 있으면 문화적 차이를 충분히 존중할 수 있다.","문화 상대주의는 자문화 중심주의와 동일한 개념이다."],a:1,exp:"문화 상대주의만 강조하면 극단적 문화 상대주의로 이어져 인류 보편 가치를 훼손하는 문화까지 인정하게 됩니다. 따라서 문화 상대주의로 다양성을 존중하되, 보편 윤리로 인권·존엄성 등 최소한의 기준을 유지하는 상호 보완적 관계가 필요합니다."},
+
+  {q:"인도 결혼 지참금 문화와 명예 살인이 보편 윤리에 부합하지 않는 이유를 가장 정확하게 설명한 것은?",opts:["두 관행 모두 경제적 손실을 유발하기 때문에","두 관행 모두 특정 종교에만 국한된 문화이기 때문에","두 관행 모두 여성의 생명권·인간 존엄성이라는 보편적 가치를 침해하기 때문에","두 관행 모두 국가 법률에 위반되기 때문에"],a:2,exp:"인도 결혼 지참금 문화는 여성의 생명과 안전을 위협하여 인간 존엄성과 생명권을 훼손합니다. 명예 살인은 사람의 생명을 빼앗아 가장 기본적인 보편 가치인 생명권과 인간 존엄성을 심각하게 훼손합니다. 두 관행 모두 문화적 특수성을 내세우더라도 보편 윤리로 정당화될 수 없습니다."},
+
+  {q:"연고주의를 보편 윤리 차원에서 성찰했을 때 가장 적절한 평가는?",opts:["연고주의는 순수하게 긍정적인 문화이므로 장려해야 한다.","연고주의는 소속감을 강화하는 긍정적 측면이 있으나, 입학·취업 등에서 공정한 기회를 박탈하여 사회 정의와 평등이라는 보편 윤리에 어긋나는 부정적 측면도 있다.","연고주의는 사회 정의를 실현하는 수단이다.","연고주의는 완전히 폐지되어야 할 문화이다."],a:1,exp:"연고주의는 연고 집단 내 유대와 소속감을 강화하는 긍정적 측면도 있지만, 입학·취업 등에서 능력보다 연고를 우선하여 공정한 기회를 박탈하고 사회 정의와 평등이라는 보편 윤리에 어긋나는 부정적 측면도 있습니다."},
+
+  {q:"자문화 중심주의가 '문화 제국주의'로 발전하는 과정을 올바르게 나열한 것은?",opts:["타문화 학습 → 자문화 보완 → 문화 교류 → 상호 발전","자기 문화 우월 인식 → 타문화 폄하 → 강요·이식 → 문화 제국주의","문화 교류 → 문화 융합 → 문화 병존 → 문화 발전","보편 윤리 강조 → 타문화 비판 → 문화 획일화 → 문화 제국주의"],a:1,exp:"자문화 중심주의가 문화 제국주의로 발전하는 단계: ① 자기 문화가 가장 우월하다는 인식 형성 → ② 다른 문화를 미개하거나 열등하다고 폄하 → ③ 자기 문화로 교화해야 한다는 사명감 형성 → ④ 힘을 바탕으로 다른 문화에 강제 이식(문화 제국주의). 유럽 열강의 식민지 문화 강요가 역사적 사례입니다."},
+
+  {q:"황금률이 보편 윤리의 근거가 될 수 있는 이유로 가장 옳은 것은?",opts:["황금률은 특정 강대국의 문화에만 존재하기 때문에","황금률은 불교·기독교·이슬람교·유교 등 다양한 종교와 문화권에서 공통으로 발견되어 특정 문화에 국한되지 않는 보편성을 가지기 때문에","황금률은 현대에 새롭게 만들어진 원칙이기 때문에","황금률은 법적 강제력을 가지기 때문에"],a:1,exp:"황금률은 서로 다른 문화권의 종교(불교, 기독교, 이슬람교, 힌두교, 유대교, 유교)에서 공통으로 발견됩니다. 이는 특정 문화에 국한되지 않고 시대를 초월하여 적용되는 보편성을 지니기 때문에 보편 윤리의 근거가 될 수 있습니다."},
+
+  {q:"자문화 중심주의의 순기능(사회 통합, 자긍심)이 다문화 사회에서 오히려 문제가 될 수 있는 이유로 가장 옳은 것은?",opts:["다문화 사회에서는 사회 통합이 전혀 필요하지 않기 때문에","자문화 중심주의의 내집단 결속이 다문화 사회에서는 이주민·소수 집단에 대한 배타성·제노포비아·차별로 작용할 수 있기 때문에","자문화 중심주의는 다문화 사회에서 강화되기 때문에","다문화 사회에서 자국 문화 자긍심은 존재해서는 안 되기 때문에"],a:1,exp:"자문화 중심주의의 내집단 결속은 단일 문화 사회에서는 결속력을 높이지만, 다문화 사회에서는 다른 문화 배경의 이주민·소수 집단에 대한 배타성으로 작용할 수 있습니다. 자기 문화가 가장 옳다는 인식은 이주민 문화를 열등하게 보는 편견, 제노포비아, 차별로 이어져 다문화 사회의 갈등을 심화시킵니다."},
+
+  {q:"'지나친 권위주의'가 보편 윤리 차원에서 성찰의 대상이 되는 이유로 가장 옳은 것은?",opts:["권위주의는 경제 성장에 방해가 되기 때문에","권위주의는 사회 구성원 간 평등한 관계를 해치고 개인의 자유와 인권을 침해하여 인간 존엄성과 평등이라는 보편 윤리에 어긋나기 때문에","권위주의는 외국에서 들어온 문화이기 때문에","권위주의는 전통 문화와 아무런 관련이 없기 때문에"],a:1,exp:"지나친 권위주의는 상하 관계를 과도하게 강조하여 평등한 관계를 해치고 개인의 자유와 인권을 침해합니다. 직장 내 갑질, 과도한 복종 강요 등이 인간 존엄성을 훼손하며 인간 존엄성과 평등이라는 보편 윤리에 어긋납니다."},
+
+  {q:"'남태평양에서 돼지를 신성시하고 혼인 행사에서 먹는 것은 비위생적이고 미개한 풍습이다'라는 진술의 오류와 바른 이해 방식으로 가장 옳은 것은?",opts:["이 진술은 사실에 기반한 올바른 분석이다.","이 진술은 자문화 중심주의적 오류로, 자기 문화의 기준을 절대 잣대로 삼아 평가한 것이다. 문화 상대주의 입장에서 그 사회의 자연환경·종교·사회적 맥락에서 이해해야 한다.","이 진술은 문화 사대주의적 오류이다.","이 진술은 보편 윤리에 근거한 올바른 비판이다."],a:1,exp:"'비위생적', '미개한'이라는 판단은 자기 문화의 기준을 절대 잣대로 삼아 다른 문화를 평가한 자문화 중심주의적 오류입니다. 문화 상대주의 입장에서 그 사회의 기온·돼지 사육 환경·종교적·사회적 의례 맥락에서 이해하는 것이 바람직합니다."},
+
+  {q:"문화 상대주의 태도가 필요한 상황과 보편 윤리적 관점이 필요한 상황을 가장 적절하게 구분한 것은?",opts:["문화 상대주의: 인권 침해 문화 성찰 / 보편 윤리: 다른 장례 관습 이해","문화 상대주의: 다른 사회의 고유한 장례·식사 문화 이해 / 보편 윤리: 명예 살인·지참금 폭력 등 인권 침해 관행 성찰","두 관점 모두 동일한 상황에서 동일하게 적용된다.","문화 상대주의: 자국 문화 비판 / 보편 윤리: 타국 문화 무조건 수용"],a:1,exp:"문화 상대주의가 필요한 상황: 다른 사회의 고유한 장례·식사 문화처럼 우리와 다른 문화를 접할 때 그 사회의 맥락에서 이해해야 합니다. 보편 윤리적 관점이 필요한 상황: 명예 살인·지참금 폭력처럼 인간의 생명·존엄성을 침해하는 관행에 대해서는 문화적 특수성을 내세우더라도 보편 윤리의 기준으로 성찰해야 합니다."}
+
+ ]
+
+},
+
+3:{
+
+ ox:[
+
+  {q:"다문화 사회는 한 사회 내에서 문화적 배경이 다른 다양한 집단이 함께 살아가면서 여러 문화가 공존하는 사회이다.",a:true,exp:"다문화 사회의 정확한 정의입니다."},
+
+  {q:"다문화 사회의 등장은 교통·통신의 발달과 세계화로 국가 간 인구 이동이 감소하면서 나타났다.",a:false,exp:"다문화 사회의 등장 배경은 국가 간 인구 이동이 '증가'하여 서로 다른 문화권 사람들의 접촉 기회가 빈번해진 것입니다."},
+
+  {q:"다문화 사회는 문화의 다양성 증진과 경제 활성화라는 긍정적 측면을 가진다.",a:true,exp:"다양한 문화 경험 기회 확대와 이주민의 경제 활동 참여로 인한 경제 활성화는 다문화 사회의 긍정적 측면입니다."},
+
+  {q:"제노포비아(Xenophobia)는 다른 문화권 사람들에 대한 혐오·기피 현상으로 다문화 사회의 부정적 측면이다.",a:true,exp:"제노포비아는 다른 문화권에서 온 사람을 혐오하거나 기피하는 현상으로 다문화 사회의 부정적 측면입니다."},
+
+  {q:"동화주의(용광로 이론)는 다양한 문화가 대등하게 공존해야 한다고 보는 이민자 정책이다.",a:false,exp:"동화주의는 소수 문화를 주류 문화 안으로 흡수·통합하는 정책입니다. 다양한 문화의 대등한 공존을 추구하는 것은 다문화주의(샐러드 볼 이론)입니다."},
+
+  {q:"다문화주의(샐러드 볼 이론)는 소수자 집단의 문화 고유성을 인정하는 장점이 있다.",a:true,exp:"다문화주의는 소수자 집단의 문화 고유성을 인정하고, 다양한 문화가 대등하게 공존하도록 하는 것이 특징입니다."},
+
+  {q:"캐나다는 1971년에 다문화주의를 선언하여 모자이크 정책을 시행하였다.",a:true,exp:"캐나다는 1971년에 다문화주의를 선언하고, 각 문화의 고유한 특징이 드러날 수 있도록 다양한 인종·민족이 함께 어울리는 모자이크 정책을 시행하였습니다."},
+
+  {q:"다문화 사회에서 개인은 문화 상대주의 입장에서 문화 간 차이를 인정하고 이해해야 한다.",a:true,exp:"다문화 사회의 갈등 해결을 위한 개인의 노력으로 문화 상대주의 입장에서 문화 간 차이를 인정하고 이해하는 태도가 필요합니다."},
+
+  {q:"동화주의 정책은 소수 인종·민족의 문화 고유성과 인권이 침해될 수 있다는 한계가 있다.",a:true,exp:"동화주의는 소수 문화를 주류 문화로 흡수하는 과정에서 소수 집단의 고유한 문화, 정체성, 인권이 침해될 수 있다는 한계가 있습니다."},
+
+  {q:"다문화 수용성이란 다문화 사회로의 변화를 부정적으로 보고 자국 문화를 지키려는 태도를 말한다.",a:false,exp:"다문화 수용성이란 다문화 사회로의 변화를 긍정적으로 받아들이고 다양한 민족과 인종의 공존이라는 사회적 가치를 받아들이는 태도입니다."}
+
+ ],
+
+ mc:[
+
+  {q:"다문화 사회의 <em>긍정적</em> 측면으로 옳지 않은 것은?",opts:["문화의 다양성 증진","경제 활성화: 이주민의 경제 활동 참여","제노포비아와 같은 심각한 사회 갈등 발생","저출생·고령화로 인한 노동력 부족 문제 해결에 도움"],a:2,exp:"제노포비아는 다문화 사회의 부정적 측면입니다. ①②④는 모두 긍정적 측면입니다."},
+
+  {q:"다문화 사회의 이민자 정책 중 '동화주의(용광로 이론)'에 대한 설명으로 옳은 것은?",opts:["다양한 문화가 대등하게 조화를 이루며 공존해야 한다는 입장","소수 문화를 주류 문화 안으로 흡수·통합시켜 사회를 통합하려는 입장","소수자 집단의 문화 고유성을 최대한 인정하는 입장","각 문화의 차이를 인정하고 병존을 추구하는 입장"],a:1,exp:"동화주의는 주류 문화를 중심으로 소수 문화를 흡수·통합하는 입장입니다."},
+
+  {q:"캐나다의 모자이크 정책과 관련된 이민자 정책 관점은?",opts:["동화주의","다문화주의","자문화 중심주의","문화 상대주의"],a:1,exp:"캐나다의 모자이크 정책은 각 문화의 고유한 특징을 유지하면서 다양한 문화가 대등하게 공존하는 다문화주의의 대표적 사례입니다."},
+
+  {q:"다문화 사회의 갈등 해결을 위한 <em>사회적 노력</em>에 해당하지 않는 것은?",opts:["이주민을 위한 언어 교육 및 취업 관련 교육 지원","다문화 가족 지원법 시행","타문화에 대한 개인적 편견·고정관념 버리기","직장 체험, 가족 캠프 등 다문화 지원 사업 진행"],a:2,exp:"편견·고정관념을 버리는 것은 개인의 노력에 해당합니다. ①②④는 모두 사회적 노력입니다."},
+
+  {q:"다문화 사회 등장의 배경으로 가장 적절한 것은?",opts:["세계 각국의 문화 교류 감소","교통·통신의 발달과 세계화로 국가 간 인구 이동 증가","자국 내 이민자에 대한 배타적 정책 강화","단일 문화 정체성 강조 정책"],a:1,exp:"교통·통신의 발달과 세계화로 국가 간 인구 이동이 늘어나 서로 다른 문화권 사람들의 접촉 기회가 빈번해진 것이 등장 배경입니다."},
+
+  {q:"동화주의와 비교할 때, 다문화주의의 핵심 장점은?",opts:["사회 통합·질서 유지에 더 효과적","이민자가 주류 문화로 편입하기 쉬움","소수자 집단의 문화 고유성을 인정하고 다양한 문화 공존 추구","주류 문화와 가치를 중심으로 결속력 강화"],a:2,exp:"다문화주의는 소수자 집단의 고유한 문화와 정체성을 인정하고 다양한 문화가 대등하게 공존하는 것을 추구하는 것이 핵심 장점입니다."},
+
+  {q:"다문화 사회의 갈등 해결을 위한 개인의 노력으로 옳지 않은 것은?",opts:["문화 상대주의 입장에서 문화 간 차이 인정","타문화에 대한 편견·고정관념 버리기","다문화 가족 지원을 위한 법률 제정","다른 문화의 고유한 가치를 인정하는 관용의 자세"],a:2,exp:"법률 제정은 사회적 노력(제도적 장치 강화)에 해당합니다. ①②④는 모두 개인의 노력입니다."},
+
+  {q:"2022년 기준 우리나라 외국인 주민 유형 중 비율이 가장 높은 것은?",opts:["결혼 이민자","유학생","외국인 근로자","외국 국적 동포"],a:2,exp:"2022년 기준 외국인 근로자(23.0%)가 가장 높고, 외국 국적 동포(22.7%), 기타(33.5%), 유학생(10.8%), 결혼 이민자(10.0%) 순입니다."},
+
+  {q:"제노포비아(Xenophobia)에 대한 설명으로 옳은 것은?",opts:["자기 문화에 대한 지나친 자부심","다른 문화권에서 온 사람을 혐오하거나 기피하는 현상","외국 문화를 맹목적으로 동경하는 태도","다문화 사회로의 변화를 긍정적으로 받아들이는 태도"],a:1,exp:"제노포비아는 Xenos(낯선 사람)+Phobos(공포)의 합성어로, 다른 문화권에서 온 사람을 혐오하거나 기피하는 현상입니다."},
+
+  {q:"다문화주의(샐러드 볼 이론)의 한계로 가장 적절한 것은?",opts:["소수 인종·민족의 문화 고유성이 침해될 수 있다.","이민자가 주류 문화로 편입하기 어렵다.","기존 주류 사회의 정체성과 통합성이 약화될 수 있다.","사회 통합과 질서 유지에 어려움이 없다."],a:2,exp:"다문화주의의 한계는 기존 주류 사회의 정체성과 통합성이 약화될 수 있다는 것입니다. ①은 동화주의의 한계입니다."}
+
+ ],
+
+ hard:[
+
+  {q:"동화주의(용광로 이론)와 다문화주의(샐러드 볼 이론)의 비교로 가장 옳은 것은?",opts:["동화주의: 소수 문화 고유성 인정 / 다문화주의: 주류 문화로 통합","동화주의: 소수 문화를 주류로 흡수, 사회 통합에 유리하나 소수 집단 인권 침해 우려 / 다문화주의: 다양한 문화 대등 공존, 소수자 고유성 인정하나 주류 사회 통합성 약화 가능","동화주의: 문화 다양성 증진 / 다문화주의: 문화 획일화 추구","두 정책은 이민자의 권리를 동등하게 보장한다."],a:1,exp:"동화주의는 소수 문화를 주류로 흡수하여 사회 통합과 질서 유지에 유리하지만 소수 집단의 문화 고유성·인권이 침해될 수 있습니다. 다문화주의는 다양한 문화가 대등하게 공존하여 소수자 고유성을 인정하지만 주류 사회의 정체성·통합성이 약화될 수 있습니다."},
+
+  {q:"다문화 사회에서 발생하는 갈등의 원인과 해결 방안의 연결로 가장 옳은 것은?",opts:["경제적 경쟁 → 이주민 강제 추방","문화적 차이·편견 → 문화 상대주의 교육, 관용의 자세 / 언어 장벽 → 이주민 언어 교육 지원","갈등 원인은 오직 이주민에게만 있다.","제도적 차별 → 이주민의 자국 문화 포기"],a:1,exp:"다문화 갈등의 원인은 ①문화적 차이·편견(→문화 상대주의 교육, 관용), ②언어 장벽(→언어 교육 지원), ③경제적 경쟁(→공정한 고용 제도), ④제도적 차별(→법적 장치 강화) 등이 있습니다. 이에 맞는 개인·사회적 해결 방안이 필요합니다."},
+
+  {q:"한국인의 다문화 수용성 지수(성인 52.27, 청소년 71.39)와 자국민 우선 고용 찬성률(한국 79.6% vs 스웨덴 14.5%)에 대한 분석으로 가장 옳은 것은?",opts:["한국인의 다문화 수용성은 모든 면에서 스웨덴보다 높다.","청소년의 수용성이 성인보다 높으며, 한국의 높은 자국민 우선 고용 찬성률은 단순한 문화 혐오보다 경제적 불안에서 비롯된 측면이 크다.","성인의 다문화 수용성이 청소년보다 높다.","한국과 스웨덴의 다문화 수용성 지수는 비슷하다."],a:1,exp:"청소년(71.39)의 다문화 수용성이 성인(52.27)보다 높아 세대 간 차이가 있습니다. 한국의 자국민 우선 고용 찬성률(79.6%)이 스웨덴(14.5%)보다 월등히 높은 것은, 다문화 사회의 역사가 짧고 경제적 불안정 상황에서 이주민을 경쟁 상대로 인식하는 경향이 강하기 때문입니다."},
+
+  {q:"동화주의 정책을 시행하는 사회에서 소수 민족 문화가 소멸 위기에 처한 상황에 대한 분석으로 가장 옳은 것은?",opts:["이 상황은 자발적 문화 접변(문화 융합)의 긍정적 사례이다.","이 상황은 강제적 문화 동화로, 주류 사회의 자문화 중심주의와 동화주의 정책의 한계(소수 문화 고유성·인권 침해)를 보여준다.","이 상황은 문화 병존의 사례이다.","이 상황은 자발적 문화 접변이므로 문제가 없다."],a:1,exp:"소수 민족 문화가 주류 문화에 강제 흡수·소멸되는 것은 강제적 문화 동화(A+B→A)입니다. 이는 주류 사회의 자문화 중심주의가 기저에 있으며, 동화주의 정책의 한계(소수 집단 문화 고유성·정체성·인권 침해)를 극명하게 보여줍니다."},
+
+  {q:"이민자들에게 자국어 교육 의무화, 자국 역사·문화 교육 이수, 공공장소 자국 언어만 사용 권장 등을 시행하는 A국의 정책에 대한 평가로 가장 옳은 것은?",opts:["A국은 다문화주의 정책을 시행하고 있으며, 이민자의 고유 문화를 완전히 보장하고 있다.","A국은 동화주의 정책을 시행하고 있으며, 사회 통합에는 유리하나 이민자의 모국 문화·정체성을 억압할 수 있다는 한계가 있다.","A국의 정책은 보편 윤리에 완전히 부합한다.","A국의 정책은 다문화주의와 동화주의를 균형 있게 결합한 이상적 모델이다."],a:1,exp:"A국은 이민자를 주류 문화로 편입·동화시키려는 동화주의 정책을 시행하고 있습니다. 공통 언어를 통한 사회 통합에는 유리하지만, 이민자의 모국 언어와 문화가 억압·소멸되어 문화 정체성이 훼손되고 소수 집단의 고유성이 침해될 수 있다는 한계가 있습니다."},
+
+  {q:"다문화 사회에서 '관용(tolerance)'의 한계를 보편 윤리와 연결하여 가장 잘 설명한 것은?",opts:["관용은 모든 문화와 행위를 무조건 허용해야 함을 의미한다.","관용은 다름을 인정하는 것이지만, 인간 존엄성·생명권·평등을 침해하는 문화까지 허용하는 것은 아니다. 보편 윤리가 관용의 한계를 설정한다.","관용은 법적 강제력을 가진 개념이다.","관용은 자문화 중심주의와 같은 개념이다."],a:1,exp:"다문화 사회에서 관용이란 자신과 다른 문화를 존중하는 태도입니다. 그러나 명예 살인·지참금 폭력·아동 학대처럼 인간 존엄성·생명권·자유를 침해하는 문화까지 관용을 베푸는 것은 극단적 문화 상대주의의 오류입니다. 보편 윤리(인간 존엄성, 생명권, 평등)가 관용의 한계를 설정합니다."},
+
+  {q:"청소년의 다문화 수용성이 성인보다 높은 이유로 가장 적절한 것을 모두 고른 것은?<br>ㄱ. 학교 교육에서 다문화 이해 교육 강화<br>ㄴ. 인터넷·SNS를 통한 다양한 문화 자연스러운 접촉<br>ㄷ. 청소년은 경제적 일자리 경쟁에서 이주민과 직접 경쟁하지 않음<br>ㄹ. 청소년은 전통적 민족 정체성에 덜 얽매이는 경향",opts:["ㄱ, ㄴ","ㄱ, ㄴ, ㄷ","ㄱ, ㄷ, ㄹ","ㄱ, ㄴ, ㄷ, ㄹ"],a:3,exp:"ㄱ(다문화 이해 교육), ㄴ(디지털 환경에서 다양한 문화 접촉), ㄷ(일자리 경쟁에서 이주민과 직접 경쟁 적음), ㄹ(전통적 민족 정체성에 덜 얽매임) 모두 청소년의 다문화 수용성이 성인보다 높은 이유로 적절합니다."},
+
+  {q:"다문화 사회의 갈등이 단순히 '문화 차이' 때문만이 아닌 이유를 가장 잘 설명한 것은?",opts:["다문화 갈등은 항상 이주민의 잘못으로 발생한다.","다문화 갈등은 문화 차이 외에도 경제적 불평등·일자리 경쟁·제도적 차별 등 구조적 요인이 복합적으로 작용하여 발생한다.","다문화 갈등은 오직 언어 장벽 때문에 발생한다.","다문화 갈등은 동화주의 정책만 시행하면 완전히 해결된다."],a:1,exp:"다문화 갈등은 표면적으로는 언어·가치관의 문화적 차이에서 비롯되지만, 경제적 취약 계층에 집중된 이주민과 내국인 간의 일자리 경쟁, 제도적 차별, 사회 안전망 부족 등 구조적 불평등이 복합적으로 작용합니다. 한국의 높은 자국민 우선 고용 찬성률이 이를 잘 보여줍니다."},
+
+  {q:"다문화 교육이 다문화 사회의 갈등 해결에 기여할 수 있는 방법으로 적절하지 않은 것은?",opts:["이주민 대상 한국어 교육으로 의사소통 장벽 해소","내국인 학생들에게 다양한 문화를 소개하여 편견 해소","이주민이 자신의 모국 문화를 완전히 포기하도록 강제하는 교육","다문화 가정 자녀의 정체성 강화 지원"],a:2,exp:"이주민이 모국 문화를 완전히 포기하도록 강제하는 것은 동화주의의 극단적 형태로, 다문화 교육의 방법이 아닙니다. 다문화 교육은 상호 이해와 존중을 통해 공존을 도모하는 것이지, 한 문화를 포기하도록 강제하는 것이 아닙니다."},
+
+  {q:"다음 중 다문화 사회와 관련된 개념의 연결이 <em>모두 옳은</em> 것은?",opts:["동화주의 – 샐러드 볼 이론 / 다문화주의 – 용광로 이론","제노포비아 – 다른 문화를 존중하고 수용하는 태도 / 다문화 수용성 – 다문화 사회를 혐오하는 태도","동화주의 – 용광로 이론 / 다문화주의 – 샐러드 볼 이론 / 제노포비아 – 다른 문화권 사람 혐오·기피","캐나다 모자이크 정책 – 동화주의 / 다문화 수용성 – 주류 문화 중심 통합"],a:2,exp:"동화주의=용광로 이론(소수 문화를 주류로 흡수), 다문화주의=샐러드 볼 이론(다양한 문화 대등 공존), 제노포비아=다른 문화권 사람을 혐오·기피하는 현상. 세 가지 모두 올바른 연결입니다."}
+
+ ]
+
+}
+
+};
+
+
+
+
+
+// ══════════════════════════════════════
+
+//  QUIZ ENGINE
+
+// ══════════════════════════════════════
+
+const UNIT_LABELS=['문화 변동','문화 변동의 양상','문화 상대주의와 보편 윤리','다문화 사회와 문화적 다양성 존중'];
+
+const TYPE_CONFIG=[
+
+  {key:'ox',  label:'OX 퀴즈',  icon:'⭕', cls:'ox'},
+
+  {key:'mc',  label:'객관식',   icon:'📋', cls:'mc'},
+
+  {key:'hard',label:'고난이도', icon:'🔥', cls:'hard'}
+
+];
+
+const COLOR_MAP={ox:'#1a73e8',mc:'#34a853',hard:'#ea4335'};
+
+
+
+const state={};
+
+for(let u=0;u<4;u++){
+
+  state[u]={activeType:0,scores:{ox:[0,0],mc:[0,0],hard:[0,0]},answered:{ox:[],mc:[],hard:[]}};
+
+}
+
+
+
+function buildQuizSection(unitIdx){
+
+  const container=document.getElementById('quiz-'+unitIdx);
+
+  const d=QUIZ_DATA[unitIdx];
+
+  const s=state[unitIdx];
+
+  container.innerHTML='';
+
+
+
+  // ─ header ─
+
+  const hdr=document.createElement('div');
+
+  hdr.className='quiz-header';
+
+  hdr.innerHTML=`<div class="quiz-main-title">📝 개념 확인 문제 — ${UNIT_LABELS[unitIdx]}</div><div class="quiz-scoreboard" id="scoreboard-${unitIdx}"></div>`;
+
+  container.appendChild(hdr);
+
+
+
+  // ─ type tab bar ─
+
+  const bar=document.createElement('div');
+
+  bar.className='quiz-type-bar';
+
+  TYPE_CONFIG.forEach((t,ti)=>{
+
+    const btn=document.createElement('button');
+
+    btn.className='qtype-btn'+(ti===s.activeType?' active':'');
+
+    btn.innerHTML=`<span class="qtype-icon">${t.icon}</span>${t.label}<span class="qtype-count">10</span>`;
+
+    btn.onclick=()=>{s.activeType=ti;buildQuizSection(unitIdx);};
+
+    bar.appendChild(btn);
+
+  });
+
+  container.appendChild(bar);
+
+
+
+  const tc=TYPE_CONFIG[s.activeType];
+
+  const qs=d[tc.key];
+
+  const doneCount=s.answered[tc.key].filter(x=>x!==undefined).length;
+
+
+
+  // ─ progress bar ─
+
+  const prog=document.createElement('div');
+
+  prog.className='q-progress-wrap';
+
+  prog.innerHTML=`<div class="q-progress-bar"><div class="q-progress-fill" style="width:${doneCount/10*100}%"></div></div><div class="q-progress-label">${doneCount}/10 완료</div>`;
+
+  container.appendChild(prog);
+
+
+
+  // ─ question cards ─
+
+  qs.forEach((q,qi)=>{container.appendChild(buildQCard(unitIdx,tc.key,qi,q,s));});
+
+
+
+  // ─ result panel ─
+
+  const res=document.createElement('div');
+
+  res.className='quiz-result'+(doneCount===10?' visible':'');
+
+  const sc=s.scores[tc.key];
+
+  const pct=doneCount===10?Math.round(sc[0]/10*100):0;
+
+  res.innerHTML=`
+
+    <div class="result-score-big">${doneCount===10?sc[0]:'-'}<span style="font-size:24px">/10</span></div>
+
+    <div class="result-score-label">${doneCount===10?pct+'% · '+getGrade(pct):''}</div>
+
+    ${buildMiniBar(unitIdx)}
+
+    <button class="reset-btn" onclick="resetType(${unitIdx},'${tc.key}')">🔄 다시 풀기</button>`;
+
+  container.appendChild(res);
+
+
+
+  updateScoreboard(unitIdx);
+
+}
+
+
+
+function buildMiniBar(unitIdx){
+
+  let h='<div class="result-bar-wrap">';
+
+  TYPE_CONFIG.forEach(t=>{
+
+    const sc=state[unitIdx].scores[t.key];
+
+    const done=state[unitIdx].answered[t.key].filter(x=>x!==undefined).length;
+
+    const px=done===10?Math.round(sc[0]/10*60):0;
+
+    h+=`<div class="result-bar-item"><div class="result-bar-fill"><div class="result-bar-fill-inner" style="height:${px}px;background:${COLOR_MAP[t.key]}"></div></div>${t.icon}<br>${done===10?sc[0]+'/10':'미완'}</div>`;
+
+  });
+
+  return h+'</div>';
+
+}
+
+
+
+function getGrade(p){
+
+  if(p>=90)return'🏆 완벽!';
+
+  if(p>=70)return'👍 잘했어요!';
+
+  if(p>=50)return'📚 복습 필요';
+
+  return'💪 다시 도전!';
+
+}
+
+
+
+function buildQCard(unitIdx,typeKey,qi,qdata,s){
+
+  const card=document.createElement('div');
+
+  card.className='q-card';
+
+  card.id=`qcard-${unitIdx}-${typeKey}-${qi}`;
+
+  const ans=s.answered[typeKey][qi];
+
+  const done=ans!==undefined;
+
+
+
+  const isCorrect=(typeKey==='ox')?(ans===true):(ans===qdata.a);
+
+  if(done) card.classList.add(isCorrect?'answered-correct':'answered-wrong');
+
+
+
+  const diffCls=typeKey==='ox'?'diff-basic':typeKey==='mc'?'diff-mid':'diff-hard';
+
+  const diffLabel=typeKey==='ox'?'기초':typeKey==='mc'?'중급':'고난이도';
+
+
+
+  card.innerHTML=`<div class="q-meta"><span class="q-num">Q${qi+1}</span><span class="q-difficulty ${diffCls}">${diffLabel}</span>${done?(isCorrect?`<span class="q-answered-mark">✅</span>`:`<span class="q-answered-mark">❌</span>`):''}</div><div class="q-text">${qdata.q}</div>`;
+
+
+
+  // OX
+
+  if(typeKey==='ox'){
+
+    const row=document.createElement('div');
+
+    row.className='ox-row';
+
+    [['⭕','맞다'],['❌','틀리다']].forEach(([sym,lbl],si)=>{
+
+      const btn=document.createElement('button');
+
+      btn.className='ox-btn';
+
+      btn.innerHTML=`<span class="ox-sym">${sym}</span><span class="ox-lbl">${lbl}</span>`;
+
+      btn.disabled=done;
+
+      if(done){
+
+        const corr=qdata.a===true;
+
+        const picked=ans;
+
+        const isCorrectBtn=(si===0&&corr)||(si===1&&!corr);
+
+        const isPickedBtn=(si===0&&picked===true)||(si===1&&picked===false);
+
+        if(isCorrectBtn) btn.classList.add(isPickedBtn?'ox-correct-picked':'ox-correct-reveal');
+
+        else if(isPickedBtn) btn.classList.add('ox-wrong-picked');
+
+      }
+
+      btn.onclick=()=>submitOX(unitIdx,qi,si===0,qdata);
+
+      row.appendChild(btn);
+
+    });
+
+    card.appendChild(row);
+
+  }
+
+  // MC (일반 + 고난이도 모두 동일 렌더)
+
+  else {
+
+    const opts=document.createElement('div');
+
+    opts.className='mc-options';
+
+    qdata.opts.forEach((opt,oi)=>{
+
+      const btn=document.createElement('button');
+
+      btn.className='mc-opt';
+
+      btn.disabled=done;
+
+      if(done){
+
+        if(oi===qdata.a) btn.classList.add('mc-correct');
+
+        else if(oi===s.answered[typeKey][qi]) btn.classList.add('mc-wrong');
+
+      }
+
+      btn.innerHTML=`<span class="mc-opt-letter">${String.fromCharCode(65+oi)}</span><span class="mc-opt-text">${opt}</span>`;
+
+      btn.onclick=()=>submitMC(unitIdx,qi,oi,qdata,typeKey);
+
+      opts.appendChild(btn);
+
+    });
+
+    card.appendChild(opts);
+
+  }
+
+
+
+  // feedback
+
+  if(done){
+
+    const fb=document.createElement('div');
+
+    fb.className='q-feedback '+(isCorrect?'correct':'wrong');
+
+    fb.innerHTML=`<strong>${isCorrect?'✅ 정답!':'❌ 오답'}</strong>&nbsp;&nbsp;${qdata.exp}`;
+
+    card.appendChild(fb);
+
+  }
+
+  return card;
+
+}
+
+
+
+function submitOX(unitIdx,qi,chosen,qdata){
+
+  const s=state[unitIdx];
+
+  const correct=chosen===qdata.a;
+
+  s.answered['ox'][qi]=correct;
+
+  if(correct)s.scores['ox'][0]++;
+
+  s.scores['ox'][1]++;
+
+  afterSubmit(unitIdx,'ox');
+
+}
+
+function submitMC(unitIdx,qi,chosen,qdata,typeKey){
+
+  const s=state[unitIdx];
+
+  const correct=chosen===qdata.a;
+
+  s.answered[typeKey][qi]=chosen;
+
+  if(correct)s.scores[typeKey][0]++;
+
+  s.scores[typeKey][1]++;
+
+  afterSubmit(unitIdx,typeKey);
+
+}
+
+
+
+function afterSubmit(unitIdx,typeKey){
+
+  buildQuizSection(unitIdx);
+
+  const answered=state[unitIdx].answered[typeKey];
+
+  const nextIdx=answered.findIndex((v,i)=>v===undefined&&i<10);
+
+  if(nextIdx>=0){
+
+    const el=document.getElementById(`qcard-${unitIdx}-${typeKey}-${nextIdx}`);
+
+    if(el)setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'center'}),80);
+
+  }
+
+}
+
+
+
+function resetType(unitIdx,typeKey){
+
+  state[unitIdx].answered[typeKey]=[];
+
+  state[unitIdx].scores[typeKey]=[0,0];
+
+  buildQuizSection(unitIdx);
+
+  document.getElementById('quiz-'+unitIdx).scrollIntoView({behavior:'smooth'});
+
+}
+
+
+
+function updateScoreboard(unitIdx){
+
+  const sb=document.getElementById('scoreboard-'+unitIdx);
+
+  if(!sb)return;
+
+  sb.innerHTML='';
+
+  TYPE_CONFIG.forEach(t=>{
+
+    const done=state[unitIdx].answered[t.key].filter(x=>x!==undefined).length;
+
+    const sc=state[unitIdx].scores[t.key];
+
+    const chip=document.createElement('span');
+
+    chip.className='score-chip '+t.cls;
+
+    chip.textContent=`${t.icon} ${done}/10${done>0?' ('+sc[0]+'점)':''}`;
+
+    sb.appendChild(chip);
+
+  });
+
+}
+
+
+
+function switchTab(idx){
+
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
+
+  document.querySelectorAll('.tab-panel').forEach((p,i)=>p.classList.toggle('active',i===idx));
+
+  window.scrollTo({top:0,behavior:'smooth'});
+
+  if(!document.getElementById('quiz-'+idx).innerHTML.trim())buildQuizSection(idx);
+
+}
+
+
+
+// ─ Charts ─
+
+const cD={plugins:{legend:{labels:{font:{family:"'Noto Sans KR',sans-serif",size:12}}}}};
+
+new Chart(document.getElementById('chartForeign'),{type:'bar',data:{labels:['2009','2011','2013','2015','2017','2019','2021','2023'],datasets:[{label:'외국인 주민 수(만 명)',data:[110,126,157,174,176,222,214,245],backgroundColor:'rgba(26,115,232,0.75)',borderRadius:5,yAxisID:'y'},{label:'외국인 주민 비율(%)',data:[2.2,2.5,3.1,3.4,3.6,4.3,4.1,4.4],type:'line',borderColor:'#ea4335',backgroundColor:'rgba(234,67,53,0.1)',pointBackgroundColor:'#ea4335',tension:.35,yAxisID:'y2'}]},options:{responsive:true,interaction:{mode:'index'},scales:{y:{title:{display:true,text:'만 명'},beginAtZero:true,grid:{color:'#f0f0f0'}},y2:{title:{display:true,text:'%'},position:'right',min:0,max:6,grid:{drawOnChartArea:false}}},plugins:{...cD.plugins}}});
+
+new Chart(document.getElementById('chartType'),{type:'doughnut',data:{labels:['외국인 근로자(23.0%)','외국 국적 동포(22.7%)','유학생(10.8%)','결혼 이민자(10.0%)','기타 외국인(33.5%)'],datasets:[{data:[23.0,22.7,10.8,10.0,33.5],backgroundColor:['#1a73e8','#34a853','#fbbc04','#ea4335','#9c27b0'],borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,cutout:'58%',plugins:{...cD.plugins,legend:{position:'bottom',labels:{font:{family:"'Noto Sans KR',sans-serif",size:11},padding:10}}}}});
+
+new Chart(document.getElementById('chartAccept'),{type:'bar',data:{labels:['2015','2018','2021'],datasets:[{label:'성인',data:[53.95,52.81,52.27],backgroundColor:'rgba(26,115,232,0.8)',borderRadius:4},{label:'청소년',data:[67.63,71.22,71.39],backgroundColor:'rgba(52,168,83,0.8)',borderRadius:4}]},options:{responsive:true,scales:{y:{min:40,max:80,title:{display:true,text:'지수'},grid:{color:'#f0f0f0'}}},plugins:{...cD.plugins}}});
+
+new Chart(document.getElementById('chartCmp'),{type:'bar',data:{labels:['한국','미국','독일','스웨덴'],datasets:[{label:'자국민 우선 고용 찬성(%)',data:[79.6,50.5,41.5,14.5],backgroundColor:'rgba(234,67,53,0.8)',borderRadius:4},{label:'외국인 이웃 기피(%)',data:[29.4,13.7,21.5,3.5],backgroundColor:'rgba(251,188,4,0.85)',borderRadius:4}]},options:{responsive:true,scales:{y:{beginAtZero:true,max:100,title:{display:true,text:'%'},grid:{color:'#f0f0f0'}}},plugins:{...cD.plugins}}});
+
+
+
+buildQuizSection(0);
+
+
+
+</script>
+
+</body>
+
 </html>
