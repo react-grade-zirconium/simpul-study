@@ -9,7 +9,6 @@ function removeUnexpectedBodyTextNodes() {
 }
 removeUnexpectedBodyTextNodes();
 
-
 const MOBILE_LITE_QUERY = '(max-width: 900px), (pointer: coarse) and (max-width: 1024px)';
 function isMobileLiteMode() {
   return Boolean(window.matchMedia?.(MOBILE_LITE_QUERY).matches);
@@ -192,10 +191,7 @@ function showSubject(btn, heading) {
   frame.src = btn.dataset.src;
   title.textContent = heading;
   desc.textContent = '';
-  const autoStatusEl = document.getElementById('aiAutoStatus');
-  if (autoStatusEl) autoStatusEl.textContent = `${heading} 로딩 중...`;
   frame.onload = () => {
-    autoAnalyzeCurrentFrame(heading);
     bindFrameInkContextSync();
     resizeSubjectFrameForMobile();
     if (window.syncInkContext) window.syncInkContext();
@@ -203,7 +199,6 @@ function showSubject(btn, heading) {
   resizeSubjectFrameForMobile();
   if (window.syncInkContext) window.syncInkContext();
 }
-
 
 function showAiCoachPanel(btn) {
   setActive(btn);
@@ -229,8 +224,6 @@ function showVersionHistory(btn) {
   if (window.syncInkContext) window.syncInkContext();
 }
 
-
-
 function initMobileHomeClose() {
   const homeLink = document.querySelector('.home a');
   if (!homeLink || !subjectToggleBtn) return;
@@ -242,8 +235,6 @@ function initMobileHomeClose() {
     applySidebarState(true);
   });
 }
-
-
 
 function initMobileSubjectBarExpansion() {
   const menu = document.querySelector('.menu');
@@ -379,8 +370,6 @@ function saveMemo() {
     if (memoMsgEl) memoMsgEl.textContent = '메모 저장에 실패했습니다.';
   }
 }
-
-
 
 function initGlobalInk() {
   const canvas = document.getElementById('inkLayer');
@@ -572,7 +561,6 @@ function initGlobalInk() {
   window.addEventListener('beforeunload', persistStrokes);
 }
 
-
 const mobileLiteMode = isMobileLiteMode();
 
 renderDday();
@@ -594,11 +582,6 @@ initCorePortalFeatures();
 if (mobileLiteMode) {
   initMobileLitePortal();
 }
-
-
-initAiCoach();
-
-
 
 function extractTextFromCurrentFrame() {
   const doc = getNestedFrameDocument(frame);
@@ -717,7 +700,6 @@ function persistAiResult(summaryPoints, questions, sourceLength, subjectKey = ''
   if (!options.append) setActiveAiQuestionIndex(0);
   return { totalQuestions: nextQuestions.length, addedCount };
 }
-
 
 function saveActiveAiSource(subjectKey, sourceText) {
   localStorage.setItem(AI_ACTIVE_SUBJECT_KEY, subjectKey);
@@ -853,7 +835,6 @@ function initAiCoach() {
 
   if (widget && minBtn && dockToggleBtn) {
     const restoreWidgetPosition = initAiWidgetDrag(widget);
-
 
   function setDockState(minimized) {
       widget.classList.remove('dock-left');
@@ -1030,7 +1011,6 @@ function initAiWidgetDrag(widget) {
 
   return restorePosition;
 }
-
 
 window.showDashboard = showDashboard;
 window.showSubject = showSubject;
