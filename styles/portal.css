@@ -62,24 +62,9 @@ body.ink-on #inkLayer{pointer-events:auto;cursor:crosshair}
 @media (max-width:940px){
   .ink-toolbar{justify-content:flex-start}
 }
-.music-widget{position:fixed;right:18px;top:72px;z-index:1250;width:min(92vw,320px);padding:12px;display:grid;gap:8px;box-shadow:0 8px 22px rgba(15,23,42,.12)}
-.music-widget h3{font-size:.94rem}
-.music-row{display:flex;gap:6px}
-.music-row input{flex:1;min-width:0;border:1px solid var(--line);border-radius:8px;padding:8px;font-family:inherit;font-size:.82rem}
-.music-row button,.music-controls button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 10px;cursor:pointer;font-weight:600}
-.music-file-input{display:none}
-.music-controls{display:flex;gap:6px}
-.music-controls button{flex:1}
-.music-playlist{margin:0;padding-left:20px;max-height:160px;overflow:auto;display:grid;gap:4px}
-.music-playlist li{font-size:.8rem;color:#334155;cursor:pointer;line-height:1.35;word-break:break-all}
-.music-playlist li.active{color:#1d4ed8;font-weight:700}
-.music-msg{font-size:.78rem;color:#2563eb;min-height:1.2em}
-@media (max-width:940px){.music-widget{top:92px;right:0}.ai-widget{top:140px;right:0}}
+@media (max-width:940px){.ai-widget{top:140px;right:0}}
 .logo-link{display:block;text-decoration:none;color:inherit}
 
-.music-header{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.music-grip{display:inline-flex;align-items:center;justify-content:center;border:1px dashed #c5d1e3;border-radius:8px;padding:5px 8px;color:#64748b;font-size:.78rem;cursor:grab;background:#f8fbff;user-select:none}
-.music-widget.dragging,.music-widget.dragging-minimized{opacity:.92}
 
 .ai-sub{font-size:.84rem;color:#64748b}.ai-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}.ai-actions button{border:1px solid #1d4ed8;background:#2563eb;color:#fff;border-radius:8px;padding:8px 11px;font-weight:700;cursor:pointer;font-size:.84rem}.ai-summary{font-size:.82rem;color:#334155;line-height:1.4;margin-top:2px}.ai-question-list{padding-left:18px;display:grid;gap:4px}.ai-question-list li{font-size:.82rem;line-height:1.45}
 .ai-widget{position:fixed;right:18px;top:340px;z-index:1240;width:min(92vw,340px);padding:12px;display:grid;gap:8px;box-shadow:0 8px 24px rgba(15,23,42,.16);touch-action:none}
@@ -102,21 +87,10 @@ body.ink-on #inkLayer{pointer-events:auto;cursor:crosshair}
 .ai-widget.minimized.dock-right .ai-dock-toggle{display:block;left:-76px;border-right:none;border-radius:10px 0 0 10px}
 .ai-widget.dragging{opacity:.92}
 
-.music-head-actions{display:flex;align-items:center;gap:6px}.music-min-btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:4px 8px;cursor:pointer;font-weight:700}.music-youtube{position:fixed;left:-1px;top:-1px;width:1px;height:1px;border:0;opacity:0;pointer-events:none;clip-path:inset(50%)}.music-widget.minimized .music-row,.music-widget.minimized .music-controls,.music-widget.minimized #musicPlaylist,.music-widget.minimized #musicMsg,.music-widget.minimized #musicAudio,.music-widget.minimized .music-ad-tip{display:none}
 
 .ai-subject-picker{display:grid;gap:8px;border:1px solid #bfdbfe;background:#eff6ff;border-radius:12px;padding:12px}.ai-subject-picker label{font-size:.86rem;font-weight:800;color:#1e3a8a}.ai-subject-row{display:flex;gap:8px;flex-wrap:wrap}.ai-subject-row select{flex:1;min-width:180px;border:1px solid var(--line);border-radius:9px;padding:10px;font-family:inherit;background:#fff}.ai-subject-row button{border:1px solid #1d4ed8;background:#2563eb;color:#fff;border-radius:9px;padding:10px 12px;font-weight:800;cursor:pointer}.ai-practice-viewer{display:grid;gap:10px;border:1px solid var(--line);border-radius:14px;background:#fff;padding:14px}.ai-practice-head{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#334155}.ai-practice-head span{font-size:.82rem;color:#64748b;font-weight:800}.ai-practice-card .ai-quiz-card{border:0;padding:0}.ai-practice-card .ai-quiz-card textarea,.ai-practice-card .ai-quiz-card button,.ai-practice-card .ai-feedback{display:none}.ai-practice-card .ai-quiz-card p{font-size:1rem;line-height:1.65;white-space:pre-line}.ai-practice-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}.ai-practice-actions button{border:1px solid #1d4ed8;background:#2563eb;color:#fff;border-radius:9px;padding:10px 12px;font-weight:800;cursor:pointer}.ai-practice-actions button:disabled{border-color:var(--line);background:#f1f5f9;color:#94a3b8;cursor:not-allowed}
 .ai-coach-panel{height:100%;margin:0;padding:22px;display:grid;grid-template-rows:auto auto minmax(160px,1fr) auto auto auto auto;align-content:start;gap:12px;overflow:auto}.ai-coach-heading{display:grid;gap:6px}.ai-coach-heading h2{font-size:1.3rem}.ai-coach-badge{width:max-content;border:1px solid #bfdbfe;background:#eff6ff;color:#1d4ed8;border-radius:999px;padding:5px 10px;font-size:.78rem;font-weight:800}.ai-coach-panel textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-family:inherit;resize:vertical;font-size:.9rem;line-height:1.5}.ai-coach-panel .ai-summary{border:1px solid var(--line);border-radius:10px;background:#f8fbff;padding:10px;min-height:44px}.ai-coach-panel .ai-question-list{border:1px solid var(--line);border-radius:10px;background:#fff;padding:10px 10px 10px 28px;min-height:44px}
 
-.music-dock-toggle{position:absolute;top:14px;width:78px;height:34px;border:1px solid var(--line);background:#fff;cursor:pointer;font-weight:800;display:none;font-size:.75rem;touch-action:none}
-.music-widget.minimized{transition:transform .22s ease}
-.music-widget.minimized.dock-right{transform:translateX(calc(100% + 22px))}
-.music-widget.minimized.dock-left{transform:translateX(calc(-100% - 22px))}
-.music-widget.minimized.dock-right .music-dock-toggle{display:block;left:-78px;border-right:none;border-radius:0;cursor:ns-resize}
-.music-widget.minimized.dock-left .music-dock-toggle{display:block;right:-78px;border-left:none;border-radius:0 10px 10px 0;cursor:ns-resize}
-.music-mini-pause{position:absolute;top:14px;left:-116px;width:36px;height:34px;border:1px solid var(--line);border-right:none;background:#fff;cursor:pointer;font-size:.9rem;display:none;border-radius:10px 0 0 10px;font-weight:700}
-.music-widget.minimized.dock-right .music-mini-pause{display:block}
-.music-ad-tip{font-size:.75rem;color:#64748b;line-height:1.4;padding-top:2px}
-.music-widget.minimized .music-min-btn{display:inline-flex}
 
 .ai-quiz{grid-column:1/-1;padding:14px;display:grid;gap:8px}.ai-quiz-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}.ai-quiz-card{border:1px solid var(--line);border-radius:10px;padding:10px;background:#fff;display:grid;gap:8px}.ai-quiz-card h4{font-size:.86rem;color:#475569}.ai-quiz-card p{font-size:.88rem;line-height:1.45}.ai-quiz-card textarea{width:100%;min-height:84px;border:1px solid var(--line);border-radius:8px;padding:8px;font-family:inherit;resize:vertical}.ai-quiz-card button{justify-self:end;border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 10px;cursor:pointer;font-weight:600}.ai-quiz-card .ai-feedback{font-size:.8rem;color:#2563eb;min-height:1.2em}
 @media (max-width:900px){
@@ -155,10 +129,6 @@ body.ink-on #inkLayer{pointer-events:auto;cursor:crosshair}
   .ink-toolbar button{padding:8px 10px;min-height:38px}
   .ink-tab-label{padding:8px 10px}
   .ink-msg{min-width:72px}
-  .music-widget{top:96px;right:8px;width:min(calc(100vw - 16px),320px);max-height:calc(100svh - 144px);overflow:auto}
-  .music-widget.minimized.dock-right{transform:translateX(calc(100% + 16px))}
-  .music-widget.minimized.dock-right .music-dock-toggle{left:-74px;width:74px;border-radius:10px 0 0 10px}
-  .music-widget.minimized.dock-right .music-mini-pause{left:-110px}
   .profile-modal{align-items:flex-start;overflow:auto;padding:14px 10px 86px}
   .profile-modal-card{width:100%;max-height:none}
   .profile-grid{grid-template-columns:1fr}
