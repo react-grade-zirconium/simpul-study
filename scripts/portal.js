@@ -149,6 +149,7 @@ function showDashboard(btn) {
   if (window.syncInkContext) window.syncInkContext();
 }
 function showSubject(btn, heading) {
+  window.SimpulUsage?.track('subject_open', { subject: btn.dataset.usageSubject || btn.dataset.subject || '' });
   setActive(btn);
   document.body.classList.add('subject-mode');
   dashPanel.classList.remove('active');
