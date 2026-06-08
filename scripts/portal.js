@@ -10,39 +10,10 @@ function removeUnexpectedBodyTextNodes() {
 removeUnexpectedBodyTextNodes();
 
 
-const ACCESS_CODE_KEY = 'studymax_access_code';
-const ACCESS_SERVER_CODE_KEY = 'studymax_access_server_code';
-const ACCESS_BIND_MODE_KEY = 'studymax_access_bind_mode';
-
-const MASTER_CODE = 'simpul';
 const MOBILE_LITE_QUERY = '(max-width: 900px), (pointer: coarse) and (max-width: 1024px)';
 function isMobileLiteMode() {
   return Boolean(window.matchMedia?.(MOBILE_LITE_QUERY).matches);
 }
-const CLASS_MIN = 1;
-const CLASS_MAX = 8;
-const NUMBER_MIN = 1;
-const NUMBER_MAX = 35;
-
-function isValidClassNumberCode(code) {
-  const m = code && code.match(/^(\d+)-(\d{2})$/);
-  if (!m) return false;
-  const classNo = Number(m[1]);
-  const numberNo = Number(m[2]);
-  return Number.isInteger(classNo) && Number.isInteger(numberNo) && classNo >= CLASS_MIN && classNo <= CLASS_MAX && numberNo >= NUMBER_MIN && numberNo <= NUMBER_MAX;
-}
-
-
-async function enforceAccessCode() {
-  const code = localStorage.getItem(ACCESS_CODE_KEY);
-  if (code === MASTER_CODE) return;
-  if (!code || !isValidClassNumberCode(code)) {
-    window.location.replace('./index.html');
-  }
-}
-
-enforceAccessCode();
-
 const title = document.getElementById('title');
 const desc = document.getElementById('desc');
 const dashPanel = document.getElementById('dashPanel');
@@ -100,13 +71,6 @@ const AI_SUBJECTS = {
   info: { label: '정보', src: 'mega_study.html', fallback: '정보 과목의 알고리즘, 프로그래밍, 자료 표현, 디지털 윤리 핵심 개념을 복습하고 문제 해결력을 점검합니다.' }
 };
 
-function getClassNumberFromAccessCode() {
-  const code = localStorage.getItem(ACCESS_CODE_KEY) || '';
-  const m = code.match(/^(\d+)-(\d{2})$/);
-  if (!m) return null;
-  return { classNo: Number(m[1]), numberNo: Number(m[2]) };
-}
-
 function updateProfileHeader() {
   const nameEl = document.getElementById('profileNameLabel');
   const classEl = document.getElementById('profileClassLabel');
@@ -141,9 +105,8 @@ function initProfileModal() {
   const msgEl = document.getElementById('profileModalMsg');
   if (!modal || !classInput || !numberInput || !nameInput || !photoInput || !saveBtn || !editBtn || !msgEl) return;
 
-  const fallback = getClassNumberFromAccessCode();
-  classInput.value = localStorage.getItem(PROFILE_CLASS_KEY) || (fallback ? String(fallback.classNo) : '');
-  numberInput.value = localStorage.getItem(PROFILE_NUMBER_KEY) || (fallback ? String(fallback.numberNo) : '');
+  classInput.value = localStorage.getItem(PROFILE_CLASS_KEY) || '';
+  numberInput.value = localStorage.getItem(PROFILE_NUMBER_KEY) || '';
   nameInput.value = localStorage.getItem(PROFILE_NAME_KEY) || '';
   let pendingPhoto = localStorage.getItem(PROFILE_PHOTO_KEY) || '';
 
@@ -175,9 +138,6 @@ function initProfileModal() {
 
   editBtn.addEventListener('click', () => { msgEl.textContent = ''; modal.classList.add('show'); });
   updateProfileHeader();
-  if (!localStorage.getItem(PROFILE_NAME_KEY) || !localStorage.getItem(PROFILE_CLASS_KEY) || !localStorage.getItem(PROFILE_NUMBER_KEY)) {
-    modal.classList.add('show');
-  }
 }
 
 function setActive(btn) {
