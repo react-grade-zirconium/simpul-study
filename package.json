@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "start": "node server.mjs",
-    "check": "node --check server.mjs && node --check scripts/index.js && node --check scripts/portal.js && node scripts/validate-assets.mjs",
+    "check": "node --check server.mjs && node --check scripts/index.js && node --check scripts/portal.js && node --check scripts/usage.js && node --check scripts/smoke-server.mjs && node scripts/validate-assets.mjs",
     "test": "npm run check",
-    "import:society": "node scripts/import-society-html.mjs"
+    "import:society": "node scripts/import-society-html.mjs",
+    "smoke:server": "node scripts/smoke-server.mjs"
   },
   "dependencies": {
     "express": "^4.19.2"

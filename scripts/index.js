@@ -69,3 +69,115 @@ setTimeout(() => { freeze(line2); }, 2100);
 setTimeout(() => { reduceFirstLineToShim(); removeServiceFromSecondLine(); }, 3600);
 setTimeout(() => { prepareMorphPieces(); }, 3850);
 setTimeout(() => { morphIntoFinalLine(); }, 5200);
+
+function formatUsageMinutes(minutes) {
+  if (!Number.isFinite(minutes) || minutes <= 0) return '0분';
+  const hours = Math.floor(minutes / 60);
+  const rest = minutes % 60;
+  return hours > 0 ? `${hours}시간 ${rest}분` : `${rest}분`;
+}
+
+function renderUsageStats(stats) {
+  const summaryEl = document.getElementById('usageSummary');
+  const dailyEl = document.getElementById('usageDaily');
+  if (!summaryEl || !dailyEl) return;
+  const totals = stats.totals || {};
+  summaryEl.innerHTML = [
+    ['방문 학생', `${totals.visitors || 0}명`],
+    ['첫 화면 조회', `${totals.pageViews || 0}회`],
+    ['학습 시작', `${totals.startClicks || 0}회`],
+    ['포털 접속', `${totals.portalViews || 0}회`],
+    ['과목 열람', `${totals.subjectOpens || 0}회`],
+    ['누적 이용 시간', formatUsageMinutes(totals.activeMinutes || 0)]
+  ].map(([label, value]) => `<div class="usage-stat-card"><span>${label}</span><strong>${value}</strong></div>`).join('');
+
+  const days = stats.days || [];
+  if (!days.length) {
+    dailyEl.innerHTML = '<p class="usage-empty">아직 기록된 이용 현황이 없습니다.</p>';
+    return;
+  }
+  dailyEl.innerHTML = days.map((day) => {
+    const subjects = Object.entries(day.subjects || {})
+      .sort((a, b) => b[1] - a[1])
+      .map(([subject, count]) => `${subject} ${count}회`)
+      .join(' · ') || '과목 기록 없음';
+    return `<article class="usage-day-card">
+      <div><strong>${day.date}</strong><span>${day.visitors}명 이용</span></div>
+      <p>첫 화면 ${day.pageViews}회 · 포털 ${day.portalViews}회 · 학습 시작 ${day.startClicks}회</p>
+      <p>과목 ${day.subjectOpens}회 · 이용 시간 ${formatUsageMinutes(day.activeMinutes || 0)}</p>
+      <small>${subjects}</small>
+    </article>`;
+  }).join('');
+}
+
+function initAdminUsageWidget() {
+  const toggleBtn = document.getElementById('adminToggleBtn');
+  const panel = document.getElementById('adminPanel');
+  const form = document.getElementById('adminLoginForm');
+  const passwordInput = document.getElementById('adminPasswordInput');
+  const messageEl = document.getElementById('adminMessage');
+  const statsPanel = document.getElementById('usageStatsPanel');
+  const refreshBtn = document.getElementById('usageRefreshBtn');
+  if (!toggleBtn || !panel || !form || !passwordInput || !messageEl || !statsPanel || !refreshBtn) return;
+
+  let adminPassword = '';
+
+  function setMessage(text, isError = false) {
+    messageEl.textContent = text;
+    messageEl.classList.toggle('error', isError);
+  }
+
+  function renderLocalStatsFallback() {
+    const localStats = window.SimpulUsage?.getLocalStats?.();
+    if (!localStats) {
+      setMessage('이용 현황을 불러올 수 없습니다.', true);
+      statsPanel.hidden = true;
+      return;
+    }
+    renderUsageStats(localStats);
+    statsPanel.hidden = false;
+    setMessage('전체 학생 통계 서버에 연결되지 않아 이 기기의 기록만 표시 중입니다.', true);
+  }
+
+  async function loadStats() {
+    if (!adminPassword) return;
+    setMessage('이용 현황을 불러오는 중입니다...');
+    try {
+      const response = await fetch('./api/usage-stats', {
+        headers: { 'x-admin-password': adminPassword }
+      });
+      const stats = await response.json();
+      if (!response.ok || !stats.ok) {
+        setMessage(stats.message || '인증에 실패했습니다.', true);
+        statsPanel.hidden = true;
+        return;
+      }
+      renderUsageStats(stats);
+      statsPanel.hidden = false;
+      setMessage(`전체 학생 통계 · 최근 업데이트: ${new Date(stats.generatedAt).toLocaleString('ko-KR')}`);
+    } catch (_) {
+      renderLocalStatsFallback();
+    }
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    const willOpen = panel.hidden;
+    panel.hidden = !willOpen;
+    toggleBtn.setAttribute('aria-expanded', String(willOpen));
+    if (willOpen) passwordInput.focus();
+  });
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    adminPassword = passwordInput.value.trim();
+    if (!adminPassword) {
+      setMessage('관리자 비밀번호를 입력해 주세요.', true);
+      return;
+    }
+    loadStats();
+  });
+
+  refreshBtn.addEventListener('click', loadStats);
+}
+
+initAdminUsageWidget();
