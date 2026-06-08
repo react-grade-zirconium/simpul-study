@@ -9,7 +9,6 @@ function removeUnexpectedBodyTextNodes() {
 }
 removeUnexpectedBodyTextNodes();
 
-
 const MOBILE_LITE_QUERY = '(max-width: 900px), (pointer: coarse) and (max-width: 1024px)';
 function isMobileLiteMode() {
   return Boolean(window.matchMedia?.(MOBILE_LITE_QUERY).matches);
@@ -39,7 +38,6 @@ const PROFILE_CLASS_KEY = 'studymax_profile_class';
 const PROFILE_NUMBER_KEY = 'studymax_profile_number';
 const PROFILE_PHOTO_KEY = 'studymax_profile_photo';
 const SIDEBAR_COLLAPSED_KEY = 'studymax_subject_sidebar_collapsed';
-const SUBJECT_TAB_INK_SCOPE_NOTE = 'Dashboard, each subject, and each in-subject tab must keep separate ink storage whenever a subject adds tabbed content.';
 function updateProfileHeader() {
   const nameEl = document.getElementById('profileNameLabel');
   const classEl = document.getElementById('profileClassLabel');
@@ -167,7 +165,6 @@ function showSubject(btn, heading) {
   if (window.syncInkContext) window.syncInkContext();
 }
 
-
 function showVersionHistory(btn) {
   setActive(btn || versionToggleBtn);
   document.body.classList.remove('subject-mode');
@@ -178,8 +175,6 @@ function showVersionHistory(btn) {
   desc.textContent = '학습 포털 변경 사항';
   if (window.syncInkContext) window.syncInkContext();
 }
-
-
 
 function initMobileHomeClose() {
   const homeLink = document.querySelector('.home a');
@@ -192,8 +187,6 @@ function initMobileHomeClose() {
     applySidebarState(true);
   });
 }
-
-
 
 function initMobileSubjectBarExpansion() {
   const menu = document.querySelector('.menu');
@@ -313,8 +306,6 @@ function saveMemo() {
     if (memoMsgEl) memoMsgEl.textContent = '메모 저장에 실패했습니다.';
   }
 }
-
-
 
 function initGlobalInk() {
   const canvas = document.getElementById('inkLayer');
@@ -506,7 +497,6 @@ function initGlobalInk() {
   window.addEventListener('beforeunload', persistStrokes);
 }
 
-
 const mobileLiteMode = isMobileLiteMode();
 
 renderDday();
@@ -528,9 +518,6 @@ initCorePortalFeatures();
 if (mobileLiteMode) {
   initMobileLitePortal();
 }
-
-
-
 
 window.showDashboard = showDashboard;
 window.showSubject = showSubject;
