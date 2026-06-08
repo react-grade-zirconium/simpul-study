@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.mjs",
     "check": "node --check server.mjs && node --check scripts/index.js && node --check scripts/portal.js && node scripts/validate-assets.mjs",
-    "test": "npm run check"
+    "test": "npm run check",
+    "import:society": "node scripts/import-society-html.mjs"
   },
   "dependencies": {
     "express": "^4.19.2",
