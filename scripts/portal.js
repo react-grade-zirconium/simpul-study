@@ -61,7 +61,6 @@ const AI_ROUND_KEY = 'studymax_ai_round_v1';
 const AI_ACTIVE_INDEX_KEY = 'studymax_ai_active_index_v1';
 const AI_WIDGET_POSITION_KEY = 'studymax_ai_widget_position_v1';
 const AI_BATCH_SIZE = 10;
-const AI_LOCAL_MAX_QUESTIONS = 40;
 const SIDEBAR_COLLAPSED_KEY = 'studymax_subject_sidebar_collapsed';
 const SUBJECT_TAB_INK_SCOPE_NOTE = 'Dashboard, each subject, and each in-subject tab must keep separate ink storage whenever a subject adds tabbed content.';
 const subjectTextCache = new Map();
@@ -613,86 +612,19 @@ function getAiApiUrl() {
   return configured || `${window.location.origin}/api/ai/analyze`;
 }
 
-function getBrowserOpenAiKey() {
-  return String(window.SIMPUL_OPENAI_API_KEY || '').trim();
-}
-
-function getOpenAiModel() {
-  return String(window.SIMPUL_OPENAI_MODEL || 'gpt-4.1-mini').trim() || 'gpt-4.1-mini';
-}
-
-function getAiJsonSchema() {
-  return {
-    type: 'object',
-    additionalProperties: false,
-    properties: {
-      summary_points: { type: 'array', items: { type: 'string' }, minItems: 1, maxItems: 3 },
-      questions: { type: 'array', items: { type: 'string' }, minItems: 6, maxItems: AI_BATCH_SIZE }
-    },
-    required: ['summary_points', 'questions']
-  };
-}
-
-function parseOpenAiJsonResponse(data) {
-  const outputText = data?.output_text
-    || data?.output?.flatMap((item) => item?.content || []).map((part) => part?.text || '').join('')
-    || '';
-  const cleaned = outputText.trim().replace(/^```json\s*/i, '').replace(/```$/i, '').trim();
-  const parsed = JSON.parse(cleaned);
-  return {
-    summary_points: (Array.isArray(parsed.summary_points) ? parsed.summary_points : []).map(String).filter(Boolean).slice(0, 3),
-    questions: (Array.isArray(parsed.questions) ? parsed.questions : []).map(String).filter(Boolean).slice(0, AI_BATCH_SIZE)
-  };
-}
-
-async function requestAiDirectlyFromOpenAi(raw, subject) {
-  const response = await fetch('https://api.openai.com/v1/responses', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${getBrowserOpenAiKey()}`
-    },
-    body: JSON.stringify({
-      model: getOpenAiModel(),
-      instructions: [
-        '너는 한국어로 답하는 중고등학생용 학습 코치다.',
-        '입력된 학습 내용을 바탕으로 개념을 익히게 하는 연습문제를 만든다.',
-        '각 문제는 짧은 개념 설명, 적용 문제, 풀이 방향을 함께 담아 학습용으로 만든다.',
-        '과목명이 있으면 해당 과목 시험 대비에 맞는 연습문제로 만든다.',
-        '반드시 JSON만 출력한다. 형식: {"summary_points":["..."],"questions":["..."]}'
-      ].join(' '),
-      input: `과목: ${subject || '선택 과목'}\n학습 내용:\n${raw.slice(0, 12000)}\n\n요구사항:\n- summary_points는 3개 이하\n- questions는 ${AI_BATCH_SIZE}개\n- 각 questions 항목은 서로 다른 개념·자료·사례를 다룬다\n- 이미 나온 문제와 같은 틀/표현을 반복하지 않는다\n- 각 questions 항목은 '개념 설명 → 연습문제 → 풀이 방향' 순서로 구성\n- 한국어로 작성`,
-      text: {
-        format: {
-          type: 'json_schema',
-          name: 'study_coach_result',
-          strict: true,
-          schema: getAiJsonSchema()
-        }
-      }
-    })
-  });
-  if (!response.ok) throw new Error(`OpenAI ${response.status}`);
-  const parsed = parseOpenAiJsonResponse(await response.json());
-  if (!parsed.summary_points.length || !parsed.questions.length) throw new Error('OpenAI 응답 형식 오류');
-  return parsed;
-}
-
 async function requestAiFromApi(raw, subjectKey = '') {
   const subject = AI_SUBJECTS[subjectKey]?.label || subjectKey || '';
-  const apiUrl = getAiApiUrl();
-  try {
-    const response = await fetch(apiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: raw, subject, lang: 'ko', mode: 'study_coach' })
-    });
-    if (response.ok) return response.json();
-    if (!getBrowserOpenAiKey()) throw new Error(`API ${response.status}`);
-  } catch (error) {
-    if (!getBrowserOpenAiKey()) throw error;
+  const response = await fetch(getAiApiUrl(), {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text: raw, subject, lang: 'ko', mode: 'study_coach' })
+  });
+  if (!response.ok) {
+    let detail = '';
+    try { detail = (await response.json())?.error || ''; } catch (_) {}
+    throw new Error(detail || `API ${response.status}`);
   }
-  return requestAiDirectlyFromOpenAi(raw, subject);
+  return response.json();
 }
 
 function getSelectedAiSubject() {
@@ -801,98 +733,20 @@ function getActiveAiSource() {
 async function runAiLearning(raw, subjectKey = getSelectedAiSubject(), options = {}) {
   try {
     const apiResult = await requestAiFromApi(raw, subjectKey);
-    if (apiResult && Array.isArray(apiResult.questions)) {
-      const points = Array.isArray(apiResult.summary_points) ? apiResult.summary_points.slice(0, 3) : [];
-      let saved = persistAiResult(points, apiResult.questions, raw.length, subjectKey, options);
-      if (options.append && saved.addedCount === 0) {
-        saved = persistAiResult(points, buildQuestionsFromText(raw, getSavedAiQuestions()), raw.length, subjectKey, { append: true });
-      }
-      const subjectLabel = AI_SUBJECTS[subjectKey]?.label || '직접 입력';
-      aiMsgEl.textContent = `${subjectLabel} AI 분석 완료: 새 문제 ${saved.addedCount}개 · 누적 ${saved.totalQuestions}개`;
-      renderAiCoach();
-      renderAiQuizCards();
-      return;
+    if (!apiResult || !Array.isArray(apiResult.questions) || !apiResult.questions.length) {
+      throw new Error('API 응답에 문제가 있습니다.');
     }
+    const points = Array.isArray(apiResult.summary_points) ? apiResult.summary_points.slice(0, 3) : [];
+    const saved = persistAiResult(points, apiResult.questions, raw.length, subjectKey, options);
+    const subjectLabel = AI_SUBJECTS[subjectKey]?.label || '직접 입력';
+    aiMsgEl.textContent = saved.addedCount
+      ? `${subjectLabel} 내장 API 문제 생성 완료: 새 문제 ${saved.addedCount}개 · 누적 ${saved.totalQuestions}개`
+      : `${subjectLabel} 내장 API가 새 중복 없는 문제를 추가하지 못했습니다. 새 연습문제 더 만들기를 다시 눌러 다른 범위를 요청해 보세요.`;
+    renderAiCoach();
+    renderAiQuizCards();
   } catch (e) {
-    aiMsgEl.textContent = `API 호출 실패 (${e.message}). 로컬 모드로 전환합니다.`;
+    aiMsgEl.textContent = `내장 AI API 호출 실패: ${e.message}. 서버의 OPENAI_API_KEY 설정을 확인해 주세요.`;
   }
-
-  const summary = summarizeForAi(raw);
-  const questions = buildQuestionsFromText(raw, options.append ? getSavedAiQuestions() : []);
-  const saved = persistAiResult(summary.points, questions, summary.totalLength, subjectKey, options);
-  const subjectLabel = AI_SUBJECTS[subjectKey]?.label || '직접 입력';
-  aiMsgEl.textContent = `${subjectLabel} 로컬 분석 완료: 새 문제 ${saved.addedCount}개 · 누적 ${saved.totalQuestions}개`;
-  renderAiCoach();
-  renderAiQuizCards();
-}
-
-function splitLearningUnits(raw) {
-  const cleaned = String(raw || '').replace(/\s+/g, ' ').trim();
-  if (!cleaned) return [];
-  const sentenceUnits = cleaned
-    .split(/(?<=[.!?。？！]|다\.|요\.)\s+|(?=\d+\.\s)|(?=[가-힣A-Za-z ]{2,18}[:：])/g)
-    .map((part) => part.trim())
-    .filter((part) => part.length >= 35);
-  const units = [];
-  for (let i = 0; i < sentenceUnits.length; i += 2) {
-    const unit = sentenceUnits.slice(i, i + 2).join(' ').slice(0, 520);
-    if (unit.length >= 35) units.push(unit);
-    if (units.length >= AI_LOCAL_MAX_QUESTIONS) break;
-  }
-  if (units.length) return units;
-  const fallback = [];
-  for (let i = 0; i < cleaned.length; i += 420) {
-    const unit = cleaned.slice(i, i + 520).trim();
-    if (unit.length >= 20) fallback.push(unit);
-  }
-  return fallback.slice(0, AI_LOCAL_MAX_QUESTIONS);
-}
-
-function extractKeywords(text, limit = 5) {
-  const stopwords = new Set(['그리고', '하지만', '그러나', '대한', '통해', '위해', '있는', '한다', '되어', '에서', '으로', '에게', '이다', '내용', '학습', '문제', '정리']);
-  const counts = new Map();
-  String(text || '').replace(/[^0-9a-zA-Z가-힣\s]/g, ' ').split(/\s+/).forEach((word) => {
-    const clean = word.trim();
-    if (clean.length < 2 || stopwords.has(clean)) return;
-    counts.set(clean, (counts.get(clean) || 0) + 1);
-  });
-  return Array.from(counts.entries()).sort((a, b) => b[1] - a[1] || b[0].length - a[0].length).map(([word]) => word).slice(0, limit);
-}
-
-function summarizeForAi(raw) {
-  const cleaned = raw.replace(/\s+/g, ' ').trim();
-  const units = splitLearningUnits(cleaned);
-  const points = units.slice(0, 3).map((unit) => unit.slice(0, 120));
-  return {
-    totalLength: cleaned.length,
-    points: points.length ? points : [cleaned.slice(0, 120)].filter(Boolean)
-  };
-}
-
-function buildQuestionsFromText(raw, previousQuestions = []) {
-  const units = splitLearningUnits(raw);
-  const previousKeys = new Set(previousQuestions.map(normalizeQuestionKey));
-  const types = [
-    { label: '빈칸 완성', prompt: (keys) => `${keys[0] || '핵심 개념'}의 의미와 관련 내용을 빈칸 없이 완성해 보세요.` },
-    { label: '사례 판단', prompt: (keys) => `${keys.slice(0, 2).join('·') || '핵심 개념'}이 실제 사례에서 어떻게 나타나는지 판단하고 근거를 쓰세요.` },
-    { label: '비교 설명', prompt: (keys) => `${keys[0] || '개념'}과(와) ${keys[1] || '관련 개념'}의 차이 또는 관계를 비교해 보세요.` },
-    { label: '원인-결과', prompt: (keys) => `${keys[0] || '현상'}이 나타나는 원인과 결과를 학습 내용에 근거해 연결하세요.` },
-    { label: '오개념 찾기', prompt: (keys) => `${keys[0] || '핵심 내용'}에 대해 친구가 할 법한 오해 1가지를 고치듯 설명하세요.` },
-    { label: '자료 해석', prompt: (keys) => `${keys.slice(0, 3).join(', ') || '제시 내용'}을 근거로 자료나 지문이 말하는 핵심 결론을 도출하세요.` }
-  ];
-  const questions = [];
-  const startIndex = previousQuestions.length % Math.max(1, units.length);
-  for (let step = 0; step < units.length && questions.length < AI_BATCH_SIZE; step += 1) {
-    const unitIndex = (startIndex + step) % units.length;
-    const unit = units[unitIndex];
-    const keywords = extractKeywords(unit, 5);
-    const type = types[(previousQuestions.length + step) % types.length];
-    const concept = unit.slice(0, 150);
-    const question = `개념 설명 → ${concept}${concept.length >= 150 ? '...' : ''}\n연습문제 → [${type.label}] ${type.prompt(keywords)}\n풀이 방향 → 답안에는 ${keywords.slice(0, 3).join(', ') || '핵심 근거'}를 반드시 포함하고, 학습 내용의 문장 또는 사례와 연결해 2~3문장으로 설명하세요.`;
-    const key = normalizeQuestionKey(question);
-    if (!previousKeys.has(key)) questions.push(question);
-  }
-  return questions;
 }
 
 function renderAiCoach() {
