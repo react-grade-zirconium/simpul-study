@@ -299,27 +299,36 @@ function getCurrentInkScope() {
   return `subject:${subject}:tab:${tab}`;
 }
 
+let subjectFrameResizeId = 0;
+
 function resizeSubjectFrameForContent() {
-  if (!frame || !document.body.classList.contains('subject-mode')) {
+  if (!frame || !document.body.classList.contains('subject-mode') || !isMobileLiteMode()) {
     if (frame) frame.style.height = '';
     return;
   }
-  window.requestAnimationFrame(() => {
-    const doc = getNestedFrameDocument(frame);
-    const docEl = doc?.documentElement;
-    const body = doc?.body;
-    const contentHeight = Math.max(docEl?.scrollHeight || 0, body?.scrollHeight || 0, docEl?.offsetHeight || 0, body?.offsetHeight || 0);
-    const reservedSpace = isMobileLiteMode() ? 150 : 170;
-    const minHeight = Math.max(520, window.innerHeight - reservedSpace);
-    frame.style.height = `${Math.max(contentHeight + 24, minHeight)}px`;
-    window.requestAnimationFrame(() => {
-      if (window.resizeInkCanvas) window.resizeInkCanvas();
-    });
+  const doc = getNestedFrameDocument(frame);
+  const docEl = doc?.documentElement;
+  const body = doc?.body;
+  const contentHeight = Math.max(docEl?.scrollHeight || 0, body?.scrollHeight || 0, docEl?.offsetHeight || 0, body?.offsetHeight || 0);
+  const minHeight = Math.max(520, window.innerHeight - 150);
+  const nextHeight = Math.max(contentHeight + 24, minHeight);
+  const currentHeight = Number.parseFloat(frame.style.height || '0');
+  if (!Number.isFinite(currentHeight) || Math.abs(currentHeight - nextHeight) > 2) {
+    frame.style.height = `${nextHeight}px`;
+    if (window.resizeInkCanvas) window.resizeInkCanvas();
+  }
+}
+
+function scheduleSubjectFrameResize() {
+  if (subjectFrameResizeId) return;
+  subjectFrameResizeId = window.requestAnimationFrame(() => {
+    subjectFrameResizeId = 0;
+    resizeSubjectFrameForContent();
   });
 }
 
 function resizeSubjectFrameForMobile() {
-  resizeSubjectFrameForContent();
+  scheduleSubjectFrameResize();
 }
 
 function bindFrameInkContextSync() {
@@ -571,7 +580,7 @@ function initGlobalInk() {
   loadStrokes();
   resizeCanvas();
   updateUndoRedoUI();
-  window.addEventListener('resize', () => { resizeSubjectFrameForContent(); resizeCanvas(); });
+  window.addEventListener('resize', () => { scheduleSubjectFrameResize(); resizeCanvas(); });
   window.addEventListener('beforeunload', persistStrokes);
 }
 
