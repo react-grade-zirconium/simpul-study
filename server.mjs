@@ -1,6 +1,7 @@
 import express from 'express';
 import OpenAI from 'openai';
 import path from 'node:path';
+import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
 const app = express();
@@ -9,6 +10,7 @@ const model = process.env.OPENAI_MODEL || 'gpt-4.1-mini';
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
 const client = process.env.OPENAI_API_KEY ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY }) : null;
 const staticAssetPattern = /\.(?:css|js|png|jpg|jpeg|gif|svg|ico|webp|woff2?)$/i;
+const societyOriginalHtmlPath = process.env.SIMPUL_SOCIETY_HTML_PATH || 'C:/Users/a3327/Downloads/통합사회_4단원_정리.html';
 
 app.use(express.json({ limit: '1mb' }));
 app.use((req, res, next) => {
@@ -31,140 +33,22 @@ app.use(express.static(rootDir, {
   }
 }));
 
-
-const FREECONVERT_API_BASE = 'https://api.freeconvert.com/v1';
-const FREECONVERT_POLL_LIMIT = 8;
-const FREECONVERT_POLL_DELAY_MS = 1200;
-const youtubeHostPattern = /(^|\.)youtube\.com$|^youtu\.be$/i;
-const supportedConvertInputPattern = /\.(?:mp3|wav|ogg|m4a|aac|flac|mp4|webm|mov|mkv|avi)(?:$|[?#])/i;
-
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-function getFreeConvertKey() {
-  return process.env.FREECONVERT_API_KEY || '';
-}
-
-function normalizeConvertibleUrl(rawUrl) {
-  const url = new URL(String(rawUrl || '').trim());
-  if (!['http:', 'https:'].includes(url.protocol)) {
-    const error = new Error('HTTP/HTTPS URL만 변환할 수 있습니다.');
-    error.statusCode = 400;
-    throw error;
-  }
-  const host = url.hostname.replace(/^www\./, '');
-  if (youtubeHostPattern.test(host)) {
-    const error = new Error('YouTube 링크의 자동 MP3 변환은 지원하지 않습니다. Ragtag 보관본 또는 파일 업로드를 사용해 주세요.');
-    error.statusCode = 400;
-    throw error;
-  }
-  if (!supportedConvertInputPattern.test(url.pathname)) {
-    const error = new Error('직접 다운로드 가능한 오디오/비디오 파일 URL만 MP3로 변환할 수 있습니다.');
-    error.statusCode = 400;
-    throw error;
-  }
-  return url.href;
-}
-
-async function freeConvertFetch(pathname, options = {}) {
-  const apiKey = getFreeConvertKey();
-  if (!apiKey) {
-    const error = new Error('FREECONVERT_API_KEY 환경 변수가 설정되지 않았습니다.');
-    error.statusCode = 503;
-    throw error;
-  }
-  const response = await fetch(`${FREECONVERT_API_BASE}${pathname}`, {
-    ...options,
-    headers: {
-      Accept: 'application/json',
-      Authorization: `Bearer ${apiKey}`,
-      ...(options.body ? { 'Content-Type': 'application/json' } : {}),
-      ...(options.headers || {})
-    }
-  });
-  const text = await response.text();
-  const data = text ? JSON.parse(text) : null;
-  if (!response.ok) {
-    const message = data?.message || data?.error || `FreeConvert API 요청에 실패했습니다. (${response.status})`;
-    const error = new Error(message);
-    error.statusCode = response.status;
-    error.details = data;
-    throw error;
-  }
-  return data;
-}
-
-function findFreeConvertDownloadUrl(value) {
-  if (!value || typeof value !== 'object') return '';
-  if (Array.isArray(value)) {
-    for (const item of value) {
-      const found = findFreeConvertDownloadUrl(item);
-      if (found) return found;
-    }
-    return '';
-  }
-  for (const [key, item] of Object.entries(value)) {
-    if (typeof item === 'string' && /^https?:\/\//i.test(item) && /url|download/i.test(key)) return item;
-    const found = findFreeConvertDownloadUrl(item);
-    if (found) return found;
-  }
-  return '';
-}
-
-function simplifyFreeConvertJob(job) {
-  const status = job?.status || job?.job?.status || 'unknown';
-  const id = job?.id || job?.job?.id || '';
-  return {
-    id,
-    status,
-    downloadUrl: findFreeConvertDownloadUrl(job),
-    rawStatus: status
-  };
-}
-
-async function pollFreeConvertJob(jobId) {
-  let job = null;
-  for (let attempt = 0; attempt < FREECONVERT_POLL_LIMIT; attempt += 1) {
-    job = await freeConvertFetch(`/process/jobs/${encodeURIComponent(jobId)}`);
-    const summary = simplifyFreeConvertJob(job);
-    if (summary.status === 'completed' || summary.status === 'failed' || summary.status === 'canceled' || summary.downloadUrl) {
-      return summary;
-    }
-    await sleep(FREECONVERT_POLL_DELAY_MS);
-  }
-  return simplifyFreeConvertJob(job);
-}
-
-app.post('/api/music/convert-mp3', async (req, res) => {
+app.get('/society-original.html', async (_req, res) => {
   try {
-    const url = normalizeConvertibleUrl(req.body?.url);
-    const job = await freeConvertFetch('/process/jobs', {
-      method: 'POST',
-      body: JSON.stringify({
-        tasks: {
-          import_file: { operation: 'import/url', url },
-          convert_file: { operation: 'convert', input: 'import_file', output_format: 'mp3' },
-          export_file: { operation: 'export/url', input: 'convert_file' }
-        }
-      })
-    });
-    const summary = simplifyFreeConvertJob(job);
-    const jobId = summary.id || job?.id;
-    if (!jobId) return res.status(502).json({ error: 'FreeConvert 작업 ID를 받지 못했습니다.' });
-    const polled = await pollFreeConvertJob(jobId);
-    res.json({ ...polled, id: jobId });
-  } catch (error) {
-    res.status(error.statusCode || 500).json({ error: error.message || 'MP3 변환 요청에 실패했습니다.' });
-  }
-});
-
-app.get('/api/music/convert-mp3/:jobId', async (req, res) => {
-  try {
-    const summary = await pollFreeConvertJob(req.params.jobId);
-    res.json({ ...summary, id: req.params.jobId });
-  } catch (error) {
-    res.status(error.statusCode || 500).json({ error: error.message || 'MP3 변환 상태 확인에 실패했습니다.' });
+    const html = await readFile(societyOriginalHtmlPath, 'utf8');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.type('html').send(html);
+  } catch (_) {
+    res.status(404).type('html').send([
+      '<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8" />',
+      '<meta name="viewport" content="width=device-width, initial-scale=1.0" />',
+      '<title>통합사회 원본 파일을 찾을 수 없습니다</title>',
+      '<style>body{font-family:system-ui,sans-serif;margin:0;padding:28px;color:#0f172a;background:#f8fafc;line-height:1.7}.box{max-width:760px;margin:auto;background:#fff;border:1px solid #dbe3ef;border-radius:18px;padding:22px;box-shadow:0 12px 28px rgba(15,23,42,.08)}code{background:#f1f5f9;border-radius:6px;padding:2px 6px}</style>',
+      '</head><body><main class="box"><h1>통합사회 원본 파일을 찾을 수 없습니다.</h1>',
+      `<p>원본을 변형하지 않기 위해 서버가 로컬 파일 <code>${societyOriginalHtmlPath}</code>을 그대로 읽어 표시하도록 설정되어 있습니다.</p>`,
+      '<p>해당 파일을 그 위치에 두고 서버를 다시 실행하거나, <code>SIMPUL_SOCIETY_HTML_PATH</code> 환경 변수로 원본 HTML 경로를 지정해 주세요.</p>',
+      '</main></body></html>'
+    ].join(''));
   }
 });
 
