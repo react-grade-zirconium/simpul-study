@@ -1,49 +1,695 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>통합과학 화학 학습</title>
-  <style>
-    :root{color-scheme:light;font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif}
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{min-height:100vh;background:#f6f8fc;color:#0f172a;padding:24px}
-    main{max-width:860px;margin:0 auto;display:grid;gap:16px}
-    section{border:1px solid #dbe3ef;border-radius:18px;background:#fff;padding:20px;box-shadow:0 12px 28px rgba(15,23,42,.08)}
-    .badge{display:inline-flex;align-items:center;gap:6px;margin-bottom:10px;border-radius:999px;background:#fefce8;color:#a16207;padding:7px 12px;font-size:.84rem;font-weight:900}
-    h1{font-size:clamp(1.45rem,4vw,2.2rem);line-height:1.25;letter-spacing:-.04em}
-    h2{margin-bottom:10px;color:#a16207;font-size:1.05rem}
-    p,li{line-height:1.7;color:#334155}
-    ul{padding-left:1.2rem}
-    .back{display:inline-flex;width:max-content;align-items:center;gap:6px;color:#2563eb;text-decoration:none;font-weight:800}
-    .back:hover,.back:focus-visible{text-decoration:underline;outline:none}
-    @media (max-width:520px){body{padding:14px}section{padding:18px}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>통합과학1 II단원 — 화학 결합</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+--primary: #1a73e8;
+--primary-light: #e8f0fe;
+--accent: #34a853;
+--bg: #f8f9fa;
+--surface: #fff;
+--border: #dadce0;
+--text: #202124;
+--text-sec: #5f6368;
+--shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);font-size:14.5px;line-height:1.7;}
+.page-header{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--border);padding:12px 20px 0;}
+.subject-label{font-size:11px;letter-spacing:.12em;color:var(--text-sec);text-transform:uppercase;margin-bottom:2px;}
+.page-title{font-family:'Noto Serif KR',serif;font-size:22px;font-weight:700;color:var(--text);margin-bottom:10px;}
+.tab-bar{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;}
+.tab-bar::-webkit-scrollbar{display:none;}
+.tab-btn{padding:10px 18px 8px;border:none;background:transparent;font-family:'Noto Sans KR',sans-serif;font-size:13.5px;color:var(--text-sec);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:6px;transition:color .2s;}
+.tab-btn.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:700;}
+.tab-btn:hover{color:var(--primary);}
+.tab-number{width:20px;height:20px;border-radius:50%;background:#f1f3f4;font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
+.tab-btn.active .tab-number{background:var(--primary);color:#fff;}
+.content-wrap{max-width:960px;margin:0 auto;padding:24px 20px 80px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+.section-title{font-family:'Noto Serif KR',serif;font-size:20px;font-weight:700;border-bottom:2px solid var(--primary);padding-bottom:8px;margin:32px 0 16px;color:var(--text);}
+.section-title:first-child{margin-top:0;}
+.subsection-title{font-size:15px;font-weight:700;color:var(--primary);padding-left:10px;border-left:3px solid var(--primary);margin:20px 0 10px;}
+.def-box{background:var(--primary-light);border-left:4px solid var(--primary);border-radius:0 8px 8px 0;padding:14px 18px;font-size:14.5px;line-height:1.7;margin-bottom:14px;}
+.def-box strong{color:var(--primary);}
+.factor-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.factor-grid.three{grid-template-columns:1fr 1fr 1fr;}
+@media(max-width:600px){.factor-grid,.factor-grid.three{grid-template-columns:1fr;}}
+.factor-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;}
+.factor-card.blue{border-top:3px solid #1a73e8;}
+.factor-card.green{border-top:3px solid #34a853;}
+.factor-card.red{border-top:3px solid #ea4335;}
+.factor-card.yellow{border-top:3px solid #f9ab00;}
+.factor-card.purple{border-top:3px solid #8430ce;}
+.factor-card h4{font-size:13px;font-weight:700;margin-bottom:8px;color:var(--text);}
+.factor-card p,.factor-card li{font-size:13px;color:var(--text-sec);line-height:1.65;}
+.factor-card ul{padding-left:16px;}
+.badge{padding:2px 10px;border-radius:20px;font-size:12px;font-weight:700;display:inline-block;}
+.badge-blue{background:#e8f0fe;color:#1a73e8;}
+.badge-green{background:#e6f4ea;color:#34a853;}
+.badge-red{background:#fce8e6;color:#ea4335;}
+.badge-yellow{background:#fef9e0;color:#b5860a;}
+.badge-purple{background:#f3e8fd;color:#8430ce;}
+.cmp-table{width:100%;border-collapse:collapse;border-radius:10px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:14px;}
+.cmp-table thead{background:var(--primary);color:#fff;}
+.cmp-table th{padding:10px 14px;font-size:13.5px;text-align:left;}
+.cmp-table td{padding:9px 14px;font-size:13.5px;line-height:1.55;border-bottom:1px solid var(--border);}
+.cmp-table tbody tr:nth-child(even){background:#f8f9fa;}
+.cmp-table td:first-child{font-weight:600;color:var(--primary);white-space:nowrap;}
+.note{background:#fffde7;border:1px solid #ffe082;color:#5d4037;border-radius:8px;padding:12px 16px;font-size:13px;line-height:1.65;margin-bottom:12px;}
+.warning{background:#fce8e6;border:1px solid #f28b82;color:#b31412;border-radius:8px;padding:12px 16px;font-size:13px;line-height:1.65;margin-bottom:12px;}
+.totop{position:fixed;bottom:28px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--primary);color:#fff;border:none;font-size:18px;cursor:pointer;box-shadow:0 2px 8px rgba(26,115,232,.4);z-index:200;}
+.quiz-section{margin-top:56px;padding-top:32px;border-top:3px solid var(--primary);}
+.quiz-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+.quiz-header h3{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:700;}
+.scoreboard{display:flex;gap:8px;flex-wrap:wrap;}
+.score-chip{padding:4px 13px;border-radius:20px;font-size:12px;font-weight:700;border:1.5px solid;}
+.score-chip.ox{background:#e8f0fe;color:#1a73e8;border-color:#1a73e8;}
+.score-chip.mc{background:#e6f4ea;color:#34a853;border-color:#34a853;}
+.score-chip.hard{background:#fce8e6;color:#ea4335;border-color:#ea4335;}
+.quiz-type-bar{display:flex;border-bottom:2px solid var(--border);overflow-x:auto;margin-bottom:16px;}
+.qtype-btn{padding:9px 20px;border:none;background:transparent;font-family:'Noto Sans KR',sans-serif;font-size:13px;color:var(--text-sec);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:6px;transition:color .2s;}
+.qtype-btn.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:700;}
+.qtype-count{width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.07);font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
+.q-progress-wrap{margin-bottom:16px;}
+.q-progress-label{font-size:12px;color:var(--text-sec);margin-bottom:6px;}
+.q-progress-bar{height:6px;background:#e0e0e0;border-radius:3px;}
+.q-progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .4s;}
+.q-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin-bottom:14px;transition:border-color .2s,background .2s;}
+.q-card.answered-correct{border-color:#34a853;background:#f6fef8;}
+.q-card.answered-wrong{border-color:#ea4335;background:#fff7f7;}
+.q-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.q-num{font-size:12px;font-weight:700;color:var(--text-sec);}
+.q-difficulty{padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;}
+.diff-basic{background:#e8f0fe;color:#1a73e8;}
+.diff-mid{background:#e6f4ea;color:#34a853;}
+.diff-hard{background:#fce8e6;color:#ea4335;}
+.q-answered-mark{font-size:14px;}
+.q-text{font-size:14px;line-height:1.7;margin-bottom:14px;color:var(--text);white-space:pre-wrap;}
+.ox-row{display:flex;gap:10px;}
+.ox-btn{flex:1;padding:14px 10px;border-radius:12px;border:2px solid var(--border);background:#fff;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .15s;}
+.ox-btn:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light);}
+.ox-sym{font-size:26px;}
+.ox-lbl{font-size:12px;color:var(--text-sec);}
+.ox-btn.ox-correct-picked{background:#e6f4ea;border-color:#34a853;box-shadow:0 0 0 3px #c8e6c9;}
+.ox-btn.ox-wrong-picked{background:#fce8e6;border-color:#ea4335;box-shadow:0 0 0 3px #ffcdd2;}
+.ox-btn.ox-correct-reveal{background:#e6f4ea;border-color:#34a853;opacity:.75;}
+.mc-options{display:flex;flex-direction:column;gap:8px;}
+.mc-opt{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);text-align:left;width:100%;font-family:'Noto Sans KR',sans-serif;font-size:13.5px;background:#fff;cursor:pointer;transition:all .15s;}
+.mc-opt:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light);}
+.mc-opt:disabled{cursor:default;}
+.mc-opt.mc-correct{background:#e6f4ea;border-color:#34a853;font-weight:600;}
+.mc-opt.mc-wrong{background:#fce8e6;border-color:#ea4335;}
+.mc-opt-letter{width:24px;height:24px;border-radius:50%;background:#f1f3f4;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.mc-opt.mc-correct .mc-opt-letter{background:#34a853;color:#fff;}
+.mc-opt.mc-wrong .mc-opt-letter{background:#ea4335;color:#fff;}
+.mc-opt-text{flex:1;line-height:1.55;}
+.q-feedback{border-radius:10px;padding:12px 16px;font-size:13.5px;line-height:1.65;margin-top:10px;}
+.q-feedback.correct{background:#e6f4ea;border:1px solid #81c995;color:#1e6b35;}
+.q-feedback.wrong{background:#fce8e6;border:1px solid #f28b82;color:#b31412;}
+.quiz-result{background:#fff;border:2px solid var(--primary);border-radius:16px;padding:24px;text-align:center;display:none;margin-top:16px;}
+.quiz-result.visible{display:block;}
+.result-score-big{font-size:48px;font-weight:700;color:var(--primary);}
+.result-score-big span{font-size:24px;color:var(--text-sec);}
+.result-score-label{font-size:18px;margin:8px 0 16px;color:var(--text);}
+.mini-bar-row{display:flex;align-items:center;gap:10px;margin:6px 0;font-size:13px;}
+.mini-bar-bg{flex:1;height:8px;background:#e0e0e0;border-radius:4px;overflow:hidden;}
+.mini-bar-fill{height:100%;border-radius:4px;}
+.reset-btn{margin-top:16px;padding:10px 24px;border-radius:20px;border:none;background:var(--primary);color:#fff;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:700;cursor:pointer;}
+.reset-btn:hover{background:#1557b0;}
+</style>
 </head>
 <body>
-  <main>
-    <a class="back" href="./science_hub.html">← 과학 파트 선택으로 돌아가기</a>
-    <section>
-      <span class="badge">⚗️ 화학 파트</span>
-      <h1>통합과학 화학 학습</h1>
-      <p>핵심 개념을 먼저 확인하고, 그래프·자료 해석과 문제 적용 순서로 복습하세요.</p>
-    </section>
-    <section>
-      <h2>핵심 학습 주제</h2>
-      <ul>
-        <li>원자와 분자의 구조를 모형으로 설명하기</li>
-        <li>화학 반응식에서 반응물·생성물과 보존되는 양 찾기</li>
-        <li>산과 염기, 산화·환원 개념을 생활 속 사례와 연결하기</li>
-      </ul>
-    </section>
-    <section>
-      <h2>오늘의 학습 루틴</h2>
-      <ul>
-        <li>핵심 용어를 정의한 뒤 대표 예시를 하나씩 적기</li>
-        <li>반응 전후 입자 수와 질량 관계를 표로 정리하기</li>
-        <li>헷갈리는 개념은 비교표로 차이점 표시하기</li>
-      </ul>
-    </section>
-  </main>
+
+<div class="page-header">
+<div class="subject-label">통합과학 1 · II. 물질과 규칙성</div>
+<div class="page-title">화학 결합과 물질의 세계</div>
+<div class="tab-bar" id="tabBar">
+<button class="tab-btn active" onclick="switchTab(0)">
+<span class="tab-number">1</span>화학 결합에 따른 물질의 성질
+</button>
+<button class="tab-btn" onclick="switchTab(1)">
+<span class="tab-number">2</span>지각과 생명체를 이루는 결합의 규칙
+</button>
+<button class="tab-btn" onclick="switchTab(2)">
+<span class="tab-number">3</span>물질의 전기적 성질과 첨단 기술
+</button>
+</div>
+</div>
+
+<div class="content-wrap">
+
+<!-- 탭 0 -->
+<div class="tab-panel active" id="panel-0">
+<div class="section-title">🔬 이온 결합 vs 공유 결합 — 물질의 성질 비교</div>
+
+<div class="subsection-title">핵심 개념 정리</div>
+<div class="def-box">
+<strong>이온 결합 물질</strong>: 양이온과 음이온 사이의 정전기적 인력으로 결합한 물질 (예: NaCl, CaCl₂)<br>
+<strong>공유 결합 물질</strong>: 원자들이 전자쌍을 공유하여 결합한 물질 (예: 설탕, 포도당)
+</div>
+
+<div class="subsection-title">전기 전도성 비교 실험 결과</div>
+<table class="cmp-table">
+<thead>
+<tr><th>구분</th><th>설탕 (공유)</th><th>포도당 (공유)</th><th>NaCl (이온)</th><th>CaCl₂ (이온)</th></tr>
+</thead>
+<tbody>
+<tr><td>고체 상태</td><td>❌ 전류 안 흐름</td><td>❌ 전류 안 흐름</td><td>❌ 전류 안 흐름</td><td>❌ 전류 안 흐름</td></tr>
+<tr><td>수용액 상태</td><td>❌ 전류 안 흐름</td><td>❌ 전류 안 흐름</td><td>✅ 전류 흐름</td><td>✅ 전류 흐름</td></tr>
+</tbody>
+</table>
+
+<div class="note">📝 증류수를 대조군으로 사용하는 이유 — 증류수 자체에 전류가 흐른다면 수용액에서 전류의 흐름이 물질 때문인지 물 때문인지 구분할 수 없기 때문이다.</div>
+
+<div class="subsection-title">입자 수준에서 이해하기</div>
+<div class="factor-grid">
+<div class="factor-card blue">
+<h4>⚡ 이온 결합 물질 (NaCl)</h4>
+<p>물에 녹으면 <strong>Na⁺와 Cl⁻</strong>로 분리됨</p>
+<ul>
+<li>Na⁺ → (-)극 방향 이동</li>
+<li>Cl⁻ → (+)극 방향 이동</li>
+<li>이온 이동 → <strong>전류 흐름 ✅</strong></li>
+</ul>
+</div>
+<div class="factor-card green">
+<h4>🔒 공유 결합 물질 (설탕)</h4>
+<p>물에 녹아도 <strong>중성 분자</strong> 상태 유지</p>
+<ul>
+<li>이온으로 분리되지 않음</li>
+<li>전하 운반체 없음</li>
+<li>고체·수용액 모두 <strong>전류 안 흐름 ❌</strong></li>
+</ul>
+</div>
+</div>
+
+<div class="warning">⚠️ 이온 결합 물질도 고체 상태에서는 전류가 흐르지 않는다! 이온이 결정 격자에 고정되어 이동할 수 없기 때문. 전류가 흐르려면 이온이나 전자가 <strong>자유롭게 이동</strong>해야 한다.</div>
+
+<div id="quiz-0" class="quiz-section"></div>
+</div>
+
+<!-- 탭 1 -->
+<div class="tab-panel" id="panel-1">
+<div class="section-title">🌍 지각을 구성하는 규산염 광물</div>
+
+<div class="def-box">
+<strong>지각 구성 단계:</strong> 원소 → 광물 → 암석 → 지각<br>
+지각 원소 질량 비율 1위: <strong>산소(O, 약 46%)</strong> → 2위: 규소(Si, 약 28%)<br>
+암석의 90% 이상: <strong>규산염 광물</strong>
+</div>
+
+<div class="subsection-title">규산염 사면체 — 지각 광물의 기본 단위체</div>
+<div class="factor-grid">
+<div class="factor-card blue">
+<h4>🔷 구조</h4>
+<p>규소(Si) <strong>1개</strong> + 산소(O) <strong>4개</strong> 공유 결합</p>
+<p style="margin-top:8px;font-weight:700;color:#1a73e8;">Si : O = 1 : 4</p>
+</div>
+<div class="factor-card green">
+<h4>🔗 결합 방식</h4>
+<p>이웃한 사면체끼리 <strong>산소를 공유</strong>하며 연결</p>
+<p style="margin-top:8px;">공유 산소 수에 따라 다양한 구조 형성</p>
+</div>
+</div>
+
+<div class="subsection-title">결합 구조에 따른 광물 종류</div>
+<table class="cmp-table">
+<thead><tr><th>결합 구조</th><th>광물</th><th>특징</th></tr></thead>
+<tbody>
+<tr><td>독립형</td><td>감람석</td><td>사면체 독립 존재, 깨짐</td></tr>
+<tr><td>단사슬형</td><td>휘석</td><td>2방향 쪼개짐, 기둥 모양 결정</td></tr>
+<tr><td>복사슬형</td><td>각섬석</td><td>충격에 약함</td></tr>
+<tr><td>판상형</td><td>흑운모</td><td>얇은 판으로 쪼개짐</td></tr>
+<tr><td>망상형</td><td>석영</td><td>3차원 그물 구조, 열에 강함</td></tr>
+</tbody>
+</table>
+<div class="note">📝 다양한 광물이 존재하는 이유 = 규산염 사면체의 <strong>결합 구조</strong>가 다양하기 때문. 같은 단위체라도 연결 방식이 달라지면 완전히 다른 광물이 된다.</div>
+
+<div class="section-title">🧬 생명체를 구성하는 탄소 화합물</div>
+
+<div class="subsection-title">탄소(C)가 생명의 중심 원소인 이유</div>
+<div class="factor-grid three">
+<div class="factor-card blue">
+<h4>원자가 전자 4개</h4>
+<p>최대 <strong>4개</strong>의 공유 결합 가능</p>
+</div>
+<div class="factor-card green">
+<h4>다양한 구조</h4>
+<p>사슬·고리·가지 모양 등 무한 구조 형성</p>
+</div>
+<div class="factor-card yellow">
+<h4>다른 원소와 결합</h4>
+<p>H, O, N 등과 결합해 수많은 화합물 생성</p>
+</div>
+</div>
+
+<div class="subsection-title">단백질 — 구조와 다양성</div>
+<div class="def-box">
+<strong>단위체:</strong> 아미노산 (약 20종류)<br>
+아미노산 → <strong>펩타이드 결합</strong> → 폴리펩타이드 → 꼬이고 접힘 → <strong>단백질 (3차원 입체구조)</strong><br>
+아미노산의 <strong>종류·수·결합 순서</strong>가 달라지면 다른 단백질이 만들어짐
+</div>
+<div class="note">📝 20종 아미노산 → 수만 종 단백질의 원리 = 한글 자음·모음 24개로 수천 개 단어를 만드는 원리와 동일. <strong>배열 순서의 다양성</strong>이 핵심!</div>
+
+<div class="subsection-title">핵산 — DNA & RNA 비교</div>
+<div class="def-box"><strong>단위체:</strong> 뉴클레오타이드 = 인산 + 당 + 염기 (1:1:1)</div>
+<table class="cmp-table">
+<thead><tr><th>구분</th><th>DNA</th><th>RNA</th></tr></thead>
+<tbody>
+<tr><td>구조</td><td>이중나선 (두 가닥)</td><td>단일 가닥</td></tr>
+<tr><td>염기</td><td>A, G, C, T</td><td>A, G, C, U (타이민→유라실)</td></tr>
+<tr><td>염기 결합</td><td>A↔T, G↔C</td><td>—</td></tr>
+<tr><td>기능</td><td>유전정보 저장</td><td>유전정보 전달 (→라이보솜)</td></tr>
+</tbody>
+</table>
+<div class="warning">⚠️ DNA 상보적 염기 결합 규칙 — A는 반드시 T와, G는 반드시 C와 결합. 다양한 유전정보를 저장할 수 있는 이유는 뉴클레오타이드의 <strong>염기 결합 순서</strong>가 생물마다 다르기 때문이다.</div>
+
+<div class="subsection-title">지각 vs 생명체 — 핵심 비교</div>
+<table class="cmp-table">
+<thead><tr><th>항목</th><th>지각</th><th>생명체</th></tr></thead>
+<tbody>
+<tr><td>중심 원소</td><td>규소 (Si)</td><td>탄소 (C)</td></tr>
+<tr><td>기본 단위체</td><td>규산염 사면체</td><td>아미노산, 뉴클레오타이드</td></tr>
+<tr><td>다양성의 원인</td><td>사면체 결합 구조의 다양성</td><td>단위체 종류·결합 순서의 다양성</td></tr>
+<tr><td>공통점</td><td colspan="2">단위체가 다양한 방식으로 결합하여 다양한 물질 형성</td></tr>
+</tbody>
+</table>
+
+<div id="quiz-1" class="quiz-section"></div>
+</div>
+
+<!-- 탭 2 -->
+<div class="tab-panel" id="panel-2">
+<div class="section-title">⚡ 물질의 전기적 성질과 첨단 기술의 활용</div>
+
+<div class="subsection-title">전기적 성질에 따른 물질 분류</div>
+<div class="factor-grid three">
+<div class="factor-card blue">
+<h4>🔵 도체</h4>
+<span class="badge badge-blue">전류 잘 흐름</span>
+<ul style="margin-top:8px;">
+<li>자유 전자 <strong>많음</strong></li>
+<li>전압 → 자유 전자 일정 방향 이동</li>
+<li>예: 철, 구리, 알루미늄</li>
+</ul>
+</div>
+<div class="factor-card red">
+<h4>🔴 부도체</h4>
+<span class="badge badge-red">전류 안 흐름</span>
+<ul style="margin-top:8px;">
+<li>자유 전자 <strong>거의 없음</strong></li>
+<li>전압 가해도 전류 흐르지 않음</li>
+<li>예: 고무, 유리, 나무</li>
+</ul>
+</div>
+<div class="factor-card yellow">
+<h4>🟡 반도체</h4>
+<span class="badge badge-yellow">조건에 따라 다름</span>
+<ul style="margin-top:8px;">
+<li>도체·부도체의 <strong>중간</strong></li>
+<li>조건에 따라 전류 조절 가능</li>
+<li>예: 규소(Si), 저마늄(Ge)</li>
+</ul>
+</div>
+</div>
+
+<div class="subsection-title">도핑 (Doping)</div>
+<div class="def-box"><strong>도핑</strong>: 순수한 반도체에 소량의 <strong>불순물</strong>을 첨가하여 전기 전도성을 높이는 것</div>
+<div class="factor-grid">
+<div class="factor-card blue">
+<h4>원자가 전자 5개인 원소 첨가</h4>
+<p>여분의 전자 1개 생성 → 전자 이동 → <strong>전류 흐름</strong></p>
+<p style="font-size:12px;color:#888;margin-top:6px;">예: 규소 + 인(P)</p>
+</div>
+<div class="factor-card green">
+<h4>원자가 전자 3개인 원소 첨가</h4>
+<p>전자 빈자리(양공) 생성 → 전자 이동 → <strong>전류 흐름</strong></p>
+<p style="font-size:12px;color:#888;margin-top:6px;">예: 규소 + 붕소(B)</p>
+</div>
+</div>
+
+<div class="subsection-title">반도체 소자의 종류와 기능</div>
+<table class="cmp-table">
+<thead><tr><th>소자</th><th>기능</th><th>특징</th></tr></thead>
+<tbody>
+<tr><td>다이오드</td><td>전류를 <strong>한 방향</strong>으로만 흐르게 함</td><td>교류 → 직류 변환 (정류), LED는 빛 방출</td></tr>
+<tr><td>트랜지스터</td><td>전류·전압 <strong>조절·제어</strong></td><td>소형, 소비 전력 작음</td></tr>
+<tr><td>집적 회로 (IC)</td><td>다이오드·트랜지스터 등을 하나의 <strong>칩</strong>으로 집적</td><td>에너지 소모 감소, 소형화</td></tr>
+</tbody>
+</table>
+
+<div class="subsection-title">유기 발광 다이오드 (OLED)</div>
+<div class="def-box">
+<strong>OLED</strong>: 탄소 등 <strong>유기 물질</strong>의 전기적 성질을 변화시켜 만든 반도체 소재<br>
+특징: <strong>스스로 빛을 냄</strong> → 얇고 가볍게 제작 가능, 유연하여 <strong>휘어지는 디스플레이</strong>에 활용
+</div>
+
+<div class="subsection-title">요약 비교표</div>
+<table class="cmp-table">
+<thead><tr><th>성질</th><th>도체</th><th>반도체</th><th>부도체</th></tr></thead>
+<tbody>
+<tr><td>자유 전자</td><td>많음</td><td>적음 (도핑으로 증가)</td><td>거의 없음</td></tr>
+<tr><td>전기 저항</td><td>작음</td><td>중간</td><td>매우 큼</td></tr>
+<tr><td>대표 물질</td><td>구리, 철, 알루미늄</td><td>규소(Si), 저마늄(Ge)</td><td>고무, 유리, 나무</td></tr>
+</tbody>
+</table>
+
+<div id="quiz-2" class="quiz-section"></div>
+</div>
+
+</div>
+
+<button class="totop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+const QUIZ_DATA = {
+0: {
+ox: [
+{ q:"이온 결합 물질은 고체 상태에서도 전류가 흐른다.", a:false, exp:"이온 결합 물질은 고체 상태에서 이온이 결정 격자에 고정되어 이동할 수 없으므로 전류가 흐르지 않는다. 수용액 상태가 되어야 이온이 자유롭게 이동하여 전류가 흐른다." },
+{ q:"공유 결합 물질은 수용액 상태에서 전기적으로 중성인 분자 상태로 존재한다.", a:true, exp:"공유 결합 물질은 물에 녹아도 이온으로 분리되지 않고 전기적으로 중성인 분자 상태를 유지한다. 전하 운반체가 없으므로 수용액에서도 전류가 흐르지 않는다." },
+{ q:"염화 나트륨(NaCl)은 공유 결합 물질이다.", a:false, exp:"NaCl은 Na⁺(양이온)와 Cl⁻(음이온) 사이의 정전기적 인력으로 결합한 이온 결합 물질이다. 공유 결합 물질의 예는 설탕, 포도당이다." },
+{ q:"설탕을 물에 녹인 수용액은 전류가 흐르지 않는다.", a:true, exp:"설탕은 공유 결합 물질로, 물에 녹아도 이온으로 분리되지 않고 중성 분자로 존재한다. 전류를 운반할 이온이 없으므로 수용액에서도 전류가 흐르지 않는다." },
+{ q:"이온 결합 물질의 수용액에서 양이온은 (+)극 방향으로 이동한다.", a:false, exp:"양이온(+)은 반대 전하인 (-)극 방향으로 이동하고, 음이온(-)은 (+)극 방향으로 이동한다. 반대 전하끼리 끌어당기는 것이 기본 원리이다." },
+{ q:"염화 칼슘(CaCl₂)을 물에 녹이면 전류가 흐른다.", a:true, exp:"염화 칼슘은 이온 결합 물질로, 물에 녹으면 Ca²⁺와 Cl⁻로 분리된다. 이 이온들이 자유롭게 이동하여 전류가 흐른다." },
+{ q:"전기 전도성 실험에서 증류수를 대조군으로 사용하는 이유는 물 자체에 전류가 흐르는지 확인하기 위해서이다.", a:true, exp:"대조군 설정의 이유: 만약 증류수에 전류가 흐른다면 물질을 녹였을 때 전류의 흐름이 물질 때문인지 물 때문인지 구분할 수 없게 된다. 따라서 대조군으로 테스트해야 한다." },
+{ q:"포도당은 이온 결합 물질이므로 수용액에서 전류가 흐른다.", a:false, exp:"포도당은 공유 결합 물질이다. 물에 녹아도 이온으로 분리되지 않으므로 수용액 상태에서도 전류가 흐르지 않는다." },
+{ q:"이온 결합 물질과 공유 결합 물질은 고체 상태에서 모두 전류가 흐르지 않는다.", a:true, exp:"이온 결합 물질은 고체에서 이온이 결정 구조에 고정되어 있고, 공유 결합 물질은 전하를 띤 입자 자체가 없다. 따라서 두 물질 모두 고체 상태에서 전류가 흐르지 않는다." },
+{ q:"공유 결합 물질로 이루어진 단백질이 이온 결합 물질로 바뀌면 생명 활동이 정상적으로 유지된다.", a:false, exp:"단백질이 이온 결합 물질로 바뀌면 물에 녹아 이온화되어 형태와 성질이 변한다. 세포와 기관이 본래 기능을 수행하지 못해 생명 유지가 불가능해진다." }
+],
+mc: [
+{ q:"이온 결합 물질을 물에 녹였을 때 나타나는 현상으로 옳은 것은?", opts:["전기적으로 중성인 분자로 존재한다","양이온과 음이온으로 분리되어 전류가 흐른다","공유 결합이 끊어져 원자로 분리된다","전류가 흐르지 않는다"], a:1, exp:"이온 결합 물질은 물에 녹으면 양이온과 음이온으로 분리(이온화)된다. 이 이온들이 전극 방향으로 이동하면서 전류가 흐른다. ①은 공유 결합 물질의 특성, ③④는 틀린 설명이다." },
+{ q:"고체 상태의 염화 나트륨에 전기 전도계를 대면?", opts:["전류가 흐른다","전류가 흐르지 않는다","빛이 매우 밝게 켜진다","물질이 분해된다"], a:1, exp:"NaCl은 이온 결합 물질이지만 고체 상태에서는 이온이 결정 격자에 고정되어 자유롭게 이동할 수 없다. 따라서 전류가 흐르지 않는다. 수용액 상태에서만 전류가 흐른다." },
+{ q:"공유 결합 물질로만 짝지어진 것은?", opts:["염화 나트륨, 설탕","설탕, 포도당","염화 칼슘, 포도당","염화 나트륨, 염화 칼슘"], a:1, exp:"설탕과 포도당은 탄소·수소·산소가 공유 결합한 공유 결합 물질이다. NaCl과 CaCl₂은 이온 결합 물질이다." },
+{ q:"이온 결합 물질 수용액에서 전류가 흐르는 직접적인 이유는?", opts:["물 분자가 이동하기 때문에","자유 전자가 많기 때문에","이온이 자유롭게 이동하기 때문에","분자가 분해되기 때문에"], a:2, exp:"이온 결합 물질 수용액에서 전류가 흐르는 이유는 양이온과 음이온이 각각 반대 전극 방향으로 자유롭게 이동하기 때문이다." },
+{ q:"다음 실험 결과 중 옳은 것은?", opts:["고체 설탕에 전기 전도계를 대면 전류가 흐른다","NaCl 수용액은 전류가 흐르지 않는다","포도당 수용액은 전류가 흐른다","CaCl₂ 수용액은 전류가 흐른다"], a:3, exp:"CaCl₂은 이온 결합 물질로, 수용액에서 Ca²⁺와 Cl⁻로 분리되어 전류가 흐른다. ①고체 설탕은 공유 결합→전류 안 흐름, ②NaCl 수용액은 전류 흐름(거짓), ③포도당은 공유 결합→전류 안 흐름." },
+{ q:"증류수에 전기 전도계를 담가 실험하는 주된 목적은?", opts:["증류수의 순도 측정","물이 이온 결합 물질인지 확인","대조군으로서 물 자체에 전류가 흐르지 않음을 확인","물에 불순물이 있는지 확인"], a:2, exp:"대조군 설정 목적이다. 물 자체에 전류가 흐른다면 물질을 녹인 수용액에서 전류가 흐를 때 그것이 물질 때문인지 물 때문인지 구분할 수 없기 때문이다." },
+{ q:"NaCl 수용액에서 Na⁺는 어느 방향으로 이동하는가?", opts:["(+)극 방향","(-)극 방향","이동하지 않는다","무작위 방향"], a:1, exp:"Na⁺는 양이온(+)이므로 반대 전하인 (-)극 방향으로 이동한다. 반대로 Cl⁻는 음이온이므로 (+)극 방향으로 이동한다." },
+{ q:"공유 결합 물질이 수용액에서도 전류가 흐르지 않는 이유는?", opts:["물에 녹지 않기 때문에","중성 분자 상태로 존재하여 전하 운반체가 없기 때문에","결합이 너무 강해 이온이 될 수 없기 때문에","산화 환원 반응이 일어나기 때문에"], a:1, exp:"공유 결합 물질은 물에 녹아도 이온으로 분리되지 않고 전기적으로 중성인 분자 상태를 유지한다. 전류를 운반할 이온이 생성되지 않으므로 전류가 흐르지 않는다." },
+{ q:"이온 결합 물질의 특성으로 옳지 않은 것은?", opts:["수용액에서 전류가 흐른다","물에 녹으면 양이온과 음이온으로 분리된다","고체 상태에서 전류가 흐른다","대표적인 예로 NaCl이 있다"], a:2, exp:"이온 결합 물질도 고체 상태에서는 이온이 결정 구조에 고정되어 이동할 수 없으므로 전류가 흐르지 않는다. ①②④는 모두 올바른 특성이다." },
+{ q:"설탕과 NaCl의 가장 핵심적인 차이점은?", opts:["녹는 온도","물에 녹는 양","수용액에서의 전기 전도성","고체 상태에서의 색깔"], a:2, exp:"설탕(공유 결합)과 NaCl(이온 결합)의 가장 핵심적 차이는 수용액 상태에서의 전기 전도성이다. NaCl 수용액은 전류가 흐르고 설탕 수용액은 흐르지 않는다." }
+],
+hard: [
+{ q:"다음 실험에 대한 설명으로 옳은 것만 고른 것은?\nㄱ. 고체 NaCl은 전류가 흐르지 않는다.\nㄴ. NaCl 수용액은 전류가 흐른다.\nㄷ. 설탕 수용액은 전류가 흐른다.", opts:["ㄱ만","ㄴ만","ㄱ, ㄴ","ㄱ, ㄴ, ㄷ"], a:2, exp:"ㄱ(참): 고체 NaCl은 이온이 결정에 고정되어 전류 안 흐름. ㄴ(참): NaCl 수용액은 Na⁺와 Cl⁻가 분리되어 전류 흐름. ㄷ(거짓): 설탕은 공유 결합 물질로 수용액에서도 중성 분자 상태→전류 안 흐름." },
+{ q:"이온 결합 물질 A와 공유 결합 물질 B에 대한 비교로 옳은 것은?", opts:["A와 B 모두 고체에서 전류가 흐른다","A는 수용액에서 전류가 흐르고, B는 흐르지 않는다","A와 B 모두 수용액에서 전류가 흐른다","B는 수용액에서 전류가 흐르고, A는 흐르지 않는다"], a:1, exp:"A(이온 결합)는 수용액에서 이온화되어 전류 흐름. B(공유 결합)는 수용액에서도 중성 분자 상태→전류 안 흐름. 둘 다 고체에서는 전류가 흐르지 않으므로 ①도 틀렸다." },
+{ q:"전기 전도성 실험에서 대조군(증류수)을 설정하는 과학적 원리를 가장 잘 설명한 것은?", opts:["증류수의 순도 측정으로 실험 신뢰성 향상","물 자체에 전류가 흐르지 않음을 확인하여 수용액 전류 흐름이 용질 때문임을 증명","물이 이온 결합 물질인지 공유 결합 물질인지 분류","물이 이온화되는 온도 측정"], a:1, exp:"대조군은 실험 변인 외 조건을 통제한다. 증류수로 '물 자체'의 전기 전도성을 제거해야, 수용액에서 전류 흐름이 순수하게 용질(물질)의 특성임을 증명할 수 있다." },
+{ q:"다음 물질을 수용액 전기 전도성에 따라 올바르게 분류한 것은?\n[목록] 설탕, NaCl, 포도당, CaCl₂, 증류수", opts:["전도: 설탕·포도당 / 비전도: NaCl·CaCl₂","전도: NaCl·CaCl₂ / 비전도: 설탕·포도당·증류수","전도: NaCl·CaCl₂·증류수 / 비전도: 설탕·포도당","전도: 모두 전도"], a:1, exp:"이온 결합 물질(NaCl·CaCl₂)은 수용액에서 이온화→전류 흐름. 공유 결합 물질(설탕·포도당)과 증류수는 이온 없음→전류 안 흐름." },
+{ q:"이온 결합 물질과 공유 결합 물질의 성질 차이가 생기는 근본적인 이유는?", opts:["분자 크기의 차이","결합 방식의 차이로 인한 이온 생성 여부의 차이","녹는점의 차이","원자 수의 차이"], a:1, exp:"이온 결합 물질은 물에 녹으면 이온으로 분리되고, 공유 결합 물질은 중성 분자 상태를 유지한다. 이 결합 방식의 근본적인 차이가 전기 전도성 차이를 만든다." },
+{ q:"다음 설명 중 옳은 것만 고른 것은?\nㄱ. 이온 결합 물질 수용액은 전류가 흐른다.\nㄴ. 공유 결합 물질은 고체와 수용액 모두 전류가 흐르지 않는다.\nㄷ. 이온 결합 물질의 음이온은 (-)극으로, 양이온은 (+)극으로 이동한다.", opts:["ㄱ만","ㄴ만","ㄱ, ㄴ","ㄴ, ㄷ"], a:2, exp:"ㄱ(참): 이온 결합 물질 수용액은 이온화→전류 흐름. ㄴ(참): 공유 결합 물질은 고체·수용액 모두 전류 안 흐름. ㄷ(거짓): 음이온(-)은 (+)극으로, 양이온(+)은 (-)극으로 이동한다. 반대로 서술됨." },
+{ q:"NaCl 고체와 NaCl 수용액의 전기 전도성이 다른 이유를 가장 정확하게 설명한 것은?", opts:["수용액에서 NaCl이 화학적으로 분해되어 새로운 물질 생성","고체에서는 이온이 결정 격자에 고정되지만, 수용액에서는 이온이 자유롭게 이동할 수 있기 때문에","물이 전기를 통하게 해주기 때문에","수용액에서 자유 전자가 생성되기 때문에"], a:1, exp:"NaCl 고체에서는 Na⁺와 Cl⁻가 결정 격자에 단단히 고정되어 이동 불가. 물에 녹으면 구조가 해체되어 이온들이 자유롭게 이동 가능해진다. 이것이 핵심 이유다." },
+{ q:"다음 중 실험 결과를 바르게 해석한 것은?", opts:["설탕이 물에 녹으면 이온이 생성되므로 전류가 흐른다","고체 NaCl은 전류가 흐르므로 이온 결합 물질이다","NaCl 수용액은 전류가 흐르므로 이온 결합 물질이다","포도당 수용액은 전류가 흐르므로 이온 결합 물질이다"], a:2, exp:"NaCl 수용액에서 전류가 흐르는 것은 이온화되기 때문이며, 이는 NaCl이 이온 결합 물질임을 보여준다. ①설탕은 이온 미생성, ②고체 NaCl은 전류 안 흐름, ④포도당은 공유 결합 물질이다." },
+{ q:"수용액의 전기 전도성을 이온·공유 결합 물질 판별 기준으로 사용할 수 있는 이유는?", opts:["두 물질의 색깔이 다르기 때문에","두 물질의 녹는점이 다르기 때문에","수용액에서 이온 생성 여부에 따라 전기 전도성이 명확히 차이나기 때문에","두 물질의 냄새가 다르기 때문에"], a:2, exp:"이온 결합 물질은 수용액에서 이온으로 분리→전류 흐름, 공유 결합 물질은 중성 분자 유지→전류 안 흐름. 이 명확한 차이 덕분에 수용액 전기 전도성이 핵심 판별 기준이 된다." },
+{ q:"다음 중 옳은 것만 고른 것은?\nㄱ. 물에 녹아 전류가 흐르는 물질은 이온 결합 물질이다.\nㄴ. 물에 녹아도 전류가 흐르지 않는 물질의 예로 설탕·포도당이 있다.\nㄷ. 이온 결합 물질은 고체 상태에서도 전류가 잘 흐른다.", opts:["ㄱ, ㄴ","ㄴ, ㄷ","ㄱ만","ㄷ만"], a:0, exp:"ㄱ(참): 물에 녹아 전류가 흐르는 물질은 이온 결합 물질이다. ㄴ(참): 전류 안 흐르는 물질의 예로 설탕·포도당(공유 결합)이 있다. ㄷ(거짓): 이온 결합 물질도 고체에서는 이온이 고정되어 전류가 흐르지 않는다." }
+]
+},
+1: {
+ox: [
+{ q:"규산염 사면체는 규소 1개를 중심으로 산소 4개가 공유 결합한 구조이다.", a:true, exp:"규산염 사면체는 Si 1개를 중심으로 O 4개가 공유 결합한 사면체 구조로, Si:O = 1:4. 지각 광물의 기본 단위체이다." },
+{ q:"지각에서 질량비가 가장 높은 원소는 규소(Si)이다.", a:false, exp:"지각에서 질량비 1위는 산소(O, 약 46%), 2위가 규소(Si, 약 28%)이다. 산소가 가장 많다." },
+{ q:"규산염 사면체들은 이웃한 사면체와 산소를 공유하면서 결합한다.", a:true, exp:"규산염 사면체들은 꼭짓점의 산소를 이웃 사면체와 공유하여 연결된다. 공유 산소 수에 따라 단사슬, 복사슬, 판상, 망상 등 다양한 구조가 형성된다." },
+{ q:"탄소 원자의 원자가 전자는 6개이다.", a:false, exp:"탄소(C)의 원자가 전자는 4개이다(14족). 원자가 전자 4개이기 때문에 최대 4개의 공유 결합을 형성할 수 있어 다양한 탄소 화합물이 만들어진다." },
+{ q:"단백질의 기본 단위체는 아미노산이다.", a:true, exp:"단백질의 기본 단위체는 아미노산이다. 약 20종류의 아미노산이 다양한 순서로 연결되어 폴리펩타이드를 이루고, 접혀 3차원 구조를 갖는 단백질이 된다." },
+{ q:"DNA는 단일 가닥의 폴리뉴클레오타이드 구조이다.", a:false, exp:"DNA는 두 가닥의 폴리뉴클레오타이드가 염기끼리 결합하고 나선형으로 꼬인 이중나선 구조이다. 단일 가닥은 RNA의 특징이다." },
+{ q:"DNA에서 아데닌(A)은 항상 타이민(T)과 결합한다.", a:true, exp:"DNA 상보적 염기 결합: A↔T, G↔C. 아데닌은 반드시 타이민과, 구아닌은 반드시 사이토신과 결합한다." },
+{ q:"뉴클레오타이드는 인산, 당, 아미노산이 1:1:1로 결합한 물질이다.", a:false, exp:"뉴클레오타이드는 인산·당·염기가 1:1:1로 결합한 핵산의 기본 단위체이다. 아미노산은 단백질의 단위체이다." },
+{ q:"지각의 중심 원소는 규소(Si)이고, 생명체의 중심 원소는 탄소(C)이다.", a:true, exp:"지각은 규산염 사면체(Si 중심), 생명체는 탄소 화합물(C 중심)이다. 둘 다 원자가 전자 4개로 최대 4개 공유 결합 가능하다는 공통점이 있다." },
+{ q:"RNA에서 타이민(T) 대신 유라실(U)을 사용한다.", a:true, exp:"RNA의 염기는 A, G, C, U이다. DNA의 타이민(T) 자리에 유라실(U)이 들어간다는 점이 DNA와 RNA 염기의 핵심 차이다." }
+],
+mc: [
+{ q:"규산염 사면체에서 규소와 산소의 개수 비율은?", opts:["Si:O = 4:1","Si:O = 1:2","Si:O = 1:4","Si:O = 2:1"], a:2, exp:"규산염 사면체는 Si 1개를 중심으로 O 4개가 공유 결합한 구조이므로 Si:O = 1:4이다." },
+{ q:"규산염 광물의 종류가 다양한 근본적인 이유는?", opts:["규소의 동위원소가 다양하기 때문에","규산염 사면체의 결합 구조가 다양하기 때문에","산소의 종류가 다르기 때문에","암석의 색깔이 다르기 때문에"], a:1, exp:"같은 규산염 사면체라도 연결 방식(단사슬·복사슬·판상·망상)이 달라지면 다른 광물이 형성된다. 결합 구조의 다양성이 다양한 광물을 만드는 이유다." },
+{ q:"탄소(C)가 생명체의 중심 원소인 이유로 가장 적절한 것은?", opts:["원자가 전자가 2개이기 때문에","원자가 전자가 4개로 다양한 공유 결합을 형성할 수 있기 때문에","반응성이 없어 안정하기 때문에","지구상에 가장 풍부하기 때문에"], a:1, exp:"탄소는 원자가 전자 4개로 최대 4개의 공유 결합 가능. 사슬·고리·가지 모양 등 다양한 구조를 이루어 수많은 탄소 화합물을 만들 수 있다." },
+{ q:"단백질에서 아미노산의 종류·수·결합 순서가 달라지면?", opts:["색깔만 달라진다","입체 구조와 기능이 달라진다","크기만 달라진다","아무런 변화가 없다"], a:1, exp:"단백질의 기능은 3차원 입체 구조에 의해 결정된다. 아미노산의 종류·수·결합 순서가 달라지면 접히는 방식이 달라져 입체 구조가 바뀌고 기능도 달라진다." },
+{ q:"DNA를 이루는 염기는?", opts:["A, G, C, U","A, G, C, T","A, T, U, G","C, T, U, A"], a:1, exp:"DNA의 염기: A(아데닌), G(구아닌), C(사이토신), T(타이민). RNA에서는 T 대신 U(유라실)이 사용된다." },
+{ q:"뉴클레오타이드를 이루는 성분은?", opts:["아미노산, 당, 인산","인산, 당, 염기","인산, 지방산, 염기","당, 단백질, 염기"], a:1, exp:"뉴클레오타이드 = 인산 + 당 + 염기 (1:1:1). 아미노산은 단백질의 단위체이므로 혼동하지 말자." },
+{ q:"판상 구조를 가지는 규산염 광물은?", opts:["감람석","휘석","흑운모","석영"], a:2, exp:"흑운모는 판상(층 모양) 구조로 얇은 판으로 쪼개지는 특성이 있다. 감람석(독립형), 휘석(단사슬), 석영(망상형)이다." },
+{ q:"생명체 내에서 유전정보를 저장하는 물질은?", opts:["단백질","지방","DNA","탄수화물"], a:2, exp:"DNA는 유전정보를 저장하는 핵산이다. RNA는 유전정보를 라이보솜에게 전달한다. 단백질·지방·탄수화물은 유전정보 저장 기능이 없다." },
+{ q:"지각의 원소 질량 비율 1위와 2위는?", opts:["규소>산소","산소>규소","철>산소","알루미늄>산소"], a:1, exp:"지각 원소 질량 비율: 산소(O) 약 46% > 규소(Si) 약 28% > 알루미늄(Al) 약 8% 순이다." },
+{ q:"단백질과 규산염 광물의 공통점은?", opts:["단위체가 아미노산이다","기본 단위체가 다양한 방식으로 결합하여 다양한 물질을 형성한다","탄소가 중심 원소이다","물에 녹으면 전류가 흐른다"], a:1, exp:"단백질(단위체: 아미노산)과 규산염 광물(단위체: 규산염 사면체) 모두 기본 단위체가 다양한 방식으로 결합하여 다양한 물질을 형성한다." }
+],
+hard: [
+{ q:"지각의 규산염 광물과 생명체의 단백질 비교로 옳은 것만 고른 것은?\nㄱ. 두 물질 모두 기본 단위체가 다양한 방식으로 결합하여 만들어진다.\nㄴ. 지각의 중심 원소는 탄소(C)이고, 생명체의 중심 원소는 규소(Si)이다.\nㄷ. 단백질의 다양성은 아미노산의 종류와 결합 순서에 의해 결정된다.", opts:["ㄱ만","ㄴ만","ㄱ, ㄷ","ㄱ, ㄴ, ㄷ"], a:2, exp:"ㄱ(참): 두 물질 모두 단위체의 결합 방식에 따라 다양한 물질 형성. ㄴ(거짓): 지각=규소(Si), 생명체=탄소(C). 반대로 서술됨. ㄷ(참): 단백질의 종류·기능은 아미노산 종류·수·결합 순서에 의해 결정된다." },
+{ q:"DNA의 구조적 특징으로 옳은 것만 고른 것은?\nㄱ. 이중나선 구조를 이룬다.\nㄴ. A는 항상 C와 결합한다.\nㄷ. 염기 결합 순서가 달라 다양한 유전정보를 저장할 수 있다.", opts:["ㄱ, ㄴ","ㄱ, ㄷ","ㄴ, ㄷ","ㄱ, ㄴ, ㄷ"], a:1, exp:"ㄱ(참): DNA는 이중나선 구조. ㄴ(거짓): A는 T와, G는 C와 결합한다. A-C 결합은 없다. ㄷ(참): 염기 결합 순서의 다양성으로 다양한 유전정보 저장 가능." },
+{ q:"규산염 광물의 결합 구조와 특성을 올바르게 연결한 것은?", opts:["감람석 — 판상 구조 — 얇은 판으로 쪼개짐","흑운모 — 판상 구조 — 얇은 판으로 쪼개짐","석영 — 단사슬 구조 — 기둥 모양 결정","각섬석 — 독립형 구조 — 열에 강함"], a:1, exp:"흑운모 = 판상 구조 = 얇은 판으로 쪼개짐. 감람석(독립형), 휘석(단사슬-기둥 모양 결정), 석영(망상형-열에 강함), 각섬석(복사슬)." },
+{ q:"탄소(C)와 규소(Si)의 공통점으로 옳은 것만 고른 것은?\nㄱ. 원자가 전자가 4개이다.\nㄴ. 최대 4개의 공유 결합을 할 수 있다.\nㄷ. 생명체의 주요 구성 원소이다.", opts:["ㄱ, ㄴ","ㄴ, ㄷ","ㄱ, ㄷ","ㄱ, ㄴ, ㄷ"], a:0, exp:"ㄱ(참): C와 Si 모두 14족, 원자가 전자 4개. ㄴ(참): 원자가 전자 4개 → 최대 4개 공유 결합 가능. ㄷ(거짓): 규소(Si)는 지각의 주요 구성 원소이지 생명체의 중심 원소가 아니다." },
+{ q:"단백질의 구조 형성 과정을 순서대로 나열한 것은?", opts:["아미노산→단백질→폴리펩타이드","폴리펩타이드→아미노산→단백질","아미노산→폴리펩타이드→단백질(입체구조)","단백질→폴리펩타이드→아미노산"], a:2, exp:"단백질 형성 순서: 아미노산(단위체) → 펩타이드 결합 → 폴리펩타이드(긴 사슬) → 꼬이고 접힘 → 단백질(3차원 입체구조)." },
+{ q:"DNA와 RNA의 차이에 대한 설명으로 옳은 것만 고른 것은?\nㄱ. DNA는 이중나선, RNA는 단일 가닥이다.\nㄴ. DNA 염기에 T가 있고, RNA 염기에는 U가 있다.\nㄷ. DNA와 RNA 모두 뉴클레오타이드가 단위체이다.", opts:["ㄱ, ㄴ","ㄴ, ㄷ","ㄱ, ㄷ","ㄱ, ㄴ, ㄷ"], a:3, exp:"ㄱ(참): DNA=이중나선, RNA=단일 가닥. ㄴ(참): DNA=A·G·C·T, RNA=A·G·C·U. ㄷ(참): DNA와 RNA 모두 뉴클레오타이드(인산·당·염기)가 단위체이다." },
+{ q:"지각의 원소 구성 비율로 옳은 것은?", opts:["철이 가장 많다","규소 1위, 산소 2위","산소가 가장 많고, 규소가 두 번째","알루미늄이 가장 많다"], a:2, exp:"지각 원소 질량 비율: O(46%) > Si(28%) > Al(8%) > Fe(5%) 순이다. 산소가 약 절반으로 가장 많다." },
+{ q:"20종의 아미노산으로 수만 종 단백질이 만들어지는 원리와 가장 유사한 비유는?", opts:["26개 알파벳으로 수많은 영어 단어를 만드는 것","원소 주기율표의 원소 수","태양계 행성의 수","물의 상태 변화"], a:0, exp:"20종 아미노산이 다양한 순서와 조합으로 결합하여 수만 종 단백질을 만드는 원리는, 26개 알파벳이 다양한 순서로 조합되어 수많은 단어를 만드는 원리와 동일하다." },
+{ q:"규산염 사면체에 대한 설명으로 옳은 것만 고른 것은?\nㄱ. 규산염 광물의 기본 단위체이다.\nㄴ. 사면체 간에 공유하는 산소 수가 많을수록 결합 구조가 복잡해진다.\nㄷ. 모든 암석은 규산염 사면체를 기본 단위체로 한다.", opts:["ㄱ만","ㄱ, ㄴ","ㄴ, ㄷ","ㄱ, ㄴ, ㄷ"], a:1, exp:"ㄱ(참): 규산염 사면체는 규산염 광물의 기본 단위체. ㄴ(참): 공유 산소 수 증가 → 독립형→단사슬→복사슬→판상→망상으로 복잡해짐. ㄷ(거짓): 암석의 90% 이상이 규산염 광물이지만 전부가 아니다(예: 방해석 등)." },
+{ q:"단백질의 기능이 다양한 이유를 가장 정확하게 설명한 것은?", opts:["단백질마다 질량이 다르기 때문에","아미노산의 종류·수·결합 순서가 달라 3차원 입체 구조가 다르기 때문에","단백질마다 녹는점이 다르기 때문에","단백질은 모두 같은 구조이지만 크기가 다르기 때문에"], a:1, exp:"단백질의 기능은 3차원 입체 구조에 의해 결정된다. 아미노산 구성이 달라지면 폴리펩타이드가 접히는 방식이 달라져 입체 구조가 바뀐다. 예: 케라틴(머리카락), 콜라젠(결합조직), 효소 등이 모두 다른 기능을 수행한다." }
+]
+},
+2: {
+ox: [
+{ q:"도체는 자유 전자가 많아 전류가 잘 흐르는 물질이다.", a:true, exp:"도체에서 전류가 잘 흐르는 이유는 자유 전자가 많기 때문이다. 전압을 가하면 자유 전자가 일정한 방향으로 이동하며 전류가 흐른다. 예: 철, 구리, 알루미늄." },
+{ q:"부도체는 자유 전자가 매우 많아 전류가 흐르지 않는다.", a:false, exp:"부도체는 자유 전자가 거의 없거나 없기 때문에 전류가 흐르지 않는다. 많은 게 아니라 적은 것이 부도체의 특징이다." },
+{ q:"반도체는 조건에 따라 전류가 잘 흐를 수도 있고, 잘 흐르지 않을 수도 있다.", a:true, exp:"반도체는 도체와 부도체의 중간 전기적 성질을 가진 물질로, 온도·빛·불순물 첨가 등 조건에 따라 전도성이 변한다. 이 특성이 반도체를 전자 소자로 활용 가능하게 한다." },
+{ q:"도핑은 순수한 반도체에 불순물을 첨가하여 전기 전도성을 낮추는 것이다.", a:false, exp:"도핑은 순수한 반도체에 소량의 불순물을 첨가하여 전기 전도성을 높이는 것이다. 낮추는 게 아니라 높이는 것이다." },
+{ q:"다이오드는 전류를 양방향으로 흐르게 하는 반도체 소자이다.", a:false, exp:"다이오드는 전류를 한쪽 방향으로만 흐르게 하는 반도체 소자이다. 이 특성으로 교류(AC)를 직류(DC)로 변환하는 정류 작용을 한다." },
+{ q:"OLED는 스스로 빛을 내기 때문에 별도의 백라이트가 필요하지 않다.", a:true, exp:"OLED는 유기 물질이 전류에 의해 스스로 빛을 내므로 별도의 백라이트가 필요 없다. 얇고 가볍게 만들 수 있으며 휘어지는 디스플레이에 활용된다." },
+{ q:"트랜지스터는 회로에서 전류나 전압을 조절하는 역할을 한다.", a:true, exp:"트랜지스터는 회로에서 전류나 전압의 흐름을 조절·제어하는 반도체 소자이다. 매우 작게 만들 수 있고 소비 전력이 작다." },
+{ q:"집적 회로(IC)는 트랜지스터, 다이오드, 저항 등을 별개의 칩으로 분리하여 연결한 것이다.", a:false, exp:"집적 회로(IC)는 트랜지스터·다이오드·저항 등을 하나의 칩으로 정밀하게 만든 것이다. 별개로 분리한 게 아니라 하나로 통합한 것이 특징이다." },
+{ q:"원자가 전자가 5개인 원소를 순수 반도체에 첨가하면 여분의 전자가 생겨 전류가 흐른다.", a:true, exp:"규소(원자가 전자 4개)에 원자가 전자 5개인 원소(예: 인)를 첨가하면 공유 결합에 참여하지 못한 여분의 전자 1개가 생긴다. 이 전자가 이동하면서 전류가 흐른다." },
+{ q:"반도체의 대표적인 예로는 규소(Si)와 저마늄(Ge)이 있다.", a:true, exp:"규소(Si)와 저마늄(Ge)은 대표적인 반도체 재료이다. 특히 규소는 지각에 풍부하고 다루기 쉬워 반도체 산업에서 가장 널리 사용된다." }
+],
+mc: [
+{ q:"다음 중 도체에 해당하는 물질은?", opts:["고무","유리","나무","구리"], a:3, exp:"구리(Cu)는 자유 전자가 많아 전류가 잘 흐르는 대표적인 도체이다. 고무·유리·나무는 자유 전자가 거의 없는 부도체이다." },
+{ q:"도체에 전류가 잘 흐르는 이유는?", opts:["분자 운동이 활발하기 때문에","자유 전자가 많아 일정한 방향으로 이동하기 때문에","이온이 자유롭게 이동하기 때문에","공유 결합이 강하기 때문에"], a:1, exp:"도체에서 전류가 흐르는 이유는 자유롭게 이동할 수 있는 자유 전자가 많기 때문이다. 전압을 가하면 자유 전자들이 일정한 방향으로 이동하면서 전류가 흐른다." },
+{ q:"순수한 반도체에 불순물을 첨가하는 과정은?", opts:["이온화","산화","도핑","정류"], a:2, exp:"도핑(Doping)은 순수한 반도체에 소량의 불순물을 첨가하여 전기 전도성을 변화시키는 과정이다. 이를 통해 반도체의 전기적 특성을 제어한다." },
+{ q:"교류를 직류로 변환하는 정류 작용을 하는 반도체 소자는?", opts:["트랜지스터","집적 회로","다이오드","OLED"], a:2, exp:"다이오드는 전류를 한쪽 방향으로만 흐르게 하는 반도체 소자로, 교류(AC)를 직류(DC)로 변환하는 정류 작용을 한다." },
+{ q:"OLED의 장점으로 옳은 것은?", opts:["전류가 흐르지 않아 안전하다","스스로 빛을 내어 얇고 가볍게 만들 수 있으며 휘어지는 디스플레이 제작 가능","전기를 많이 사용해 밝기가 높다","자유 전자 수가 매우 많아 전도성이 높다"], a:1, exp:"OLED는 유기 물질이 스스로 빛을 내므로 백라이트 불필요 → 얇고 가볍다. 또한 유연하여 휘어지는 디스플레이·롤러블 TV 등에 활용된다." },
+{ q:"반도체에서 원자가 전자 3개인 원소를 첨가하면?", opts:["여분의 전자가 생겨 전류가 흐른다","전자의 빈자리(양공)가 생기고 주변 전자가 이동하며 전류가 흐른다","전류가 완전히 차단된다","도체로 변환된다"], a:1, exp:"원자가 전자 3개인 원소(예: 붕소)를 규소에 첨가하면 공유 결합을 위한 전자 1개가 부족하여 전자 빈자리(양공)가 생긴다. 주변 전자들이 이 빈자리를 채우기 위해 이동하면서 전류가 흐른다." },
+{ q:"부도체에 해당하는 물질로만 짝지어진 것은?", opts:["철, 구리","규소, 저마늄","고무, 유리","알루미늄, 규소"], a:2, exp:"고무와 유리는 자유 전자가 거의 없어 전류가 흐르지 않는 부도체이다. 철·구리·알루미늄은 도체, 규소·저마늄은 반도체이다." },
+{ q:"집적 회로(IC)에 대한 설명으로 옳은 것은?", opts:["다이오드 기능만 하는 단일 소자이다","트랜지스터·다이오드·저항 등을 하나의 칩으로 만든 것이다","순수 반도체만으로 구성된다","교류를 직류로만 변환한다"], a:1, exp:"집적 회로(IC)는 트랜지스터·다이오드·저항 등 다양한 전자 부품들을 하나의 작은 칩에 집적하여 만든 것이다. 에너지 소모를 줄이고 소형화할 수 있다." },
+{ q:"전기적 성질에 따른 물질 분류에서 올바르게 매칭된 것은?", opts:["도체 — 자유 전자 없음","부도체 — 전기 저항 작음","반도체 — 조건에 따라 전도성 변화","도체 — 전기 저항 매우 큼"], a:2, exp:"반도체는 조건(온도·빛·도핑 등)에 따라 전도성이 달라진다. 도체=자유 전자 많음·저항 작음, 부도체=자유 전자 없음·저항 매우 큼이 올바르다." },
+{ q:"반도체를 첨단 산업에 활용하는 이유로 옳지 않은 것은?", opts:["조건에 따라 전도성을 제어할 수 있다","도핑으로 전기적 특성을 조절할 수 있다","매우 작게 만들 수 있다","한번 제조하면 영구적으로 성능이 유지된다"], a:3, exp:"반도체 소자는 열·노화 등에 의해 성능이 저하될 수 있으며 영구적이지 않다. ①②③은 반도체를 첨단 산업에 활용하는 실제 이유들이다." }
+],
+hard: [
+{ q:"도체, 반도체, 부도체를 자유 전자 수 기준으로 올바르게 나열한 것은?", opts:["반도체>도체>부도체","도체>반도체>부도체","부도체>도체>반도체","도체=반도체>부도체"], a:1, exp:"자유 전자 수: 도체(많음) > 반도체(적음) > 부도체(거의 없음). 자유 전자 수가 많을수록 전류가 잘 흐른다." },
+{ q:"반도체 소자에 대한 설명으로 옳은 것만 고른 것은?\nㄱ. 다이오드 — 전류를 한 방향으로만 흐르게 함 (교류→직류)\nㄴ. 트랜지스터 — 전류·전압 조절·제어\nㄷ. 집적 회로 — 단일 소자를 개별적으로 납땜한 회로", opts:["ㄱ만","ㄱ, ㄴ","ㄴ, ㄷ","ㄱ, ㄴ, ㄷ"], a:1, exp:"ㄱ(참): 다이오드=전류 한 방향→교류→직류 변환. ㄴ(참): 트랜지스터=전류·전압 조절. ㄷ(거짓): 집적 회로는 여러 소자를 하나의 칩에 집적한 것이지 개별 납땜이 아니다." },
+{ q:"원자가 전자 5개 vs 3개인 원소를 규소에 도핑할 때 차이점은?", opts:["5개짜리: 양공 생성, 3개짜리: 여분 전자 생성","5개짜리: 여분 전자 생성, 3개짜리: 양공 생성","둘 다 여분 전자 생성","둘 다 전류가 흐르지 않게 됨"], a:1, exp:"원자가 전자 5개(예: 인) → 전자 1개 남음 → 여분 전자 이동 → 전류 흐름. 원자가 전자 3개(예: 붕소) → 전자 1개 부족 → 양공 생성 → 주변 전자가 빈자리 이동 → 전류 흐름." },
+{ q:"OLED와 기존 LCD의 차이로 옳은 것만 고른 것은?\nㄱ. OLED는 유기 물질이 스스로 빛을 낸다.\nㄴ. OLED는 별도의 백라이트가 필요하다.\nㄷ. OLED는 유연하게 구부릴 수 있다.", opts:["ㄱ만","ㄱ, ㄷ","ㄴ, ㄷ","ㄱ, ㄴ, ㄷ"], a:1, exp:"ㄱ(참): OLED는 유기 발광 물질이 스스로 빛을 낸다. ㄴ(거짓): 스스로 빛을 내기 때문에 백라이트 불필요. ㄷ(참): 유기 물질이 유연하여 휘어지는 디스플레이 제작 가능." },
+{ q:"반도체가 첨단 기술에서 중요한 이유를 가장 포괄적으로 설명한 것은?", opts:["도체보다 전기가 더 잘 통하기 때문에","도핑 등을 통해 전기적 특성을 제어하여 다양한 전기 소자 제작이 가능하기 때문에","무한히 작게 만들 수 있기 때문에","반도체 원료가 지구상에 무한히 존재하기 때문에"], a:1, exp:"반도체가 첨단 기술의 핵심인 이유는 도핑·온도·빛 등으로 전기적 특성을 정밀 제어할 수 있기 때문이다. 이를 통해 다이오드·트랜지스터·IC 등을 만들어 컴퓨터·스마트폰·항공우주 산업에 활용된다." },
+{ q:"반도체에 대한 설명으로 옳은 것만 고른 것은?\nㄱ. 순수한 규소는 원자가 전자 4개로 공유 결합하여 전류가 잘 흐르지 않는다.\nㄴ. 도핑을 하면 전기 전도성이 감소한다.\nㄷ. 반도체 소자의 예로 다이오드·트랜지스터·집적 회로가 있다.", opts:["ㄱ, ㄷ","ㄴ, ㄷ","ㄱ, ㄴ","ㄱ, ㄴ, ㄷ"], a:0, exp:"ㄱ(참): 순수 규소는 원자가 전자 4개로 공유 결합을 완전히 채워 자유 전자 없음→전류 잘 안 흐름. ㄴ(거짓): 도핑하면 전기 전도성이 증가한다. ㄷ(참): 다이오드·트랜지스터·집적 회로는 모두 반도체 소자이다." },
+{ q:"물질의 전기적 성질 활용 예시로 옳지 않은 것은?", opts:["구리 전선 전기 배선(도체 활용)","고무 절연체로 전선 피복(부도체 활용)","규소 반도체로 태양전지 제작(반도체 활용)","유리창을 통한 전기 전달(부도체→도체로 활용)"], a:3, exp:"유리는 부도체이므로 전기를 전달하지 않는다. 유리창을 통한 전기 전달은 불가능하다. 나머지 ①②③은 모두 전기적 성질을 올바르게 활용한 예시이다." },
+{ q:"다이오드의 정류 작용을 이용하는 실제 예시는?", opts:["전압을 증폭시켜 소리를 크게 만드는 스피커","가정용 AC 220V를 기기에 맞는 DC 전압으로 변환하는 어댑터","화면의 픽셀을 켜고 끄는 스위치","빛의 세기에 따라 저항이 변하는 센서"], a:1, exp:"다이오드의 정류 작용(AC→DC)은 스마트폰 충전기·컴퓨터 전원 공급 장치 등 어댑터에 활용된다. ①은 트랜지스터 증폭, ③은 트랜지스터 스위칭, ④는 광센서의 역할이다." },
+{ q:"반도체 기술 발전 흐름으로 옳은 것은?", opts:["도핑 발견→반도체 소자(다이오드·트랜지스터)→집적 회로(IC)→현대 전자 기기","집적 회로(IC)→도핑→다이오드→트랜지스터","반도체→부도체→도체→초전도체","집적 회로(IC)→반도체→도핑→트랜지스터"], a:0, exp:"반도체 기술 발전: 반도체 발견·도핑 기술 개발 → 개별 반도체 소자(다이오드·트랜지스터) → 집적 회로(IC) → CPU·메모리 등 고집적 반도체로 발전." },
+{ q:"도체·반도체·부도체에 대한 설명으로 옳은 것만 고른 것은?\nㄱ. 도체에 전압을 가하면 자유 전자가 일정한 방향으로 이동하여 전류가 흐른다.\nㄴ. 반도체에 도핑을 하면 전기 전도성이 변화한다.\nㄷ. 부도체는 절대로 전류가 흐를 수 없다.", opts:["ㄱ, ㄴ","ㄴ, ㄷ","ㄱ, ㄷ","ㄱ, ㄴ, ㄷ"], a:0, exp:"ㄱ(참): 도체의 자유 전자가 전압에 의해 일정 방향으로 이동→전류 흐름. ㄴ(참): 도핑으로 반도체의 전기 전도성을 조절할 수 있다. ㄷ(거짓): '절대로'가 틀렸다. 매우 강한 전압 등 특수 조건에서 부도체에도 전류가 흐를 수 있다(절연 파괴)." }
+]
+}
+};
+
+const TYPE_CONFIG = [
+{ key:'ox', label:'OX 퀴즈', icon:'⭕', cls:'ox' },
+{ key:'mc', label:'객관식', icon:'📋', cls:'mc' },
+{ key:'hard', label:'고난이도', icon:'🔥', cls:'hard' }
+];
+const COLOR_MAP = { ox:'#1a73e8', mc:'#34a853', hard:'#ea4335' };
+
+const state = {};
+for (let u = 0; u < 3; u++) {
+state[u] = {
+activeType: 0,
+scores: { ox:[0,0], mc:[0,0], hard:[0,0] },
+answered: { ox:[], mc:[], hard:[] }
+};
+}
+
+function buildQuizSection(unitIdx) {
+const container = document.getElementById('quiz-' + unitIdx);
+if (!container) return;
+container.innerHTML = '';
+const s = state[unitIdx];
+const tc = TYPE_CONFIG[s.activeType];
+const typeKey = tc.key;
+const questions = QUIZ_DATA[unitIdx][typeKey];
+
+const header = document.createElement('div');
+header.className = 'quiz-header';
+header.innerHTML = `<h3>✏️ 개념 확인 퀴즈</h3><div class="scoreboard" id="scoreboard-${unitIdx}"></div>`;
+container.appendChild(header);
+
+const typeBar = document.createElement('div');
+typeBar.className = 'quiz-type-bar';
+TYPE_CONFIG.forEach((tc2, ti) => {
+const btn = document.createElement('button');
+btn.className = 'qtype-btn' + (ti === s.activeType ? ' active' : '');
+const done = (state[unitIdx].answered[tc2.key] || []).filter(v => v !== undefined).length;
+btn.innerHTML = `${tc2.icon} ${tc2.label} <span class="qtype-count">${done}</span>`;
+btn.onclick = () => { state[unitIdx].activeType = ti; buildQuizSection(unitIdx); };
+typeBar.appendChild(btn);
+});
+container.appendChild(typeBar);
+
+const answered = s.answered[typeKey] || [];
+const doneCount = answered.filter(v => v !== undefined).length;
+const prog = document.createElement('div');
+prog.className = 'q-progress-wrap';
+prog.innerHTML = `<div class="q-progress-label">${doneCount}/10 완료</div>
+<div class="q-progress-bar"><div class="q-progress-fill" style="width:${doneCount*10}%"></div></div>`;
+container.appendChild(prog);
+
+questions.forEach((qdata, qi) => {
+container.appendChild(buildQCard(unitIdx, typeKey, qi, qdata, s));
+});
+
+if (doneCount === 10) {
+const correct = s.scores[typeKey][0];
+const pct = correct * 10;
+const grade = pct >= 90 ? '🏆 완벽!' : pct >= 70 ? '👍 잘했어요!' : pct >= 50 ? '📚 복습 필요' : '💪 다시 도전!';
+const result = document.createElement('div');
+result.className = 'quiz-result visible';
+result.innerHTML = `
+<div class="result-score-big">${correct}<span>/10</span></div>
+<div class="result-score-label">${pct}% · ${grade}</div>
+<div style="max-width:320px;margin:0 auto 8px;">${buildMiniBar(unitIdx)}</div>
+<button class="reset-btn" onclick="resetType(${unitIdx},'${typeKey}')">🔄 다시 풀기</button>`;
+container.appendChild(result);
+}
+updateScoreboard(unitIdx);
+}
+
+function buildMiniBar(unitIdx) {
+const s = state[unitIdx];
+return TYPE_CONFIG.map(tc => {
+const [correct, total] = s.scores[tc.key];
+const pct = total > 0 ? Math.round(correct/total*100) : 0;
+return `<div class="mini-bar-row">
+<span style="width:70px;font-size:12px;text-align:left;">${tc.icon} ${tc.label}</span>
+<div class="mini-bar-bg"><div class="mini-bar-fill" style="width:${pct}%;background:${COLOR_MAP[tc.key]};"></div></div>
+<span style="width:40px;font-size:12px;text-align:right;">${correct}/${total}</span>
+</div>`;
+}).join('');
+}
+
+function buildQCard(unitIdx, typeKey, qi, qdata, s) {
+const answered = s.answered[typeKey] || [];
+const done = answered[qi] !== undefined;
+const ans = answered[qi];
+const isCorrect = (typeKey === 'ox') ? (ans === true) : (ans === qdata.a);
+
+const card = document.createElement('div');
+card.className = 'q-card';
+if (done) card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+
+const diffLabel = typeKey === 'ox' ? ['기초','diff-basic'] : typeKey === 'mc' ? ['중급','diff-mid'] : ['고난이도','diff-hard'];
+const markHtml = done ? `<span class="q-answered-mark">${isCorrect ? '✅' : '❌'}</span>` : '';
+
+card.innerHTML = `
+<div class="q-meta">
+<span class="q-num">Q${qi+1}</span>
+<span class="q-difficulty ${diffLabel[1]}">${diffLabel[0]}</span>
+${markHtml}
+</div>
+<div class="q-text">${qdata.q}</div>
+`;
+
+if (typeKey === 'ox') {
+const oxRow = document.createElement('div');
+oxRow.className = 'ox-row';
+[true, false].forEach(val => {
+const btn = document.createElement('button');
+btn.className = 'ox-btn';
+if (done) {
+btn.disabled = true;
+if (val === qdata.a && ans === val) btn.classList.add('ox-correct-picked');
+else if (val !== qdata.a && ans === val) btn.classList.add('ox-wrong-picked');
+else if (val === qdata.a && ans !== val) btn.classList.add('ox-correct-reveal');
+}
+btn.innerHTML = `<span class="ox-sym">${val ? '⭕' : '❌'}</span><span class="ox-lbl">${val ? '맞다' : '틀리다'}</span>`;
+if (!done) btn.onclick = () => submitOX(unitIdx, qi, val, qdata);
+oxRow.appendChild(btn);
+});
+card.appendChild(oxRow);
+} else {
+const mcOpts = document.createElement('div');
+mcOpts.className = 'mc-options';
+const letters = ['A','B','C','D'];
+qdata.opts.forEach((opt, oi) => {
+const btn = document.createElement('button');
+btn.className = 'mc-opt';
+if (done) {
+btn.disabled = true;
+if (oi === qdata.a) btn.classList.add('mc-correct');
+else if (oi === ans) btn.classList.add('mc-wrong');
+}
+btn.innerHTML = `<span class="mc-opt-letter">${letters[oi]}</span><span class="mc-opt-text">${opt}</span>`;
+if (!done) btn.onclick = () => submitMC(unitIdx, qi, oi, qdata, typeKey);
+mcOpts.appendChild(btn);
+});
+card.appendChild(mcOpts);
+}
+
+if (done) {
+const fb = document.createElement('div');
+fb.className = 'q-feedback ' + (isCorrect ? 'correct' : 'wrong');
+fb.innerHTML = `<strong>${isCorrect ? '✅ 정답!' : '❌ 오답'}</strong>&nbsp;&nbsp;${qdata.exp}`;
+card.appendChild(fb);
+}
+return card;
+}
+
+function submitOX(unitIdx, qi, chosen, qdata) {
+const s = state[unitIdx];
+const correct = chosen === qdata.a;
+s.answered['ox'][qi] = correct;
+if (correct) s.scores['ox'][0]++;
+s.scores['ox'][1]++;
+afterSubmit(unitIdx, 'ox');
+}
+
+function submitMC(unitIdx, qi, chosen, qdata, typeKey) {
+const s = state[unitIdx];
+const correct = chosen === qdata.a;
+s.answered[typeKey][qi] = chosen;
+if (correct) s.scores[typeKey][0]++;
+s.scores[typeKey][1]++;
+afterSubmit(unitIdx, typeKey);
+}
+
+function afterSubmit(unitIdx, typeKey) {
+buildQuizSection(unitIdx);
+const answered = state[unitIdx].answered[typeKey];
+const nextIdx = answered.findIndex((v, i) => v === undefined && i < 10);
+if (nextIdx >= 0) {
+const cards = document.querySelectorAll('#quiz-' + unitIdx + ' .q-card');
+if (cards[nextIdx]) {
+setTimeout(() => cards[nextIdx].scrollIntoView({ behavior:'smooth', block:'center' }), 100);
+}
+}
+}
+
+function resetType(unitIdx, typeKey) {
+state[unitIdx].answered[typeKey] = [];
+state[unitIdx].scores[typeKey] = [0, 0];
+buildQuizSection(unitIdx);
+document.getElementById('quiz-' + unitIdx).scrollIntoView({ behavior:'smooth' });
+}
+
+function updateScoreboard(unitIdx) {
+const sb = document.getElementById('scoreboard-' + unitIdx);
+if (!sb) return;
+sb.innerHTML = TYPE_CONFIG.map(tc => {
+const [correct, total] = state[unitIdx].scores[tc.key];
+return `<span class="score-chip ${tc.cls}">${tc.icon} ${total}/10 (${correct}점)</span>`;
+}).join('');
+}
+
+function switchTab(idx) {
+document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+document.querySelectorAll('.tab-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
+window.scrollTo({ top: 0, behavior: 'smooth' });
+const qSection = document.getElementById('quiz-' + idx);
+if (qSection && !qSection.innerHTML.trim()) buildQuizSection(idx);
+}
+
+buildQuizSection(0);
+</script>
 </body>
 </html>
