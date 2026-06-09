@@ -21,7 +21,6 @@ const versionPanel = document.getElementById('versionPanel');
 const operatorsPanel = document.getElementById('operatorsPanel');
 const frame = document.getElementById('frame');
 const subjectToggleBtn = document.getElementById('subjectToggleBtn');
-const versionToggleBtn = document.getElementById('versionToggleBtn');
 const ddayEl = document.getElementById('ddayValue');
 const goalInput = document.getElementById('goalInput');
 const goalSaveBtn = document.getElementById('goalSaveBtn');
@@ -112,7 +111,6 @@ function initProfileModal() {
 
 function setActive(btn) {
   document.querySelectorAll('.menu button').forEach((b) => b.classList.remove('active'));
-  versionToggleBtn?.classList.remove('active');
   btn?.classList.add('active');
 }
 function getSubjectToggleText(collapsed) {
@@ -136,7 +134,7 @@ function initSubjectSidebarToggle() {
     applySidebarState(!document.body.classList.contains('sidebar-collapsed'));
   });
   sidebarCloseBtn?.addEventListener('click', () => {
-    showVersionHistory(versionToggleBtn);
+    applySidebarState(true);
   });
 }
 function showDashboard(btn) {
@@ -184,7 +182,7 @@ function showOperators(btn) {
 }
 
 function showVersionHistory(btn) {
-  setActive(btn || versionToggleBtn);
+  setActive(btn);
   document.body.classList.remove('subject-mode');
   dashPanel.classList.remove('active');
   framePanel.classList.remove('active');
@@ -196,15 +194,9 @@ function showVersionHistory(btn) {
 }
 
 function initMobileHomeClose() {
-  const homeLink = document.querySelector('.home a');
-  if (!homeLink || !subjectToggleBtn) return;
-  homeLink.textContent = '닫기';
-  homeLink.setAttribute('aria-label', '모바일 과목 선택 영역 닫기');
-  homeLink.addEventListener('click', (event) => {
-    if (!isMobileLiteMode()) return;
-    event.preventDefault();
-    applySidebarState(true);
-  });
+  const closeBtn = document.getElementById('sidebarCloseBtn');
+  if (!closeBtn || !subjectToggleBtn) return;
+  closeBtn.setAttribute('aria-label', '과목 선택 영역 닫기');
 }
 
 function initMobileSubjectBarExpansion() {
