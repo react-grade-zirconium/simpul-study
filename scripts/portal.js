@@ -18,6 +18,7 @@ const desc = document.getElementById('desc');
 const dashPanel = document.getElementById('dashPanel');
 const framePanel = document.getElementById('framePanel');
 const versionPanel = document.getElementById('versionPanel');
+const operatorsPanel = document.getElementById('operatorsPanel');
 const frame = document.getElementById('frame');
 const subjectToggleBtn = document.getElementById('subjectToggleBtn');
 const versionToggleBtn = document.getElementById('versionToggleBtn');
@@ -144,6 +145,7 @@ function showDashboard(btn) {
   dashPanel.classList.add('active');
   framePanel.classList.remove('active');
   if (versionPanel) versionPanel.classList.remove('active');
+  if (operatorsPanel) operatorsPanel.classList.remove('active');
   title.textContent = '기말 학습 대시보드';
   desc.textContent = '';
   if (window.syncInkContext) window.syncInkContext();
@@ -154,6 +156,7 @@ function showSubject(btn, heading) {
   document.body.classList.add('subject-mode');
   dashPanel.classList.remove('active');
   if (versionPanel) versionPanel.classList.remove('active');
+  if (operatorsPanel) operatorsPanel.classList.remove('active');
   framePanel.classList.add('active');
   frame.dataset.subject = btn.dataset.subject || inferSubjectFromSrc(btn.dataset.src || '');
   frame.src = btn.dataset.src;
@@ -168,12 +171,25 @@ function showSubject(btn, heading) {
   if (window.syncInkContext) window.syncInkContext();
 }
 
+function showOperators(btn) {
+  setActive(btn);
+  document.body.classList.remove('subject-mode');
+  dashPanel.classList.remove('active');
+  framePanel.classList.remove('active');
+  if (versionPanel) versionPanel.classList.remove('active');
+  if (operatorsPanel) operatorsPanel.classList.add('active');
+  title.textContent = '운영자들';
+  desc.textContent = '';
+  if (window.syncInkContext) window.syncInkContext();
+}
+
 function showVersionHistory(btn) {
   setActive(btn || versionToggleBtn);
   document.body.classList.remove('subject-mode');
   dashPanel.classList.remove('active');
   framePanel.classList.remove('active');
   if (versionPanel) versionPanel.classList.add('active');
+  if (operatorsPanel) operatorsPanel.classList.remove('active');
   title.textContent = '업데이트 내역';
   desc.textContent = '학습 포털 변경 사항';
   if (window.syncInkContext) window.syncInkContext();
@@ -524,4 +540,5 @@ if (mobileLiteMode) {
 
 window.showDashboard = showDashboard;
 window.showSubject = showSubject;
+window.showOperators = showOperators;
 window.showVersionHistory = showVersionHistory;
