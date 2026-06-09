@@ -1,32 +1,1887 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>통합사회 도시 파트</title>
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{width:100%;height:100%;background:#f6f8fc;color:#0f172a;font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif}
-    body{display:grid;place-items:center;padding:20px;overflow:auto}
-    .page{width:min(620px,100%);border:1px solid #dbe3ef;border-radius:22px;background:#fff;padding:28px;box-shadow:0 12px 32px rgba(15,23,42,.08)}
-    .label{display:inline-flex;border-radius:999px;background:#f0fdf4;color:#15803d;padding:7px 12px;font-size:.88rem;font-weight:800}
-    h1{margin-top:14px;font-size:clamp(1.55rem,4vw,2.1rem);line-height:1.25;letter-spacing:-.04em}
-    p{margin-top:10px;color:#64748b;line-height:1.6}
-    ul{margin-top:14px;padding-left:20px;color:#475569;line-height:1.75}
-    .back-link{display:inline-flex;margin-top:22px;border:1px solid #bbf7d0;border-radius:999px;background:#f0fdf4;color:#15803d;text-decoration:none;font-weight:900;padding:10px 14px}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>통합사회 B — V. 생활공간과 사회</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+--primary: #1a73e8;
+--primary-light: #e8f0fe;
+--accent: #34a853;
+--bg: #f8f9fa;
+--surface: #fff;
+--border: #dadce0;
+--text: #202124;
+--text-sec: #5f6368;
+--shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.08);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.7;}
+
+/* ── HEADER ── */
+.page-header{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:var(--shadow);}
+.header-top{padding:12px 20px 4px;}
+.subject-label{font-size:11px;letter-spacing:.08em;color:var(--text-sec);text-transform:uppercase;margin-bottom:2px;}
+.page-title{font-family:'Noto Serif KR',serif;font-size:22px;font-weight:700;}
+.tab-bar{display:flex;overflow-x:auto;scrollbar-width:none;border-top:1px solid var(--border);}
+.tab-bar::-webkit-scrollbar{display:none;}
+.tab-btn{flex-shrink:0;display:flex;align-items:center;gap:6px;padding:10px 18px;border:none;background:transparent;font-family:'Noto Sans KR',sans-serif;font-size:13px;color:var(--text-sec);cursor:pointer;border-bottom:3px solid transparent;transition:color .2s,border-color .2s;white-space:nowrap;}
+.tab-btn:hover{color:var(--primary);}
+.tab-btn.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:700;}
+.tab-number{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.07);font-size:11px;font-weight:700;}
+.tab-btn.active .tab-number{background:var(--primary);color:#fff;}
+
+/* ── LAYOUT ── */
+.content-wrap{max-width:960px;margin:0 auto;padding:28px 20px 80px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+/* ── TITLES ── */
+.section-title{font-family:'Noto Serif KR',serif;font-size:20px;font-weight:700;border-bottom:2px solid var(--primary);padding-bottom:8px;margin:32px 0 16px;}
+.section-title:first-child{margin-top:0;}
+.subsection-title{font-size:15px;font-weight:700;color:var(--primary);padding-left:10px;border-left:3px solid var(--primary);margin:20px 0 10px;}
+
+/* ── DEF BOX ── */
+.def-box{background:var(--primary-light);border-left:4px solid var(--primary);border-radius:0 8px 8px 0;padding:14px 18px;font-size:14.5px;line-height:1.7;margin-bottom:12px;}
+.def-box strong{color:var(--primary);}
+
+/* ── GRID ── */
+.factor-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.factor-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:16px;}
+@media(max-width:600px){.factor-grid,.factor-grid-3{grid-template-columns:1fr;}}
+.factor-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;}
+.factor-card.blue{border-top:3px solid #1a73e8;}
+.factor-card.green{border-top:3px solid #34a853;}
+.factor-card.red{border-top:3px solid #ea4335;}
+.factor-card.yellow{border-top:3px solid #f9ab00;}
+.factor-card.purple{border-top:3px solid #8430ce;}
+.factor-card.orange{border-top:3px solid #e37400;}
+.factor-card h4{font-size:14px;font-weight:700;margin-bottom:8px;}
+.factor-card p,.factor-card li{font-size:13.5px;line-height:1.65;color:var(--text-sec);}
+.factor-card ul{padding-left:16px;}
+
+/* ── BADGES ── */
+.badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:12px;font-weight:700;}
+.badge-blue{background:#e8f0fe;color:#1a73e8;}
+.badge-green{background:#e6f4ea;color:#34a853;}
+.badge-red{background:#fce8e6;color:#ea4335;}
+.badge-yellow{background:#fef9e0;color:#b5860a;}
+.badge-purple{background:#f3e8fd;color:#8430ce;}
+
+/* ── TABLE ── */
+.cmp-table-wrap{border-radius:10px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:16px;}
+.cmp-table{width:100%;border-collapse:collapse;}
+.cmp-table thead tr{background:var(--primary);color:#fff;}
+.cmp-table thead th{padding:10px 14px;font-size:13.5px;font-weight:700;text-align:left;}
+.cmp-table tbody tr:nth-child(even){background:#f8f9fa;}
+.cmp-table tbody td{padding:9px 14px;font-size:13.5px;line-height:1.55;border-bottom:1px solid var(--border);}
+.cmp-table tbody td:first-child{font-weight:600;color:var(--primary);white-space:nowrap;}
+
+/* ── NOTE / WARNING ── */
+.note{background:#fffde7;border:1px solid #ffe082;color:#5d4037;border-radius:8px;padding:12px 16px;font-size:13px;line-height:1.65;margin-bottom:12px;}
+.warning{background:#fce8e6;border:1px solid #f28b82;color:#b31412;border-radius:8px;padding:12px 16px;font-size:13px;line-height:1.65;margin-bottom:12px;}
+
+/* ── INFO LIST ── */
+.info-list{list-style:none;padding:0;margin-bottom:14px;}
+.info-list li{padding:7px 0 7px 18px;position:relative;font-size:13.5px;line-height:1.65;border-bottom:1px solid var(--border);}
+.info-list li:last-child{border-bottom:none;}
+.info-list li::before{content:'▸';position:absolute;left:0;color:var(--primary);font-size:12px;top:9px;}
+
+/* ── CHART PLACEHOLDER ── */
+.chart-wrap{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:var(--shadow);margin-bottom:16px;}
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+@media(max-width:600px){.chart-grid{grid-template-columns:1fr;}}
+.chart-placeholder{background:var(--bg);border:2px dashed var(--border);border-radius:8px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--text-sec);}
+.chart-placeholder .ci{font-size:32px;opacity:.4;}
+.chart-placeholder .cl{font-size:13px;font-weight:700;}
+.chart-placeholder .ch{font-size:11px;opacity:.7;}
+.chart-caption{font-size:13px;font-weight:700;color:var(--text-sec);margin-bottom:10px;}
+
+/* ── STEP LIST ── */
+.step-list{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
+.step-item{display:flex;align-items:flex-start;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
+.step-num{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--primary);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.step-content h4{font-size:14px;font-weight:700;margin-bottom:4px;}
+.step-content p{font-size:13px;color:var(--text-sec);line-height:1.6;}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:var(--border);margin:24px 0;}
+
+/* ── TO TOP ── */
+.totop{position:fixed;bottom:24px;right:24px;width:40px;height:40px;border-radius:50%;background:var(--primary);color:#fff;border:none;font-size:18px;cursor:pointer;box-shadow:0 2px 8px rgba(26,115,232,.4);z-index:200;display:flex;align-items:center;justify-content:center;transition:transform .2s;}
+.totop:hover{transform:scale(1.1);}
+
+/* ══ QUIZ ══ */
+.quiz-section{margin-top:56px;padding-top:32px;border-top:3px solid var(--primary);}
+
+/* 헤더 + 스코어보드 */
+.quiz-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;}
+.quiz-header-title{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:700;color:var(--text);}
+.scoreboard{display:flex;gap:6px;flex-wrap:wrap;}
+.score-chip{padding:4px 13px;border-radius:20px;font-size:12px;font-weight:700;border:1.5px solid;}
+.score-chip.ox {background:#e8f0fe;color:#1a73e8;border-color:#1a73e8;}
+.score-chip.mc {background:#e6f4ea;color:#34a853;border-color:#34a853;}
+.score-chip.hard{background:#fce8e6;color:#ea4335;border-color:#ea4335;}
+
+/* 타입 탭 */
+.quiz-type-bar{display:flex;border-bottom:2px solid var(--border);margin-bottom:16px;overflow-x:auto;scrollbar-width:none;}
+.quiz-type-bar::-webkit-scrollbar{display:none;}
+.qtype-btn{display:flex;align-items:center;gap:6px;padding:9px 20px;border:none;background:transparent;font-family:'Noto Sans KR',sans-serif;font-size:13px;color:var(--text-sec);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:color .2s,border-color .2s;}
+.qtype-btn.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:700;}
+.qtype-count{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.07);font-size:11px;font-weight:700;}
+
+/* 진행률 바 */
+.q-progress-wrap{margin-bottom:16px;}
+.q-progress-bar{height:6px;background:#e0e0e0;border-radius:3px;margin-bottom:6px;}
+.q-progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width .4s;}
+.q-progress-text{font-size:12px;color:var(--text-sec);text-align:right;}
+
+/* 문항 카드 */
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:12px;transition:border-color .2s,background .2s;}
+.q-card.answered-correct{border-color:#34a853;background:#f6fef8;}
+.q-card.answered-wrong {border-color:#ea4335;background:#fff7f7;}
+
+/* 메타 */
+.q-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.q-num{font-size:12px;font-weight:700;color:var(--text-sec);}
+.q-difficulty{padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;}
+.diff-basic{background:#e8f0fe;color:#1a73e8;}
+.diff-mid {background:#e6f4ea;color:#34a853;}
+.diff-hard {background:#fce8e6;color:#ea4335;}
+.q-answered-mark{font-size:14px;margin-left:2px;}
+
+/* 문제 텍스트 */
+.q-text{font-size:14px;line-height:1.75;margin-bottom:14px;color:var(--text);}
+.q-text em{color:var(--primary);font-style:normal;font-weight:700;}
+
+/* OX 버튼 */
+.ox-row{display:flex;gap:10px;margin-bottom:4px;}
+.ox-btn{flex:1;padding:16px 10px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);display:flex;flex-direction:column;align-items:center;gap:5px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;transition:all .18s;}
+.ox-btn:not([disabled]):hover{border-color:var(--primary);background:var(--primary-light);}
+.ox-sym{font-size:28px;line-height:1;}
+.ox-lbl{font-size:12px;color:var(--text-sec);font-weight:500;}
+.ox-btn.ox-correct-picked{background:#e6f4ea;border-color:#34a853;box-shadow:0 0 0 3px #c8e6c9;}
+.ox-btn.ox-wrong-picked {background:#fce8e6;border-color:#ea4335;box-shadow:0 0 0 3px #ffcdd2;}
+.ox-btn.ox-correct-reveal{background:#e6f4ea;border-color:#34a853;opacity:.65;}
+
+/* MC 선택지 */
+.mc-options{display:flex;flex-direction:column;gap:8px;}
+.mc-opt{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);text-align:left;width:100%;background:var(--surface);font-family:'Noto Sans KR',sans-serif;font-size:13.5px;cursor:pointer;transition:all .18s;line-height:1.55;}
+.mc-opt:not([disabled]):hover{border-color:var(--primary);background:var(--primary-light);}
+.mc-opt.mc-correct{background:#e6f4ea;border-color:#34a853;font-weight:600;}
+.mc-opt.mc-wrong {background:#fce8e6;border-color:#ea4335;}
+.mc-opt-letter{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:#f1f3f4;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px;}
+.mc-opt.mc-correct .mc-opt-letter{background:#34a853;color:#fff;}
+.mc-opt.mc-wrong .mc-opt-letter{background:#ea4335;color:#fff;}
+.mc-opt-text{flex:1;line-height:1.6;}
+
+/* 피드백 */
+.q-feedback{border-radius:10px;padding:12px 16px;font-size:13px;line-height:1.7;margin-top:10px;}
+.q-feedback.correct{background:#e6f4ea;border:1px solid #81c995;color:#1e6b35;}
+.q-feedback.wrong {background:#fce8e6;border:1px solid #f28b82;color:#b31412;}
+
+/* 결과 패널 */
+.quiz-result{background:var(--surface);border:2px solid var(--primary);border-radius:14px;padding:28px 24px;text-align:center;display:none;margin-top:20px;}
+.quiz-result.visible{display:block;}
+.result-score-big{font-size:52px;font-weight:700;color:var(--primary);line-height:1;}
+.result-score-big span{font-size:24px;color:var(--text-sec);}
+.result-score-label{font-size:16px;color:var(--text-sec);margin:8px 0 20px;}
+.mini-bars{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:20px;}
+.mini-bar-item{text-align:center;min-width:70px;}
+.mini-bar-track{width:64px;height:6px;background:#e0e0e0;border-radius:3px;margin:4px auto;}
+.mini-bar-fill{height:100%;border-radius:3px;transition:width .6s;}
+.mini-bar-label{font-size:11px;color:var(--text-sec);}
+.reset-btn{padding:10px 28px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:opacity .2s;}
+.reset-btn:hover{opacity:.85;}
+</style>
 </head>
 <body>
-  <main class="page">
-    <span class="label">🏙️ 통합사회 · 도시</span>
-    <h1>도시 파트 학습 파일</h1>
-    <p>도시 파트 자료를 담기 위한 별도 페이지입니다.</p>
-    <ul>
-      <li>도시화의 의미와 특징</li>
-      <li>도시 내부 구조와 생활권</li>
-      <li>도시 문제와 지속 가능한 도시</li>
-    </ul>
-    <a class="back-link" href="./society_hub.html">← 선택으로 돌아가기</a>
-  </main>
+
+<div class="page-header">
+<div class="header-top">
+<div class="subject-label">통합사회 B · V. 생활공간과 사회</div>
+<div class="page-title">생활공간과 사회</div>
+</div>
+<div class="tab-bar" id="tabBar">
+<button class="tab-btn active" onclick="switchTab(0)"><span class="tab-number">1</span>산업화·도시화의 전개</button>
+<button class="tab-btn" onclick="switchTab(1)"><span class="tab-number">2</span>도시화 곡선과 세계의 도시화</button>
+<button class="tab-btn" onclick="switchTab(2)"><span class="tab-number">3</span>생활공간의 변화</button>
+<button class="tab-btn" onclick="switchTab(3)"><span class="tab-number">4</span>생활양식·문제·해결방안</button>
+<button class="tab-btn" onclick="switchTab(4)"><span class="tab-number">5</span>교통·통신과 과학기술</button>
+<button class="tab-btn" onclick="switchTab(5)"><span class="tab-number">6</span>우리 지역의 공간 변화</button>
+</div>
+</div>
+
+<div class="content-wrap">
+
+<!-- ══════════════════════════════════════
+탭 0 : 산업화·도시화의 전개
+══════════════════════════════════════ -->
+<div class="tab-panel active" id="panel-0">
+
+<div class="section-title">1. 산업화와 도시화의 전개</div>
+
+<div class="subsection-title">(1) 산업화와 도시화의 의미</div>
+
+<div class="factor-grid">
+<div class="factor-card blue">
+<h4>산업화</h4>
+<p>농업 및 어업 중심의 사회가 <strong>공업</strong> 중심 사회로 변화하는 현상</p>
+<p style="margin-top:6px;">= 산업 구조가 <strong>1차 산업 중심</strong>에서 <strong>2·3차 산업 중심으로 변화</strong>하는 현상</p>
+</div>
+<div class="factor-card green">
+<h4>도시화</h4>
+<p><strong>도시화율</strong>이 높아지거나 <strong>도시적 생활 양식이 확대</strong>되는 현상</p>
+<p style="margin-top:6px;"><strong>도시화율</strong> = 전체 <strong>인구</strong> 중 도시에 거주하는 인구의 비율</p>
+</div>
+</div>
+
+<div class="cmp-table-wrap">
+<table class="cmp-table">
+<thead><tr><th>구분</th><th>정의</th><th>예시</th></tr></thead>
+<tbody>
+<tr><td>1차 산업</td><td>자연에서 자원을 직접 얻는 산업</td><td>농업, 임업, 어업, 축산업</td></tr>
+<tr><td>2차 산업</td><td>원료를 가공하여 제품을 생산하는 산업 <span class="badge badge-blue">기계·자본 집약적</span></td><td>공업(경공업·중공업), 제조업, 건설업</td></tr>
+<tr><td>3차 산업</td><td>재화 생산을 지원하거나 서비스를 제공하는 산업</td><td>상업, 운수·통신, 관광</td></tr>
+<tr><td>고차 서비스업</td><td>3차 산업 중 전문성·지식이 요구되는 산업 (고도화·확장)</td><td>금융·보험, 교육, 의료, 연구개발(R&amp;D), IT, 전문 서비스(법률·회계)</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="note">📝 <strong>부가가치 비교 (시간 대비)</strong>: 1차 &lt; 2차 &lt; 3차(고차 서비스업). 산업구조의 고도화 = 부가가치가 높은 산업으로 이동.</div>
+
+<div class="divider"></div>
+
+<div class="subsection-title">산업화와 도시화의 전개</div>
+
+<div class="def-box">
+<strong>산업혁명(Industrial Revolution)</strong>: 18세기 후반 유럽에서 일어난 생산 기술과 사회조직의 변화. 수공업 → 기계 공업으로 생산 방식 변화, 산업 구조가 1차 산업 중심에서 2·3차 산업 중심으로 바뀌었다. 이 과정에서 <strong>이촌향도 현상</strong>이 나타나고 도시화가 심화되기 시작하였다.
+</div>
+
+<div class="factor-card green" style="margin-bottom:16px;">
+<h4>이촌향도 현상</h4>
+<p>촌락의 인구가 일자리와 더 나은 생활을 찾아 <strong>도시로 이동</strong>하는 현상. 산업화에 따라 발생하며 <strong>도시화를 가속화</strong>한다.</p>
+</div>
+
+<!-- [그래프] 우리나라 산업구조 변화 막대그래프 (1970~2022)
+파일명: graph_industry_structure.png
+내용: 농림어업·광공업·서비스업 비율 변화 / 출처: 통계청, 2023 (산업별 취업자 수 기준) -->
+<div class="chart-wrap">
+<p class="chart-caption">▲ 우리나라의 산업 구조 변화 (1970~2022)</p>
+<div class="chart-placeholder">
+<span class="ci">📊</span>
+<span class="cl">우리나라 산업구조 변화 그래프</span>
+<span class="ch">graph_industry_structure.png</span>
+</div>
+</div>
+
+<ul class="info-list">
+<li>1960년대 이전: <strong>1차 산업 중심</strong>의 사회</li>
+<li>1960년대 이후: 산업화 진행으로 <strong>2·3차 산업 비중</strong> 높아짐</li>
+<li>1990년대 이후: <strong>탈공업화</strong> 현상으로 2차 산업 종사자 수 비율 낮아짐</li>
+</ul>
+
+<div class="quiz-section" id="quiz-0"></div>
+</div><!-- /panel-0 -->
+
+
+<!-- ══════════════════════════════════════
+탭 1 : 도시화 곡선과 세계의 도시화
+══════════════════════════════════════ -->
+<div class="tab-panel" id="panel-1">
+
+<div class="section-title">2. 도시화 곡선과 세계의 도시화</div>
+
+<div class="subsection-title">(1) 도시화 곡선 — 3단계</div>
+
+<div class="def-box">
+도시화 곡선은 한 국가의 <strong>도시화 진행 속도</strong>를 알 수 있는 S자형 그래프. 기울기가 급할수록 도시화 속도 빠름. 대부분 선진국은 <strong>종착 단계</strong>, 개발도상국은 대체로 <strong>가속화 단계</strong>.
+</div>
+
+<div class="factor-grid-3">
+<div class="factor-card blue">
+<h4>① 초기 단계</h4>
+<p>1차 산업 중심의 <strong>농업 사회</strong>. 도시화율 낮고 변화 느림.</p>
+</div>
+<div class="factor-card yellow">
+<h4>② 가속화 단계</h4>
+<p><strong>이촌향도</strong>로 급속한 도시 인구 증가. 각종 <strong>도시 문제 발생</strong>.</p>
+</div>
+<div class="factor-card green">
+<h4>③ 종착 단계</h4>
+<p>도시화율 증가 <strong>둔화</strong>. <strong>교외화</strong> 및 대도시권 확대.</p>
+</div>
+</div>
+
+<!-- [그래프] 도시화 곡선 S자형
+파일명: graph_urbanization_curve.png
+내용: 초기·가속화·종착 단계, 도시화율(%) vs 시간 -->
+<div class="chart-wrap">
+<p class="chart-caption">▲ 도시화 곡선 (S자형)</p>
+<div class="chart-placeholder">
+<span class="ci">📈</span>
+<span class="cl">도시화 곡선 그래프</span>
+<span class="ch">graph_urbanization_curve.png</span>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="subsection-title">(2) 선진국 vs 개발도상국의 도시화</div>
+
+<div class="cmp-table-wrap">
+<table class="cmp-table">
+<thead><tr><th>구분</th><th>도시화 시작</th><th>현재 단계</th><th>특징</th></tr></thead>
+<tbody>
+<tr>
+<td>선진국</td>
+<td>산업 혁명 이후 <strong>점진적</strong>으로 진행</td>
+<td><span class="badge badge-green">종착 단계</span></td>
+<td>도시화율 증가 둔화, <strong>교외화</strong> 현상</td>
+</tr>
+<tr>
+<td>개발도상국</td>
+<td>제2차 세계 대전 이후 <strong>급속</strong>히 진행</td>
+<td><span class="badge badge-yellow">가속화 단계</span></td>
+<td>주택 부족, 기반 시설 부족, 환경 오염 등 <strong>도시 문제</strong> 발생</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="note">📝 <strong>우리나라</strong>: 제2차 세계 대전 이후 산업혁명을 겪었으나, 현재 도시화율 91.9%로 <strong>종착 단계</strong>에 해당.</div>
+
+<div class="divider"></div>
+
+<div class="subsection-title">(3) 우리나라의 도시화율</div>
+
+<!-- [그래프] 우리나라 도시화율 변화 꺾은선 (1960~2022)
+파일명: graph_korea_urbanization.png
+내용: 39.1%(1960)→50.1%(1970)→68.7%(1980)→81.9%(1990)→88.3%(2000)→90.9%(2010)→91.9%(2022)
+출처: 국토교통부·한국 국토 정보 공사, 2023 / 용도 지역별 도시 인구 기준 -->
+<div class="chart-wrap">
+<p class="chart-caption">▲ 우리나라의 도시화율 (1960~2022)</p>
+<div class="chart-placeholder">
+<span class="ci">📉</span>
+<span class="cl">우리나라 도시화율 변화 그래프</span>
+<span class="ch">graph_korea_urbanization.png</span>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="subsection-title">(4) 지역(대륙)별 도시화율 변화</div>
+
+<!-- [그래프] 지역(대륙)별 도시화율 변화 꺾은선 (1950~2020)
+파일명: graph_global_urbanization.png
+내용: 앵글로아메리카·유럽·라틴아메리카·오세아니아·아시아·아프리카 6개 지역 / 출처: 국제 연합 -->
+<div class="chart-wrap">
+<p class="chart-caption">▲ 지역(대륙)별 도시화율 변화 (1950~2020)</p>
+<div class="chart-placeholder">
+<span class="ci">🌏</span>
+<span class="cl">대륙별 도시화율 변화 그래프</span>
+<span class="ch">graph_global_urbanization.png</span>
+</div>
+</div>
+
+<div class="note">📝 도시화율 순위(높은 순): <strong>앵글로아메리카 &gt; 라틴아메리카 &gt; 유럽 &gt; 오세아니아 &gt; 아시아 &gt; 아프리카</strong>. 도시 인구 <em>절대수</em>는 아시아가 가장 많음. 라틴아메리카는 개발도상국이 대부분이지만 과거 식민지 시절부터 도시가 발달 → 경제수준 대비 도시화율 높음.</div>
+
+<div class="divider"></div>
+
+<div class="subsection-title">(5) 우리나라의 도시화 과정</div>
+
+<div class="cmp-table-wrap">
+<table class="cmp-table">
+<thead><tr><th>시기</th><th>주요 내용</th></tr></thead>
+<tbody>
+<tr><td>과거</td><td>조선시대 <strong>한양</strong>을 중심으로 각 지방 행정 중심지 발달</td></tr>
+<tr><td>1960년대</td><td>경제 개발 정책에 따른 산업화와 이촌향도 현상 → <strong>서울·부산</strong> 등 대도시에 인구 집중 (도시화율 50% 이상)</td></tr>
+<tr><td>1970년대</td><td>도시 인구 &gt; 촌락 인구 / 광주·대전 등 지방 대도시 성장 / 수출 위주 공업화 정책 → <strong>남동 임해 공업 지역</strong> 발달 → 포항·울산·창원 등 공업 도시 발달</td></tr>
+<tr><td>1980년대</td><td>대도시 과밀 → 수도권 주변 지역으로 인구·기능 분산 → <strong>교외화 현상</strong> 나타남</td></tr>
+<tr><td>1990년대</td><td><strong>1기 신도시</strong>(분당·일산·평촌·산본·중동) 건설 → 대도시 인구 분산 (교통 발달 전제)</td></tr>
+<tr><td>2000년대</td><td><strong>2기 신도시</strong>(판교·동탄·광교·김포한강·위례 등) 건설 → 주택 공급 확대·자족 기능 강화 → 교외화 지속</td></tr>
+<tr><td>2010년대 후반~</td><td><strong>3기 신도시</strong>(남양주 왕숙·하남 교산·인천 계양 등) 건설 → 수도권 주택 공급 확대·서울 접근성 개선</td></tr>
+<tr><td>최근</td><td><strong>역도시화</strong>: 대도시 인구 → 중소도시·농촌 이동 (주거환경·삶의 질·원격근무 등) / <strong>재도시화</strong>: 구도심 재개발·재생 → 도심 회귀</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="note">📝 흐름 요약: 집중 → 과밀 → 분산(신도시·교외화) → 재분산(역도시화) ↔ 재집중(재도시화) <em>동시에 나타남</em></div>
+
+<!-- [지도] 3기 신도시 조성계획 + 수도권 인구밀도 지도
+파일명: map_3rd_newtown.png
+내용: 1·2·3기 신도시 위치 및 수도권 인구밀도 분포 / 출처: 국토교통부·행정안전부, 2023 -->
+<div class="chart-wrap">
+<p class="chart-caption">▲ 3기 신도시 조성계획 및 수도권 인구밀도</p>
+<div class="chart-placeholder">
+<span class="ci">🗺️</span>
+<span class="cl">3기 신도시 조성계획 지도</span>
+<span class="ch">map_3rd_newtown.png</span>
+</div>
+</div>
+
+<div class="quiz-section" id="quiz-1"></div>
+</div><!-- /panel-1 -->
+
+
+<!-- ══════════════════════════════════════
+탭 2 : 생활공간의 변화
+══════════════════════════════════════ -->
+<div class="tab-panel" id="panel-2">
+
+<div class="section-title">2. 산업화와 도시화로 인한 생활공간의 변화</div>
+
+<div class="cmp-table-wrap">
+<table class="cmp-table">
+<thead><tr><th>변화</th><th>내용</th></tr></thead>
+<tbody>
+<tr><td>도시 규모 확대</td><td>제조업·서비스업 발달로 도시 기능 강화 → 시가지 면적 확대, 농경지가 주거·상업·업무 지역으로 변화</td></tr>
+<tr><td>도시 내부의 지역 분화</td><td>도시 규모 확대·교통 발달로 기능별 <strong>지역 분화</strong> / 접근성과 지가 차이에 따라 중심 업무·상업·주거·공업 지역으로 구분</td></tr>
+<tr><td>토지 이용의 집약화</td><td>아파트·연립주택 등 공동주택 등가 (고층·지하) → 집약적 토지 이용 / 고층 건물 증가 및 <strong>도시 공간의 수직적 확대</strong>, 상업·업무 기능이 도심에 집중</td></tr>
+<tr><td>도시의 범위 확대와 교외화</td><td>교통 발달로 주거지·직장 거리 증가 / 도시 인구·기능이 주변 지역으로 분산되는 <strong>교외화</strong> 현상</td></tr>
+<tr><td>대도시권 형성</td><td>중심 도시와 주변 지역이 기능적으로 밀접하게 연결되는 <strong>대도시권</strong> 형성 → 통근·통학권 확대</td></tr>
+<tr><td>생태 환경의 변화</td><td>하천 직강화·복개 등 인위적 개발 증가 / <strong>도시 내 포장 면적 확대</strong>로 녹지 공간 감소, 도시 생태 환경 악화</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="divider"></div>
+
+<div class="subsection-title">(1) 도시 내부의 지역 분화</div>
+
+<div class="def-box">
+도시의 중심부는 교통망이 발달하고 유동인구가 많아 <strong>지가가 높다</strong>. 높은 지가를 지불할 수 있는 <strong>중심 업무 기능(상업·금융)</strong>이 도심에 주로 입지. 그 주변에는 공업 지역, 외곽에는 주거 지역이 형성된다.
+</div>
+
+<!-- [모식도] 도시 내부 지역 분화 모식도 (지가 곡선 + 동심원)
+파일명: diagram_urban_zone.png
+내용: 상업·업무 / 공업 / 주거 지가 곡선, 도심·공업지구·주거지구 동심원 -->
+<div class="chart-wrap">
+<p class="chart-caption">▲ 도시 내부의 지역 분화 모식도</p>
+<div class="chart-placeholder">
+<span class="ci">🏙️</span>
+<span class="cl">도시 내부 지역 분화 모식도</span>
+<span class="ch">diagram_urban_zone.png</span>
+</div>
+</div>
+
+<div class="subsection-title">서울의 지역 분화</div>
+
+<div class="cmp-table-wrap">
+<table class="cmp-table">
+<thead><tr><th>지역</th><th>특징</th><th>대표 지역</th></tr></thead>
+<tbody>
+<tr>
+<td>도심 <span class="badge badge-blue">CBD</span></td>
+<td>상업·금융 관리 기능, 기업 본사 집중 / 주간 유동인구 多, 상주인구 少 → <strong>인구 공동화 현상</strong></td>
+<td>중구, 종로구</td>
+</tr>
+<tr>
+<td>공업 지역</td>
+<td>과거 대표 공업 지역 → 현재 <strong>첨단 산업·업무 지역</strong>으로 변화</td>
+<td>구로구, 금천구 (구로 공단 일대)</td>
+</tr>
+<tr>
+<td>외곽 지역</td>
+<td>상주인구·학교 수 多, <strong>주거 기능</strong> 집중</td>
+<td>노원구, 도봉구, 은평구, 강동구, 강서구</td>
+</tr>
+<tr>
+<td>부도심</td>
+<td>도심 기능 분산, 상업 기능 밀집 / 교통 편리한 지역 중심 성장</td>
+<td>영등포구(여의도), 강남구, 송파구(잠실)</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- [지도] 서울 인구밀도 지도 (구별)
+파일명: map_seoul_density.png
+내용: 인구밀도(명/㎢) 단계 구분 / 출처: 서울 통계 연보, 2016 -->
+<div class="chart-wrap">
+<p class="chart-caption">▲ 서울 내부의 지역 분화 (인구밀도, 2016)</p>
+<div class="chart-placeholder">
+<span class="ci">🗺️</span>
+<span class="cl">서울 인구밀도 지도</span>
+<span class="ch">map_seoul_density.png</span>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="subsection-title">(2) 인구 공동화 현상</div>
+
+<div class="def-box">
+도심 지역에 낮에는 인구가 집중되었다가 밤이 되면 감소하는 현상. 도심은 상업·업무 기능과 일자리가 집중 → <strong>주간 유동인구↑, 야간 유동인구↓</strong>
+</div>
+
+<div class="warning">⚠️ 혼동 주의 — 도심 기준: 도심의 야간 인구 ⭕ 감소 / 주변 지역의 야간 인구 ❌ 감소 아님</div>
+
+<!-- [그래프] 인구 공동화 그래프 + 집심·이심 모식도
+파일명: diagram_population_hollow.png
+내용: 주간·야간 인구 곡선(도심↔주변), 집심·이심 현상 동심원 모식도 -->
+<div class="chart-wrap">
+<p class="chart-caption">▲ 인구 공동화 현상 그래프 및 집심·이심 모식도</p>
+<div class="chart-placeholder">
+<span class="ci">📊</span>
+<span class="cl">인구 공동화 + 집심·이심 모식도</span>
+<span class="ch">diagram_population_hollow.png</span>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="subsection-title">(3) 집심 현상과 이심 현상</div>
+
+<div class="factor-grid">
+<div class="factor-card blue">
+<h4>집심 현상</h4>
+<p>도시의 인구·산업·기능 등이 <strong>중심부로 집중</strong>되는 현상</p>
+<ul style="margin-top:8px;">
+<li>도심에 상업·업무 기능과 교통이 집중되면서 나타남</li>
+<li>지가 상승, 교통 혼잡, 환경 문제 발생</li>
+</ul>
+</div>
+<div class="factor-card red">
+<h4>이심 현상</h4>
+<p>도시의 인구·기능 등이 중심부에서 <strong>주변 지역으로 분산</strong>되는 현상</p>
+<ul style="margin-top:8px;">
+<li>교외화, 신도시 개발, 교통 발달 등으로 나타남</li>
+<li>주거 기능이 외곽으로 이동 → 대도시권 확대</li>
+</ul>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="subsection-title">(4) 교외화 현상과 대도시권 형성</div>
+
+<div class="def-box">
+도시 규모 성장 → 도시 인구·기능·시설이 주변 지역으로 분산 → <strong>교외화 현상</strong>. 교통 발달로 통근 가능 범위 확대 → <strong>대도시권</strong> 형성.
+</div>
+
+<div class="cmp-table-wrap">
+<table class="cmp-table">
+<thead><tr><th>구분</th><th>개념</th></tr></thead>
+<tbody>
+<tr>
+<td>위성도시</td>
+<td>대도시의 <strong>기능을 분담</strong>하기 위해 외곽 지역에 형성된 도시. 기능적으로 대도시와 밀접하게 연결.</td>
+</tr>
+<tr>
+<td>신도시</td>
+<td>수도권 인구를 분산하기 위해 <strong>계획적으로 조성</strong>한 도시. 주거 기능 외 상업·업무 기능 등 <strong>자족적 기능</strong>을 갖추는 것을 목표.</td>
+</tr>
+<tr>
+<td>근교 농촌 지역<br>(배후 농촌 지역)</td>
+<td>대도시 주변, 도시·농촌 경관·생활 양식이 함께 나타남. 주로 1차 산업으로 생계 유지. <strong>신선도 중요한 채소·원예 작물</strong> 재배, 낙농업.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- [모식도] 교외화 현상과 대도시권 형성 모식도
+파일명: diagram_suburbanization.png
+내용: 중심도시-교외지역-대도시 영향권-배후농촌-위성도시, 통근가능권·대도시 일일생활권 -->
+<div class="chart-wrap">
+<p class="chart-caption">▲ 교외화 현상과 대도시권 형성 모식도</p>
+<div class="chart-placeholder">
+<span class="ci">🔵</span>
+<span class="cl">대도시권 형성 모식도</span>
+<span class="ch">diagram_suburbanization.png</span>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="subsection-title">(5) 국토 용도별 이용 면적 변화</div>
+
+<!-- [표/그래프] 우리나라 국토 용도별 이용 면적 변화
+파일명: graph_land_use.png
+내용: 임야 3.4%↓, 논밭 16.5%↓, 대지 89.9%↑, 도로 114%↑ (1977→2022)
+출처: 국토 교통부, 각 연도 -->
+<div class="chart-wrap">
+<p class="chart-caption">▲ 우리나라 국토 용도별 이용 면적 변화 (1977→2022)</p>
+<div class="chart-placeholder">
+<span class="ci">🏗️</span>
+<span class="cl">국토 용도별 이용 면적 변화</span>
+<span class="ch">graph_land_use.png</span>
+</div>
+</div>
+
+<div class="quiz-section" id="quiz-2"></div>
+</div><!-- /panel-2 -->
+
+
+<!-- ══════════════════════════════════════
+탭 3 : 생활양식·문제·해결방안
+══════════════════════════════════════ -->
+<div class="tab-panel" id="panel-3">
+
+<div class="section-title">3. 산업화·도시화로 인한 생활양식의 변화</div>
+
+<div class="cmp-table-wrap">
+<table class="cmp-table">
+<thead><tr><th>변화</th><th>내용</th></tr></thead>
+<tbody>
+<tr><td>생활 수준의 향상</td><td>대량 생산·대량 소비 가능, 소득 증대 및 생활 수준 향상 / 기계화·자동화로 <strong>근로자의 노동 시간 단축</strong> 및 여가 시간 증가</td></tr>
+<tr><td>도시적 생활 양식의 확대 <span class="badge badge-blue">5신성 확산</span></td><td>교통 시설, 다양한 상업 시설, 여가·문화 시설 발달 = <strong>편의점, 대형 마트, 복합 쇼핑몰, 백화점</strong> 등</td></tr>
+<tr><td>직업의 분화</td><td>2·3차 산업의 발달로 직업 분화·전문화 → 삶의 다양화로 <strong>이질성 증대</strong>, 직업 간 소득 차이</td></tr>
+<tr><td>개인주의 가치관 확산</td><td>핵가족 및 <strong>1인 가구</strong>의 비중 증가 / 이웃 간 유대 관계 낮음, 공동체보다 <strong>개인의 자유와 권리</strong> 중시</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- [그래프] 우리나라 1인 가구 비율 변화 + 편의점 수 증가
+파일명(좌): graph_single_household.png / 파일명(우): graph_convenience_store.png
+내용(좌): 1인가구 비율 4.8%(1980)→27.2%(2015) / 출처: 통계청, 2016
+내용(우): 편의점 수 9,847(2006)→26,874(2014)개 / 출처: 통계청, 2015 -->
+<div class="chart-grid">
+<div class="chart-wrap" style="margin-bottom:0;">
+<p class="chart-caption">▲ 우리나라 1인 가구 비율 변화</p>
+<div class="chart-placeholder" style="min-height:180px;">
+<span class="ci">👤</span>
+<span class="cl">1인 가구 비율 그래프</span>
+<span class="ch">graph_single_household.png</span>
+</div>
+</div>
+<div class="chart-wrap" style="margin-bottom:0;">
+<p class="chart-caption">▲ 편의점 수의 증가</p>
+<div class="chart-placeholder" style="min-height:180px;">
+<span class="ci">🏪</span>
+<span class="cl">편의점 수 증가 그래프</span>
+<span class="ch">graph_convenience_store.png</span>
+</div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section-title">4. 산업화·도시화로 인한 문제</div>
+
+<div class="note">📝 <strong>교통 혼잡 비용</strong> = 환경 오염 비용·교통사고 비용과 함께 교통 수요 증가에 따라 발생하는 <strong>사회적 비용</strong></div>
+
+<div class="factor-grid-3">
+<div class="factor-card red">
+<h4>도시 문제</h4>
+<ul>
+<li><strong>주택</strong>: 주택 부족, 집값 상승, 불량 주택 지역 형성</li>
+<li><strong>교통</strong>: 교통 체증, <strong>교통 혼잡 비용</strong> 증가, 주차난, 교통사고</li>
+<li><strong>환경</strong>: 대기·수질·토양 오염, 쓰레기, 소음</li>
+<li><strong>기타</strong>: 범죄 문제 증가</li>
+</ul>
+</div>
+<div class="factor-card yellow">
+<h4>사회 문제</h4>
+<ul>
+<li><strong>노동</strong>: 자동화·기계화로 노동 수요 감소 → <strong>실업 문제</strong></li>
+<li>인구 이동 잦아짐 → 유대·공동체 의식 약화, 익명성 확산 → <strong>인간 소외 현상</strong></li>
+<li>빈부 격차, <strong>갈등 문제</strong> 심화</li>
+</ul>
+</div>
+<div class="factor-card green">
+<h4>생태 환경의 변화</h4>
+<ul>
+<li>녹지 감소, 포장 면적 증가 → <strong>도시 홍수</strong> 빈도 증가</li>
+<li>인공 열 → <strong>열섬 현상·열대야</strong> 발생</li>
+<li>포장도로 = <strong>불투수성 높아</strong> → 상대 습도↓, 지하수 흡수 어려움</li>
+</ul>
+</div>
+</div>
+
+<div class="subsection-title">인간 소외 현상</div>
+<div class="def-box">
+인간이 만들어 낸 물질이 거꾸로 인간을 지배하게 된 현상. 문명·사회 조직에 의해 인간이 주체로서의 지위를 잃고, 인간성이 손상되어 인간다운 삶을 누리지 못하는 상태. 경제적 효율성에 따라 인간이 기계의 부속품으로 평가, 언제나 대체 가능한 기능인으로 취급됨. (영화 <em>모던타임즈</em>)
+</div>
+
+<div class="subsection-title">열섬 현상</div>
+<div class="def-box">
+인공 열로 인하여 도시 중심부의 기온이 주변 지역보다 현저하게 높게 나타나는 현상. 도심을 중심으로 <strong>동심원상의 기온 분포</strong>. 열섬의 강도는 <strong>여름보다 겨울에, 낮보다 밤에</strong> 뚜렷.
+<br>포장 도로 = <strong>불투수성 높아(투수성 매우 낮아)</strong> → 지하수 흡수 불가, 식생 부족 → 수분 보존 어려움 → 상대 습도↓ → 비열 차이 → 열섬 현상.
+</div>
+
+<!-- [그래프] 열섬 현상 등온선 지도 (서울 최저기온 분포)
+파일명: diagram_heat_island.png
+내용: 서울 최저기온 등온선 지도 + 시가지화 전후 물 수지 비교 모식도 -->
+<div class="chart-wrap">
+<p class="chart-caption">▲ 열섬 현상 (서울 최저 기온 분포)</p>
+<div class="chart-placeholder">
+<span class="ci">🌡️</span>
+<span class="cl">열섬 현상 등온선 지도</span>
+<span class="ch">diagram_heat_island.png</span>
+</div>
+</div>
+
+<!-- [그래프] 도시화 전후 하천 수위 변화 그래프
+파일명: graph_flood_risk.png
+내용: 도시화 이전·이후 하천 수위 변화 비교 (강우 시작 후 경과 시간)
+출처: Introducing Physical Geography, 2013 -->
+<div class="chart-wrap">
+<p class="chart-caption">▲ 도시화에 따른 지표 환경의 변화 (하천 수위 변화)</p>
+<div class="chart-placeholder">
+<span class="ci">🌊</span>
+<span class="cl">도시화 전후 하천 수위 변화 그래프</span>
+<span class="ch">graph_flood_risk.png</span>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section-title">5. 산업화·도시화로 인한 문제의 해결 방안</div>
+
+<div class="cmp-table-wrap">
+<table class="cmp-table">
+<thead><tr><th>차원</th><th>문제</th><th>해결 방안</th></tr></thead>
+<tbody>
+<tr><td rowspan="4">사회적 차원</td><td>환경 문제</td><td>환경과 조화를 이루는 도시 개발 계획 수립</td></tr>
+<tr><td>주택 문제</td><td>대도시 주변에 <strong>신도시 건설</strong>, 도시 재개발 사업 추진</td></tr>
+<tr><td>교통 문제</td><td><strong>거주자 우선 주차 제도</strong> 정착, 공영 주차장 확대, 대중교통 수단 확충</td></tr>
+<tr><td>사회 문제</td><td>소외 계층을 위한 사회 복지 제도 확대, 범죄 예방 정책 마련</td></tr>
+<tr><td rowspan="2">개인적 차원</td><td>환경 문제</td><td>쓰레기 분리수거, 대중교통 이용 실천</td></tr>
+<tr><td>사회 문제</td><td>인간 존엄성 중시·타인 존중 자세 확립, <strong>지나친 개인주의적 태도 지양</strong>, 공동체 구성원과의 연대 의식 함양</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- [지도] 우리나라 혁신 도시의 위치와 특화 분야
+파일명: map_innovation_city.png
+내용: 강원·충북·전북·광주전남·제주·경북·대구·경남·울산·부산 혁신도시 위치·특화분야
+출처: 국토 교통부, 2023 -->
+<div class="chart-wrap">
+<p class="chart-caption">▲ 우리나라 혁신 도시의 위치와 특화 분야</p>
+<div class="chart-placeholder">
+<span class="ci">🗺️</span>
+<span class="cl">혁신 도시 위치 지도</span>
+<span class="ch">map_innovation_city.png</span>
+</div>
+</div>
+
+<div class="quiz-section" id="quiz-3"></div>
+</div><!-- /panel-3 -->
+
+
+<!-- ══════════════════════════════════════
+탭 4 : 교통·통신 및 과학기술의 발달
+══════════════════════════════════════ -->
+<div class="tab-panel" id="panel-4">
+
+<div class="section-title">3. 교통·통신 및 과학기술의 발달에 따른 변화</div>
+
+<div class="subsection-title">1. 교통·통신 및 과학기술의 발달</div>
+
+<ul class="info-list">
+<li><strong>교통 발달</strong>: 철도, 자동차, 비행기 등 새롭고 더 빠른 교통수단 등장</li>
+<li><strong>통신 발달</strong>: 인공위성, 인터넷과 같은 새로운 통신 기술 발달</li>
+<li><strong>정보화 사회로의 전환</strong>: 지식과 정보가 중심이 되어 가치 창출</li>
+<li><strong>4차 산업혁명</strong>: 지능 정보 기술(인공지능·사물 인터넷·로봇 등)이 다양한 산업·서비스 분야에 융합 → 사회·경제 전반에 혁신적 변화</li>
+</ul>
+
+<div class="note">📝 <strong>사물 인터넷</strong>: 사람·사물·공간 등이 인터넷으로 연결되어 정보가 생성·수집·공유·활용되는 초연결망 / <strong>인공지능</strong>: 인간의 언어를 알아듣고 사람처럼 지각하고 판단하는 기술</div>
+
+<div class="cmp-table-wrap">
+<table class="cmp-table">
+<thead><tr><th>산업혁명</th><th>시기</th><th>특징</th></tr></thead>
+<tbody>
+<tr><td>제1차</td><td>18세기</td><td>증기 기관 기반의 <strong>기계화 혁명</strong></td></tr>
+<tr><td>제2차</td><td>19~20세기</td><td>전기 에너지 기반의 <strong>대량 생산 혁명</strong></td></tr>
+<tr><td>제3차</td><td>20세기 후반</td><td>컴퓨터·인터넷 기반의 <strong>지식 정보 혁명</strong></td></tr>
+<tr><td>제4차</td><td>21세기 초반~</td><td>AI·IoT·빅데이터·클라우드 → <span class="badge badge-purple">지능 정보 기술</span> 융합</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- [개념도] 제4차 산업 혁명 개념도
+파일명: diagram_4th_revolution.png
+내용: 1~4차 산업혁명 흐름, AI+빅데이터+IoT+클라우드 융합 / 출처: 과학기술정보통신부 블로그, 2023 -->
+<div class="chart-wrap">
+<p class="chart-caption">▲ 제4차 산업 혁명 개념도</p>
+<div class="chart-placeholder">
+<span class="ci">🤖</span>
+<span class="cl">4차 산업혁명 개념도</span>
+<span class="ch">diagram_4th_revolution.png</span>
+</div>
+</div>
+
+<!-- [그래프] 교통 발달에 따른 지구의 상대적 크기 변화 + 수도권 통근 네트워크 변화
+파일명: graph_transport_development.png
+내용(좌): 1500~1970년대 교통수단별 이동속도 (지구 점점 작아지는 그림)
+내용(우): 1996년 vs 2019년 수도권 통근 네트워크 변화
+출처: The Geography of Transportation Systems, 2020 / 서울 연구원, 2022 -->
+<div class="chart-wrap">
+<p class="chart-caption">▲ 교통 발달에 따른 지구의 상대적 크기 변화 및 수도권 통근 네트워크 변화</p>
+<div class="chart-placeholder">
+<span class="ci">✈️</span>
+<span class="cl">교통 발달 + 수도권 통근 변화</span>
+<span class="ch">graph_transport_development.png</span>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="subsection-title">2. 생활공간의 변화</div>
+
+<div class="cmp-table-wrap">
+<table class="cmp-table">
+<thead><tr><th>변화</th><th>내용</th></tr></thead>
+<tbody>
+<tr>
+<td>일상생활 범위의 확대</td>
+<td>접근성 향상: 통근·쇼핑 등 일상생활 범위 확대 / <strong>교외화</strong>: 주거지·공장 등 교외로 이전 / <strong>대도시권</strong> 형성: 광역 교통망 발달 → 대도시 기능·영향력이 주변 도시로 확대 (예: 2018 고속철도 강릉선, 2009 서울-춘천 고속국도)</td>
+</tr>
+<tr>
+<td>경제활동 범위의 확대</td>
+<td>상품·노동력이 국가 넘나들며 이동 / <strong>시공간 제약 감소</strong>: 인터넷·스마트폰 → 언제 어디서나 전자상거래·금융 거래 / <strong>공간적 분업</strong>: 다국적 기업 각 기능이 공간적으로 분리 (본사·연구소: 선진국 / 생산 공장: 개발도상국) / <strong>초국적 기업</strong>: 본사 또는 핵심 기능까지 해외로 이전</td>
+</tr>
+<tr>
+<td>여가 공간의 확대</td>
+<td>국내외 여행 증가 / 대중 매체 통한 세계 여러 지역과의 상호작용, 다양한 문화 경험</td>
+</tr>
+<tr>
+<td>생태환경 변화</td>
+<td>도로망·통신 시설 건설 → <strong>생태계</strong> 파괴, 동식물 서식 환경 악화 / 생태계 보호에도 활용: GPS, <strong>GIS</strong> 활용한 멸종위기동물 관리·보호, 드론·헬리콥터로 생태환경 유지</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="def-box">
+<strong>지리정보체계(GIS)</strong>: 지리적 위치 정보를 기반으로 공간 자료를 수집·저장·관리·분석·시각화하는 시스템
+</div>
+
+<div class="note">📝 <strong>공간적 분업 구조 (생산비 절감)</strong><br>
+본사(운영·관리) → 선진국 / 연구소(개발·연구) → 선진국 / 생산 공장 → 개발도상국 / 판매 법인 → 여러 국가</div>
+
+<div class="divider"></div>
+
+<div class="subsection-title">3. 생활양식의 변화</div>
+
+<div class="cmp-table-wrap">
+<table class="cmp-table">
+<thead><tr><th>변화</th><th>내용</th></tr></thead>
+<tbody>
+<tr><td>근무 환경의 변화</td><td><strong>원격 근무</strong>, 출퇴근 시간 감소 / 유연한 근무 환경(<strong>재택 오피스</strong>, 선택적 시간 근무, 부분 주4일제) / <em>워케이션</em>: 원하는 곳에서 업무·휴가 동시에 하는 새로운 근무 제도</td></tr>
+<tr><td>생활 편리성 증대</td><td>로봇, 인공지능, 사물인터넷, <strong>빅데이터</strong></td></tr>
+<tr><td>다양한 인간관계 형성</td><td>대면 접촉 중요성 약화, <strong>가상공간</strong> 교류 확대</td></tr>
+<tr><td>정치 참여 기회 확대</td><td>개인 방송·SNS 통한 홍보·정치적 의견 표출 → <strong>직접 민주주의</strong> 실현 가능성↑ (전자 민주주의)</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="divider"></div>
+
+<div class="subsection-title">4. 교통·통신 발달에 따른 문제점과 해결방안</div>
+
+<div class="factor-grid">
+<div class="factor-card red">
+<h4>① 지역 격차 확대</h4>
+<p><strong>원인</strong>: 접근성 높은 지역 발전 ↔ 낮은 지역 쇠퇴 → 지역 격차</p>
+<p style="margin-top:6px;"><strong>빨대 효과</strong>: 새로운 교통수단 개통으로 주변 도시의 인구·경제력이 대도시로 유입되는 현상 (역류 효과 중 교통수단 발전이 선제)</p>
+<p style="margin-top:6px;"><strong>해결</strong>: 낙후 지역 교통망 확충, 공공기관 이전(<strong>혁신 도시</strong>), 산업단지 조성 → 생활 여건 개선 + <strong>지역 균형 발전</strong></p>
+</div>
+<div class="factor-card blue">
+<h4>② 전염병 확산</h4>
+<p><strong>원인</strong>: 교통 발달로 전염병 급속히 전파</p>
+<p style="margin-top:6px;"><strong>해결</strong>: 세계 각국 국제 사회 연대 강화(정보 공유·공동 연구·경보 체계) / 공항·항만 상시 방역 강화 / 개인 위생 관리</p>
+</div>
+<div class="factor-card green">
+<h4>③ 생태환경 파괴</h4>
+<p><strong>원인</strong>: 외래종의 토종 동식물 생태계 위협 (<strong>선박 평형수</strong>를 통한 유입) / 화석연료로 인한 환경오염</p>
+<p style="margin-top:6px;"><strong>해결</strong>: 생태교란종 국제 이동 통제, 조기 발견, 친환경 대체 연료 개발</p>
+</div>
+<div class="factor-card yellow">
+<h4>④ 정보 격차 발생</h4>
+<p><strong>원인</strong>: 디지털 소외 계층, 경제적·사회적 격차로 더욱 확대</p>
+<p style="margin-top:6px;"><strong>해결</strong>: 접근성 높이는 기술 개발·제품 제공, 정보 격차 해소 교육 / 예: <strong>배리어 프리 키오스크</strong></p>
+</div>
+<div class="factor-card purple">
+<h4>⑤ 노동 시장 양극화</h4>
+<p><strong>원인</strong>: 단순 생산·사무직·관리직 일자리 감소 / 과학·수학·정보통신기술 분야 증가 / <strong>실업</strong>↑, 빈부격차 확대</p>
+<p style="margin-top:6px;"><strong>해결</strong>: 미래 필요 노동력 양성, 기존 노동력 재취업 직업 훈련 / 사회 보장 시스템 개편, 창의적 인재 육성</p>
+</div>
+<div class="factor-card orange">
+<h4>오버투어리즘</h4>
+<p>한 지역에 수용 가능한 적정 수준의 관광객 수를 넘는 관광객이 유입하여 발생하는 문제</p>
+<p style="margin-top:6px;"><strong>해결</strong>: 지역 — 관광객 수 제한, 입장료 부과 / 개인 — 공정 여행 노력</p>
+</div>
+</div>
+
+<!-- [그래프] 고속 철도 강릉선 지도 + 일반 국민과 정보 취약 계층의 항목별 정보화 지수(2022)
+파일명: graph_regional_gap.png
+내용(좌): 서울-양양 고속국도·강릉KTX 지도
+내용(우): 접근·역량·활용 항목 정보화 지수 막대그래프 (장애인·저소득층·고령층·농어민)
+출처: 과학기술정보통신부·한국지능정보사회진흥원, 2023 -->
+<div class="chart-wrap">
+<p class="chart-caption">▲ 지역 격차 관련 자료 (강릉선 KTX + 정보화 지수)</p>
+<div class="chart-placeholder">
+<span class="ci">🚄</span>
+<span class="cl">강릉선 KTX 지도 + 정보화 지수 그래프</span>
+<span class="ch">graph_regional_gap.png</span>
+</div>
+</div>
+
+<!-- [지도] 혁신도시와 이전 공공기관 지도
+파일명: map_public_institution.png
+내용: 강원·충북·전북·광주전남·제주·경북·대구·경남·울산·부산 혁신도시 이전 공공기관 목록 지도
+출처: 국토교통부 -->
+<div class="chart-wrap">
+<p class="chart-caption">▲ 혁신도시와 이전 공공기관</p>
+<div class="chart-placeholder">
+<span class="ci">🏛️</span>
+<span class="cl">혁신도시 이전 공공기관 지도</span>
+<span class="ch">map_public_institution.png</span>
+</div>
+</div>
+
+<div class="note">📝 <strong>파급·역류·빨대 효과</strong><br>
+파급 효과: 핵심 지역 성장 → 주변 지역으로 파급 / 역류 효과: 핵심 지역 성장 ← 주변 지역에서 투자·인구 유출 / <strong>빨대 효과</strong>: 역류 효과 중 교통수단 발전이 선제되는 것</div>
+
+<div class="note">📝 <strong>개발 방식의 변화</strong><br>
+성장 거점 개발(하향식): 대도시 위주 개발 → 파급 효과·역류 효과 공존 ⇒ <strong>지역 균형 개발(상향식)</strong>로 전환</div>
+
+<div class="quiz-section" id="quiz-4"></div>
+</div><!-- /panel-4 -->
+
+
+<!-- ══════════════════════════════════════
+탭 5 : 우리 지역의 공간 변화
+══════════════════════════════════════ -->
+<div class="tab-panel" id="panel-5">
+
+<div class="section-title">3. 우리 지역의 공간 변화</div>
+
+<div class="subsection-title">1. 지역의 변화</div>
+
+<div class="subsection-title">(1) 지역의 개념</div>
+
+<div class="def-box">
+<strong>지역</strong> ① 지리적 특성이 다른 곳과 구별되는 <strong>지표상의 공간 범위</strong><br>
+② 경관상 유사하거나 기능적으로 관련된 장소들의 모임
+</div>
+
+<div class="factor-grid">
+<div class="factor-card blue">
+<h4>등질 지역</h4>
+<p>특정한 지리적 특징이 <strong>공통적</strong>으로 나타나는 공간 범위</p>
+<p style="margin-top:6px;">자연환경·문화·산업 등 공통된 특징 기준으로 구분. 지역 내부 성격이 비교적 유사.</p>
+<p style="margin-top:6px;"><strong>예)</strong> 기후 지역, 문화권</p>
+</div>
+<div class="factor-card green">
+<h4>기능 지역</h4>
+<p><strong>중심지</strong>와 그 영향을 받는 <strong>배후지</strong>로 이루어진 공간 범위</p>
+<p style="margin-top:6px;">사람·물자·정보의 이동 등 <strong>중심지와의 기능적 연결</strong>을 기준으로 형성.</p>
+<p style="margin-top:6px;"><strong>예)</strong> 상권, 통근·통학권, 대도시권</p>
+<p style="margin-top:4px;font-size:12px;color:var(--text-sec);">*배후지: 중심지의 영향을 받는 주변 지역</p>
+</div>
+</div>
+
+<!-- [지도] 등질지역 vs 기능지역 비교 지도
+파일명: map_region_types.png
+내용: (좌) 경기도 주택유형 비율(등질지역) / (우) 서울로의 통근·통학률(기능지역) -->
+<div class="chart-wrap">
+<p class="chart-caption">▲ 등질지역과 기능지역 비교</p>
+<div class="chart-placeholder">
+<span class="ci">🗺️</span>
+<span class="cl">등질지역·기능지역 지도</span>
+<span class="ch">map_region_types.png</span>
+</div>
+</div>
+
+<div class="subsection-title">(2) 지역성</div>
+<div class="def-box">
+<strong>지역성</strong>: 자연·인문환경이 상호 작용하여 형성된 그 지역만의 고유한 특성.<br>
+지역성과 공간 범위는 시간의 흐름, 교통·통신의 발달, 지역 간 상호 작용 등에 따라 <strong>변화(유동적)</strong>.
+</div>
+
+<div class="subsection-title">(3) 지역의 변화 모습</div>
+<ul class="info-list">
+<li><strong>지역의 공간 변화</strong>: 토지 이용, 인구, 산업 구조, 생태 환경, 인간관계, 주민의 가치관 등 다양한 요소에서 변화</li>
+<li><strong>공간 변화의 영향 ①</strong> 주민들의 직업·생활 방식·인간관계 등이 변화</li>
+<li><strong>공간 변화의 영향 ②</strong> 지역 경제 활성화, 생활 환경 개선 등의 <strong>긍정적</strong> 효과</li>
+<li><strong>공간 변화의 영향 ③</strong> 개발 과정에서 환경 오염, 공동체 약화 등 다양한 <strong>문제</strong> 발생</li>
+<li><strong>지역 조사</strong>를 활용하여 변화 모습 파악, 발생하는 문제의 해결 방안 마련</li>
+</ul>
+
+<div class="divider"></div>
+
+<div class="subsection-title">2. 지역 조사</div>
+
+<div class="def-box">
+<strong>지역조사의 의미</strong>: 지역의 변화 모습과 문제점을 파악하기 위해 다양한 <strong>지리 정보</strong>를 수집·분석·종합하는 활동<br>
+<strong>지역조사의 필요성</strong>: 지역의 특성·변화 모습을 이해하고, 지역 사회 문제의 원인을 분석하여 우리 지역을 더 살기 좋은 공간으로 만들기 위한 방안 모색
+</div>
+
+<div class="step-list">
+<div class="step-item">
+<div class="step-num">①</div>
+<div class="step-content">
+<h4>지역 조사 계획 수립 <span class="badge badge-blue">★</span></h4>
+<p>지역 조사 목적을 결정하고 목적에 적합한 <strong>조사 주제와 지역을 선정</strong> / 조사 항목과 조사 방법 선정</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-num">②</div>
+<div class="step-content">
+<h4>지리 정보의 수집 <span class="badge badge-blue">★</span></h4>
+<p><strong>실내 조사</strong>: 도서관·인터넷 → 지도, 문헌 자료, 통계 자료, 위성 사진·항공 사진 등 / 야외 조사 항목·방법·답사 경로·일자 등을 <strong>사전에 결정</strong><br>
+<strong>야외 조사</strong>: 해당 지역 직접 방문 → 관찰, 실측, 촬영, 면담, 설문 등 (생략 가능)</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-num">③</div>
+<div class="step-content">
+<h4>지리 정보의 분석 및 종합</h4>
+<p>수집한 지리 정보를 항목별로 구분, 중요 정보 선별·정리 → <strong>그래프, 통계 지도, 표</strong> 등으로 표현 → 분석·종합</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-num">④</div>
+<div class="step-content">
+<h4>보고서 작성</h4>
+<p>조사 방법, 분석한 자료, 결론 등을 체계적으로 기술 / 지역의 공간 변화 양상·문제점, <strong>해결 방안을 모색</strong></p>
+</div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="subsection-title">3. 지역의 공간 변화에 따른 문제점과 해결 방안</div>
+
+<div class="def-box">
+<strong>지역 문제</strong>: 지역 주민들의 삶에 불편을 주거나 주민들 사이에 갈등을 불러오는 사회 문제
+</div>
+
+<div class="subsection-title">(1) 지역 문제 해결을 위한 노력</div>
+<ul class="info-list">
+<li>지역 주민: 공동체 구성원으로서 성숙한 <strong>시민 의식</strong>을 바탕으로 지역 문제 해결에 적극 참여</li>
+<li>지역의 <strong>지속 가능성</strong>을 고려한 해결 방안 모색</li>
+<li>국가·지방 자치 단체: 주민 참여를 높이기 위한 제도·정책 마련, 의사 결정 과정에 주민 의견 적극 반영 (예: <strong>지역문제 해결 플랫폼</strong>)</li>
+</ul>
+
+<div class="note">📝 <strong>지역 문제 해결 플랫폼</strong>: 지역 주민이 <strong>직접</strong> 지역 사회 문제를 발굴하고, 정부·지방 자치 단체·공공 기관·전문가·대학 등과 협력하여 해결해 나가는 협업 체계. 기존 중앙정부 중심 방식에서 벗어나 주민 참여 기반. 2019년 광주·충북·대전·경남·대구·강원에 처음 도입, 현재 전남·충남 추가 → 총 8개 지역 운영.</div>
+
+<div class="subsection-title">(2) 다양한 지역 문제와 해결 방안</div>
+
+<div class="cmp-table-wrap">
+<table class="cmp-table">
+<thead><tr><th>구분</th><th>영향 및 문제점</th><th>해결 방안</th></tr></thead>
+<tbody>
+<tr>
+<td>대도시</td>
+<td>인구 과밀로 인한 시설 부족·노후화, 교통 체증·범죄 증가, 환경 오염 발생, <strong>공동체 의식 약화</strong> 등</td>
+<td>도시 내 기반 시설 확충 / <strong>도시 재개발</strong>을 통한 환경 개선 / <strong>지역 균형 발전</strong>을 통한 인구의 지방 분산</td>
+</tr>
+<tr>
+<td>중소 도시</td>
+<td>일자리·시설 부족에 따른 지역 경제 침체 / 대도시로의 인구 유출</td>
+<td>일자리 창출 및 각종 서비스 질 개선을 통한 <strong>자족 기능</strong> 확충</td>
+</tr>
+<tr>
+<td>도시와<br>인접한 촌락</td>
+<td>일자리·시설 부족 → 지역 경제 침체 / 도시화 진행으로 전통적 가치관·문화 상실, 공동체 의식 약화</td>
+<td>지역경제 활성화: <strong>지리적 표시제</strong> 시행, 인터넷을 통한 <strong>농산물 직거래</strong>, <strong>지역 축제</strong> 등 <strong>지역 특성화 사업</strong> 추진 / 공동체 문화 유지를 위한 지역 사회 노력</td>
+</tr>
+<tr>
+<td>도시와 멀리<br>떨어진 촌락</td>
+<td>노동력 부족, 성비 불균형, 유휴 경작지 증가, 교육·의료·문화 생활 여건 악화 → <strong>인구 유출 가속화</strong></td>
+<td>교육·의료·문화 등 생활 기반 시설 확충으로 주민들의 삶의 질 향상</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- [지도] 우리나라의 지리적 표시제 지도
+파일명: map_geographical_indication.png
+내용: 전국 지리적 표시 특산물 위치 지도 (이천 쌀, 보성 녹차, 횡성 한우 등) -->
+<div class="chart-wrap">
+<p class="chart-caption">▲ 우리나라의 지리적 표시제</p>
+<div class="chart-placeholder">
+<span class="ci">🗺️</span>
+<span class="cl">지리적 표시제 지도</span>
+<span class="ch">map_geographical_indication.png</span>
+</div>
+</div>
+
+<div class="quiz-section" id="quiz-5"></div>
+</div><!-- /panel-5 -->
+
+</div><!-- /content-wrap -->
+
+<button class="totop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+function switchTab(idx) {
+document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+window.scrollTo({top:0, behavior:'smooth'});
+const qEl = document.getElementById('quiz-'+idx);
+if (qEl && !qEl.innerHTML.trim()) buildQuizSection(idx);
+}
+
+// ══════════════════════════════════════════════════
+// QUIZ DATA — 탭 0~2 (90문항)
+// ══════════════════════════════════════════════════
+const QUIZ_DATA = {
+
+/* ─────────────── 탭 0 : 산업화·도시화의 전개 ─────────────── */
+0: {
+ox: [
+{ q:"산업화란 산업 구조가 1차 산업 중심에서 2·3차 산업 중심으로 변화하는 현상이다.", a:true,
+exp:"산업화는 농업·어업 중심 사회가 공업 중심 사회로 변화하는 현상으로, 1차 산업 중심에서 2·3차 산업 중심으로의 구조 변화를 의미한다." },
+{ q:"도시화율은 전체 면적 중 도시가 차지하는 면적의 비율이다.", a:false,
+exp:"도시화율은 전체 인구 중 도시에 거주하는 인구의 비율이다. 면적 비율이 아님에 주의한다." },
+{ q:"2차 산업에는 공업·제조업·건설업이 포함된다.", a:true,
+exp:"2차 산업은 원료를 가공하여 제품을 생산하는 산업으로 공업(경공업·중공업), 제조업, 건설업이 해당한다." },
+{ q:"고차 서비스업은 2차 산업이 고도화된 형태이다.", a:false,
+exp:"고차 서비스업은 3차 산업 중 전문성·지식이 요구되는 분야(금융·보험, 의료, R&D, IT 등)이다. 2차 산업과는 무관하다." },
+{ q:"이촌향도 현상은 도시의 인구가 촌락으로 이동하는 현상이다.", a:false,
+exp:"이촌향도는 촌락의 인구가 일자리와 더 나은 생활을 찾아 도시로 이동하는 현상이다. 도시→촌락 이동은 역도시화에 해당한다." },
+{ q:"산업혁명은 18세기 후반 유럽에서 시작되었다.", a:true,
+exp:"산업혁명은 18세기 후반 영국을 중심으로 한 유럽에서 수공업에서 기계 공업으로의 전환이 이루어지며 시작되었다." },
+{ q:"우리나라는 1990년대 이후 탈공업화로 2차 산업 종사자 비율이 낮아졌다.", a:true,
+exp:"우리나라는 1990년대 이후 탈공업화 현상으로 광공업(2차 산업) 종사자 수 비율이 낮아지고 서비스업 비중이 증가하였다." },
+{ q:"이촌향도 현상은 도시화를 억제한다.", a:false,
+exp:"이촌향도로 도시 인구가 급격히 증가하여 도시화율이 상승하므로, 도시화를 가속화하는 요인이다." },
+{ q:"3차 산업에는 상업, 운수·통신, 관광 등이 포함된다.", a:true,
+exp:"3차 산업은 재화 생산을 지원하거나 서비스를 제공하는 산업으로, 상업·운수·통신·관광 등이 해당한다." },
+{ q:"부가가치는 1차 산업이 3차 산업보다 일반적으로 높다.", a:false,
+exp:"부가가치는 1차 < 2차 < 3차(고차 서비스업) 순으로 높아진다. 고차 서비스업의 부가가치가 가장 높다." }
+],
+mc: [
+{ q:"다음 중 <em>1차 산업</em>에 해당하지 않는 것은?",
+opts:["농업","임업","어업","제조업"], a:3,
+exp:"제조업은 원료를 가공하여 제품을 생산하는 2차 산업이다. 농업·임업·어업은 자연에서 자원을 직접 얻는 1차 산업이다." },
+{ q:"<em>도시화율</em>의 올바른 정의는?",
+opts:["전체 면적 중 도시 면적의 비율","전체 인구 중 도시 거주 인구의 비율","전체 취업자 중 도시 취업자의 비율","전체 지역 수 중 도시 수의 비율"], a:1,
+exp:"도시화율 = 도시 거주 인구 ÷ 전체 인구 × 100(%). 면적이나 취업자 비율이 아님에 주의한다." },
+{ q:"<em>고차 서비스업</em>의 예로 가장 적절한 것은?",
+opts:["농업","제조업","금융·보험업","운수업"], a:2,
+exp:"고차 서비스업은 지식·정보 중심 산업으로 금융·보험, 교육, 의료, R&D, IT, 법률·회계 등이 해당한다. 농업은 1차, 제조업은 2차, 운수업은 일반 3차 산업이다." },
+{ q:"<em>이촌향도 현상</em>에 대한 설명으로 옳은 것은?",
+opts:["도시 인구가 농촌으로 이동하는 현상","도시화를 억제하는 요인","산업화에 따라 발생하여 도시화를 가속화","선진국 종착 단계에서 주로 나타남"], a:2,
+exp:"이촌향도는 촌락 인구가 일자리와 더 나은 생활을 위해 도시로 이동하는 현상이다. 산업화에 따라 발생하며 도시화를 가속화한다." },
+{ q:"우리나라 산업 구조 변화에 대한 설명으로 옳은 것은?",
+opts:["1960년대 이전 3차 산업 중심","1990년대 이후 2차 산업 비율 지속 증가","1960년대 이전 1차 산업 중심","현재까지 1차 산업 비중이 가장 높다"], a:2,
+exp:"우리나라는 1960년대 이전 1차 산업 중심의 농업 사회였으며, 이후 산업화 진행으로 2·3차 산업 비중이 높아졌다." },
+{ q:"산업 구조의 고도화란 무엇을 의미하는가?",
+opts:["1차 산업 비중이 높아지는 것","부가가치가 낮은 산업으로 이동","부가가치가 높은 산업으로 이동","공업 중심 사회로의 변화만을 의미"], a:2,
+exp:"산업 구조의 고도화는 부가가치가 낮은 1차 산업 중심에서 부가가치가 높은 2차, 나아가 고차 서비스업(3차) 중심으로 이동하는 현상이다." },
+{ q:"산업혁명으로 나타난 변화로 옳지 않은 것은?",
+opts:["수공업 → 기계 공업으로 생산 방식 변화","1차 → 2·3차 산업 중심으로 변화","이촌향도 현상 발생","역도시화 현상 본격화"], a:3,
+exp:"역도시화는 도시화가 충분히 진행된 종착 단계 이후에 나타나는 현상이다. 산업혁명 당시에는 이촌향도와 도시화 가속화가 나타났다." },
+{ q:"도시화에 대한 설명으로 옳지 않은 것은?",
+opts:["도시화율이 높아지는 현상","도시적 생활 양식이 확대되는 현상","도시 면적이 증가하는 현상만을 의미","산업화와 밀접한 관련이 있음"], a:2,
+exp:"도시화는 도시화율(인구 기준)이 높아지거나 도시적 생활 양식이 확대되는 현상이다. 면적 증가만을 의미하지 않는다." },
+{ q:"1차 산업의 특징으로 옳은 것은?",
+opts:["원료를 가공하여 제품을 생산","자연에서 자원을 직접 얻음","서비스를 제공하는 산업","지식·정보 중심의 고부가가치 산업"], a:1,
+exp:"1차 산업은 자연에서 자원을 직접 얻는 산업으로 농업·임업·어업·축산업이 해당한다." },
+{ q:"다음 중 <em>고차 서비스업</em>에 해당하지 않는 것은?",
+opts:["IT 산업","법률·회계 서비스","연구개발(R&D)","운수업"], a:3,
+exp:"운수업은 일반적인 3차 산업에 해당한다. 고차 서비스업은 전문성·지식이 요구되는 금융·보험, 교육, 의료, R&D, IT, 전문 서비스이다." }
+],
+hard: [
+{ q:"산업화와 도시화의 관계에 대한 설명으로 옳은 것을 모두 고른 것은?\nㄱ. 산업화는 이촌향도를 유발하여 도시화를 가속화한다.\nㄴ. 도시화는 항상 산업화보다 먼저 나타난다.\nㄷ. 우리나라는 1960년대 이후 산업화와 도시화가 함께 진행되었다.\nㄹ. 산업화로 2·3차 산업이 발달하면 도시 일자리가 늘어 이촌향도가 촉진된다.",
+opts:["ㄱ, ㄷ","ㄱ, ㄷ, ㄹ","ㄴ, ㄷ","ㄱ, ㄴ, ㄹ"], a:1,
+exp:"ㄱ: 산업화→이촌향도→도시화 가속화 (맞음) / ㄴ: 일반적으로 산업화가 도시화를 유발한다 (틀림) / ㄷ: 우리나라 1960년대 이후 산업화·도시화 동시 진행 (맞음) / ㄹ: 2·3차 산업 발달→도시 일자리 증가→이촌향도 촉진 (맞음). 따라서 ㄱ·ㄷ·ㄹ." },
+{ q:"산업 구조 변화에 대한 설명으로 옳은 것을 〈보기〉에서 고른 것은?\nㄱ. 부가가치는 1차 < 2차 < 3차 순으로 높아진다.\nㄴ. 고차 서비스업은 2차 산업의 고도화된 형태이다.\nㄷ. 탈공업화는 3차 산업 비중이 줄고 2차가 느는 현상이다.\nㄹ. IT, 금융·보험, R&D는 고차 서비스업에 해당한다.",
+opts:["ㄱ, ㄹ","ㄴ, ㄷ","ㄱ, ㄴ","ㄷ, ㄹ"], a:0,
+exp:"ㄱ: 부가가치 1차<2차<3차(고차) (맞음) / ㄴ: 고차 서비스업은 3차 산업의 고도화 (틀림) / ㄷ: 탈공업화는 2차↓·3차↑ (틀림) / ㄹ: IT·금융·R&D = 고차 서비스업 (맞음). ㄱ·ㄹ이 정답." },
+{ q:"다음 자료를 분석한 내용으로 적절하지 않은 것은?\n[우리나라 산업별 취업자 수 비율]\n1970: 농림어업 50.4% / 광공업 14.3% / 서비스업 35.3%\n2022: 농림어업 5.4% / 광공업 16.1% / 서비스업 78.5%",
+opts:["1970년에는 농림어업 종사자 비율이 가장 높았다","1970→2022년 서비스업 비율이 두 배 이상 증가했다","1990년대 이후 광공업 비율이 지속적으로 감소했다","전반적으로 3차 산업화 경향이 지속되었다"], a:2,
+exp:"1970→1990년까지 광공업 비율은 오히려 증가하였다(1970: 14.3%→1990: 27.6%). 1990년대 이후 탈공업화로 감소하였지만 '지속적으로 감소'는 전체 기간에 맞지 않는 표현이다." },
+{ q:"다음은 어느 나라의 상황을 설명한 것이다. 이 나라의 현재 상태로 가장 적절한 것은?\n'이 나라는 과거 1차 산업 중심이었으나 최근 빠르게 산업화가 진행되어 공업이 발달하고 있다. 농촌 인구가 도시로 대거 이동하고 있으며 도시 문제가 심화되고 있다.'",
+opts:["종착 단계에서 교외화가 나타남","탈공업화로 2차 산업 비율이 낮아짐","도시화 가속화 단계에 해당","역도시화로 도시 인구 감소 중"], a:2,
+exp:"급속한 산업화, 이촌향도, 도시 문제 심화 → 도시화 가속화 단계의 전형적 특징이다. 종착 단계는 교외화·도시화율 둔화, 역도시화는 도시 인구 감소 현상이다." },
+{ q:"산업들을 부가가치가 낮은 순서에서 높은 순서로 바르게 나열한 것은?\nA. 어업 B. 금융업 C. 자동차 제조업 D. 연구개발(R&D)",
+opts:["A-C-B-D","A-C-D-B","C-A-B-D","B-D-C-A"], a:0,
+exp:"부가가치 순서: 1차(A.어업) < 2차(C.자동차 제조업) < 3차(B.금융업) < 고차서비스(D.R&D). 산업 고도화에 따라 부가가치가 높아진다." },
+{ q:"다음 빈칸 (가), (나)에 들어갈 개념으로 가장 적절한 것은?\n( 가 )란 산업 구조가 1차 산업 중심에서 2·3차 산업 중심으로 변화하는 현상이며, 이 과정에서 ( 나) 현상이 나타나 도시화를 가속화한다.",
+opts:["(가)도시화 / (나)역도시화","(가)산업화 / (나)이촌향도","(가)탈공업화 / (나)교외화","(가)정보화 / (나)재도시화"], a:1,
+exp:"(가): 1차→2·3차 산업으로의 구조 변화 = 산업화 / (나): 산업화 과정에서 도시 일자리 증가 → 촌락 인구의 도시 이동 = 이촌향도." },
+{ q:"도시화의 의미에 대한 설명으로 옳은 것을 모두 고른 것은?\nㄱ. 도시화율이 높아지는 현상만을 의미한다.\nㄴ. 도시적 생활 양식이 농촌 지역으로 확산되는 것도 포함된다.\nㄷ. 도시화율 = 도시 면적 ÷ 전체 국토 면적 × 100\nㄹ. 도시화는 산업화와 밀접한 관련이 있다.",
+opts:["ㄱ, ㄷ","ㄴ, ㄹ","ㄱ, ㄴ, ㄷ","ㄴ, ㄷ, ㄹ"], a:1,
+exp:"ㄱ: 도시화는 도시화율 상승과 생활 양식 확대 모두 포함 (틀림) / ㄴ: 도시적 생활 양식 확산도 도시화 (맞음) / ㄷ: 도시화율 = 도시 거주 인구 ÷ 전체 인구 (틀림) / ㄹ: 산업화가 도시화를 촉진 (맞음). ㄴ·ㄹ이 정답." },
+{ q:"3차 산업과 고차 서비스업의 관계를 가장 잘 설명한 것은?",
+opts:["고차 서비스업은 3차 산업과 완전히 별개이다","고차 서비스업은 3차 산업 중 전문성·지식이 요구되는 고도화된 영역이다","모든 3차 산업은 고차 서비스업에 해당한다","고차 서비스업은 2차 산업이 고도화된 형태이다"], a:1,
+exp:"고차 서비스업은 3차 산업의 하위 개념으로, 전문성·지식이 요구되는 금융·보험·교육·의료·R&D·IT 등 고도화된 영역이다. 운수업·관광업 등 일반 3차 산업과 구분된다." },
+{ q:"우리나라 1970년대의 산업 구조 변화와 관련된 설명으로 옳지 않은 것은?",
+opts:["1970년 농림어업 종사자 비율은 50% 이상이었다","광공업 비율은 1970~1990년 사이 증가하였다","1990년대 이후 탈공업화가 시작되었다","1970년에 이미 서비스업 비율이 농림어업보다 높았다"], a:3,
+exp:"1970년 농림어업 50.4%, 서비스업 35.3%로 농림어업 비율이 서비스업보다 높았다. 서비스업이 농림어업을 추월한 것은 이후이다." },
+{ q:"산업화와 도시화에 관한 설명 중 옳은 것을 고른 것은?\nㄱ. 산업화로 2·3차 산업이 발달할수록 도시 일자리 증가\nㄴ. 이촌향도 현상으로 촌락의 인구 감소, 도시 인구 증가\nㄷ. 도시화율이 높아질수록 반드시 생활 양식이 도시화됨\nㄹ. 고차 서비스업은 부가가치가 낮아 탈공업화를 촉진",
+opts:["ㄱ, ㄴ","ㄴ, ㄷ","ㄱ, ㄷ, ㄹ","ㄴ, ㄷ, ㄹ"], a:0,
+exp:"ㄱ: 2·3차 산업 발달→도시 일자리 증가 (맞음) / ㄴ: 이촌향도→촌락 인구↓, 도시 인구↑ (맞음) / ㄷ: 도시화율 상승이 반드시 생활 양식 도시화를 의미하지는 않음 (틀림) / ㄹ: 고차 서비스업은 부가가치가 높다 (틀림). ㄱ·ㄴ이 정답." }
+]
+},
+
+/* ─────────────── 탭 1 : 도시화 곡선과 세계의 도시화 ─────────────── */
+1: {
+ox: [
+{ q:"도시화 곡선에서 기울기가 급할수록 도시화 속도가 빠르다.", a:true,
+exp:"도시화 곡선은 시간(x축)에 따른 도시화율(y축) 변화를 나타내며, 기울기가 급할수록 단위 시간당 도시화율 증가폭이 커서 도시화 속도가 빠름을 의미한다." },
+{ q:"도시화 초기 단계에서는 이촌향도로 급속한 도시 인구 증가가 나타난다.", a:false,
+exp:"이촌향도로 급속한 도시 인구 증가가 나타나는 것은 가속화 단계이다. 초기 단계는 1차 산업 중심 농업 사회로 도시화율이 낮고 변화가 느리다." },
+{ q:"선진국의 도시화는 산업 혁명 이후 점진적으로 진행되었다.", a:true,
+exp:"선진국은 18세기 산업 혁명 이후 수백 년에 걸쳐 점진적으로 도시화가 진행되었다. 현재는 종착 단계에 도달해 증가세가 둔화되었다." },
+{ q:"개발도상국은 대부분 도시화 종착 단계에 속해있다.", a:false,
+exp:"개발도상국은 각 국가 개발 정도에 따라 다르지만 대체로 가속화 단계에 속해있다. 종착 단계는 선진국의 특징이다." },
+{ q:"우리나라는 현재 도시화율이 90% 이상으로 종착 단계에 해당한다.", a:true,
+exp:"우리나라의 도시화율은 2022년 기준 91.9%로, 도시화율 증가가 둔화되는 종착 단계에 해당한다." },
+{ q:"현재 도시화율이 가장 높은 대륙은 아시아이다.", a:false,
+exp:"현재 도시화율이 가장 높은 대륙(지역)은 앵글로아메리카이다. 아시아는 도시 인구 절대수는 가장 많지만 도시화율은 낮은 편이다." },
+{ q:"도시화 종착 단계에서는 교외화 및 대도시권 확대가 나타난다.", a:true,
+exp:"종착 단계에서는 도시 내부 포화로 인구·기능이 외곽으로 분산되는 교외화 현상이 나타나고, 대도시권이 확대된다." },
+{ q:"라틴아메리카는 개발도상국이 대부분이지만 도시화율이 높은 편이다.", a:true,
+exp:"라틴아메리카는 경제 수준 대비 도시화율이 매우 높다. 이는 과거 식민지 시절부터 도시가 일찍 발달하였기 때문이다." },
+{ q:"우리나라의 1970년 도시화율은 50%를 처음 넘어섰다.", a:true,
+exp:"우리나라 1960년 도시화율은 39.1%, 1970년에 50.1%로 처음 50%를 넘어섰다. 이 시기 도시 인구가 촌락 인구를 처음 초과하였다." },
+{ q:"개발도상국의 급속한 도시화 과정에서는 주택 부족, 기반 시설 부족 등 도시 문제가 발생하기 쉽다.", a:true,
+exp:"개발도상국은 2차 세계대전 이후 급속한 도시화가 진행되면서 도시 기반 시설이 인구 증가를 따라가지 못해 주택 부족, 환경 오염 등 도시 문제가 심각하게 발생한다." }
+],
+mc: [
+{ q:"도시화 3단계를 순서대로 바르게 나열한 것은?",
+opts:["초기→종착→가속화","가속화→초기→종착","초기→가속화→종착","종착→가속화→초기"], a:2,
+exp:"도시화는 초기(1차 산업 중심 농업사회) → 가속화(이촌향도, 급속한 도시 인구 증가) → 종착(도시화율 둔화, 교외화) 단계 순으로 진행된다." },
+{ q:"<em>종착 단계</em>의 특징으로 옳은 것은?",
+opts:["1차 산업 중심 농업 사회","이촌향도로 급속한 도시 인구 증가","도시화율 증가 둔화, 교외화 현상","주택 부족 및 기반 시설 부족"], a:2,
+exp:"종착 단계는 도시화율이 높은 수준에서 증가가 둔화되고, 교외화 및 대도시권 확대가 나타나는 시기이다." },
+{ q:"우리나라 1960년대 도시화 과정에 대한 설명으로 옳은 것은?",
+opts:["도시화율이 처음으로 50%를 넘어섰다","남동 임해 공업 지역이 발달하였다","경제 개발 정책으로 대도시에 인구 집중","역도시화 현상이 처음 나타났다"], a:2,
+exp:"1960년대에는 경제 개발 정책에 따른 산업화와 이촌향도로 서울·부산 등 대도시에 인구가 집중되었다. 50% 초과는 1970년대, 남동 임해 공업 지역 발달은 1970년대이다." },
+{ q:"선진국의 도시화 특징으로 옳은 것은?",
+opts:["2차 세계대전 이후 급속한 도시화","현재 가속화 단계 진행 중","산업 혁명 이후 점진적 도시화, 현재 종착 단계","도시화율이 매우 낮음"], a:2,
+exp:"선진국은 18세기 산업 혁명 이후 점진적으로 도시화가 진행되어 현재 종착 단계에 도달, 교외화 현상이 나타난다." },
+{ q:"우리나라 <em>1기 신도시</em>(분당·일산·평촌·산본·중동)가 건설된 시기와 목적은?",
+opts:["1980년대 / 교통 혼잡 해소","1990년대 / 대도시 인구 분산","2000년대 / 자족 기능 강화","2010년대 / 서울 접근성 개선"], a:1,
+exp:"1기 신도시는 1990년대 수도권 대도시(서울) 인구 분산을 위해 건설되었다. 2기는 2000년대 자족 기능 강화, 3기는 2010년대 후반 서울 접근성 개선이 목적이었다." },
+{ q:"<em>역도시화</em>에 대한 설명으로 옳은 것은?",
+opts:["가속화 단계에서 나타남","구도심 재개발로 도심 회귀 현상","대도시 인구가 중소도시·농촌으로 이동","산업화 초기에 나타나는 현상"], a:2,
+exp:"역도시화는 대도시 인구가 주거 환경·삶의 질·원격 근무 등의 영향으로 중소도시·농촌으로 이동하는 현상이다. 구도심 재개발로 도심 회귀는 재도시화이다." },
+{ q:"대륙별 도시화율을 높은 순서로 바르게 나열한 것은?",
+opts:["앵글로아메리카>아시아>아프리카","아프리카>아시아>유럽","앵글로아메리카>라틴아메리카>유럽","유럽>앵글로아메리카>아시아"], a:2,
+exp:"도시화율 높은 순: 앵글로아메리카 > 라틴아메리카 > 유럽 > 오세아니아 > 아시아 > 아프리카. 라틴아메리카는 개발도상국이 많지만 식민지 시절부터 도시 발달로 도시화율이 높다." },
+{ q:"우리나라에서 <em>교외화 현상</em>이 처음 나타난 시기는?",
+opts:["1960년대","1970년대","1980년대","2000년대"], a:2,
+exp:"1980년대에 대도시가 과밀해지면서 수도권 주변 지역으로 인구와 기능이 분산되는 교외화 현상이 처음 나타났다." },
+{ q:"다음 중 2기 신도시에 해당하지 않는 것은?",
+opts:["판교","동탄","분당","광교"], a:2,
+exp:"분당은 1990년대에 건설된 1기 신도시이다. 2기 신도시에는 판교·동탄·광교·김포한강·위례 등이 있다." },
+{ q:"<em>재도시화</em>의 의미로 옳은 것은?",
+opts:["농촌에서 도시로 대규모 인구 이동","대도시 인구가 중소도시·농촌으로 이동","구도심 재개발·재생으로 도심 회귀","신도시 건설로 인한 교외화 지속"], a:2,
+exp:"재도시화는 구도심 재개발·재생을 통해 인구가 다시 도심으로 회귀하는 현상이다. 역도시화(대도시→중소도시·농촌)와 반대 방향으로, 현재 두 현상이 동시에 나타나고 있다." }
+],
+hard: [
+{ q:"도시화 단계별 특징을 바르게 연결한 것을 모두 고른 것은?\nㄱ. 초기 단계 - 1차 산업 중심, 도시화율 낮음\nㄴ. 가속화 단계 - 교외화 현상 뚜렷\nㄷ. 종착 단계 - 대도시권 확대, 도시화율 증가 둔화\nㄹ. 가속화 단계 - 주택 부족, 기반 시설 부족 등 도시 문제 심화",
+opts:["ㄱ, ㄴ","ㄱ, ㄷ, ㄹ","ㄴ, ㄷ","ㄱ, ㄴ, ㄷ, ㄹ"], a:1,
+exp:"ㄱ: 초기-1차 산업·낮은 도시화율 (맞음) / ㄴ: 교외화는 종착 단계 특징이다 (틀림) / ㄷ: 종착-대도시권 확대·도시화율 둔화 (맞음) / ㄹ: 가속화-급속 도시화로 인프라 부족 문제 (맞음). ㄱ·ㄷ·ㄹ." },
+{ q:"우리나라 도시화 과정에서 시기별 특징을 바르게 연결한 것은?\n(가) 1960년대 (나) 1970년대 (다) 1980년대 (라) 1990년대",
+opts:["(가)교외화 / (나)1기신도시 / (다)남동임해공업 / (라)대도시인구집중","(가)대도시인구집중 / (나)남동임해공업발달 / (다)교외화 / (라)1기신도시건설","(가)1기신도시 / (나)교외화 / (다)대도시집중 / (라)역도시화","(가)남동임해공업 / (나)교외화 / (다)1기신도시 / (라)대도시집중"], a:1,
+exp:"(가)1960년대: 경제 개발 정책→대도시 인구 집중 / (나)1970년대: 수출 위주 공업화→남동 임해 공업 지역 발달 / (다)1980년대: 대도시 과밀→교외화 / (라)1990년대: 1기 신도시 건설." },
+{ q:"라틴아메리카의 도시화율이 경제 수준에 비해 높은 이유로 가장 적절한 것은?",
+opts:["라틴아메리카 경제 수준이 매우 높기 때문","2차 세계대전 이후 급속한 산업화 때문","과거 식민지 시절부터 도시가 일찍 발달하였기 때문","앵글로아메리카보다 선진국 비율이 높기 때문"], a:2,
+exp:"라틴아메리카는 스페인·포르투갈 식민지 지배 시절 행정·무역 거점으로 도시가 일찍 발달하였다. 현재 경제 수준은 개발도상국 수준이지만 도시화율이 높다." },
+{ q:"신도시와 위성도시에 대한 설명으로 옳은 것을 모두 고른 것은?\nㄱ. 위성도시는 대도시의 기능을 분담하기 위해 형성된다.\nㄴ. 신도시는 대도시에 기능적으로 완전히 종속된다.\nㄷ. 신도시는 주거 외에 상업·업무 등 자족적 기능을 갖추는 것을 목표로 한다.\nㄹ. 위성도시와 신도시는 일부 중첩되기도 한다.",
+opts:["ㄱ, ㄷ, ㄹ","ㄴ, ㄹ","ㄱ, ㄴ, ㄷ","ㄱ, ㄷ"], a:0,
+exp:"ㄱ: 위성도시-대도시 기능 분담 (맞음) / ㄴ: 신도시는 자족 기능을 목표, 완전 종속이 아님 (틀림) / ㄷ: 신도시-자족 기능 (맞음) / ㄹ: 위성도시·신도시는 일부 중첩 가능 (맞음). ㄱ·ㄷ·ㄹ." },
+{ q:"우리나라 도시화율이 가장 급격히 변한 시기와 이유를 바르게 연결한 것은?",
+opts:["1980~1990년대 / 3기 신도시 건설","1960~1980년대 / 경제 개발 정책과 산업화에 따른 이촌향도","2000~2010년대 / 역도시화","1950~1960년대 / 광복 이후 국토 재건"], a:1,
+exp:"우리나라 도시화율은 1960~1980년에 39.1%→68.7%로 20년간 약 30%p 급상승하였다. 경제 개발 정책에 따른 급속한 산업화와 이촌향도가 원인이다." },
+{ q:"다음 자료의 나라가 속하는 도시화 단계와 그 특징으로 옳은 것은?\n'A국은 2차 세계대전 이후 빠르게 산업화가 진행되면서 도시화율이 급상승하였다. 현재 주택난, 교통 혼잡, 환경 오염 등의 도시 문제가 심각하다.'",
+opts:["종착 단계 - 교외화 현상","가속화 단계 - 이촌향도, 도시 문제 심화","초기 단계 - 1차 산업 중심","역도시화 단계 - 도시 인구 감소"], a:1,
+exp:"2차 세계대전 이후 급속한 산업화, 이촌향도, 도시 문제 심화 → 개발도상국의 가속화 단계 특징이다." },
+{ q:"우리나라 최근 도시화의 특징으로 옳지 않은 것은?",
+opts:["역도시화와 재도시화가 동시에 나타난다","원격 근무 확산이 역도시화를 촉진한다","재도시화는 구도심 재개발·재생을 통해 나타난다","최근 도시화율이 다시 가파르게 상승하고 있다"], a:3,
+exp:"우리나라는 이미 종착 단계로 도시화율이 91.9%에서 증가 속도가 매우 둔화되었다. 최근에는 역도시화와 재도시화가 동시에 나타나고 있다." },
+{ q:"도시화 단계와 선진국·개발도상국의 현재 상태를 바르게 연결한 것은?",
+opts:["선진국-가속화 / 개발도상국-종착","선진국-초기 / 개발도상국-가속화","선진국-종착 / 개발도상국-가속화","선진국-가속화 / 개발도상국-초기"], a:2,
+exp:"현재 선진국은 도시화율이 높고 증가세가 둔화된 종착 단계, 개발도상국은 여전히 급속한 도시화가 진행 중인 가속화 단계에 대체로 속한다." },
+{ q:"우리나라 신도시 건설 목적으로 옳지 않은 것은?",
+opts:["1기 신도시: 대도시 인구 분산","2기 신도시: 주택 공급 확대·자족 기능 강화","3기 신도시: 수도권 주택 공급 확대·서울 접근성 개선","모든 신도시: 농업 생산성 향상"], a:3,
+exp:"신도시는 수도권 인구 분산, 주택 공급, 자족 기능 강화 등을 목적으로 건설되었다. 농업 생산성 향상과는 무관하며, 오히려 농경지가 주거·상업 지역으로 변화한다." },
+{ q:"도시화 곡선에 대한 설명으로 옳은 것을 모두 고른 것은?\nㄱ. S자형 곡선으로 나타난다.\nㄴ. 기울기가 가장 급한 부분이 가속화 단계이다.\nㄷ. 종착 단계에서는 도시화율이 0%에 가까워진다.\nㄹ. 개발도상국은 선진국보다 뒤늦게 가속화 단계를 경험한다.",
+opts:["ㄱ, ㄴ","ㄱ, ㄴ, ㄷ","ㄱ, ㄴ, ㄹ","ㄴ, ㄷ, ㄹ"], a:2,
+exp:"ㄱ: S자형 곡선 (맞음) / ㄴ: 가속화 단계에서 기울기 가장 급함 (맞음) / ㄷ: 종착 단계는 80~90% 이상의 높은 수준에서 증가 둔화 (틀림) / ㄹ: 개발도상국은 2차 세계대전 이후 뒤늦게 가속화 단계 경험 (맞음)." }
+]
+},
+
+/* ─────────────── 탭 2 : 생활공간의 변화 ─────────────── */
+2: {
+ox: [
+{ q:"도심에는 상업·금융 관리 기능과 기업 본사가 집중된다.", a:true,
+exp:"도심은 교통이 편리하고 지가가 높아 높은 지가를 지불할 수 있는 상업·금융·업무 기능과 기업 본사가 집중된다." },
+{ q:"인구 공동화 현상이란 도심에서 야간 인구가 주간보다 많아지는 현상이다.", a:false,
+exp:"인구 공동화 현상은 도심에서 낮(주간)에 유동인구가 집중되었다가 밤(야간)에 감소하는 현상이다. 야간에는 주거 지역으로 이동하여 상주인구가 적어진다." },
+{ q:"집심 현상은 도시의 인구·기능이 중심부로 집중되는 현상이다.", a:true,
+exp:"집심 현상은 도시의 인구·산업·기능이 도심(중심부)으로 모이는 현상으로, 상업·업무 기능과 교통이 도심에 집중되면서 나타난다." },
+{ q:"서울의 대표적 도심 지역은 강남구와 송파구이다.", a:false,
+exp:"서울의 대표적 도심은 중구와 종로구(CBD 지역)이다. 강남구와 송파구(잠실)는 부도심에 해당한다." },
+{ q:"위성도시는 대도시의 기능을 분담하기 위해 외곽 지역에 형성된다.", a:true,
+exp:"위성도시는 대도시의 인구 과밀을 완화하고 기능을 분담하기 위해 외곽 지역에 형성된 도시로, 기능적으로 대도시와 밀접하게 연결되어 있다." },
+{ q:"신도시는 대도시에 완전히 종속되며 자족 기능이 없다.", a:false,
+exp:"신도시는 주거 기능뿐 아니라 상업·업무 기능 등 자족적 기능을 갖추는 것을 목표로 계획적으로 조성된다." },
+{ q:"도시 내부의 지역 분화는 접근성과 지가 차이에 따라 나타난다.", a:true,
+exp:"도시 내부는 접근성과 지가 차이에 따라 중심 업무·상업·주거·공업 지역 등으로 기능별 지역 분화가 나타난다." },
+{ q:"도시화로 논밭 면적은 증가하고 대지 면적은 감소한다.", a:false,
+exp:"도시화로 농경지(논밭)가 주거·상업·업무 지역으로 변화하여 대지·도로 면적은 증가하고, 논밭·임야 면적은 감소한다." },
+{ q:"교외화로 인해 대도시권이 형성된다.", a:true,
+exp:"교외화로 도시 인구·기능이 주변 지역으로 분산되고, 교통 발달로 통근 가능한 범위가 넓어지면서 중심 도시와 주변 지역이 기능적으로 연결되는 대도시권이 형성된다." },
+{ q:"서울 구로구·금천구는 현재도 주요 제조업 공업 지역으로 기능한다.", a:false,
+exp:"서울 구로구·금천구는 과거 구로 공단을 중심으로 공업 지역이었으나, 현재는 첨단 산업·업무 지역(IT·벤처 등)으로 변화하였다." }
+],
+mc: [
+{ q:"도시의 중심 업무 기능이 도심에 집중하는 가장 큰 이유는?",
+opts:["인구 밀도가 낮아서","높은 지가를 지불할 수 있는 기능이 입지하기 때문","교통이 불편해서","주거 환경이 좋아서"], a:1,
+exp:"도심은 교통망이 발달하고 유동인구가 많아 지가가 높다. 상업·금융 등 높은 지가를 지불할 수 있는 기능만이 도심에 입지할 수 있다." },
+{ q:"<em>인구 공동화 현상</em>이 나타나는 지역과 시간대로 바르게 연결한 것은?",
+opts:["주거 지역 / 주간","도심 / 야간","공업 지역 / 주간","외곽 지역 / 야간"], a:1,
+exp:"인구 공동화 현상은 도심에서 야간에 나타난다. 도심은 낮에 유동인구가 많지만 밤에는 주거 지역으로 이동하여 인구가 감소한다." },
+{ q:"서울의 <em>부도심</em>에 해당하는 지역으로 옳은 것은?",
+opts:["중구, 종로구","노원구, 도봉구","영등포구(여의도), 강남구, 송파구(잠실)","구로구, 금천구"], a:2,
+exp:"서울의 부도심은 도심 기능 분산, 상업 기능 밀집 지역으로 영등포구(여의도), 강남구, 송파구(잠실)가 대표적이다." },
+{ q:"근교 농촌 지역에서 주로 재배하는 농작물로 옳은 것은?",
+opts:["벼, 보리","신선도가 중요한 채소·원예 작물","목화, 면화","오렌지, 코코아"], a:1,
+exp:"근교 농촌 지역은 대도시 인근에 위치하여 빠른 공급이 가능하므로 신선도가 중요한 채소·원예 작물을 주로 재배하고 낙농업이 이루어진다." },
+{ q:"이심 현상의 원인으로 가장 거리가 먼 것은?",
+opts:["교외화 진행","신도시 개발","교통 발달","도심 지가 하락으로 기업 본사 이전"], a:3,
+exp:"이심 현상은 도시 기능이 외곽으로 분산되는 현상으로 교외화·신도시 개발·교통 발달이 원인이다. 도심 지가는 하락이 아닌 상승이 이심 현상을 유발한다." },
+{ q:"도시화로 인한 토지 이용 변화로 옳은 것은?",
+opts:["논밭 면적 증가","임야 면적 증가","대지 및 도로 면적 증가","녹지 공간 증가"], a:2,
+exp:"도시화가 진행되면 농경지(논밭)·임야가 주거·상업·업무·도로 용도로 전환되어 대지와 도로 면적이 증가한다." },
+{ q:"대도시권의 범주에 포함되는 것으로 옳지 않은 것은?",
+opts:["중심 도시","교외 지역","위성 도시","다른 나라의 대도시"], a:3,
+exp:"대도시권의 범주는 중심 도시, 교외 지역, 위성 도시, 배후 농촌 지역을 포함한다. 다른 나라의 대도시는 기능적으로 연결되지 않으므로 포함되지 않는다." },
+{ q:"집심 현상으로 나타날 수 있는 문제로 옳은 것은?",
+opts:["도심 공동화","지가 하락","교통 혼잡과 환경 문제","농촌 인구 증가"], a:2,
+exp:"집심 현상으로 도심에 인구·기능이 과도하게 집중되면 지가 상승, 교통 혼잡, 환경 문제 등이 발생한다." },
+{ q:"도시 규모 확대로 나타나는 변화로 옳지 않은 것은?",
+opts:["시가지 면적 확대","농경지가 주거·상업 지역으로 변화","도시 생태 환경 개선","고층 건물 증가"], a:2,
+exp:"도시 규모 확대로 녹지 공간이 감소하고 도시 생태 환경이 악화된다. 포장 면적 확대, 하천 직강화 등으로 생태 환경에 부정적 영향이 나타난다." },
+{ q:"토지 이용의 집약화에 대한 설명으로 옳은 것은?",
+opts:["농경지 중심의 넓은 토지 이용","고층 건물 증가 및 수직적 공간 확대","주거 지역의 외곽 이동","도심 인구 감소"], a:1,
+exp:"토지 이용의 집약화는 지가가 높은 도심에서 제한된 면적을 효율적으로 활용하기 위해 고층 건물이 증가하고 도시 공간이 수직적으로 확대되는 현상이다." }
+],
+hard: [
+{ q:"서울의 지역별 특성을 바르게 연결한 것을 모두 고른 것은?\nㄱ. 중구·종로구 - 상업·금융 집중, 인구 공동화 현상\nㄴ. 노원구·도봉구 - 상주인구 많음, 주거 기능 집중\nㄷ. 영등포구(여의도) - 도심의 기능 분산, 부도심\nㄹ. 구로구·금천구 - 현재도 주요 제조업 공업 지역",
+opts:["ㄱ, ㄴ, ㄷ","ㄱ, ㄴ, ㄹ","ㄴ, ㄷ, ㄹ","ㄱ, ㄷ, ㄹ"], a:0,
+exp:"ㄱ: 중구·종로구는 도심(CBD)으로 상업·금융 집중, 인구 공동화 (맞음) / ㄴ: 노원구·도봉구는 외곽 주거 지역 (맞음) / ㄷ: 영등포구(여의도)는 부도심 (맞음) / ㄹ: 구로구·금천구는 현재 첨단 산업·업무 지역으로 변화 (틀림)." },
+{ q:"도시 내부 지역 분화에 대한 설명으로 옳은 것을 모두 고른 것은?\nㄱ. 도심은 지가가 높아 상업·업무 기능이 집중된다.\nㄴ. 외곽으로 갈수록 지가가 높아진다.\nㄷ. 공업 지역은 도심과 외곽 주거 지역 사이에 위치하는 경향이 있다.\nㄹ. 도심에서의 토지 이용은 조방적이다.",
+opts:["ㄱ, ㄷ","ㄴ, ㄷ","ㄱ, ㄴ, ㄷ","ㄴ, ㄹ"], a:0,
+exp:"ㄱ: 도심-지가 高→상업·업무 집중 (맞음) / ㄴ: 도심에서 외곽으로 갈수록 지가가 낮아진다 (틀림) / ㄷ: 공업 지역은 도심 주변~중간 지역 (맞음) / ㄹ: 도심은 집약적 토지 이용. 조방적은 외곽·농촌 특성 (틀림)." },
+{ q:"다음 자료에 나타나는 현상의 이름과 그 설명으로 옳은 것은?\n'서울 도심(중구)의 주간 인구는 야간 인구보다 훨씬 많다. 반면 외곽(노원구)의 야간 인구는 주간 인구보다 훨씬 많다.'",
+opts:["도심의 야간 인구 감소는 인구 공동화 현상의 결과이다","노원구는 상업·업무 기능이 집중된 도심이다","주간 유동인구는 외곽에서 더 많다","이 현상은 도시화 초기 단계에서 주로 나타난다"], a:0,
+exp:"도심의 주간 인구>야간 인구: 상업·업무 기능으로 낮에 유동인구 집중, 밤에 주거 지역으로 이동 → 인구 공동화 현상. 노원구는 외곽 주거 지역이다." },
+{ q:"위성도시와 신도시를 구분하는 핵심 기준으로 옳은 것은?",
+opts:["인구 규모","자족적 기능 보유 여부와 계획적 조성 여부","도심까지의 거리","건설 시기"], a:1,
+exp:"위성도시는 대도시 기능 분담을 위해 자연 발생적으로 형성된 도시이고, 신도시는 인구 분산을 위해 계획적으로 조성하고 자족 기능을 갖추는 것이 목표이다." },
+{ q:"이심 현상과 집심 현상이 동시에 나타나는 도시의 상황으로 가장 옳은 것은?",
+opts:["도심에는 상업·업무 기능 집중, 주거·공업 기능은 외곽으로 이동하는 상황","도심 인구 증가, 외곽 인구 감소 상황","농촌에서 도시로 이촌향도 현상","모든 기능이 균등하게 분산되는 상황"], a:0,
+exp:"실제 도시에서는 집심(상업·업무 기능이 도심으로 집중)과 이심(주거·공업 기능이 외곽으로 분산)이 동시에 나타난다. 이것이 도시 내부 지역 분화의 핵심 메커니즘이다." },
+{ q:"대도시권의 구성 요소와 특성을 바르게 연결한 것을 모두 고른 것은?\nㄱ. 중심 도시 - 상업·업무 기능 집중, 통근자 흡수\nㄴ. 위성 도시 - 대도시의 기능 분담, 기능적으로 대도시와 연결\nㄷ. 배후 농촌 지역 - 도시·농촌 생활양식 공존, 신선 채소·낙농업\nㄹ. 교외 지역 - 대도시 영향권 외부, 독립적 경제 운영",
+opts:["ㄱ, ㄴ","ㄱ, ㄴ, ㄷ","ㄴ, ㄷ, ㄹ","ㄱ, ㄴ, ㄷ, ㄹ"], a:1,
+exp:"ㄱ: 중심 도시-상업·업무 집중 (맞음) / ㄴ: 위성도시-기능 분담·대도시 연결 (맞음) / ㄷ: 배후 농촌-도시·농촌 혼재, 신선 채소·낙농업 (맞음) / ㄹ: 교외 지역은 대도시 영향권 내에 위치 (틀림)." },
+{ q:"도시 내 포장 면적 증가로 나타나는 환경 변화로 옳은 것을 모두 고른 것은?\nㄱ. 불투수성 증가로 지하수 함양량 감소\nㄴ. 녹지 공간 증가로 생태 환경 개선\nㄷ. 도시 홍수 발생 위험 증가\nㄹ. 열섬 현상 심화",
+opts:["ㄱ, ㄷ, ㄹ","ㄴ, ㄷ","ㄱ, ㄴ","ㄴ, ㄹ"], a:0,
+exp:"ㄱ: 포장→불투수성 증가→지하수 함양량 감소 (맞음) / ㄴ: 포장 면적 증가→녹지 감소·생태 환경 악화 (틀림) / ㄷ: 빗물 하천 유출 빨라져 도시 홍수 위험 증가 (맞음) / ㄹ: 비열 차이·인공 열로 열섬 심화 (맞음)." },
+{ q:"서울 도시 내부 구조를 설명하는 내용 중 가장 옳지 않은 것은?",
+opts:["중구·종로구는 CBD로 기업 본사와 금융 기관이 밀집","강남구는 서울의 대표적인 부도심으로 상업·업무 기능 발달","노원구는 도심 기능 집중 지역으로 주간 유동인구가 많다","구로구는 과거 공업 지역이었다가 현재 첨단 산업 지역으로 변화"], a:2,
+exp:"노원구는 서울 외곽의 대표적인 주거 지역으로 야간 상주인구가 많다. 도심 기능 집중으로 주간 유동인구가 많은 곳은 중구·종로구이다." },
+{ q:"도시화로 인한 생활공간 변화의 특징을 옳게 설명한 것을 모두 고른 것은?\nㄱ. 도시 규모 확대→시가지 면적 증가, 농경지 감소\nㄴ. 토지 이용 집약화→고층 건물 증가, 수직적 공간 확대\nㄷ. 대도시권 형성→통근·통학권 축소\nㄹ. 교외화→도시 인구·기능이 주변 지역으로 분산",
+opts:["ㄱ, ㄴ, ㄹ","ㄱ, ㄷ, ㄹ","ㄴ, ㄷ","ㄱ, ㄴ, ㄷ, ㄹ"], a:0,
+exp:"ㄱ: 도시 규모 확대→시가지 확대, 농경지→주거·상업 지역으로 변화 (맞음) / ㄴ: 집약화→고층 건물·수직적 확대 (맞음) / ㄷ: 대도시권 형성→교통 발달로 통근·통학권이 오히려 확대된다 (틀림) / ㄹ: 교외화→주변 지역으로 분산 (맞음)." },
+{ q:"다음 자료를 보고 나타나는 현상으로 옳은 것은?\n'도심 A의 주간 인구 15,000명 / 야간 5,000명. 외곽 B의 주간 3,000명 / 야간 10,000명.'",
+opts:["A는 주거 기능이 집중된 지역이다","B 지역이 A보다 지가가 높다","A에서 인구 공동화 현상이 나타나고 있다","B에서 집심 현상이 나타나고 있다"], a:2,
+exp:"도심 A: 주간 15,000명→야간 5,000명으로 감소 = 낮에 인구 집중, 밤에 감소하는 인구 공동화 현상. B지역은 야간 인구>주간 인구인 외곽 주거 지역이다." }
+]
+}
+};
+
+/* ─────────────── 탭 3 : 생활양식·문제·해결방안 ─────────────── */
+QUIZ_DATA[3] = {
+ox: [
+{ q:"산업화·도시화로 핵가족 및 1인 가구의 비중이 증가하였다.", a:true,
+exp:"개인주의 가치관 확산으로 핵가족화가 진행되고 1인 가구 비중이 증가하였다. 우리나라 1인 가구 비율은 1980년 4.8%에서 2015년 27.2%로 급증하였다." },
+{ q:"열섬 현상의 강도는 여름보다 겨울에, 낮보다 밤에 더 뚜렷하다.", a:true,
+exp:"열섬 현상의 강도는 여름이 아닌 겨울에, 낮보다 밤에 더 뚜렷하게 나타난다. 도심과 외곽의 기온 차이가 겨울 야간에 가장 크기 때문이다." },
+{ q:"도시의 포장 면적 확대는 도시 홍수 발생 위험을 낮춘다.", a:false,
+exp:"포장 면적 확대로 빗물이 땅속으로 침투하지 못하고 지표로 빠르게 유출되어 하천 수위가 급상승, 도시 홍수 발생 위험이 오히려 증가한다." },
+{ q:"인간 소외 현상은 인간이 만들어 낸 물질이 거꾸로 인간을 지배하게 되는 현상이다.", a:true,
+exp:"인간 소외 현상은 문명·사회 조직에 의해 인간이 주체로서의 지위를 잃고, 인간성이 손상되어 인간다운 삶을 누리지 못하는 현상이다." },
+{ q:"교통 혼잡 비용은 환경 오염 비용, 교통사고 비용과 함께 사회적 비용에 포함된다.", a:true,
+exp:"교통 혼잡 비용은 교통 수요 증가에 따라 발생하는 사회적 비용 중 하나로, 환경 오염 비용·교통사고 비용과 함께 도시 문제로 인한 사회적 비용을 구성한다." },
+{ q:"신도시 건설은 개인적 차원의 주택 문제 해결 방안이다.", a:false,
+exp:"신도시 건설은 국가·지방자치단체 주도의 사회적(제도적) 차원의 해결 방안이다. 개인적 차원은 쓰레기 분리수거, 대중교통 이용, 타인 존중 등이다." },
+{ q:"도시적 생활 양식 확산으로 편의점·복합 쇼핑몰 등의 상업 시설이 발달한다.", a:true,
+exp:"산업화·도시화에 따른 도시적 생활 양식의 확대로 편의점, 대형 마트, 복합 쇼핑몰, 백화점 등 다양한 상업 시설이 발달한다." },
+{ q:"인공 열로 인한 열섬 현상은 도심을 중심으로 동심원상의 기온 분포를 보인다.", a:true,
+exp:"열섬 현상은 도심을 중심으로 기온이 높고 외곽으로 갈수록 낮아지는 동심원상의 기온 분포를 나타낸다." },
+{ q:"거주자 우선 주차 제도는 개인적 차원의 교통 문제 해결 방안이다.", a:false,
+exp:"거주자 우선 주차 제도는 제도적 장치이므로 사회적 차원의 교통 문제 해결 방안이다. 개인적 차원의 교통 문제 해결은 대중교통 이용 등이다." },
+{ q:"포장 도로의 불투수성이 높으면 도시의 상대 습도가 낮아진다.", a:true,
+exp:"포장 도로는 투수성이 매우 낮아 지하수 흡수가 불가능하고 식생도 부족하여 수분 보존이 어렵다. 따라서 강수량 대부분이 지표로 유출되어 상대 습도가 낮아진다." }
+],
+mc: [
+{ q:"산업화·도시화로 인한 <em>사회 문제</em>에 해당하지 않는 것은?",
+opts:["실업 문제 발생","인간 소외 현상","빈부 격차 심화","도시 홍수 발생"], a:3,
+exp:"도시 홍수는 포장 면적 증가로 인한 생태 환경 변화에 해당한다. 실업 문제, 인간 소외 현상, 빈부 격차 심화는 모두 사회 문제이다." },
+{ q:"<em>열섬 현상</em>이 심해지는 원인으로 가장 거리가 먼 것은?",
+opts:["포장 면적 증가","인공 시설물 증가","녹지 공간 감소","강수량 증가"], a:3,
+exp:"강수량 증가는 지표 냉각 효과가 있어 열섬 현상을 오히려 완화할 수 있다. 포장 면적·인공 시설물 증가·녹지 감소는 열섬 현상을 심화시킨다." },
+{ q:"도시 문제의 사회적 해결 방안으로 옳지 않은 것은?",
+opts:["대중교통 수단 확충","공영 주차장 확대","신도시 건설","쓰레기 분리수거 실천"], a:3,
+exp:"쓰레기 분리수거 실천은 개인적 차원의 환경 문제 해결 방안이다. 대중교통 확충·공영 주차장 확대·신도시 건설은 사회적 차원이다." },
+{ q:"직업 분화로 나타나는 현상으로 옳은 것은?",
+opts:["삶의 동질성 증대","직업 간 소득 격차 축소","삶의 다양화로 이질성 증대","1차 산업 종사자 증가"], a:2,
+exp:"2·3차 산업 발달로 직업이 분화·전문화되면서 삶이 다양해지고 이질성이 증대된다. 직업 간 소득 차이도 발생한다." },
+{ q:"<em>인간 소외 현상</em>에 대한 설명으로 옳은 것은?",
+opts:["인간이 자연을 지배하는 현상","인간이 만든 물질·조직에 의해 인간다운 삶을 잃는 현상","도시 인구가 농촌으로 이동하는 현상","기계화로 생산성이 증가하는 현상"], a:1,
+exp:"인간 소외 현상은 인간이 만들어 낸 물질과 사회 조직이 거꾸로 인간을 지배하게 되어, 인간이 주체성을 잃고 인간다운 삶을 누리지 못하는 현상이다." },
+{ q:"도시화로 인한 <em>생태 환경의 변화</em>로 옳은 것은?",
+opts:["도시 내 녹지 공간 증가","인공 열로 열섬·열대야 현상 발생","하천 수질 개선","생물 다양성 증가"], a:1,
+exp:"도시화로 인공 열 발생, 포장 면적 증가, 녹지 감소 등으로 열섬 현상과 열대야 현상이 발생한다." },
+{ q:"개인주의 가치관 확산에 따른 사회 변화로 옳은 것은?",
+opts:["확대 가족 비율 증가","이웃 간 유대 관계 강화","핵가족 및 1인 가구 비율 증가","공동체 의식 강화"], a:2,
+exp:"개인주의 가치관 확산으로 핵가족 및 1인 가구의 비중이 증가하고, 이웃 간 유대 관계가 낮아지며, 공동체보다 개인의 자유·권리를 중시하는 경향이 나타난다." },
+{ q:"도시화 이후 하천 수위 변화의 특징으로 옳은 것은?",
+opts:["강우 시 하천 수위 상승 속도가 느려진다","하천 최고 수위가 낮아진다","강우 시 하천 수위 상승 속도가 빨라지고 최고 수위가 높아진다","강수량과 관계없이 하천 수위가 일정하다"], a:2,
+exp:"도시화로 포장 면적이 증가하면 빗물이 땅속으로 침투하지 못하고 하천으로 빠르게 유출되어, 강우 시 하천 수위 상승 속도가 빨라지고 최고 수위도 높아진다." },
+{ q:"기계화와 자동화로 인한 변화로 옳은 것은?",
+opts:["노동 수요 증가","근로자의 노동 시간 단축 및 여가 시간 증가","1차 산업 종사자 증가","공동체 의식 강화"], a:1,
+exp:"기계화·자동화는 생산 효율을 높이고 근로자의 노동 시간을 단축시켜 여가 시간이 증가한다. 동시에 노동 수요가 감소하여 실업 문제가 발생하기도 한다." },
+{ q:"다음 중 산업화·도시화로 인한 <em>도시 문제</em>에 해당하는 것을 모두 고른 것은?\nA. 주택 부족 B. 실업 문제 C. 교통 체증 D. 대기 오염",
+opts:["A, B, C","A, C, D","B, D","A, B, C, D"], a:1,
+exp:"도시 문제: 주택 문제(A), 교통 문제(C), 환경 문제(D.대기오염) / 사회 문제: 실업 문제(B). 순수 도시 문제는 A, C, D이다." }
+],
+hard: [
+{ q:"산업화·도시화로 인한 문제를 사회적·개인적 차원으로 분류한 것으로 옳은 것은?\nㄱ. 쓰레기 분리수거 실천 - 개인적 차원\nㄴ. 소외 계층 사회 복지 제도 확대 - 개인적 차원\nㄷ. 거주자 우선 주차 제도 - 사회적 차원\nㄹ. 지나친 개인주의 태도 지양 - 사회적 차원",
+opts:["ㄱ, ㄷ","ㄴ, ㄹ","ㄱ, ㄴ, ㄷ","ㄴ, ㄷ, ㄹ"], a:0,
+exp:"ㄱ: 쓰레기 분리수거-개인적 차원 (맞음) / ㄴ: 소외 계층 복지 확대-국가·사회 주도이므로 사회적 차원 (틀림) / ㄷ: 거주자 우선 주차-제도적 장치이므로 사회적 차원 (맞음) / ㄹ: 개인주의 태도 지양-개인적 차원 (틀림)." },
+{ q:"도시 홍수가 발생하는 인과관계로 바르게 나타낸 것은?",
+opts:["녹지 증가→증발산↑→하천 수위 상승","포장 면적 증가→불투수성↑→빗물 하천 유출 빠름→하천 수위 급상승","인공 열 증가→강수량 증가→하천 범람","지하수 증가→토양 포화→지표 유출 증가"], a:1,
+exp:"도시 홍수 인과관계: 도시화→포장 면적↑→불투수성↑(빗물이 땅속 침투 못함)→빗물이 하천으로 빠르게 유출→강우 직후 하천 수위 급상승→도시 홍수 위험 증가." },
+{ q:"열섬 현상에 대한 설명으로 옳은 것을 모두 고른 것은?\nㄱ. 도심을 중심으로 동심원상의 기온 분포를 나타낸다.\nㄴ. 열섬 강도는 여름에 더 뚜렷하다.\nㄷ. 포장 도로의 불투수성이 높을수록 열섬 현상이 강해진다.\nㄹ. 녹지 공간 확충은 열섬 현상 완화에 도움이 된다.",
+opts:["ㄱ, ㄷ, ㄹ","ㄴ, ㄷ","ㄱ, ㄴ, ㄷ","ㄱ, ㄷ"], a:0,
+exp:"ㄱ: 도심 중심 동심원상 기온 분포 (맞음) / ㄴ: 열섬 강도는 여름보다 겨울에, 낮보다 밤에 뚜렷 (틀림) / ㄷ: 불투수성↑→수분 증발 감소→비열 차이→열섬 강화 (맞음) / ㄹ: 녹지→증발산 냉각 효과→열섬 완화 (맞음)." },
+{ q:"산업화·도시화가 생활양식에 미친 영향으로 가장 종합적으로 설명한 것은?",
+opts:["오직 긍정적인 변화만 가져왔다","생활 수준 향상·직업 다양화 등 긍정적 측면과 인간 소외·공동체 약화 등 부정적 측면이 공존한다","개인주의 가치관이 완전히 사라졌다","모든 사람의 생활 수준이 균등하게 향상되었다"], a:1,
+exp:"산업화·도시화는 생활 수준 향상·직업 분화 등 긍정적 측면과 함께 인간 소외·개인주의 확산·공동체 약화·빈부 격차 등 부정적 측면이 동시에 나타난다." },
+{ q:"인간 소외 현상을 극복하기 위한 방안으로 가장 적절한 것은?",
+opts:["기계화·자동화를 전면 중단한다","모든 산업화를 역행시킨다","인간 존엄성 중시·타인 존중 자세 확립, 공동체 의식 함양","1인 가구를 금지한다"], a:2,
+exp:"인간 소외 현상 극복을 위한 개인적 차원의 방안은 인간의 존엄성을 중시하고 타인을 존중하는 자세 확립, 지나친 개인주의 태도 지양, 공동체 구성원과의 연대 의식 함양 등이다." },
+{ q:"도시 문제·사회 문제·생태 환경 변화를 각각 옳게 분류한 것은?",
+opts:["교통 체증-도시문제 / 실업-사회문제 / 열섬 현상-생태환경변화","주택 부족-사회문제 / 인간소외-도시문제 / 도시홍수-생태환경변화","범죄 증가-생태환경변화 / 빈부격차-도시문제 / 대기오염-사회문제","교통 혼잡-사회문제 / 쓰레기-생태환경변화 / 실업-도시문제"], a:0,
+exp:"도시 문제: 주택·교통·환경(대기·수질·토양·소음)·범죄 / 사회 문제: 실업·인간 소외·빈부 격차·계층 갈등 / 생태 환경 변화: 열섬·열대야·도시 홍수·녹지 감소. 교통 체증-도시문제, 실업-사회문제, 열섬-생태환경변화가 정확한 분류이다." },
+{ q:"기계화·자동화의 영향으로 옳은 것을 모두 고른 것은?\nㄱ. 근로자의 노동 시간 단축\nㄴ. 노동 수요 감소→실업 문제 발생\nㄷ. 여가 시간 증가\nㄹ. 모든 계층의 소득이 균등하게 증가",
+opts:["ㄱ, ㄷ","ㄱ, ㄴ, ㄷ","ㄴ, ㄷ, ㄹ","ㄱ, ㄴ, ㄷ, ㄹ"], a:1,
+exp:"ㄱ: 기계화·자동화→생산 효율↑→노동 시간 단축 (맞음) / ㄴ: 자동화→노동 수요 감소→실업 문제 (맞음) / ㄷ: 노동 시간 단축→여가 시간 증가 (맞음) / ㄹ: 기계화 혜택이 균등하지 않아 빈부격차 심화 (틀림)." },
+{ q:"도시 문제 해결 방안과 분류(사회적/개인적)를 바르게 연결한 것을 모두 고른 것은?\nA. 신도시 건설 - 사회적 차원\nB. 대중교통 이용 - 개인적 차원\nC. 거주자 우선 주차 제도 - 개인적 차원\nD. 공동체 구성원과의 연대 의식 함양 - 개인적 차원",
+opts:["A, B, D","A, C, D","B, C, D","A, B, C, D"], a:0,
+exp:"A: 신도시 건설-사회적 차원 (맞음) / B: 대중교통 이용-개인적 차원 (맞음) / C: 거주자 우선 주차-제도적 장치이므로 사회적 차원 (틀림) / D: 연대 의식 함양-개인의 의식이므로 개인적 차원 (맞음)." },
+{ q:"산업화·도시화가 가져온 변화 중 부정적 측면에 해당하지 않는 것은?",
+opts:["인간 소외 현상 발생","이웃 간 유대 관계 약화","직업 분화·전문화로 삶의 다양성 증가","빈부 격차 심화"], a:2,
+exp:"직업 분화·전문화로 삶이 다양해지는 것은 긍정적 측면이다. 인간 소외, 이웃 간 유대 약화, 빈부 격차 심화는 산업화·도시화의 부정적 측면에 해당한다." },
+{ q:"다음 자료에서 나타나는 현상으로 옳은 것은?\n'서울 도심의 주간 인구 15,000명→야간 5,000명. 외곽 노원구 야간 인구>주간 인구. 포장 면적 확대로 집중 호우 시 침수 피해 잦아짐. 도심 기온이 외곽보다 3~4℃ 높음.'",
+opts:["제시된 현상은 모두 도시화의 긍정적 효과이다","인구 공동화·도시 홍수·열섬 현상이 복합적으로 나타나고 있다","교외화 현상이 완전히 해소되었다","모든 현상의 원인은 역도시화이다"], a:1,
+exp:"도심 주간↑야간↓=인구 공동화 / 포장 면적 확대→집중 호우 침수=도시 홍수 / 도심 기온>외곽=열섬 현상. 세 가지 도시화 부작용이 동시에 나타나고 있다." }
+]
+};
+
+/* ─────────────── 탭 4 : 교통·통신 및 과학기술의 발달 ─────────────── */
+QUIZ_DATA[4] = {
+ox: [
+{ q:"4차 산업혁명은 지능 정보 기술이 다양한 산업에 융합되어 사회·경제 전반에 혁신적 변화를 가져오는 현상이다.", a:true,
+exp:"4차 산업혁명은 AI, IoT, 빅데이터, 클라우드 등 지능 정보 기술이 다양한 산업·서비스 분야에 융합되어 사회·경제 전반에 혁신적 변화를 가져오는 현상이다." },
+{ q:"빨대 효과는 새로운 교통수단 개통으로 주변 도시의 인구·경제력이 대도시로 유입되는 현상이다.", a:true,
+exp:"빨대 효과는 KTX 등 새로운 교통수단이 개통되면 주변 도시의 인구·경제력이 빨대로 빨리듯 대도시로 유입되는 현상이다. 역류 효과의 일종이다." },
+{ q:"공간적 분업에서 생산 공장은 주로 선진국에 위치한다.", a:false,
+exp:"공간적 분업에서 생산 공장은 생산비 절감을 위해 주로 개발도상국(노동력·토지 비용 저렴)에 위치하며, 본사·연구소는 선진국에 입지한다." },
+{ q:"GIS는 지리적 위치 정보를 기반으로 공간 자료를 수집·저장·관리·분석·시각화하는 시스템이다.", a:true,
+exp:"GIS(지리정보체계)는 지리적 위치 정보를 기반으로 공간 자료를 수집·저장·관리·분석·시각화하는 시스템으로, 멸종위기동물 관리·생태환경 유지 등에 활용된다." },
+{ q:"오버투어리즘은 관광객이 너무 적어 지역 경제가 침체되는 문제이다.", a:false,
+exp:"오버투어리즘(over-tourism)은 한 지역에 수용 가능한 적정 수준의 관광객 수를 넘는 과도한 관광객이 유입되어 발생하는 문제이다." },
+{ q:"초국적 기업은 본사 또는 핵심 기능까지 해외로 이전한 기업이다.", a:true,
+exp:"초국적 기업은 다국적 기업이 더 발전하여 본사 또는 본사 핵심 기능(운영·관리)까지 해외로 이전한 형태이다. 관세·비용 절감 등이 목적이다." },
+{ q:"지역 균형 개발은 대도시 위주의 성장 거점 개발(하향식)의 다른 이름이다.", a:false,
+exp:"성장 거점 개발(하향식)은 대도시 위주 개발 방식이고, 지역 균형 개발(상향식)은 모든 지역의 골고루 발전을 추구하는 방식이다. 두 개념은 반대 방향이다." },
+{ q:"교통 발달로 전염병이 더 빠르게 전파될 수 있다.", a:true,
+exp:"교통의 발달로 사람들의 이동이 빠르고 잦아지면서 전염병이 국경을 넘어 급속히 전파될 수 있다." },
+{ q:"배리어 프리 키오스크는 정보 격차 해소를 위한 사례이다.", a:true,
+exp:"배리어 프리 키오스크는 장애인, 고령자 등 디지털 소외 계층이 키오스크를 쉽게 이용할 수 있도록 만든 것으로, 정보 격차 해소를 위한 구체적 사례이다." },
+{ q:"파급 효과는 핵심 지역의 성장이 주변 지역으로 퍼져나가는 긍정적 효과이다.", a:true,
+exp:"파급 효과(확산 효과)는 핵심 지역의 경제 성장이 주변 지역으로 파급되어 함께 발전하는 긍정적 효과이다. 반면 역류 효과는 주변 지역 자원이 핵심 지역으로 유입되는 부정적 효과이다." }
+],
+mc: [
+{ q:"다음 중 <em>4차 산업혁명</em>의 핵심 기술로 옳지 않은 것은?",
+opts:["인공지능(AI)","사물 인터넷(IoT)","증기 기관","빅데이터"], a:2,
+exp:"증기 기관은 18세기 1차 산업혁명의 핵심 기술이다. 4차 산업혁명의 핵심 기술은 AI, IoT, 빅데이터, 클라우드, 소프트웨어 등 지능 정보 기술이다." },
+{ q:"<em>공간적 분업</em>에서 연구소(R&D)의 입지로 가장 적절한 곳은?",
+opts:["개발도상국 - 생산비 절감","선진국 - 기술 인력·인프라 확보","여러 국가 - 판매 확대","어느 곳이든 동일"], a:1,
+exp:"공간적 분업에서 연구소는 고급 기술 인력과 연구 인프라가 갖춰진 선진국에 입지하는 것이 일반적이다. 생산 공장은 개발도상국, 판매 법인은 여러 국가에 분산된다." },
+{ q:"<em>빨대 효과</em>에 대한 설명으로 옳은 것은?",
+opts:["주변 도시가 대도시로부터 발전 혜택을 받는 현상","대도시 성장이 주변 지역으로 파급되는 현상","새로운 교통수단 개통으로 주변 도시의 인구·경제력이 대도시로 유입되는 현상","주변 지역의 인프라가 강화되는 현상"], a:2,
+exp:"빨대 효과는 KTX 등 새로운 교통수단이 개통되면 주변 도시의 인구·경제력이 대도시로 빨려 들어가는 현상이다. 역류 효과 중 교통수단 발전이 선제된 경우이다." },
+{ q:"지역 격차 해결을 위한 방안으로 옳지 않은 것은?",
+opts:["낙후 지역에 교통망 확충","공공기관의 혁신 도시 이전","대도시에만 집중 투자하는 성장 거점 개발","산업 단지 조성"], a:2,
+exp:"대도시에만 집중 투자하는 성장 거점 개발은 오히려 지역 격차를 확대할 수 있다. 지역 격차 해결을 위해서는 지역 균형 개발, 낙후 지역 교통망 확충, 공공기관 이전 등이 필요하다." },
+{ q:"전염병 확산 문제의 <em>국제 사회</em> 해결 방안으로 옳은 것은?",
+opts:["모든 국제 항공 노선 영구 폐쇄","국제 사회 연대 강화(정보 공유, 공동 연구, 경보 체계)","전염병 정보 비공개","개인 위생 관리만으로 해결"], a:1,
+exp:"전염병 확산의 국제 사회 해결 방안은 전염병 정보 공유, 공동 연구 지속, 경보 체계 마련 등 국제 사회 연대 강화이다. 개인 위생은 개인적 차원이다." },
+{ q:"<em>생태환경 보호</em>를 위한 IT 기술 활용 사례로 옳은 것은?",
+opts:["GIS를 활용한 멸종위기동물 관리","인터넷을 통한 무역 거래 확대","SNS를 통한 정치 참여 확대","스마트폰을 통한 전자상거래"], a:0,
+exp:"GIS(지리정보체계)를 활용하여 멸종위기동물의 이동 경로와 서식지를 관리·보호하거나, 드론·헬리콥터로 생태환경을 유지하는 것이 IT 기술을 생태환경 보호에 활용하는 사례이다." },
+{ q:"정보 격차의 주요 취약 계층으로 옳지 않은 것은?",
+opts:["노인","장애인","저소득층","IT 기업 종사자"], a:3,
+exp:"정보 격차의 주요 취약 계층은 디지털 기기 접근이 어렵거나 활용 능력이 부족한 노인, 장애인, 저소득층, 농어민 등이다. IT 기업 종사자는 오히려 정보 기술을 능숙하게 활용하는 집단이다." },
+{ q:"오버투어리즘 해결을 위한 개인 차원의 방안으로 옳은 것은?",
+opts:["관광지 입장료 부과","관광객 수 법적 제한","공정 여행 노력","관광 산업 전면 중단"], a:2,
+exp:"오버투어리즘 해결: 지역 차원-관광객 수 제한, 입장료 부과 / 개인 차원-공정 여행(현지 문화 존중, 환경 배려) 노력." },
+{ q:"노동 시장 양극화의 원인으로 가장 적절한 것은?",
+opts:["모든 분야의 일자리 균등 감소","단순 생산·사무직 감소, 과학·IT 분야 증가","농업 종사자 급증","서비스업 전면 폐지"], a:1,
+exp:"자동화·AI 발전으로 단순 생산·사무직·관리직 일자리가 감소하는 반면, 과학·수학·정보통신기술 분야 일자리는 증가하면서 실업 증가와 빈부격차 확대가 심화되는 노동 시장 양극화가 나타난다." },
+{ q:"파급 효과와 역류 효과의 차이로 옳은 것은?",
+opts:["파급: 주변→핵심 / 역류: 핵심→주변","파급: 핵심→주변 / 역류: 주변→핵심","파급: 인구 이동 / 역류: 기술 이전","파급: 부정적 효과 / 역류: 긍정적 효과"], a:1,
+exp:"파급 효과: 핵심(대도시) 성장이 주변 지역으로 파급되는 긍정적 효과 / 역류 효과: 주변 지역의 인구·자본이 핵심 지역으로 빨려 들어가는 부정적 효과. 방향이 반대이다." }
+],
+hard: [
+{ q:"교통 발달에 따른 지역 격차에 대한 설명으로 옳은 것을 모두 고른 것은?\nㄱ. 접근성이 높아진 지역은 경제활동이 활성화되어 발전한다.\nㄴ. 새로운 교통수단 개통은 항상 주변 지역에 긍정적 효과만 준다.\nㄷ. 빨대 효과는 역류 효과 중 교통수단 발전이 선제되는 것이다.\nㄹ. 지역 격차 해결을 위해 낙후 지역에 교통망 확충이 필요하다.",
+opts:["ㄱ, ㄷ, ㄹ","ㄴ, ㄷ","ㄱ, ㄴ, ㄷ","ㄴ, ㄹ"], a:0,
+exp:"ㄱ: 접근성↑→경제활동 활성화 (맞음) / ㄴ: 빨대 효과처럼 새로운 교통수단이 오히려 주변 지역에 부정적 영향을 줄 수도 있다 (틀림) / ㄷ: 빨대 효과=역류 효과 중 교통수단 발전이 선제 (맞음) / ㄹ: 낙후 지역 교통망 확충→접근성 향상→지역 격차 해소 기여 (맞음)." },
+{ q:"다국적 기업과 초국적 기업, 공간적 분업에 대한 설명으로 옳은 것을 모두 고른 것은?\nㄱ. 다국적 기업은 여러 나라에 생산 시설을 갖추지만 본사는 자국에 둔다.\nㄴ. 초국적 기업은 본사 또는 핵심 기능까지 해외로 이전한다.\nㄷ. 공간적 분업에서 생산 공장은 선진국에 집중한다.\nㄹ. 공간적 분업의 목적은 생산비 절감과 판매 시장 확대이다.",
+opts:["ㄱ, ㄴ, ㄹ","ㄴ, ㄷ","ㄱ, ㄷ, ㄹ","ㄴ, ㄷ, ㄹ"], a:0,
+exp:"ㄱ: 다국적-여러 나라 생산 시설, 본사는 본국 (맞음) / ㄴ: 초국적-본사·핵심 기능까지 해외 이전 (맞음) / ㄷ: 생산 공장은 생산비 절감을 위해 개발도상국에 집중 (틀림) / ㄹ: 공간적 분업 목적=생산비 절감+판매 시장 확대 (맞음)." },
+{ q:"다음에서 설명하는 개념으로 가장 적절한 것은?\n'A 지역에 고속철도가 개통된 이후, 주변 중소도시의 백화점·병원·학원 등이 쇠퇴하고 사람들이 대도시로 쇼핑·진료·학습을 위해 이동하는 현상이 늘었다.'",
+opts:["파급 효과","빨대 효과","오버투어리즘","역도시화"], a:1,
+exp:"고속철도 개통 후 주변 중소도시의 상업·의료·교육 기능이 쇠퇴하고 주민들이 대도시로 이동하는 현상은 빨대 효과이다. 새로운 교통수단 발전이 선제되어 역류 효과가 나타나는 전형적 사례이다." },
+{ q:"4차 산업혁명과 노동 시장에 대한 설명으로 옳은 것을 모두 고른 것은?\nㄱ. 단순 반복 작업 일자리가 자동화로 감소한다.\nㄴ. 창의적·기술적 분야의 일자리는 증가 전망이다.\nㄷ. 모든 직종에서 일자리가 균등하게 증가한다.\nㄹ. 노동 시장 양극화로 빈부격차가 확대될 수 있다.",
+opts:["ㄱ, ㄴ, ㄹ","ㄴ, ㄷ","ㄱ, ㄷ","ㄴ, ㄷ, ㄹ"], a:0,
+exp:"ㄱ: 자동화→단순 반복 일자리 감소 (맞음) / ㄴ: 과학·IT 등 창의적 분야 일자리 증가 전망 (맞음) / ㄷ: 일자리는 분야별로 증감이 다르다 (틀림) / ㄹ: 양극화→빈부격차 확대 우려 (맞음)." },
+{ q:"시공간 제약 감소로 나타나는 변화로 옳지 않은 것은?",
+opts:["인터넷·스마트폰으로 언제 어디서나 전자상거래 가능","해외 투자 및 금융 거래 편리화","모든 지역의 물가와 임금이 동일해진다","국내외 여행 및 문화 교류 증가"], a:2,
+exp:"시공간 제약 감소로 전자상거래·금융 거래·문화 교류 등이 활발해지지만, 모든 지역의 물가와 임금이 동일해지지는 않는다. 오히려 지역별 특성에 따른 차이는 유지될 수 있다." },
+{ q:"다음 사례들의 공통된 현상으로 옳은 것은?\n사례1: A국 기업이 생산 공장을 인건비가 싼 B국으로 이전\n사례2: C국 IT 기업이 세금 혜택을 위해 법인을 D국으로 이전\n사례3: E국 회사가 연구소는 자국에 두고 생산·판매는 여러 국가에 분산",
+opts:["역도시화","공간적 분업","오버투어리즘","이촌향도"], a:1,
+exp:"세 사례 모두 다국적·초국적 기업이 기능(본사·연구소·생산·판매)을 비용·이익에 따라 여러 국가에 공간적으로 분리·배치하는 공간적 분업의 사례이다." },
+{ q:"외래종 유입(생태계 교란)의 경로와 해결 방안을 바르게 연결한 것은?",
+opts:["항공기→공항 농산물 검역 강화","선박 평형수→생태교란종 국제 이동 통제, 조기 발견","인터넷→디지털 격차 해소","고속철도→지역 균형 발전"], a:1,
+exp:"외래종이 선박 평형수를 통해 다른 생태계로 유입되는 것이 대표적 경로이다. 해결 방안으로는 생태교란종의 국제 이동 통제, 조기 발견, 친환경 대체 연료 개발 등이 있다." },
+{ q:"성장 거점 개발과 지역 균형 개발을 비교한 것으로 옳은 것은?",
+opts:["성장 거점-상향식 / 지역 균형-하향식","성장 거점-하향식 / 지역 균형-상향식","성장 거점-소도시 우선 / 지역 균형-대도시 우선","두 개발 방식은 동일한 결과를 가져온다"], a:1,
+exp:"성장 거점 개발(하향식): 대도시·핵심 지역 위주 투자→파급 효과·역류 효과 공존 / 지역 균형 개발(상향식): 모든 지역의 균형 발전 추구→낙후 지역 지원 강화. 성장 거점=하향식, 지역 균형=상향식이다." },
+{ q:"교통·통신 발달이 생활 양식에 미친 변화로 옳지 않은 것은?",
+opts:["원격 근무(재택근무) 가능","가상공간에서의 인간관계 확대","SNS를 통한 직접 민주주의 실현 가능성 증가","대면 접촉의 중요성이 더욱 강화됨"], a:3,
+exp:"교통·통신 발달로 가상공간 교류가 확대되면서 오히려 대면 접촉의 중요성이 약화되는 경향이 있다. 원격 근무, 가상공간 인간관계, SNS 정치 참여 확대는 모두 교통·통신 발달의 결과이다." },
+{ q:"워케이션(workcation)에 대한 설명으로 옳지 않은 것은?",
+opts:["원하는 곳에서 업무와 휴가를 동시에 할 수 있다","효율성 향상과 재충전의 기회를 동시에 제공한다","원격 근무가 가능한 환경에서 실현 가능하다","반드시 해외에서만 이루어지는 근무 형태이다"], a:3,
+exp:"워케이션은 원하는 곳(국내외 어디서든)에서 업무와 휴가를 동시에 하는 새로운 근무 제도이다. 반드시 해외에서만 이루어지는 것이 아니다." }
+]
+};
+
+/* ─────────────── 탭 5 : 우리 지역의 공간 변화 ─────────────── */
+QUIZ_DATA[5] = {
+ox: [
+{ q:"등질 지역은 특정한 지리적 특징이 공통적으로 나타나는 공간 범위이다.", a:true,
+exp:"등질 지역은 자연환경·문화·산업 등 공통된 특징을 기준으로 구분되며, 지역 내부의 성격이 비교적 유사하다. 기후 지역, 문화권 등이 사례이다." },
+{ q:"기능 지역은 지리적 특징이 균일하게 나타나는 지역이다.", a:false,
+exp:"기능 지역은 중심지와 그 영향을 받는 배후지로 이루어진 공간 범위로, 중심지와의 기능적 연결을 기준으로 형성된다. 지리적 특징의 균일성은 등질 지역의 특성이다." },
+{ q:"지역성은 자연·인문환경이 상호 작용하여 형성된 그 지역만의 고유한 특성이다.", a:true,
+exp:"지역성은 자연환경과 인문환경이 서로 영향을 주고받으면서 형성된 그 지역만의 고유한 특성이다. 시간의 흐름과 교통·통신 발달에 따라 변화한다." },
+{ q:"지역 조사에서 야외 조사는 생략할 수 없는 필수 과정이다.", a:false,
+exp:"지역 조사에서 야외 조사는 생략이 가능하다. 실내 조사만으로도 지역 조사를 수행할 수 있으며, 야외 조사는 실내 조사를 보완하는 과정이다." },
+{ q:"지역 조사의 순서는 계획 수립→지리 정보 수집→분석 및 종합→보고서 작성이다.", a:true,
+exp:"지역 조사의 순서: ①지역 조사 계획 수립→②지리 정보의 수집(실내·야외 조사)→③지리 정보의 분석 및 종합→④보고서 작성." },
+{ q:"지리적 표시제는 우수한 지리적 특성을 가진 농산물·가공품의 지리적 표시를 등록·보호하는 제도이다.", a:true,
+exp:"지리적 표시제는 지리적 특성을 가진 농산물·가공품의 표시를 등록·보호하여 지리적 특산품의 품질을 향상시키고 지역특화 산업으로 육성하고자 하는 제도이다." },
+{ q:"도시와 멀리 떨어진 촌락 문제의 해결을 위해서는 지역경제 활성화보다 생활 기반 시설 확충이 더 강조된다.", a:true,
+exp:"도시와 멀리 떨어진 촌락은 교육·의료·문화 생활 여건 악화로 인한 인구 유출이 주요 문제이므로, 생활 기반 시설(교육·의료·문화) 확충을 통한 삶의 질 향상이 강조된다." },
+{ q:"지역 문제 해결 플랫폼은 중앙정부 중심으로 문제를 해결하는 기존 방식이다.", a:false,
+exp:"지역 문제 해결 플랫폼은 기존의 중앙정부 중심 방식에서 벗어나 지역 주민이 직접 문제를 발굴하고 정부·전문가 등과 협력하여 해결하는 주민 참여 기반의 협업 체계이다." },
+{ q:"대도시는 인구 과밀로 인한 시설 노후화, 공동체 의식 약화 등의 문제가 나타난다.", a:true,
+exp:"대도시는 인구 과밀로 인한 시설 부족·노후화, 교통 체증, 범죄 증가, 환경 오염, 공동체 의식 약화 등 다양한 도시 문제가 나타난다." },
+{ q:"중소 도시의 자족 기능 확충은 대도시로의 인구 유출을 막는 해결 방안이 될 수 있다.", a:true,
+exp:"중소 도시는 일자리·시설 부족으로 대도시로 인구가 유출된다. 일자리 창출 및 각종 서비스 질 개선을 통한 자족 기능 확충이 인구 유출을 막는 해결 방안이 된다." }
+],
+mc: [
+{ q:"다음 중 <em>기능 지역</em>의 사례로 옳은 것은?",
+opts:["기후 지역","문화권","통근·통학권","언어권"], a:2,
+exp:"기능 지역은 중심지와의 기능적 연결을 기준으로 형성된 공간 범위로, 통근·통학권, 상권, 대도시권 등이 사례이다. 기후 지역, 문화권, 언어권은 등질 지역의 사례이다." },
+{ q:"지역 조사에서 <em>야외 조사</em>의 방법으로 옳지 않은 것은?",
+opts:["관찰","면담","인터넷 검색","설문"], a:2,
+exp:"인터넷 검색은 도서관, 인터넷 등을 이용하는 실내 조사의 방법이다. 야외 조사는 해당 지역을 직접 방문하여 관찰, 실측, 촬영, 면담, 설문 등을 통해 이루어진다." },
+{ q:"<em>도시와 인접한 촌락</em>의 해결 방안으로 가장 적절한 것은?",
+opts:["교육·의료 등 생활 기반 시설 확충","지리적 표시제 시행, 지역 축제 등 지역 특성화 사업","도시 재개발을 통한 환경 개선","대도시로의 인구 이주 장려"], a:1,
+exp:"도시와 인접한 촌락은 전통적 가치관·문화 상실, 공동체 의식 약화 등이 주요 문제이다. 지리적 표시제, 농산물 직거래, 지역 축제 등 지역 특성화 사업이 해결 방안이다. 생활 기반 시설 확충은 도시와 먼 촌락의 해결 방안이다." },
+{ q:"지역 문제 해결을 위한 노력으로 옳지 않은 것은?",
+opts:["지역 주민이 성숙한 시민 의식을 바탕으로 적극 참여","지역의 지속 가능성을 고려한 해결 방안 모색","중앙정부만이 지역 문제를 결정해야 함","지방 자치 단체는 주민 의견을 의사 결정에 반영"], a:2,
+exp:"지역 문제 해결은 중앙정부 중심이 아니라 지역 주민의 적극적 참여, 지방 자치 단체의 주민 의견 반영, 지속 가능성 고려 등을 통해 이루어져야 한다." },
+{ q:"<em>지리적 표시제</em>의 목적으로 옳은 것은?",
+opts:["도시 재개발을 통한 환경 개선","지리적 특산품의 품질 향상 및 지역특화 산업 육성","대도시 인구 분산","산업 단지 조성"], a:1,
+exp:"지리적 표시제는 우수한 지리적 특성을 가진 농산물·가공품의 표시를 등록·보호하여 지리적 특산품의 품질을 향상시키고 지역특화 산업으로 육성하고자 하는 제도이다." },
+{ q:"지역성에 대한 설명으로 옳은 것은?",
+opts:["한번 형성되면 절대 변하지 않는다","자연·인문환경이 상호 작용하여 형성된 그 지역만의 고유한 특성","모든 지역의 지역성은 동일하다","행정 구역과 항상 일치한다"], a:1,
+exp:"지역성은 자연·인문환경이 상호 작용하여 형성된 그 지역만의 고유한 특성이다. 시간의 흐름, 교통·통신의 발달, 지역 간 상호 작용에 따라 변화한다." },
+{ q:"지역 조사의 보고서 작성 단계에서 포함해야 할 내용으로 옳지 않은 것은?",
+opts:["조사 방법","분석한 자료","결론","조사 대상 지역의 모든 주민 개인 정보"], a:3,
+exp:"보고서 작성에는 조사 방법, 분석한 자료, 결론 등을 체계적으로 기술하고, 지역의 공간 변화 양상·문제점, 해결 방안을 모색한다. 주민 개인 정보는 포함하지 않는다." },
+{ q:"<em>대도시</em>의 지역 문제 해결 방안으로 옳지 않은 것은?",
+opts:["도시 내 기반 시설 확충","도시 재개발을 통한 환경 개선","지역 균형 발전을 통한 인구의 지방 분산","도시와 먼 촌락의 생활 기반 시설만 집중 확충"], a:3,
+exp:"도시와 먼 촌락의 생활 기반 시설 확충은 촌락 지역의 해결 방안이다. 대도시의 해결 방안은 기반 시설 확충, 도시 재개발, 지역 균형 발전을 통한 인구 지방 분산 등이다." },
+{ q:"등질 지역과 기능 지역의 차이를 가장 잘 설명한 것은?",
+opts:["등질 지역-기능적 연결 기준 / 기능 지역-공통 특성 기준","등질 지역-공통 특성 기준 / 기능 지역-중심지와의 기능적 연결 기준","두 지역 유형은 구분이 불가능하다","등질 지역은 도시, 기능 지역은 농촌에만 해당된다"], a:1,
+exp:"등질 지역은 공통된 지리적 특징(자연환경·문화·산업 등)을 기준으로 구분되고, 기능 지역은 중심지와의 기능적 연결(사람·물자·정보의 이동)을 기준으로 형성된다." },
+{ q:"지역 문제 해결 플랫폼에 대한 설명으로 옳지 않은 것은?",
+opts:["지역 주민이 직접 지역 사회 문제를 발굴한다","정부·지방 자치 단체·전문가·대학 등과 협력하여 해결한다","2019년 광주·충북·대전·경남·대구·강원에 처음 도입되었다","중앙정부만이 모든 결정을 내리는 하향식 방식이다"], a:3,
+exp:"지역 문제 해결 플랫폼은 중앙정부 중심 방식에서 벗어나 주민 참여를 바탕으로 지역 문제를 해결하는 협업 체계이다. 하향식이 아닌 주민 참여 기반의 상향식 방식이다." }
+],
+hard: [
+{ q:"등질 지역과 기능 지역에 대한 설명으로 옳은 것을 모두 고른 것은?\nㄱ. 기후 지역은 등질 지역의 사례이다.\nㄴ. 통근·통학권은 기능 지역의 사례이다.\nㄷ. 등질 지역과 기능 지역은 절대 중첩되지 않는다.\nㄹ. 기능 지역은 중심지와 배후지로 이루어진다.",
+opts:["ㄱ, ㄴ, ㄹ","ㄴ, ㄷ","ㄱ, ㄷ, ㄹ","ㄱ, ㄴ, ㄷ, ㄹ"], a:0,
+exp:"ㄱ: 기후 지역-등질 지역 (맞음) / ㄴ: 통근·통학권-기능 지역 (맞음) / ㄷ: 등질 지역과 기능 지역은 중첩될 수 있다 (틀림) / ㄹ: 기능 지역=중심지+배후지 (맞음)." },
+{ q:"지역 조사 과정에서 단계별 설명으로 옳지 않은 것은?",
+opts:["계획 수립: 조사 목적 결정, 조사 주제·지역 선정","실내 조사: 지도·문헌 자료·통계 자료·위성 사진 등 수집","야외 조사: 해당 지역 직접 방문, 관찰·면담·설문 등","보고서 작성: 조사 계획 수립 이전에 먼저 실시"], a:3,
+exp:"보고서 작성은 지역 조사의 마지막 단계이다. 순서: ①계획 수립→②지리 정보 수집(실내·야외)→③분석 및 종합→④보고서 작성. 보고서를 먼저 작성하는 것은 순서에 맞지 않는다." },
+{ q:"다양한 지역 문제와 해결 방안을 바르게 연결한 것을 모두 고른 것은?\nA. 대도시-인구 과밀→기반 시설 확충, 도시 재개발\nB. 중소 도시-인구 유출→자족 기능 확충\nC. 도시 인접 촌락-전통 문화 상실→지리적 표시제, 지역 축제\nD. 도시 먼 촌락-인구 유출→교육·의료 등 생활 기반 시설 확충",
+opts:["A, B","A, B, C","B, C, D","A, B, C, D"], a:3,
+exp:"A: 대도시-기반 시설 확충·도시 재개발 (맞음) / B: 중소 도시-자족 기능 확충 (맞음) / C: 도시 인접 촌락-지리적 표시제·지역 축제 등 지역 특성화 사업 (맞음) / D: 도시 먼 촌락-생활 기반 시설 확충 (맞음). 모두 옳다." },
+{ q:"공간 변화의 영향에 대한 설명으로 옳은 것을 모두 고른 것은?\nㄱ. 주민들의 직업·생활 방식·인간관계 등이 변화한다.\nㄴ. 지역 경제 활성화, 생활 환경 개선 등의 긍정적 효과가 나타난다.\nㄷ. 개발 과정에서 환경 오염, 공동체 약화 등의 문제가 발생하기도 한다.\nㄹ. 공간 변화는 항상 긍정적인 결과만 가져온다.",
+opts:["ㄱ, ㄴ, ㄷ","ㄴ, ㄷ, ㄹ","ㄱ, ㄷ","ㄱ, ㄴ, ㄷ, ㄹ"], a:0,
+exp:"ㄱ: 공간 변화→직업·생활방식·인간관계 변화 (맞음) / ㄴ: 긍정적 효과 (맞음) / ㄷ: 부정적 문제도 발생 (맞음) / ㄹ: 공간 변화는 긍정적·부정적 결과가 공존한다 (틀림)." },
+{ q:"지역 문제 해결을 위한 노력에서 각 주체의 역할을 바르게 연결한 것을 모두 고른 것은?\nA. 지역 주민-성숙한 시민 의식으로 적극 참여\nB. 지방 자치 단체-주민 참여 높이는 제도·정책 마련\nC. 중앙정부-지역 주민의 의견을 무시하고 독단적으로 결정\nD. 모든 주체-지역의 지속 가능성 고려",
+opts:["A, B, D","B, C","A, C, D","A, B, C, D"], a:0,
+exp:"A: 지역 주민-시민 의식 기반 적극 참여 (맞음) / B: 지방 자치 단체-주민 참여 제도·정책 마련, 의견 반영 (맞음) / C: 중앙정부도 주민 의견을 반영해야 한다 (틀림) / D: 모든 주체가 지속 가능성 고려 (맞음)." },
+{ q:"다음 자료를 읽고 관련된 개념으로 가장 적절한 것은?\n'A 마을은 오랫동안 특정 농산물을 재배해 왔으며, 그 지역의 토양·기후·전통 재배 기술이 결합되어 독특한 맛과 품질을 자랑한다. 이를 공식적으로 등록하여 보호하고 있다.'",
+opts:["지역 문제 해결 플랫폼","지리적 표시제","도시 재개발","지역 균형 발전"], a:1,
+exp:"지리적 특성(토양·기후)과 전통 재배 기술이 결합된 농산물의 품질을 공식 등록·보호하는 것은 지리적 표시제이다. 지역특화 산업으로 육성하고 소비자에게 정보를 제공하는 목적도 있다." },
+{ q:"지역 조사에서 실내 조사와 야외 조사의 특징을 바르게 연결한 것을 모두 고른 것은?\nㄱ. 실내 조사-도서관·인터넷을 이용하여 통계 자료·문헌 수집\nㄴ. 야외 조사-실내 조사에서 파악한 정보를 현장에서 확인\nㄷ. 실내 조사-야외 조사를 통해 조사할 항목·방법을 사전에 결정\nㄹ. 야외 조사-관찰·실측·촬영·면담·설문 등을 통해 자료 수집",
+opts:["ㄱ, ㄴ, ㄷ, ㄹ","ㄴ, ㄷ","ㄱ, ㄹ","ㄱ, ㄴ, ㄹ"], a:0,
+exp:"ㄱ: 실내 조사-도서관·인터넷 이용, 통계·문헌 수집 (맞음) / ㄴ: 야외 조사-실내 조사 정보 현장 확인 (맞음) / ㄷ: 실내 조사 단계에서 야외 조사 항목·방법·경로·일자를 사전에 결정 (맞음) / ㄹ: 야외 조사-관찰·실측·촬영·면담·설문 (맞음). 모두 맞다." },
+{ q:"다음 상황에서 나타나는 지역 문제 유형과 가장 적절한 해결 방안을 연결한 것은?\n'B 지역은 산업 시설이 부족하고 일자리가 없어 젊은 인구가 대도시로 빠져나가고 있다. 인구의 고령화가 심화되고 지역 경제가 침체되고 있다.'",
+opts:["대도시 문제-도시 재개발","중소 도시 문제-자족 기능 확충","도시 인접 촌락-지리적 표시제","도시 먼 촌락-생활 기반 시설만 확충"], a:1,
+exp:"일자리 부족으로 인한 인구 유출, 지역 경제 침체는 중소 도시의 전형적인 문제이다. 해결 방안은 일자리 창출 및 각종 서비스 질 개선을 통한 자족 기능 확충이다." },
+{ q:"지역성의 변화에 대한 설명으로 옳은 것을 모두 고른 것은?\nㄱ. 교통·통신의 발달로 지역 간 상호 작용이 활발해지면서 지역성이 변화할 수 있다.\nㄴ. 지역성은 한번 형성되면 절대 변하지 않는다.\nㄷ. 시간의 흐름에 따라 지역성과 지역성의 공간 범위가 달라질 수 있다.\nㄹ. 외래 문화 유입, 인구 이동 등도 지역성 변화의 원인이 될 수 있다.",
+opts:["ㄱ, ㄷ, ㄹ","ㄴ, ㄷ","ㄱ, ㄴ","ㄴ, ㄷ, ㄹ"], a:0,
+exp:"ㄱ: 교통·통신 발달→지역 간 상호 작용↑→지역성 변화 (맞음) / ㄴ: 지역성은 변화한다 (틀림) / ㄷ: 시간의 흐름에 따라 지역성·공간 범위 변화 (맞음) / ㄹ: 외래 문화 유입·인구 이동→지역성 변화 원인 (맞음)." },
+{ q:"다음은 지역 문제 해결 플랫폼에 대한 설명이다. 옳지 않은 것은?",
+opts:["지역 주민이 직접 지역 사회 문제를 발굴한다","2019년 처음 도입 시 6개 지역에서 시작되었다","현재 전국 모든 시·군·구에서 운영되고 있다","중앙정부 중심 문제 해결 방식에서 벗어난 협업 체계이다"], a:2,
+exp:"지역 문제 해결 플랫폼은 2019년 광주·충북·대전·경남·대구·강원 6개 지역에서 처음 도입되어, 현재 전남·충남이 추가되어 총 8개 지역에서 운영되고 있다. 전국 모든 시·군·구에서 운영되는 것은 아니다." }
+]
+};
+
+// ══════════════════════════════════════════════════
+// TYPE CONFIG & STATE
+// ══════════════════════════════════════════════════
+const TYPE_CONFIG = [
+{ key:'ox', label:'OX 퀴즈', icon:'⭕', cls:'ox' },
+{ key:'mc', label:'객관식', icon:'📋', cls:'mc' },
+{ key:'hard', label:'고난이도', icon:'🔥', cls:'hard' }
+];
+const COLOR_MAP = { ox:'#1a73e8', mc:'#34a853', hard:'#ea4335' };
+
+const state = {};
+for (let u = 0; u < 6; u++) {
+state[u] = {
+activeType: 0,
+scores: { ox:[0,0], mc:[0,0], hard:[0,0] },
+answered: { ox:[], mc:[], hard:[] }
+};
+}
+
+// ══════════════════════════════════════════════════
+// QUIZ ENGINE
+// ══════════════════════════════════════════════════
+function buildQuizSection(unitIdx) {
+const container = document.getElementById('quiz-' + unitIdx);
+if (!container) return;
+const data = QUIZ_DATA[unitIdx];
+if (!data) return; // 아직 데이터 없는 탭
+
+container.innerHTML = '';
+const s = state[unitIdx];
+const typeKey = TYPE_CONFIG[s.activeType].key;
+const questions = data[typeKey];
+
+// ── 헤더
+const header = document.createElement('div');
+header.className = 'quiz-header';
+header.innerHTML = `<div class="quiz-header-title">📝 개념 확인 퀴즈</div>
+<div class="scoreboard" id="scoreboard-${unitIdx}"></div>`;
+container.appendChild(header);
+updateScoreboard(unitIdx);
+
+// ── 타입 탭
+const typeBar = document.createElement('div');
+typeBar.className = 'quiz-type-bar';
+TYPE_CONFIG.forEach((tc, ti) => {
+const btn = document.createElement('button');
+btn.className = 'qtype-btn' + (ti === s.activeType ? ' active' : '');
+const done = (state[unitIdx].answered[tc.key].filter(v=>v!==undefined).length);
+btn.innerHTML = `${tc.icon} ${tc.label} <span class="qtype-count">${done}</span>`;
+btn.onclick = () => { s.activeType = ti; buildQuizSection(unitIdx); };
+typeBar.appendChild(btn);
+});
+container.appendChild(typeBar);
+
+// ── 진행률 바
+const answered = s.answered[typeKey];
+const doneCount = answered.filter(v => v !== undefined).length;
+const progressWrap = document.createElement('div');
+progressWrap.className = 'q-progress-wrap';
+progressWrap.innerHTML = `
+<div class="q-progress-bar"><div class="q-progress-fill" style="width:${doneCount/10*100}%"></div></div>
+<div class="q-progress-text">${doneCount}/10 완료</div>`;
+container.appendChild(progressWrap);
+
+// ── 문항 카드
+questions.forEach((qdata, qi) => {
+container.appendChild(buildQCard(unitIdx, typeKey, qi, qdata, s));
+});
+
+// ── 결과 패널
+if (doneCount === 10) {
+const correct = s.scores[typeKey][0];
+const pct = correct * 10;
+const grade = pct >= 90 ? '🏆 완벽!' : pct >= 70 ? '👍 잘했어요!' : pct >= 50 ? '📚 복습 필요' : '💪 다시 도전!';
+const result = document.createElement('div');
+result.className = 'quiz-result visible';
+result.innerHTML = `
+<div class="result-score-big">${correct}<span>/10</span></div>
+<div class="result-score-label">${pct}% · ${grade}</div>
+<div class="mini-bars">${TYPE_CONFIG.map(tc=>{
+const sc = state[unitIdx].scores[tc.key];
+const w = sc[1]>0 ? Math.round(sc[0]/sc[1]*100) : 0;
+return `<div class="mini-bar-item">
+<div class="mini-bar-label">${tc.icon} ${tc.label}</div>
+<div class="mini-bar-track"><div class="mini-bar-fill" style="width:${w}%;background:${COLOR_MAP[tc.key]}"></div></div>
+<div class="mini-bar-label">${sc[0]}/${sc[1]}</div>
+</div>`;
+}).join('')}</div>
+<button class="reset-btn" onclick="resetType(${unitIdx},'${typeKey}')">🔄 다시 풀기</button>`;
+container.appendChild(result);
+}
+}
+
+function buildQCard(unitIdx, typeKey, qi, qdata, s) {
+const answered = s.answered[typeKey];
+const done = answered[qi] !== undefined;
+const ans = answered[qi];
+
+const isCorrect = done
+? (typeKey === 'ox' ? (ans === true) : (ans === qdata.a))
+: false;
+
+const card = document.createElement('div');
+card.className = 'q-card';
+if (done) card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+
+const diff = typeKey === 'ox' ? 'diff-basic' : typeKey === 'mc' ? 'diff-mid' : 'diff-hard';
+const diffLabel = typeKey === 'ox' ? '기초' : typeKey === 'mc' ? '중급' : '고난이도';
+
+// meta
+const meta = document.createElement('div');
+meta.className = 'q-meta';
+meta.innerHTML = `<span class="q-num">Q${qi+1}</span>
+<span class="q-difficulty ${diff}">${diffLabel}</span>
+${done ? `<span class="q-answered-mark">${isCorrect ? '✅' : '❌'}</span>` : ''}`;
+card.appendChild(meta);
+
+// question text
+const qText = document.createElement('div');
+qText.className = 'q-text';
+qText.innerHTML = qdata.q.replace(/\n/g, '<br>');
+card.appendChild(qText);
+
+// OX or MC
+if (typeKey === 'ox') {
+const row = document.createElement('div');
+row.className = 'ox-row';
+[true, false].forEach(val => {
+const btn = document.createElement('button');
+btn.className = 'ox-btn';
+if (done) {
+btn.disabled = true;
+if (val === qdata.a && val === ans) btn.classList.add('ox-correct-picked');
+else if (val !== qdata.a && val === ans) btn.classList.add('ox-wrong-picked');
+else if (val === qdata.a && val !== ans) btn.classList.add('ox-correct-reveal');
+}
+btn.innerHTML = `<span class="ox-sym">${val ? '⭕' : '❌'}</span><span class="ox-lbl">${val ? '맞다' : '틀리다'}</span>`;
+if (!done) btn.onclick = () => submitOX(unitIdx, qi, val, qdata);
+row.appendChild(btn);
+});
+card.appendChild(row);
+} else {
+const opts = document.createElement('div');
+opts.className = 'mc-options';
+qdata.opts.forEach((opt, oi) => {
+const btn = document.createElement('button');
+btn.className = 'mc-opt';
+if (done) {
+btn.disabled = true;
+if (oi === qdata.a) btn.classList.add('mc-correct');
+else if (oi === ans && oi !== qdata.a) btn.classList.add('mc-wrong');
+}
+btn.innerHTML = `<span class="mc-opt-letter">${String.fromCharCode(65+oi)}</span>
+<span class="mc-opt-text">${opt}</span>`;
+if (!done) btn.onclick = () => submitMC(unitIdx, qi, oi, qdata, typeKey);
+opts.appendChild(btn);
+});
+card.appendChild(opts);
+}
+
+// feedback
+if (done) {
+const fb = document.createElement('div');
+fb.className = 'q-feedback ' + (isCorrect ? 'correct' : 'wrong');
+fb.innerHTML = `<strong>${isCorrect ? '✅ 정답!' : '❌ 오답'}</strong>&nbsp;&nbsp;${qdata.exp}`;
+card.appendChild(fb);
+}
+
+return card;
+}
+
+function submitOX(unitIdx, qi, chosen, qdata) {
+const s = state[unitIdx];
+const correct = chosen === qdata.a;
+s.answered['ox'][qi] = correct; // boolean 저장
+if (correct) s.scores['ox'][0]++;
+s.scores['ox'][1]++;
+afterSubmit(unitIdx, 'ox');
+}
+
+function submitMC(unitIdx, qi, chosen, qdata, typeKey) {
+const s = state[unitIdx];
+const correct = chosen === qdata.a;
+s.answered[typeKey][qi] = chosen; // 인덱스(숫자) 저장
+if (correct) s.scores[typeKey][0]++;
+s.scores[typeKey][1]++;
+afterSubmit(unitIdx, typeKey);
+}
+
+function afterSubmit(unitIdx, typeKey) {
+buildQuizSection(unitIdx);
+// 다음 미완료 문항으로 스크롤
+const answered = state[unitIdx].answered[typeKey];
+const nextIdx = answered.findIndex((v, i) => v === undefined && i < 10);
+if (nextIdx >= 0) {
+const cards = document.querySelectorAll(`#quiz-${unitIdx} .q-card`);
+if (cards[nextIdx]) cards[nextIdx].scrollIntoView({ behavior:'smooth', block:'center' });
+}
+}
+
+function resetType(unitIdx, typeKey) {
+state[unitIdx].answered[typeKey] = [];
+state[unitIdx].scores[typeKey] = [0, 0];
+buildQuizSection(unitIdx);
+}
+
+function updateScoreboard(unitIdx) {
+const el = document.getElementById('scoreboard-' + unitIdx);
+if (!el) return;
+el.innerHTML = TYPE_CONFIG.map(tc => {
+const sc = state[unitIdx].scores[tc.key];
+const done = state[unitIdx].answered[tc.key].filter(v=>v!==undefined).length;
+return `<span class="score-chip ${tc.cls}">${tc.icon} ${done}/10 (${sc[0]}점)</span>`;
+}).join('');
+}
+
+buildQuizSection(0);
+</script>
 </body>
 </html>
