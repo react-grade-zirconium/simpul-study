@@ -2,10 +2,28 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const rootDir = process.cwd();
-const htmlFiles = ['index.html', 'portal.html'];
+const ignoredDirs = new Set(['.git', 'node_modules', 'dist', 'build', 'data']);
 const attrPattern = /(?:href|src)="([^"#]+)"/g;
-const ignoredProtocols = /^(?:https?:|mailto:|tel:|javascript:|about:)/i;
+const ignoredProtocols = /^(?:https?:|mailto:|tel:|javascript:|about:|data:)/i;
+const htmlFiles = [];
 const missing = [];
+
+function collectHtmlFiles(dir) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (ignoredDirs.has(entry.name)) continue;
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      collectHtmlFiles(fullPath);
+      continue;
+    }
+    if (entry.isFile() && entry.name.endsWith('.html')) {
+      htmlFiles.push(path.relative(rootDir, fullPath));
+    }
+  }
+}
+
+collectHtmlFiles(rootDir);
+htmlFiles.sort();
 
 for (const htmlFile of htmlFiles) {
   const html = fs.readFileSync(path.join(rootDir, htmlFile), 'utf8');
@@ -24,4 +42,4 @@ if (missing.length) {
   process.exit(1);
 }
 
-console.log(`Validated local asset references in ${htmlFiles.join(', ')}`);
+console.log(`Validated local asset references in ${htmlFiles.length} HTML files`);
