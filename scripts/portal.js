@@ -21,7 +21,6 @@ const versionPanel = document.getElementById('versionPanel');
 const operatorsPanel = document.getElementById('operatorsPanel');
 const frame = document.getElementById('frame');
 const subjectToggleBtn = document.getElementById('subjectToggleBtn');
-const versionToggleBtn = document.getElementById('versionToggleBtn');
 const ddayEl = document.getElementById('ddayValue');
 const goalInput = document.getElementById('goalInput');
 const goalSaveBtn = document.getElementById('goalSaveBtn');
@@ -112,7 +111,6 @@ function initProfileModal() {
 
 function setActive(btn) {
   document.querySelectorAll('.menu button').forEach((b) => b.classList.remove('active'));
-  versionToggleBtn?.classList.remove('active');
   btn?.classList.add('active');
 }
 function getSubjectToggleText(collapsed) {
@@ -136,7 +134,7 @@ function initSubjectSidebarToggle() {
     applySidebarState(!document.body.classList.contains('sidebar-collapsed'));
   });
   sidebarCloseBtn?.addEventListener('click', () => {
-    showVersionHistory(versionToggleBtn);
+    applySidebarState(true);
   });
 }
 function showDashboard(btn) {
@@ -184,7 +182,7 @@ function showOperators(btn) {
 }
 
 function showVersionHistory(btn) {
-  setActive(btn || versionToggleBtn);
+  setActive(btn);
   document.body.classList.remove('subject-mode');
   dashPanel.classList.remove('active');
   framePanel.classList.remove('active');
@@ -196,15 +194,9 @@ function showVersionHistory(btn) {
 }
 
 function initMobileHomeClose() {
-  const homeLink = document.querySelector('.home a');
-  if (!homeLink || !subjectToggleBtn) return;
-  homeLink.textContent = '닫기';
-  homeLink.setAttribute('aria-label', '모바일 과목 선택 영역 닫기');
-  homeLink.addEventListener('click', (event) => {
-    if (!isMobileLiteMode()) return;
-    event.preventDefault();
-    applySidebarState(true);
-  });
+  const closeBtn = document.getElementById('sidebarCloseBtn');
+  if (!closeBtn || !subjectToggleBtn) return;
+  closeBtn.setAttribute('aria-label', '과목 선택 영역 닫기');
 }
 
 function initMobileSubjectBarExpansion() {
@@ -368,18 +360,23 @@ function initGlobalInk() {
     undoBtn.disabled = strokes.length === 0;
     redoBtn.disabled = redoStack.length === 0;
   }
-  function toDocumentXY(e) {
-    return { x: e.clientX + window.scrollX, y: e.clientY + window.scrollY };
+  function toCanvasXY(e) {
+    return { x: e.clientX, y: e.clientY };
+  }
+  function getViewportSize() {
+    const doc = document.documentElement;
+    return {
+      width: Math.max(1, Math.round(window.innerWidth || doc.clientWidth || 1)),
+      height: Math.max(1, Math.round(window.innerHeight || doc.clientHeight || 1)),
+    };
   }
   function resizeCanvas() {
     const ratio = window.devicePixelRatio || 1;
-    const doc = document.documentElement;
-    const w = Math.max(doc.scrollWidth, window.innerWidth);
-    const h = Math.max(doc.scrollHeight, window.innerHeight);
-    canvas.style.width = `${w}px`;
-    canvas.style.height = `${h}px`;
-    canvas.width = Math.floor(w * ratio);
-    canvas.height = Math.floor(h * ratio);
+    const { width, height } = getViewportSize();
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+    canvas.width = Math.floor(width * ratio);
+    canvas.height = Math.floor(height * ratio);
     ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
     drawAll();
   }
@@ -447,12 +444,12 @@ function initGlobalInk() {
     if (e.target.closest && e.target.closest('#inkToolbar')) return;
     drawing = true;
     currentStroke = { mode, size: penSize, color: penColor, points: [] };
-    currentStroke.points.push(toDocumentXY(e));
+    currentStroke.points.push(toCanvasXY(e));
     e.preventDefault();
   }
   function moveStroke(e) {
     if (!drawing || !currentStroke) return;
-    currentStroke.points.push(toDocumentXY(e));
+    currentStroke.points.push(toCanvasXY(e));
     drawAll();
     drawStroke(currentStroke);
     e.preventDefault();
@@ -513,6 +510,7 @@ function initGlobalInk() {
   resizeCanvas();
   updateUndoRedoUI();
   window.addEventListener('resize', () => { scheduleSubjectFrameResize(); resizeCanvas(); });
+  window.visualViewport?.addEventListener('resize', resizeCanvas);
   window.addEventListener('beforeunload', persistStrokes);
 }
 
