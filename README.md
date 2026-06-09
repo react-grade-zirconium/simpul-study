@@ -49,10 +49,11 @@ npm run smoke:server
 
 - 로고는 저장소 루트의 `simpul-logo.png`를 사용합니다.
 - `index.html`/`portal.html`은 `styles/`와 `scripts/` 아래의 파일을 로드합니다.
+- 과목별 학습 페이지는 `subjects/korean`, `subjects/english`, `subjects/science`, `subjects/society`, `subjects/info` 폴더에 정리되어 있습니다.
 
 ## 통합사회 4단원 원본 HTML 가져오기
 
-사회 탭은 저장소의 `통합사회_4단원_정리.html`을 iframe으로 그대로 표시합니다. 원본 파일이 사용자 PC의 다운로드 폴더에 있다면 아래 명령으로 원본 소스 코드를 변형 없이 저장소 파일로 복사하세요.
+사회 탭은 `subjects/society/society_hub.html`에서 문화/도시를 선택하고, 문화는 `subjects/society/통합사회_4단원_정리.html`을 표시합니다. 원본 파일이 사용자 PC의 다운로드 폴더에 있다면 아래 명령으로 원본 소스 코드를 변형 없이 저장소 파일로 복사하세요.
 
 ```bash
 npm run import:society
