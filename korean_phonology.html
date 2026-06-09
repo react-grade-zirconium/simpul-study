@@ -235,6 +235,10 @@
     border: 1px solid var(--border);
   }
 
+  .consonant-mobile-cards {
+    display: none;
+  }
+
   table {
     width: 100%;
     border-collapse: collapse;
@@ -354,6 +358,67 @@
     header { padding: 14px 16px 0; }
     main { padding: 18px 14px 40px; }
     h1 { font-size: 18px; }
+    .consonant-table-wrap { display: none; }
+    .consonant-mobile-cards {
+      display: grid;
+      gap: 12px;
+      margin: 14px 0;
+    }
+    .consonant-mobile-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+    }
+    .consonant-mobile-card h3 {
+      font-size: 15px;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+    .consonant-mobile-card .card-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .consonant-row {
+      display: grid;
+      gap: 7px;
+      padding: 10px 0;
+      border-top: 1px solid var(--border);
+    }
+    .consonant-row:first-of-type { border-top: 0; padding-top: 0; }
+    .consonant-method {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .consonant-places {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 7px;
+    }
+    .consonant-place {
+      min-height: 54px;
+      border: 1px solid var(--primary-mid);
+      border-radius: 10px;
+      background: #F8FBFF;
+      padding: 8px 9px;
+    }
+    .consonant-place span {
+      display: block;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 3px;
+      line-height: 1.25;
+    }
+    .consonant-place strong {
+      font-size: 22px;
+      line-height: 1;
+      letter-spacing: 2px;
+      color: var(--text);
+    }
   }
 
   /* Exception box */
@@ -539,8 +604,8 @@
     소리를 낼 때 공기의 흐름이 발음 기관의 장애를 받는 소리
   </div>
 
-  <div class="tbl-wrap">
-    <table>
+  <div class="tbl-wrap consonant-table-wrap">
+    <table class="consonant-table">
       <thead>
         <tr>
           <th rowspan="2">발음 방법</th>
@@ -643,6 +708,72 @@
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <div class="consonant-mobile-cards" aria-label="자음 체계 모바일 요약">
+    <section class="consonant-mobile-card">
+      <h3>안울림소리（장애음）</h3>
+      <p class="card-desc">공기가 막히거나 마찰되며 나는 소리입니다.</p>
+      <div class="consonant-row">
+        <div class="consonant-method">파열음 · 예사소리(평음)</div>
+        <div class="consonant-places">
+          <div class="consonant-place"><span>입술소리</span><strong>ㅂ</strong></div>
+          <div class="consonant-place"><span>잇몸소리</span><strong>ㄷ</strong></div>
+          <div class="consonant-place"><span>여린입천장소리</span><strong>ㄱ</strong></div>
+        </div>
+      </div>
+      <div class="consonant-row">
+        <div class="consonant-method">파열음 · 된소리</div>
+        <div class="consonant-places">
+          <div class="consonant-place"><span>입술소리</span><strong>ㅃ</strong></div>
+          <div class="consonant-place"><span>잇몸소리</span><strong>ㄸ</strong></div>
+          <div class="consonant-place"><span>여린입천장소리</span><strong>ㄲ</strong></div>
+        </div>
+      </div>
+      <div class="consonant-row">
+        <div class="consonant-method">파열음 · 거센소리</div>
+        <div class="consonant-places">
+          <div class="consonant-place"><span>입술소리</span><strong>ㅍ</strong></div>
+          <div class="consonant-place"><span>잇몸소리</span><strong>ㅌ</strong></div>
+          <div class="consonant-place"><span>여린입천장소리</span><strong>ㅋ</strong></div>
+        </div>
+      </div>
+      <div class="consonant-row">
+        <div class="consonant-method">파찰음</div>
+        <div class="consonant-places">
+          <div class="consonant-place"><span>예사소리 · 센입천장</span><strong>ㅈ</strong></div>
+          <div class="consonant-place"><span>된소리 · 센입천장</span><strong>ㅉ</strong></div>
+          <div class="consonant-place"><span>거센소리 · 센입천장</span><strong>ㅊ</strong></div>
+        </div>
+      </div>
+      <div class="consonant-row">
+        <div class="consonant-method">마찰음</div>
+        <div class="consonant-places">
+          <div class="consonant-place"><span>예사소리 · 잇몸</span><strong>ㅅ</strong></div>
+          <div class="consonant-place"><span>된소리 · 잇몸</span><strong>ㅆ</strong></div>
+          <div class="consonant-place"><span>목청소리</span><strong>ㅎ</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="consonant-mobile-card">
+      <h3>울림소리（공명음）</h3>
+      <p class="card-desc">공기가 비교적 부드럽게 흐르며 나는 소리입니다.</p>
+      <div class="consonant-row">
+        <div class="consonant-method">콧소리(비음)</div>
+        <div class="consonant-places">
+          <div class="consonant-place"><span>입술소리</span><strong>ㅁ</strong></div>
+          <div class="consonant-place"><span>잇몸소리</span><strong>ㄴ</strong></div>
+          <div class="consonant-place"><span>여린입천장소리</span><strong>ㅇ</strong></div>
+        </div>
+      </div>
+      <div class="consonant-row">
+        <div class="consonant-method">흐름소리(유음)</div>
+        <div class="consonant-places">
+          <div class="consonant-place"><span>잇몸소리</span><strong>ㄹ</strong></div>
+        </div>
+      </div>
+    </section>
   </div>
 
   <div class="warn-box">
