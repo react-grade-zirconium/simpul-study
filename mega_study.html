@@ -3,104 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>정보 학습</title>
+  <title>정보 학습 선택</title>
   <style>
-    :root { color-scheme: light; font-family: Pretendard, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-    * { box-sizing: border-box; }
-    body { margin: 0; padding: 24px; color: #0f172a; background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%); }
-    main { max-width: 920px; margin: 0 auto; display: grid; gap: 16px; }
-    section { border: 1px solid #dbe3ef; border-radius: 18px; padding: 20px; background: rgba(255, 255, 255, .92); box-shadow: 0 12px 28px rgba(15, 23, 42, .08); }
-    h1 { margin: 0 0 8px; font-size: clamp(1.45rem, 4vw, 2.2rem); letter-spacing: -.04em; }
-    h2 { margin: 0 0 10px; font-size: 1.05rem; color: #1d4ed8; }
-    h3 { margin: 0; font-size: 1.08rem; }
-    p, li { line-height: 1.7; }
-    p { margin: 0; }
-    ul { margin: 0; padding-left: 1.2rem; }
-    .badge { display: inline-flex; margin-bottom: 10px; padding: 6px 10px; border-radius: 999px; background: #dbeafe; color: #1e3a8a; font-weight: 800; font-size: .82rem; }
-    .hero-desc { color: #64748b; }
-    .range-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-    .tab-btn { display: grid; gap: 8px; width: 100%; min-height: 124px; border: 1px solid #dbe3ef; border-radius: 18px; padding: 18px; text-align: left; background: #fff; color: #0f172a; cursor: pointer; box-shadow: 0 8px 20px rgba(15, 23, 42, .06); transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease, background .16s ease; }
-    .tab-btn:hover, .tab-btn:focus-visible { transform: translateY(-2px); border-color: #93c5fd; box-shadow: 0 14px 26px rgba(37, 99, 235, .14); outline: none; }
-    .tab-btn.active { border-color: #2563eb; background: linear-gradient(135deg, #eff6ff, #ffffff); box-shadow: 0 16px 34px rgba(37, 99, 235, .18); }
-    .tab-kicker { display: inline-flex; width: max-content; border-radius: 999px; padding: 5px 9px; background: #e0f2fe; color: #0369a1; font-weight: 900; font-size: .78rem; }
-    .tab-title { font-size: 1.22rem; font-weight: 900; }
-    .tab-desc { color: #475569; font-size: .92rem; line-height: 1.55; }
-    .tab-panel { display: none; gap: 16px; }
-    .tab-panel.active { display: grid; }
-    .routine-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 16px; }
-    .routine-card { display: grid; gap: 12px; border: 1px solid #dbeafe; border-radius: 16px; padding: 18px; background: #f8fbff; }
-    .routine-card strong { color: #1d4ed8; }
-    .range-note { border: 1px solid #bfdbfe; border-radius: 14px; padding: 12px 14px; background: #eff6ff; color: #1d4ed8; font-weight: 800; }
-    @media (max-width: 700px) {
-      body { padding: 14px; }
-      section { padding: 18px; }
-      .range-tabs, .routine-grid { grid-template-columns: 1fr; }
-      .tab-btn { min-height: 112px; }
-    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{width:100%;height:100%;background:#f6f8fc;color:#0f172a;font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif}
+    body{display:grid;place-items:center;padding:20px;overflow:auto}
+    .info-select{width:min(560px,100%);border:1px solid #dbe3ef;border-radius:22px;background:#fff;padding:28px;box-shadow:0 12px 32px rgba(15,23,42,.08);text-align:center}
+    .label{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;background:#eff6ff;color:#1d4ed8;padding:7px 12px;font-size:.88rem;font-weight:800}
+    h1{margin-top:14px;font-size:clamp(1.55rem,4vw,2.15rem);line-height:1.25;letter-spacing:-.04em}
+    p{margin-top:8px;color:#64748b;line-height:1.55;font-size:.96rem}
+    .choices{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+    .choice{display:flex;align-items:center;justify-content:center;gap:8px;min-height:74px;border:1px solid #dbe3ef;border-radius:16px;background:#f8fafc;color:#0f172a;text-decoration:none;font-size:1.12rem;font-weight:900;transition:background .15s ease,border-color .15s ease,transform .15s ease}
+    .choice:hover,.choice:focus-visible{background:#eff6ff;border-color:#93c5fd;transform:translateY(-2px);outline:none}
+    .choice.new:hover,.choice.new:focus-visible{background:#f0fdf4;border-color:#86efac}
+    @media (max-width:520px){body{padding:14px}.info-select{padding:22px 16px}.choices{grid-template-columns:1fr}.choice{min-height:62px}}
   </style>
 </head>
 <body>
-  <main>
-    <section>
-      <span class="badge">SIMPUL STUDY</span>
-      <h1>정보 학습</h1>
-      <p class="hero-desc">파트를 선택해 정보 과목의 중간고사 범위와 신규 범위를 나누어 복습하세요.</p>
-    </section>
+  <main class="info-select" aria-labelledby="infoTitle">
+    <span class="label">💻 정보</span>
+    <h1 id="infoTitle">파트를 선택하세요</h1>
+    <p>중간고사 범위 또는 신규 범위 학습 자료로 이동합니다.</p>
+    <p>두 범위 모두 기말고사 범위입니다.</p>
 
-    <nav class="range-tabs" aria-label="정보 파트 선택">
-      <button class="tab-btn active" type="button" data-tab="midterm-range" aria-controls="midterm-range" aria-selected="true">
-        <span class="tab-kicker">PART 01</span>
-        <span class="tab-title">중간고사 범위</span>
-        <span class="tab-desc">두 범위 모두 기말고사 범위입니다.</span>
-      </button>
-      <button class="tab-btn" type="button" data-tab="new-range" aria-controls="new-range" aria-selected="false">
-        <span class="tab-kicker">PART 02</span>
-        <span class="tab-title">신규 범위</span>
-        <span class="tab-desc">두 범위 모두 기말고사 범위입니다.</span>
-      </button>
+    <nav class="choices" aria-label="정보 파트 선택">
+      <a class="choice midterm" href="./info_midterm.html">🧾 중간고사 범위</a>
+      <a class="choice new" href="./info_new.html">✨ 신규 범위</a>
     </nav>
-
-    <section id="midterm-range" class="tab-panel active" aria-labelledby="midtermTitle">
-      <div>
-        <h2 id="midtermTitle">중간고사 범위</h2>
-        <p class="range-note">두 범위 모두 기말고사 범위입니다.</p>
-      </div>
-      <div class="routine-grid">
-        <article class="routine-card">
-          <h3>오늘의 학습 루틴</h3>
-          <ul>
-            <li>문제를 입력·처리·출력으로 나누기</li>
-            <li>순서도나 의사코드로 해결 절차 쓰기</li>
-            <li>기존에 틀렸던 개념을 다시 표시하기</li>
-          </ul>
-        </article>
-        <article class="routine-card">
-          <h3>복습 팁</h3>
-          <p><strong>핵심 개념</strong>을 읽은 뒤 스스로 질문을 만들고, 답을 교과서 표현으로 다시 정리해 보세요.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="new-range" class="tab-panel" aria-labelledby="newRangeTitle">
-      <div>
-        <h2 id="newRangeTitle">신규 범위</h2>
-        <p class="range-note">두 범위 모두 기말고사 범위입니다.</p>
-      </div>
-      <div class="routine-grid">
-        <article class="routine-card">
-          <h3>오늘의 학습 루틴</h3>
-          <ul>
-            <li>새로 배운 용어를 예시와 함께 정리하기</li>
-            <li>디지털 윤리와 정보 보안 사례 비교하기</li>
-            <li>신규 개념을 중간고사 범위와 연결해 보기</li>
-          </ul>
-        </article>
-        <article class="routine-card">
-          <h3>복습 팁</h3>
-          <p><strong>새 범위</strong>는 개념 이름만 외우지 말고, 실제 상황에 적용되는 방식까지 한 문장으로 설명해 보세요.</p>
-        </article>
-      </div>
-    </section>
   </main>
 
   <script>
