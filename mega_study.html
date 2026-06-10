@@ -31,5 +31,21 @@
       <a class="choice new" href="./info_new.html">✨ 신규 범위</a>
     </nav>
   </main>
+
+  <script>
+    document.querySelectorAll('.tab-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const target = button.dataset.tab;
+        document.querySelectorAll('.tab-btn').forEach((tabButton) => {
+          const active = tabButton === button;
+          tabButton.classList.toggle('active', active);
+          tabButton.setAttribute('aria-selected', String(active));
+        });
+        document.querySelectorAll('.tab-panel').forEach((panel) => {
+          panel.classList.toggle('active', panel.id === target);
+        });
+      });
+    });
+  </script>
 </body>
 </html>
