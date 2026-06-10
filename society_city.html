@@ -1671,7 +1671,7 @@ exp:"지역 문제 해결 플랫폼은 2019년 광주·충북·대전·경남·�
 const TYPE_CONFIG = [
 { key:'ox', label:'OX 퀴즈', icon:'⭕', cls:'ox' },
 { key:'mc', label:'객관식', icon:'📋', cls:'mc' },
-{ key:'hard', label:'고난이도', icon:'🔥', cls:'hard' }
+{ key:'hard', label:'고난도', icon:'🔥', cls:'hard' }
 ];
 const COLOR_MAP = { ox:'#1a73e8', mc:'#34a853', hard:'#ea4335' };
 
@@ -1772,7 +1772,7 @@ card.className = 'q-card';
 if (done) card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
 
 const diff = typeKey === 'ox' ? 'diff-basic' : typeKey === 'mc' ? 'diff-mid' : 'diff-hard';
-const diffLabel = typeKey === 'ox' ? '기초' : typeKey === 'mc' ? '중급' : '고난이도';
+const diffLabel = typeKey === 'ox' ? '기초' : typeKey === 'mc' ? '중급' : '고난도';
 
 // meta
 const meta = document.createElement('div');
