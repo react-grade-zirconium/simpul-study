@@ -397,7 +397,7 @@ hard: [
 const TYPE_CONFIG = [
 { key:'ox', label:'OX 퀴즈', icon:'⭕', cls:'ox' },
 { key:'mc', label:'객관식', icon:'📋', cls:'mc' },
-{ key:'hard', label:'고난이도', icon:'🔥', cls:'hard' }
+{ key:'hard', label:'고난도', icon:'🔥', cls:'hard' }
 ];
 const COLOR_MAP = { ox:'#1a73e8', mc:'#34a853', hard:'#ea4335' };
 
@@ -487,7 +487,7 @@ const card = document.createElement('div');
 card.className = 'q-card';
 if (done) card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
 
-const diffLabel = typeKey === 'ox' ? ['기초','diff-basic'] : typeKey === 'mc' ? ['중급','diff-mid'] : ['고난이도','diff-hard'];
+const diffLabel = typeKey === 'ox' ? ['기초','diff-basic'] : typeKey === 'mc' ? ['중급','diff-mid'] : ['고난도','diff-hard'];
 const markHtml = done ? `<span class="q-answered-mark">${isCorrect ? '✅' : '❌'}</span>` : '';
 
 card.innerHTML = `
