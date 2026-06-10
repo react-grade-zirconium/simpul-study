@@ -2,7 +2,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const rootDir = process.cwd();
-const htmlFiles = ['index.html', 'portal.html'];
+const htmlFiles = fs.readdirSync(rootDir)
+  .filter((file) => file.endsWith('.html'))
+  .sort();
 const attrPattern = /(?:href|src)="([^"#]+)"/g;
 const ignoredProtocols = /^(?:https?:|mailto:|tel:|javascript:|about:)/i;
 const missing = [];
