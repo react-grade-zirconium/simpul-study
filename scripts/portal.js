@@ -176,7 +176,7 @@ function showOperators(btn) {
   framePanel.classList.remove('active');
   if (versionPanel) versionPanel.classList.remove('active');
   if (operatorsPanel) operatorsPanel.classList.add('active');
-  title.textContent = '운영자';
+  title.textContent = '운영진';
   desc.textContent = '';
   if (window.syncInkContext) window.syncInkContext();
 }
