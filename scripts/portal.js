@@ -255,6 +255,7 @@ function inferSubjectFromSrc(src) {
   if (clean.includes('english')) return 'english';
   if (clean.includes('science')) return 'science';
   if (clean.includes('society')) return 'society';
+  if (clean.includes('japanese')) return 'japanese';
   if (clean.includes('mega') || clean.includes('info')) return 'info';
   return clean || 'subject';
 }
