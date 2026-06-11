@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>가타카나 외우기</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{width:100%;min-height:100%;background:#fff;color:#0f172a;font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif}
+    body{padding:24px}
+    main{width:min(1040px,100%);margin:0 auto;display:grid;gap:18px}
+    .intro{border-radius:16px;background:#eff6ff;padding:22px;border:1px solid #bfdbfe}
+    .badge{display:inline-flex;border-radius:999px;background:#2563eb;color:#fff;padding:6px 10px;font-size:.8rem;font-weight:900}
+    h1{margin-top:10px;font-size:clamp(1.6rem,4vw,2.35rem);letter-spacing:-.04em}
+    p{margin-top:8px;color:#64748b;line-height:1.65;font-size:1.04rem}
+    .kana-table{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+    .kana-card{border:1px solid #e2e8f0;border-radius:18px;background:#fff;padding:18px;text-align:center;min-height:124px;display:grid;place-items:center;gap:8px;box-shadow:0 8px 20px rgba(15,23,42,.06)}
+    .kana{font-size:3rem;font-weight:900;color:#1d4ed8;line-height:1}
+    .sound{font-size:1rem;color:#475569;font-weight:800;text-transform:uppercase}
+    .tip{border:1px dashed #93c5fd;border-radius:16px;padding:16px;font-size:1.02rem;color:#1e3a8a;background:#f8fbff;line-height:1.6}
+    @media (max-width:760px){body{padding:16px}.kana-table{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.kana-card{min-height:104px;padding:14px}.kana{font-size:2.45rem}}
+    @media (max-width:420px){.kana-table{grid-template-columns:repeat(2,minmax(0,1fr))}.kana-card{min-height:96px}.kana{font-size:2.2rem}}
+  </style>
+</head>
+<body>
+  <main>
+    <section class="intro">
+      <span class="badge">カタカナ</span>
+      <h1>가타카나 외우기</h1>
+      <p>외래어와 이름 표기에 자주 쓰이는 각진 모양의 문자를 소리와 함께 익히세요.</p>
+    </section>
+    <section class="kana-table" aria-label="가타카나 오십음도 기본 행">
+      <article class="kana-card"><span class="kana">ア</span><span class="sound">a</span></article>
+      <article class="kana-card"><span class="kana">イ</span><span class="sound">i</span></article>
+      <article class="kana-card"><span class="kana">ウ</span><span class="sound">u</span></article>
+      <article class="kana-card"><span class="kana">エ</span><span class="sound">e</span></article>
+      <article class="kana-card"><span class="kana">オ</span><span class="sound">o</span></article>
+      <article class="kana-card"><span class="kana">カ</span><span class="sound">ka</span></article>
+      <article class="kana-card"><span class="kana">キ</span><span class="sound">ki</span></article>
+      <article class="kana-card"><span class="kana">ク</span><span class="sound">ku</span></article>
+      <article class="kana-card"><span class="kana">ケ</span><span class="sound">ke</span></article>
+      <article class="kana-card"><span class="kana">コ</span><span class="sound">ko</span></article>
+      <article class="kana-card"><span class="kana">サ</span><span class="sound">sa</span></article>
+      <article class="kana-card"><span class="kana">シ</span><span class="sound">shi</span></article>
+      <article class="kana-card"><span class="kana">ス</span><span class="sound">su</span></article>
+      <article class="kana-card"><span class="kana">セ</span><span class="sound">se</span></article>
+      <article class="kana-card"><span class="kana">ソ</span><span class="sound">so</span></article>
+    </section>
+    <p class="tip">가타카나는 선이 곧고 비슷한 글자가 많으니 획 방향을 보며 “시·츠”, “소·응”처럼 헷갈리는 글자를 따로 비교해 보세요.</p>
+  </main>
+</body>
+</html>
