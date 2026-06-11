@@ -288,6 +288,7 @@ let subjectFrameResizeId = 0;
 function resizeSubjectFrameForContent() {
   if (frame && frame.style.height) frame.style.height = '';
   if (window.resizeInkCanvas) window.resizeInkCanvas();
+  if (window.redrawInkLayer) window.redrawInkLayer();
 }
 
 function scheduleSubjectFrameResize() {
@@ -302,10 +303,33 @@ function resizeSubjectFrameForMobile() {
   scheduleSubjectFrameResize();
 }
 
-function bindFrameInkContextSync() {
-  const doc = getNestedFrameDocument(frame);
+function bindInkDocumentForContext(doc) {
   if (!doc || doc.body?.dataset.inkSyncBound === '1') return;
   if (doc.body) doc.body.dataset.inkSyncBound = '1';
+  let redrawFrame = 0;
+  let redrawUntil = 0;
+  const keepInkInSync = () => {
+    redrawFrame = 0;
+    if (window.redrawInkLayer) window.redrawInkLayer();
+    if (Date.now() < redrawUntil) {
+      redrawFrame = window.requestAnimationFrame(keepInkInSync);
+    }
+  };
+  const scheduleInkRedraw = () => {
+    redrawUntil = Date.now() + 220;
+    if (!redrawFrame) redrawFrame = window.requestAnimationFrame(keepInkInSync);
+  };
+  const scrollTargets = new Set([
+    doc.defaultView,
+    doc.defaultView?.visualViewport,
+    doc,
+    doc.scrollingElement,
+    doc.documentElement,
+    doc.body,
+  ]);
+  scrollTargets.forEach((target) => {
+    target?.addEventListener?.('scroll', scheduleInkRedraw, { passive: true });
+  });
   doc.querySelectorAll('.tab-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       setTimeout(() => {
@@ -314,7 +338,14 @@ function bindFrameInkContextSync() {
       }, 30);
     });
   });
-  const nested = frame?.contentDocument?.querySelector('iframe');
+}
+
+function bindFrameInkContextSync() {
+  const rootDoc = frame?.contentDocument;
+  bindInkDocumentForContext(rootDoc);
+  const nestedDoc = getNestedFrameDocument(frame);
+  if (nestedDoc && nestedDoc !== rootDoc) bindInkDocumentForContext(nestedDoc);
+  const nested = rootDoc?.querySelector('iframe');
   if (nested && nested.dataset.inkSyncBound !== '1') {
     nested.dataset.inkSyncBound = '1';
     nested.addEventListener('load', () => {
@@ -389,8 +420,102 @@ function initGlobalInk() {
     undoBtn.disabled = strokes.length === 0;
     redoBtn.disabled = redoStack.length === 0;
   }
-  function toCanvasXY(e) {
+  function getSubjectInkMetrics() {
+    const viewportMetrics = { type: 'viewport', originX: 0, originY: 0, scrollX: 0, scrollY: 0, width: window.innerWidth, height: window.innerHeight };
+    if (!document.body.classList.contains('subject-mode') || !frame) return viewportMetrics;
+    const viewportRect = { left: 0, top: 0, right: window.innerWidth, bottom: window.innerHeight };
+    const intersectRects = (...rects) => {
+      const left = Math.max(...rects.map((rect) => rect.left));
+      const top = Math.max(...rects.map((rect) => rect.top));
+      const right = Math.min(...rects.map((rect) => rect.right));
+      const bottom = Math.min(...rects.map((rect) => rect.bottom));
+      return { left, top, right, bottom, width: Math.max(0, right - left), height: Math.max(0, bottom - top) };
+    };
+    const getOcclusionRects = (doc, originX, originY, clip) => {
+      if (!doc || !clip || clip.width <= 0 || clip.height <= 0) return [];
+      const win = doc.defaultView;
+      if (!win) return [];
+      const selectors = ['header', '.page-header', '.tab-bar', '.quiz-type-bar', '[data-ink-occlude]'];
+      const elements = new Set(selectors.flatMap((selector) => Array.from(doc.querySelectorAll(selector))));
+      return Array.from(elements).flatMap((el) => {
+        const style = win.getComputedStyle(el);
+        const explicitlyOccluding = el.hasAttribute('data-ink-occlude');
+        if (!explicitlyOccluding && style.position !== 'sticky' && style.position !== 'fixed') return [];
+        const rect = el.getBoundingClientRect();
+        if (rect.width <= 0 || rect.height <= 0) return [];
+        const screenRect = {
+          left: originX + rect.left,
+          top: originY + rect.top,
+          right: originX + rect.right,
+          bottom: originY + rect.bottom,
+        };
+        const visibleRect = intersectRects(clip, screenRect);
+        return visibleRect.width > 0 && visibleRect.height > 0 ? [visibleRect] : [];
+      });
+    };
+    try {
+      const rootRect = frame.getBoundingClientRect();
+      const rootViewportRect = { left: rootRect.left, top: rootRect.top, right: rootRect.right, bottom: rootRect.bottom };
+      const rootDoc = frame.contentDocument;
+      const rootWin = frame.contentWindow;
+      if (!rootDoc || !rootWin) throw new Error('frame unavailable');
+      const hasOwnTabs = Boolean(rootDoc.querySelector('.tab-btn.active'));
+      const nested = !hasOwnTabs ? rootDoc.querySelector('iframe') : null;
+      const nestedDoc = nested?.contentDocument;
+      const nestedWin = nested?.contentWindow;
+      if (nestedDoc && nestedWin) {
+        const nestedRect = nested.getBoundingClientRect();
+        const nestedViewportRect = {
+          left: rootRect.left + nestedRect.left,
+          top: rootRect.top + nestedRect.top,
+          right: rootRect.left + nestedRect.right,
+          bottom: rootRect.top + nestedRect.bottom,
+        };
+        const clip = intersectRects(viewportRect, rootViewportRect, nestedViewportRect);
+        return {
+          type: 'subject-content',
+          originX: nestedViewportRect.left,
+          originY: nestedViewportRect.top,
+          scrollX: nestedWin.scrollX || nestedDoc.documentElement?.scrollLeft || nestedDoc.body?.scrollLeft || 0,
+          scrollY: nestedWin.scrollY || nestedDoc.documentElement?.scrollTop || nestedDoc.body?.scrollTop || 0,
+          width: nestedWin.innerWidth || nestedDoc.documentElement?.clientWidth || nestedRect.width,
+          height: nestedWin.innerHeight || nestedDoc.documentElement?.clientHeight || nestedRect.height,
+          clip,
+          occlusions: getOcclusionRects(nestedDoc, nestedViewportRect.left, nestedViewportRect.top, clip),
+        };
+      }
+      const clip = intersectRects(viewportRect, rootViewportRect);
+      return {
+        type: 'subject-content',
+        originX: rootRect.left,
+        originY: rootRect.top,
+        scrollX: rootWin.scrollX || rootDoc.documentElement?.scrollLeft || rootDoc.body?.scrollLeft || 0,
+        scrollY: rootWin.scrollY || rootDoc.documentElement?.scrollTop || rootDoc.body?.scrollTop || 0,
+        width: rootWin.innerWidth || rootDoc.documentElement?.clientWidth || rootRect.width,
+        height: rootWin.innerHeight || rootDoc.documentElement?.clientHeight || rootRect.height,
+        clip,
+        occlusions: getOcclusionRects(rootDoc, rootRect.left, rootRect.top, clip),
+      };
+    } catch (_) {
+      return viewportMetrics;
+    }
+  }
+  function isWithinInkMetrics(e, metrics) {
+    if (metrics.type !== 'subject-content') return true;
+    const clip = metrics.clip || { left: metrics.originX, top: metrics.originY, width: metrics.width, height: metrics.height };
+    return e.clientX >= clip.left && e.clientX <= clip.left + clip.width && e.clientY >= clip.top && e.clientY <= clip.top + clip.height;
+  }
+  function toCanvasXY(e, metrics = getSubjectInkMetrics()) {
+    if (metrics.type === 'subject-content') {
+      return { x: e.clientX - metrics.originX + metrics.scrollX, y: e.clientY - metrics.originY + metrics.scrollY };
+    }
     return { x: e.clientX, y: e.clientY };
+  }
+  function toScreenXY(point, stroke, metrics = getSubjectInkMetrics()) {
+    if (stroke.coordSpace === 'subject-content' && metrics.type === 'subject-content') {
+      return { x: point.x - metrics.scrollX + metrics.originX, y: point.y - metrics.scrollY + metrics.originY };
+    }
+    return point;
   }
   function getViewportSize() {
     const doc = document.documentElement;
@@ -428,18 +553,68 @@ function initGlobalInk() {
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
   }
-  function drawStroke(stroke) {
+  function drawStroke(stroke, metrics = getSubjectInkMetrics()) {
     if (!stroke.points || stroke.points.length < 2) return;
     applyStrokeStyle(stroke);
+    const screenPoints = stroke.points.map((point) => toScreenXY(point, stroke, metrics));
     ctx.beginPath();
-    ctx.moveTo(stroke.points[0].x, stroke.points[0].y);
-    for (let i = 1; i < stroke.points.length; i++) ctx.lineTo(stroke.points[i].x, stroke.points[i].y);
+    ctx.moveTo(screenPoints[0].x, screenPoints[0].y);
+    if (screenPoints.length === 2) {
+      ctx.lineTo(screenPoints[1].x, screenPoints[1].y);
+    } else {
+      for (let i = 1; i < screenPoints.length - 1; i++) {
+        const midX = (screenPoints[i].x + screenPoints[i + 1].x) / 2;
+        const midY = (screenPoints[i].y + screenPoints[i + 1].y) / 2;
+        ctx.quadraticCurveTo(screenPoints[i].x, screenPoints[i].y, midX, midY);
+      }
+      const last = screenPoints[screenPoints.length - 1];
+      ctx.lineTo(last.x, last.y);
+    }
     ctx.stroke();
     ctx.closePath();
   }
+  function applySubjectOcclusionMasks(rects) {
+    if (!rects?.length) return;
+    ctx.save();
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.globalAlpha = 1;
+    rects.forEach((rect) => ctx.fillRect(rect.left, rect.top, rect.width, rect.height));
+    ctx.restore();
+  }
+  function applySubjectClipFade(clip) {
+    const fade = Math.min(22, Math.floor(clip.height / 5), Math.floor(clip.width / 5));
+    if (fade < 3) return;
+    ctx.save();
+    ctx.globalCompositeOperation = 'destination-in';
+    ctx.globalAlpha = 1;
+    const verticalMask = ctx.createLinearGradient(0, clip.top, 0, clip.top + clip.height);
+    verticalMask.addColorStop(0, 'rgba(0,0,0,0)');
+    verticalMask.addColorStop(Math.min(0.45, fade / clip.height), 'rgba(0,0,0,1)');
+    verticalMask.addColorStop(Math.max(0.55, 1 - fade / clip.height), 'rgba(0,0,0,1)');
+    verticalMask.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = verticalMask;
+    ctx.fillRect(clip.left, clip.top, clip.width, clip.height);
+    ctx.restore();
+  }
   function drawAll() {
+    const metrics = getSubjectInkMetrics();
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.globalAlpha = 1;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (const s of strokes) drawStroke(s);
+    if (metrics.type === 'subject-content') {
+      const clip = metrics.clip || { left: metrics.originX, top: metrics.originY, width: metrics.width, height: metrics.height };
+      if (clip.width <= 0 || clip.height <= 0) return;
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(clip.left, clip.top, clip.width, clip.height);
+      ctx.clip();
+      for (const s of strokes) drawStroke(s, metrics);
+      applySubjectOcclusionMasks(metrics.occlusions);
+      applySubjectClipFade(clip);
+      ctx.restore();
+      return;
+    }
+    for (const s of strokes) drawStroke(s, metrics);
   }
   function inkStorageKey(scope = activeInkScope) {
     return `${INK_STROKES_PREFIX}${scope}`;
@@ -468,19 +643,23 @@ function initGlobalInk() {
   }
   window.syncInkContext = syncInkContext;
   window.resizeInkCanvas = resizeCanvas;
+  window.redrawInkLayer = drawAll;
   function beginStroke(e) {
     if (!document.body.classList.contains('ink-on')) return;
     if (e.target.closest && e.target.closest('#inkToolbar')) return;
+    const metrics = getSubjectInkMetrics();
+    if (!isWithinInkMetrics(e, metrics)) return;
     drawing = true;
-    currentStroke = { mode, size: penSize, color: penColor, points: [] };
-    currentStroke.points.push(toCanvasXY(e));
+    currentStroke = { mode, size: penSize, color: penColor, coordSpace: metrics.type, points: [] };
+    currentStroke.points.push(toCanvasXY(e, metrics));
     e.preventDefault();
   }
   function moveStroke(e) {
     if (!drawing || !currentStroke) return;
-    currentStroke.points.push(toCanvasXY(e));
+    const metrics = getSubjectInkMetrics();
+    currentStroke.points.push(toCanvasXY(e, metrics));
     drawAll();
-    drawStroke(currentStroke);
+    drawStroke(currentStroke, metrics);
     e.preventDefault();
   }
   function endStroke() {
@@ -490,7 +669,7 @@ function initGlobalInk() {
       strokes.push(currentStroke);
       if (strokes.length > 400) strokes = strokes.slice(strokes.length - 400);
       redoStack = [];
-            persistStrokes();
+      persistStrokes();
       updateUndoRedoUI();
     }
     currentStroke = null;
@@ -540,6 +719,7 @@ function initGlobalInk() {
   updateUndoRedoUI();
   window.addEventListener('resize', () => { scheduleSubjectFrameResize(); resizeCanvas(); });
   window.visualViewport?.addEventListener('resize', resizeCanvas);
+  window.visualViewport?.addEventListener('scroll', drawAll, { passive: true });
   window.addEventListener('beforeunload', persistStrokes);
 }
 
