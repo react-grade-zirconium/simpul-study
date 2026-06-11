@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1408 768" role="img" aria-labelledby="title desc">
+  <title id="title">자음 체계표</title>
+  <desc id="desc">조음 방법과 조음 위치에 따라 한국어 자음을 분류한 표</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#c3dcf0"/>
+      <stop offset="0.48" stop-color="#dcecf6"/>
+      <stop offset="1" stop-color="#cfe4f4"/>
+    </linearGradient>
+    <filter id="soft" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur stdDeviation="0.35"/>
+    </filter>
+    <style>
+      .bg{fill:url(#paper)}
+      .top{fill:#062965}
+      .grid{stroke:#fff;stroke-width:3;fill:none;stroke-linejoin:round}
+      .label{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;font-weight:800;fill:#05070b;text-anchor:middle;dominant-baseline:middle}
+      .title{font-size:40px;fill:#fff;font-weight:900;letter-spacing:-1px}
+      .head{font-size:34px}
+      .place{font-size:31px}
+      .small{font-size:27px}
+      .side{font-size:31px}
+      .method{font-size:29px}
+      .sound{font-size:31px}
+      .letter{font-size:42px;font-weight:900}
+      .spark{fill:#fff;opacity:.55}
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1408" height="768"/>
+  <rect class="top" x="0" y="0" width="1408" height="63"/>
+  <text class="label title" x="704" y="31.5">자음 체계표</text>
+
+  <!-- header and body grid -->
+  <path class="grid" d="M0 63H1408V766H0Z M0 198H1408 M410 63V766 M0 652.4H410 M166 198V766 M277 198V766 M0 198H410 M166 368.4H410 M166 538.8H410 M166 652.4H410"/>
+  <path class="grid" d="M410 117H1408 M609.6 117V766 M809.2 117V766 M1008.8 117V766 M1208.4 117V766"/>
+  <path class="grid" d="M277 254.8H1408 M277 311.6H1408 M277 368.4H1408 M277 425.2H1408 M277 482H1408 M277 538.8H1408 M277 595.6H1408 M0 652.4H1408 M166 709.2H1408"/>
+
+  <!-- headers -->
+  <text class="label head" x="205" y="130.5">조음방법</text>
+  <text class="label head" x="909" y="90">조음위치</text>
+  <text class="label place" x="509.8" y="143">
+    <tspan x="509.8" dy="0">양순음</tspan><tspan class="small" x="509.8" dy="38">(두입술소리)</tspan>
+  </text>
+  <text class="label place" x="709.4" y="143">
+    <tspan x="709.4" dy="0">치조음</tspan><tspan class="small" x="709.4" dy="38">(잇몸소리)</tspan>
+  </text>
+  <text class="label place" x="909" y="143">
+    <tspan x="909" dy="0">경구개음</tspan><tspan class="small" x="909" dy="38">(센입천장소리)</tspan>
+  </text>
+  <text class="label place" x="1108.6" y="143">
+    <tspan x="1108.6" dy="0">연구개음</tspan><tspan class="small" x="1108.6" dy="38">(여린입천장소리)</tspan>
+  </text>
+  <text class="label place" x="1308.2" y="143">
+    <tspan x="1308.2" dy="0">후음</tspan><tspan class="small" x="1308.2" dy="38">(목청소리)</tspan>
+  </text>
+
+  <!-- side labels -->
+  <text class="label side" x="83" y="425.2"><tspan x="83" dy="-18">안울림소리</tspan><tspan x="83" dy="42">(장애음)</tspan></text>
+  <text class="label side" x="83" y="709.2"><tspan x="83" dy="-18">울림소리</tspan><tspan x="83" dy="42">(공명음)</tspan></text>
+  <text class="label method" x="221.5" y="283.2">파열음</text>
+  <text class="label method" x="221.5" y="453.6">파찰음</text>
+  <text class="label method" x="221.5" y="595.6">마찰음</text>
+
+  <!-- row labels -->
+  <text class="label sound" x="343.5" y="226.4">예사소리</text>
+  <text class="label sound" x="343.5" y="283.2">된소리</text>
+  <text class="label sound" x="343.5" y="340">거센소리</text>
+  <text class="label sound" x="343.5" y="396.8">예사소리</text>
+  <text class="label sound" x="343.5" y="453.6">된소리</text>
+  <text class="label sound" x="343.5" y="510.4">거센소리</text>
+  <text class="label sound" x="343.5" y="567.2">예사소리</text>
+  <text class="label sound" x="343.5" y="624">된소리</text>
+  <text class="label method" x="343.5" y="680.8">비음</text>
+  <text class="label method" x="343.5" y="737.6">유음</text>
+
+  <!-- consonants -->
+  <text class="label letter" x="509.8" y="226.4">ㅂ</text>
+  <text class="label letter" x="709.4" y="226.4">ㄷ</text>
+  <text class="label letter" x="1108.6" y="226.4">ㄱ</text>
+  <text class="label letter" x="509.8" y="283.2">ㅃ</text>
+  <text class="label letter" x="709.4" y="283.2">ㄸ</text>
+  <text class="label letter" x="1108.6" y="283.2">ㄲ</text>
+  <text class="label letter" x="509.8" y="340">ㅍ</text>
+  <text class="label letter" x="709.4" y="340">ㅌ</text>
+  <text class="label letter" x="1108.6" y="340">ㅋ</text>
+  <text class="label letter" x="909" y="396.8">ㅈ</text>
+  <text class="label letter" x="909" y="453.6">ㅉ</text>
+  <text class="label letter" x="909" y="510.4">ㅊ</text>
+  <text class="label letter" x="709.4" y="567.2">ㅅ</text>
+  <text class="label letter" x="1308.2" y="567.2">ㅎ</text>
+  <text class="label letter" x="709.4" y="624">ㅆ</text>
+  <text class="label letter" x="509.8" y="680.8">ㅁ</text>
+  <text class="label letter" x="709.4" y="680.8">ㄴ</text>
+  <text class="label letter" x="1108.6" y="680.8">ㅇ</text>
+  <text class="label letter" x="709.4" y="737.6">ㄹ</text>
+
+  <path class="spark" d="M1351 690l10 28 28 10-28 10-10 28-10-28-28-10 28-10z"/>
+</svg>
