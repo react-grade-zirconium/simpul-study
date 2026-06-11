@@ -549,8 +549,25 @@ function initGlobalInk() {
     ctx.stroke();
     ctx.closePath();
   }
+  function applySubjectClipFade(clip) {
+    const fade = Math.min(22, Math.floor(clip.height / 5), Math.floor(clip.width / 5));
+    if (fade < 3) return;
+    ctx.save();
+    ctx.globalCompositeOperation = 'destination-in';
+    ctx.globalAlpha = 1;
+    const verticalMask = ctx.createLinearGradient(0, clip.top, 0, clip.top + clip.height);
+    verticalMask.addColorStop(0, 'rgba(0,0,0,0)');
+    verticalMask.addColorStop(Math.min(0.45, fade / clip.height), 'rgba(0,0,0,1)');
+    verticalMask.addColorStop(Math.max(0.55, 1 - fade / clip.height), 'rgba(0,0,0,1)');
+    verticalMask.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = verticalMask;
+    ctx.fillRect(clip.left, clip.top, clip.width, clip.height);
+    ctx.restore();
+  }
   function drawAll() {
     const metrics = getSubjectInkMetrics();
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.globalAlpha = 1;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (metrics.type === 'subject-content') {
       const clip = metrics.clip || { left: metrics.originX, top: metrics.originY, width: metrics.width, height: metrics.height };
@@ -560,6 +577,7 @@ function initGlobalInk() {
       ctx.rect(clip.left, clip.top, clip.width, clip.height);
       ctx.clip();
       for (const s of strokes) drawStroke(s, metrics);
+      applySubjectClipFade(clip);
       ctx.restore();
       return;
     }
