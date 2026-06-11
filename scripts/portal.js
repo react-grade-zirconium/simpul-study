@@ -307,12 +307,17 @@ function bindInkDocumentForContext(doc) {
   if (!doc || doc.body?.dataset.inkSyncBound === '1') return;
   if (doc.body) doc.body.dataset.inkSyncBound = '1';
   let redrawFrame = 0;
+  let redrawUntil = 0;
+  const keepInkInSync = () => {
+    redrawFrame = 0;
+    if (window.redrawInkLayer) window.redrawInkLayer();
+    if (Date.now() < redrawUntil) {
+      redrawFrame = window.requestAnimationFrame(keepInkInSync);
+    }
+  };
   const scheduleInkRedraw = () => {
-    if (redrawFrame) return;
-    redrawFrame = window.requestAnimationFrame(() => {
-      redrawFrame = 0;
-      if (window.redrawInkLayer) window.redrawInkLayer();
-    });
+    redrawUntil = Date.now() + 220;
+    if (!redrawFrame) redrawFrame = window.requestAnimationFrame(keepInkInSync);
   };
   const scrollTargets = new Set([
     doc.defaultView,
@@ -416,11 +421,19 @@ function initGlobalInk() {
     redoBtn.disabled = redoStack.length === 0;
   }
   function getSubjectInkMetrics() {
-    if (!document.body.classList.contains('subject-mode') || !frame) {
-      return { type: 'viewport', originX: 0, originY: 0, scrollX: 0, scrollY: 0, width: window.innerWidth, height: window.innerHeight };
-    }
+    const viewportMetrics = { type: 'viewport', originX: 0, originY: 0, scrollX: 0, scrollY: 0, width: window.innerWidth, height: window.innerHeight };
+    if (!document.body.classList.contains('subject-mode') || !frame) return viewportMetrics;
+    const viewportRect = { left: 0, top: 0, right: window.innerWidth, bottom: window.innerHeight };
+    const intersectRects = (...rects) => {
+      const left = Math.max(...rects.map((rect) => rect.left));
+      const top = Math.max(...rects.map((rect) => rect.top));
+      const right = Math.min(...rects.map((rect) => rect.right));
+      const bottom = Math.min(...rects.map((rect) => rect.bottom));
+      return { left, top, right, bottom, width: Math.max(0, right - left), height: Math.max(0, bottom - top) };
+    };
     try {
       const rootRect = frame.getBoundingClientRect();
+      const rootViewportRect = { left: rootRect.left, top: rootRect.top, right: rootRect.right, bottom: rootRect.bottom };
       const rootDoc = frame.contentDocument;
       const rootWin = frame.contentWindow;
       if (!rootDoc || !rootWin) throw new Error('frame unavailable');
@@ -430,16 +443,25 @@ function initGlobalInk() {
       const nestedWin = nested?.contentWindow;
       if (nestedDoc && nestedWin) {
         const nestedRect = nested.getBoundingClientRect();
+        const nestedViewportRect = {
+          left: rootRect.left + nestedRect.left,
+          top: rootRect.top + nestedRect.top,
+          right: rootRect.left + nestedRect.right,
+          bottom: rootRect.top + nestedRect.bottom,
+        };
+        const clip = intersectRects(viewportRect, rootViewportRect, nestedViewportRect);
         return {
           type: 'subject-content',
-          originX: rootRect.left + nestedRect.left,
-          originY: rootRect.top + nestedRect.top,
+          originX: nestedViewportRect.left,
+          originY: nestedViewportRect.top,
           scrollX: nestedWin.scrollX || nestedDoc.documentElement?.scrollLeft || nestedDoc.body?.scrollLeft || 0,
           scrollY: nestedWin.scrollY || nestedDoc.documentElement?.scrollTop || nestedDoc.body?.scrollTop || 0,
           width: nestedWin.innerWidth || nestedDoc.documentElement?.clientWidth || nestedRect.width,
           height: nestedWin.innerHeight || nestedDoc.documentElement?.clientHeight || nestedRect.height,
+          clip,
         };
       }
+      const clip = intersectRects(viewportRect, rootViewportRect);
       return {
         type: 'subject-content',
         originX: rootRect.left,
@@ -448,14 +470,16 @@ function initGlobalInk() {
         scrollY: rootWin.scrollY || rootDoc.documentElement?.scrollTop || rootDoc.body?.scrollTop || 0,
         width: rootWin.innerWidth || rootDoc.documentElement?.clientWidth || rootRect.width,
         height: rootWin.innerHeight || rootDoc.documentElement?.clientHeight || rootRect.height,
+        clip,
       };
     } catch (_) {
-      return { type: 'viewport', originX: 0, originY: 0, scrollX: 0, scrollY: 0, width: window.innerWidth, height: window.innerHeight };
+      return viewportMetrics;
     }
   }
   function isWithinInkMetrics(e, metrics) {
     if (metrics.type !== 'subject-content') return true;
-    return e.clientX >= metrics.originX && e.clientX <= metrics.originX + metrics.width && e.clientY >= metrics.originY && e.clientY <= metrics.originY + metrics.height;
+    const clip = metrics.clip || { left: metrics.originX, top: metrics.originY, width: metrics.width, height: metrics.height };
+    return e.clientX >= clip.left && e.clientX <= clip.left + clip.width && e.clientY >= clip.top && e.clientY <= clip.top + clip.height;
   }
   function toCanvasXY(e, metrics = getSubjectInkMetrics()) {
     if (metrics.type === 'subject-content') {
@@ -508,12 +532,19 @@ function initGlobalInk() {
   function drawStroke(stroke, metrics = getSubjectInkMetrics()) {
     if (!stroke.points || stroke.points.length < 2) return;
     applyStrokeStyle(stroke);
-    const firstPoint = toScreenXY(stroke.points[0], stroke, metrics);
+    const screenPoints = stroke.points.map((point) => toScreenXY(point, stroke, metrics));
     ctx.beginPath();
-    ctx.moveTo(firstPoint.x, firstPoint.y);
-    for (let i = 1; i < stroke.points.length; i++) {
-      const point = toScreenXY(stroke.points[i], stroke, metrics);
-      ctx.lineTo(point.x, point.y);
+    ctx.moveTo(screenPoints[0].x, screenPoints[0].y);
+    if (screenPoints.length === 2) {
+      ctx.lineTo(screenPoints[1].x, screenPoints[1].y);
+    } else {
+      for (let i = 1; i < screenPoints.length - 1; i++) {
+        const midX = (screenPoints[i].x + screenPoints[i + 1].x) / 2;
+        const midY = (screenPoints[i].y + screenPoints[i + 1].y) / 2;
+        ctx.quadraticCurveTo(screenPoints[i].x, screenPoints[i].y, midX, midY);
+      }
+      const last = screenPoints[screenPoints.length - 1];
+      ctx.lineTo(last.x, last.y);
     }
     ctx.stroke();
     ctx.closePath();
@@ -521,6 +552,17 @@ function initGlobalInk() {
   function drawAll() {
     const metrics = getSubjectInkMetrics();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (metrics.type === 'subject-content') {
+      const clip = metrics.clip || { left: metrics.originX, top: metrics.originY, width: metrics.width, height: metrics.height };
+      if (clip.width <= 0 || clip.height <= 0) return;
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(clip.left, clip.top, clip.width, clip.height);
+      ctx.clip();
+      for (const s of strokes) drawStroke(s, metrics);
+      ctx.restore();
+      return;
+    }
     for (const s of strokes) drawStroke(s, metrics);
   }
   function inkStorageKey(scope = activeInkScope) {
