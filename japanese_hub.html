@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>일본어 학습</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{width:100%;min-height:100%;background:#f6f8fc;color:#0f172a;font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif}
+    body{padding:24px;overflow:auto}
+    .japanese-page{width:min(1180px,100%);margin:0 auto;display:grid;gap:16px}
+    .hero,.tab-panel{border:1px solid #dbe3ef;border-radius:22px;background:#fff;padding:24px;box-shadow:0 12px 32px rgba(15,23,42,.08)}
+    .label{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;background:#fef2f2;color:#b91c1c;padding:7px 12px;font-size:.88rem;font-weight:800}
+    h1{margin-top:14px;font-size:clamp(1.55rem,4vw,2.25rem);line-height:1.25;letter-spacing:-.04em}
+    p{margin-top:8px;color:#64748b;line-height:1.65;font-size:.96rem}
+    .tabs{display:flex;gap:10px;overflow-x:auto;padding:4px;scrollbar-width:none}
+    .tabs::-webkit-scrollbar{display:none}
+    .tab-btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid #dbe3ef;border-radius:999px;background:#fff;color:#334155;padding:10px 16px;font-family:inherit;font-size:.95rem;font-weight:900;white-space:nowrap;cursor:pointer;text-decoration:none;transition:background .15s ease,border-color .15s ease,color .15s ease,transform .15s ease}
+    .tab-btn:hover,.tab-btn:focus-visible{background:#fef2f2;border-color:#fca5a5;outline:none;transform:translateY(-1px)}
+    .tab-btn.active{background:#dc2626;border-color:#b91c1c;color:#fff;box-shadow:0 8px 18px rgba(220,38,38,.18)}
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+    .tab-panel h2{font-size:1.22rem;color:#b91c1c;margin-bottom:10px}
+    .study-list{display:grid;gap:10px;margin-top:14px;list-style:none}
+    .study-list li{border:1px solid #e2e8f0;border-radius:14px;background:#f8fafc;padding:14px;line-height:1.6;color:#334155}
+    .jump-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
+    .jump-card{display:grid;gap:8px;border:1px solid #fecaca;border-radius:18px;background:#fff7f7;color:#7f1d1d;text-decoration:none;padding:18px;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease}
+    .jump-card:hover,.jump-card:focus-visible{border-color:#f87171;box-shadow:0 10px 24px rgba(248,113,113,.18);transform:translateY(-2px);outline:none}
+    .jump-card strong{font-size:1.08rem}.jump-card span{color:#64748b;line-height:1.5}
+    @media (max-width:620px){body{padding:14px}.hero,.tab-panel{padding:20px 16px}.tabs{gap:8px}.tab-btn{padding:9px 12px;font-size:.88rem}.jump-list{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main class="japanese-page">
+    <section class="hero" aria-labelledby="japaneseTitle">
+      <span class="label">🇯🇵 일본어</span>
+      <h1 id="japaneseTitle">일본어 파트를 선택하세요</h1>
+      <p>내용 정리, 히라가나 외우기, 가타카나 외우기 탭을 따로 열어 일본어 기초를 학습할 수 있습니다.</p>
+    </section>
+
+    <nav class="tabs" role="tablist" aria-label="일본어 학습 탭">
+      <button id="summaryTab" class="tab-btn active" type="button" role="tab" aria-selected="true" aria-controls="summary">내용 정리</button>
+      <a id="hiraganaTab" class="tab-btn" role="tab" aria-selected="false" href="./japanese_hiragana.html">히라가나 외우기</a>
+      <a id="katakanaTab" class="tab-btn" role="tab" aria-selected="false" href="./japanese_katakana.html">가타카나 외우기</a>
+    </nav>
+
+    <section id="summary" class="tab-panel active" role="tabpanel" aria-labelledby="summaryTab">
+      <h2>내용 정리</h2>
+      <p>수업에서 배운 일본어 핵심 개념을 이곳에 정리하며 복습하세요.</p>
+      <ul class="study-list">
+        <li><strong>발음:</strong> 모음 5개와 청음·탁음·반탁음의 차이를 확인합니다.</li>
+        <li><strong>인사 표현:</strong> 상황별 기본 인사와 감사·사과 표현을 반복합니다.</li>
+        <li><strong>문장 구조:</strong> 주제 표시 조사와 기본 어순을 예문으로 정리합니다.</li>
+      </ul>
+      <div class="jump-list" aria-label="일본어 문자 학습 바로가기">
+        <a class="jump-card" href="./japanese_hiragana.html">
+          <strong>ひらがな 히라가나 외우기</strong>
+          <span>새 화면으로 이동해서 히라가나 카드를 크게 봅니다.</span>
+        </a>
+        <a class="jump-card" href="./japanese_katakana.html">
+          <strong>カタカナ 가타카나 외우기</strong>
+          <span>새 화면으로 이동해서 가타카나 카드를 크게 봅니다.</span>
+        </a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
