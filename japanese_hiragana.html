@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>히라가나 외우기</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{width:100%;min-height:100%;background:#fff;color:#0f172a;font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif}
+    body{padding:18px}
+    main{display:grid;gap:14px}
+    .intro{border-radius:16px;background:#fef2f2;padding:16px;border:1px solid #fecaca}
+    .badge{display:inline-flex;border-radius:999px;background:#dc2626;color:#fff;padding:6px 10px;font-size:.8rem;font-weight:900}
+    h1{margin-top:10px;font-size:clamp(1.35rem,4vw,1.9rem);letter-spacing:-.04em}
+    p{margin-top:6px;color:#64748b;line-height:1.6}
+    .kana-table{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+    .kana-card{border:1px solid #e2e8f0;border-radius:14px;background:#fff;padding:12px;text-align:center;min-height:78px;display:grid;place-items:center;gap:4px}
+    .kana{font-size:1.9rem;font-weight:900;color:#b91c1c;line-height:1}
+    .sound{font-size:.82rem;color:#475569;font-weight:800;text-transform:uppercase}
+    .tip{border:1px dashed #fca5a5;border-radius:14px;padding:12px;color:#7f1d1d;background:#fff7f7;line-height:1.6}
+    @media (max-width:520px){body{padding:12px}.kana-table{grid-template-columns:repeat(3,minmax(0,1fr))}.kana-card{min-height:70px}.kana{font-size:1.65rem}}
+  </style>
+</head>
+<body>
+  <main>
+    <section class="intro">
+      <span class="badge">ひらがな</span>
+      <h1>히라가나 외우기</h1>
+      <p>일본어 기본 문장에 가장 많이 쓰이는 둥근 모양의 문자를 소리와 함께 익히세요.</p>
+    </section>
+    <section class="kana-table" aria-label="히라가나 오십음도 기본 행">
+      <article class="kana-card"><span class="kana">あ</span><span class="sound">a</span></article>
+      <article class="kana-card"><span class="kana">い</span><span class="sound">i</span></article>
+      <article class="kana-card"><span class="kana">う</span><span class="sound">u</span></article>
+      <article class="kana-card"><span class="kana">え</span><span class="sound">e</span></article>
+      <article class="kana-card"><span class="kana">お</span><span class="sound">o</span></article>
+      <article class="kana-card"><span class="kana">か</span><span class="sound">ka</span></article>
+      <article class="kana-card"><span class="kana">き</span><span class="sound">ki</span></article>
+      <article class="kana-card"><span class="kana">く</span><span class="sound">ku</span></article>
+      <article class="kana-card"><span class="kana">け</span><span class="sound">ke</span></article>
+      <article class="kana-card"><span class="kana">こ</span><span class="sound">ko</span></article>
+      <article class="kana-card"><span class="kana">さ</span><span class="sound">sa</span></article>
+      <article class="kana-card"><span class="kana">し</span><span class="sound">shi</span></article>
+      <article class="kana-card"><span class="kana">す</span><span class="sound">su</span></article>
+      <article class="kana-card"><span class="kana">せ</span><span class="sound">se</span></article>
+      <article class="kana-card"><span class="kana">そ</span><span class="sound">so</span></article>
+    </section>
+    <p class="tip">외울 때는 “아·이·우·에·오”처럼 행 단위로 읽고, 비슷한 모양을 묶어 손으로 써 보세요.</p>
+  </main>
+</body>
+</html>

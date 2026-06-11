@@ -23,11 +23,8 @@
     .tab-panel h2{font-size:1.22rem;color:#b91c1c;margin-bottom:10px}
     .study-list{display:grid;gap:10px;margin-top:14px;list-style:none}
     .study-list li{border:1px solid #e2e8f0;border-radius:14px;background:#f8fafc;padding:14px;line-height:1.6;color:#334155}
-    .kana-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}
-    .kana-card{border:1px solid #e2e8f0;border-radius:16px;background:#fff7ed;padding:16px;text-align:center}
-    .kana-card strong{display:block;color:#9a3412;font-size:1.05rem;margin-bottom:6px}
-    .kana-card span{font-size:2rem;font-weight:900;letter-spacing:.08em;color:#0f172a}
-    @media (max-width:620px){body{padding:14px}.hero,.tab-panel{padding:20px 16px}.tabs{gap:8px}.tab-btn{padding:9px 12px;font-size:.88rem}.kana-grid{grid-template-columns:1fr}.kana-card span{font-size:1.75rem}}
+    .kana-frame{display:block;width:100%;height:520px;margin-top:14px;border:1px solid #e2e8f0;border-radius:18px;background:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.4)}
+    @media (max-width:620px){body{padding:14px}.hero,.tab-panel{padding:20px 16px}.tabs{gap:8px}.tab-btn{padding:9px 12px;font-size:.88rem}.kana-frame{height:560px}}
   </style>
 </head>
 <body>
@@ -35,12 +32,13 @@
     <section class="hero" aria-labelledby="japaneseTitle">
       <span class="label">🇯🇵 일본어</span>
       <h1 id="japaneseTitle">일본어 파트를 선택하세요</h1>
-      <p>내용 정리와 히라가나·가타카나 암기 탭을 오가며 일본어 기초를 학습할 수 있습니다.</p>
+      <p>내용 정리, 히라가나 외우기, 가타카나 외우기 탭을 따로 열어 일본어 기초를 학습할 수 있습니다.</p>
     </section>
 
     <nav class="tabs" role="tablist" aria-label="일본어 학습 탭">
       <button id="summaryTab" class="tab-btn active" type="button" role="tab" aria-selected="true" aria-controls="summary" data-tab="summary">내용 정리</button>
-      <button id="kanaTab" class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="kana" data-tab="kana">히라가나, 가타카나 외우기</button>
+      <button id="hiraganaTab" class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="hiragana" data-tab="hiragana">히라가나 외우기</button>
+      <button id="katakanaTab" class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="katakana" data-tab="katakana">가타카나 외우기</button>
     </nav>
 
     <section id="summary" class="tab-panel active" role="tabpanel" aria-labelledby="summaryTab">
@@ -53,19 +51,16 @@
       </ul>
     </section>
 
-    <section id="kana" class="tab-panel" role="tabpanel" aria-labelledby="kanaTab">
-      <h2>히라가나, 가타카나 외우기</h2>
-      <p>두 문자 체계를 나란히 비교하며 읽는 순서와 모양을 빠르게 익혀 보세요.</p>
-      <div class="kana-grid" aria-label="히라가나와 가타카나 예시">
-        <article class="kana-card">
-          <strong>히라가나</strong>
-          <span>あ い う え お</span>
-        </article>
-        <article class="kana-card">
-          <strong>가타카나</strong>
-          <span>ア イ ウ エ オ</span>
-        </article>
-      </div>
+    <section id="hiragana" class="tab-panel" role="tabpanel" aria-labelledby="hiraganaTab">
+      <h2>히라가나 외우기</h2>
+      <p>히라가나 전용 학습 화면을 아래 iframe으로 불러옵니다.</p>
+      <iframe class="kana-frame" src="./japanese_hiragana.html" title="히라가나 외우기"></iframe>
+    </section>
+
+    <section id="katakana" class="tab-panel" role="tabpanel" aria-labelledby="katakanaTab">
+      <h2>가타카나 외우기</h2>
+      <p>가타카나 전용 학습 화면을 아래 iframe으로 불러옵니다.</p>
+      <iframe class="kana-frame" src="./japanese_katakana.html" title="가타카나 외우기"></iframe>
     </section>
   </main>
 
