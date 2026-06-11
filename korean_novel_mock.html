@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simpul Study — 제1회 현대소설 미니 모의고사</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+  :root {
+    --ink: #1a1a2e;
+    --ink-light: #4a4a6a;
+    --paper: #fafaf7;
+    --paper-warm: #f5f3ee;
+    --rule: #d4d0c8;
+    --accent: #2d5a8e;
+    --accent-soft: #e8eef5;
+    --answer-bg: #1a1a2e;
+    --answer-text: #f0ede6;
+    --correct: #2d6a4f;
+    --correct-bg: #d8f3dc;
+    --wrong-bg: #ffe8e8;
+    --wrong: #9b2335;
+    --highlight: #fff3cd;
+    --serif: 'Noto Serif KR', 'Batang', serif;
+    --sans: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 15px;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: var(--ink);
+    color: var(--answer-text);
+    padding: 28px 40px 24px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .site-header .brand {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #8899bb;
+    margin-bottom: 4px;
+  }
+  .site-header h1 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: #f0ede6;
+  }
+  .site-header .meta {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: #8899bb;
+    text-align: right;
+  }
+
+  /* ── NAV TABS ── */
+  .tab-bar {
+    background: var(--paper-warm);
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    gap: 0;
+    padding: 0 40px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .tab-btn {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-light);
+    border: none;
+    background: transparent;
+    padding: 14px 22px 12px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s ease;
+    letter-spacing: 0.02em;
+  }
+  .tab-btn:hover { color: var(--accent); }
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 860px; margin: 0 auto; padding: 48px 32px 80px; }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ── PASSAGE BLOCK ── */
+  .passage-block {
+    background: white;
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--accent);
+    border-radius: 2px;
+    margin-bottom: 40px;
+    overflow: hidden;
+  }
+  .passage-header {
+    background: var(--accent-soft);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--rule);
+  }
+  .passage-range {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .passage-title {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--ink-light);
+  }
+  .synopsis {
+    background: #f8f6f0;
+    border-bottom: 1px solid var(--rule);
+    padding: 16px 24px;
+    font-size: 13.5px;
+    color: var(--ink-light);
+    line-height: 1.8;
+  }
+  .synopsis strong { color: var(--ink); font-weight: 600; }
+  .passage-body {
+    padding: 24px 28px;
+    font-size: 14.5px;
+    line-height: 2;
+  }
+  .passage-body p { margin-bottom: 10px; }
+  .passage-body .dialogue { margin-left: 12px; }
+  .passage-body .omission {
+    text-align: center;
+    color: var(--ink-light);
+    font-size: 13px;
+    padding: 14px 0;
+    border-top: 1px dashed var(--rule);
+    border-bottom: 1px dashed var(--rule);
+    margin: 16px 0;
+    background: #fbfaf7;
+  }
+  .passage-source {
+    padding: 10px 28px 18px;
+    font-size: 13px;
+    color: var(--ink-light);
+    text-align: right;
+    font-style: italic;
+  }
+  .underline-target {
+    border-bottom: 2px solid var(--ink);
+    font-weight: 600;
+  }
+
+  /* ── QUESTION BLOCK ── */
+  .question-block {
+    margin-bottom: 36px;
+    background: white;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .q-header {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 16px 24px 14px;
+    border-bottom: 1px solid var(--rule);
+    background: #fafaf8;
+  }
+  .q-number {
+    font-family: var(--sans);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--accent);
+    min-width: 28px;
+  }
+  .q-text {
+    font-size: 14.5px;
+    line-height: 1.75;
+    flex: 1;
+  }
+  .q-badge {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--ink);
+    color: white;
+    padding: 2px 7px;
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+  .bogi-box {
+    background: #f8f6f0;
+    border: 1px solid #ddd8cc;
+    border-radius: 2px;
+    padding: 14px 20px;
+    margin: 0 24px 4px;
+    font-size: 13.5px;
+    line-height: 1.85;
+  }
+  .bogi-box .bogi-label {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .choices {
+    padding: 8px 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .choice {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 14px;
+    border-radius: 2px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .choice:hover { background: var(--accent-soft); border-color: #b8cce0; }
+  .choice.selected { background: var(--accent-soft); border-color: var(--accent); }
+  .choice.correct-answer { background: var(--correct-bg); border-color: var(--correct); }
+  .choice.wrong-selected { background: var(--wrong-bg); border-color: var(--wrong); }
+  .choice-num {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--ink-light);
+    min-width: 18px;
+    padding-top: 1px;
+  }
+  .choice.correct-answer .choice-num { color: var(--correct); }
+  .choice.wrong-selected .choice-num { color: var(--wrong); }
+
+  /* ── ANSWER PANEL ── */
+  .answer-sheet {
+    background: var(--answer-bg);
+    color: var(--answer-text);
+    border-radius: 2px;
+    padding: 32px;
+    margin-bottom: 40px;
+  }
+  .answer-sheet h2 {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #8899bb;
+    margin-bottom: 20px;
+  }
+  .answer-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .answer-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 3px;
+    padding: 14px 12px 12px;
+    text-align: center;
+  }
+  .answer-card .ac-num {
+    font-family: var(--sans);
+    font-size: 11px;
+    color: #8899bb;
+    margin-bottom: 6px;
+    letter-spacing: 0.05em;
+  }
+  .answer-card .ac-answer {
+    font-family: var(--sans);
+    font-size: 22px;
+    font-weight: 700;
+    color: #e0d4b0;
+  }
+  .answer-card .ac-score {
+    font-family: var(--sans);
+    font-size: 10px;
+    color: #6677aa;
+    margin-top: 4px;
+  }
+
+  /* ── EXPLANATION ── */
+  .explanation-section { margin-bottom: 48px; }
+  .exp-title {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .exp-card {
+    background: white;
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--accent);
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .exp-card-header {
+    background: #f4f6fa;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .exp-q-num {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+  .exp-correct-badge {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--correct);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+  .exp-body { padding: 18px 20px; }
+  .exp-section-label {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--correct);
+    margin-bottom: 8px;
+    margin-top: 16px;
+  }
+  .exp-section-label.wrong-label { color: var(--wrong); }
+  .exp-section-label:first-child { margin-top: 0; }
+  .exp-body p {
+    font-size: 13.5px;
+    line-height: 1.85;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .exp-body .choice-exp {
+    display: flex;
+    gap: 10px;
+    padding: 7px 12px;
+    border-radius: 2px;
+    background: #f9f9f7;
+    margin-bottom: 5px;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .exp-body .choice-exp .cn {
+    font-weight: 700;
+    color: var(--ink-light);
+    min-width: 16px;
+  }
+  .exp-body .choice-exp.correct-exp { background: var(--correct-bg); }
+  .exp-body .choice-exp.correct-exp .cn { color: var(--correct); }
+
+  /* ── SECTION DIVIDER ── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 48px 0 32px;
+  }
+  .section-divider .sd-label {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+  .section-divider hr {
+    flex: 1;
+    border: none;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* ── SCORE BOX ── */
+  .score-display {
+    background: var(--accent-soft);
+    border: 1px solid #b8cce0;
+    border-radius: 2px;
+    padding: 20px 28px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .score-display .sd-main {
+    font-family: var(--sans);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .score-display .sd-label {
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink-light);
+  }
+  .score-display .sd-detail {
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink-light);
+    margin-left: auto;
+  }
+
+  /* ── CHECK BUTTON ── */
+  .check-btn {
+    display: block;
+    width: 100%;
+    max-width: 320px;
+    margin: 24px auto 0;
+    padding: 14px 0;
+    background: var(--accent);
+    color: white;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .check-btn:hover { background: #1e3f63; }
+
+  /* ── PRINT ── */
+  @media print {
+    .tab-bar, .check-btn { display: none; }
+    .panel { display: block !important; }
+    body { font-size: 13px; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .container { padding: 32px 16px 60px; }
+    .answer-grid { grid-template-columns: repeat(2, 1fr); }
+    .site-header { padding: 20px 20px 18px; }
+    .site-header h1 { font-size: 17px; }
+    .tab-bar { padding: 0 16px; overflow-x: auto; }
+    .passage-body { padding: 18px 16px; }
+    .choices { padding: 8px 16px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div>
+    <div class="brand">Simpul Study · 제1회</div>
+    <h1>현대소설 미니 모의고사</h1>
+  </div>
+  <div class="meta">
+    2026학년도 경희고등학교 1학년<br>
+    1학기 기말고사 학업 역량 증진 프로젝트<br>
+    총 10문항 · 배점 28점
+  </div>
+</header>
+
+<nav class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('exam')">문제 풀기</button>
+  <button class="tab-btn" onclick="showTab('answer')">정답 및 해설</button>
+</nav>
+
+<!-- ══════════════════ 문제 탭 ══════════════════ -->
+<div id="tab-exam" class="panel active">
+<div class="container">
+
+  <!-- 지문 1: 감나무 -->
+  <div class="passage-block">
+    <div class="passage-header">
+      <span class="passage-range">[1 – 3] 다음 글을 읽고 물음에 답하시오.</span>
+      <span class="passage-title">창작 소설 · 감나무</span>
+    </div>
+    <div class="synopsis">
+      <strong>[앞부분의 줄거리]</strong> 재개발로 철거 예정인 달동네에서 혼자 살아온 칠십 대 노인 윤복만은, 삼십 년 만에 고향을 떠났던 아들 윤기준이 찾아왔다는 소식을 이웃 여자 박씨에게 전해 듣는다. 노인은 아들이 돌아온 이유가 재산 정리를 위해서임을 직감하면서도, 오래된 소주병을 꺼내 상에 올려둔다.
+    </div>
+    <div class="passage-body">
+      <p>기준이 들어선 것은 저녁 여섯 시가 조금 넘어서였다. 방문을 여는 소리가 나자 복만은 등을 돌린 채 아궁이 앞에 쭈그리고 앉아 불을 들여다보았다. 군불이 필요한 계절도 아니었다. 늦가을 찬기가 마루 틈새로 스며들긴 했지만, 복만이 불을 지핀 것은 추위 때문만은 아니었다. 손을 어디에 두어야 할지 알 수 없을 때, 그는 늘 그 자리에 앉았다.</p>
+      <p class="dialogue">"아버지."</p>
+      <p>기준의 목소리는 낮고 건조했다. 복만은 부지깽이로 재를 한 번 긁고 나서야 몸을 돌렸다. 아들의 얼굴은 기억 속의 것보다 훨씬 낯설었다. 관자놀이에 흰 머리가 올라와 있었고, 입가에는 복만이 알지 못하는 세월이 새겨져 있었다.</p>
+      <p class="dialogue">"왔냐."</p>
+      <p>복만은 그 한마디만 하고 상 쪽으로 눈을 돌렸다. 소주병은 뚜껑이 따지지 않은 채 그대로 놓여 있었다. 두 개의 잔도 엎어 두지 않고 세워 두었다. 기준은 방 안을 한 번 둘러보고 나서 벽 쪽에 등을 기댔다. 앉지는 않았다.</p>
+      <p class="dialogue">"연락도 없이."</p>
+      <p class="dialogue">"전화가 없잖습니까."</p>
+      <p class="dialogue">"읍내 박씨한테 부탁하면 됐잖냐."</p>
+      <p>기준은 대꾸하지 않았다. 복만도 더 말하지 않았다. 방 안에는 군불 냄새와 오래된 나무 냄새가 섞여 있었다. 그 침묵 속에서 복만은 아들이 무슨 말을 꺼내려는지 이미 알고 있었다. 알고 있었기 때문에, 먼저 묻지 않았다.</p>
+      <div class="omission">[중략 부분의 줄거리] 기준은 재개발 조합에서 보내온 서류를 꺼내며, 집을 처분하고 자신이 사는 도시로 함께 내려가자고 말한다. 복만은 말없이 서류를 받아들었다가 상 위에 내려놓는다. 기준은 아버지가 이 집에 집착하는 것이 '고집'이라고 생각하지만, 복만에게 이 집은 아내 순이가 죽은 방이 있는 곳이었다. 두 사람은 그날 밤 서로의 말을 끝까지 듣지 않은 채 잠자리에 든다.</div>
+      <p>이튿날 아침, 복만이 눈을 떴을 때 기준은 이미 마루에 나와 있었다. 아들은 마당을 내려다보고 있었다. 복만은 사립문 옆 감나무 한 그루가 아들의 시선 끝에 있다는 것을 알아채고는, 천천히 방에서 나왔다.</p>
+      <p>감나무는 감을 달지 않은 지 오래였다. 언제부턴가 가지만 남은 채 마당 한쪽을 차지하고 있었는데, 복만은 그것을 베어내지 않았다. 순이가 살아 있을 때 감을 따서 채반에 늘어놓던 나무였다. 기준도 그것을 알고 있을 터였다.</p>
+      <p class="dialogue">"베어내지 그러셨어요."</p>
+      <p>기준이 말했다. 복만은 마루 끝에 앉아 발을 내려놓았다.</p>
+      <p class="dialogue">"열매도 안 맺는 게 자리만 차지하잖습니까."</p>
+      <p>복만은 천천히 고개를 들어 감나무를 바라보았다. 가지들이 이른 아침 빛 속에 가늘고 뚜렷하게 서 있었다.</p>
+      <p class="dialogue">"차지할 자리가 있으니까 있는 거지."</p>
+      <p>기준은 더 말하지 않았다. 복만도 아들 쪽을 보지 않았다. 감나무는 바람도 없는데 가지 끝을 미세하게 떨었다. 그 떨림이 어디서 오는 것인지 복만은 알 수 없었지만, 오래 살아온 것들은 으레 그렇게 떤다는 것쯤은 알고 있었다.</p>
+      <p>두 사람은 한동안 같은 방향을 바라보았다. 아침 햇살이 마당을 가로질러 감나무 밑동까지 닿았을 때, 복만은 비로소 입을 열었다.</p>
+      <p class="dialogue">"밥은 먹고 가냐."</p>
+      <p>기준이 잠시 머뭇거리다가 대답했다.</p>
+      <p class="dialogue">"예."</p>
+      <p>짧은 대답이었지만, 복만은 그 말 안에서 무언가를 들었다. 잡아달라는 것인지, 아니면 그저 배가 고픈 것인지, 그것까지는 알 수 없었다. 복만은 몸을 일으켜 부엌으로 들어갔다. 국솥을 올리는 소리가 마당으로 퍼져나갔다. 기준은 여전히 마루에 서서 감나무를 바라보고 있었다.</p>
+    </div>
+    <div class="passage-source">— 창작 소설, 「감나무」</div>
+  </div>
+
+  <!-- 문제 1 -->
+  <div class="question-block" id="q1">
+    <div class="q-header">
+      <span class="q-number">1.</span>
+      <span class="q-text">윗글의 서술상 특징으로 가장 적절한 것은?</span>
+    </div>
+    <div class="choices">
+      <div class="choice" onclick="selectChoice(this, 1, 1)"><span class="choice-num">①</span><span>공간적 배경을 빈번하게 교체하여 사건이 전개되는 속도감을 높이고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 1, 2)"><span class="choice-num">②</span><span>서술자가 작품 밖에 위치하여, 특정 인물의 내면과 시선을 중심으로 상황을 전달하고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 1, 3)"><span class="choice-num">③</span><span>인물의 외양을 과장되고 우스꽝스럽게 묘사하여 인물에 대한 비판적 태도를 드러내고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 1, 4)"><span class="choice-num">④</span><span>과거와 현재의 사건을 교차로 서술하여 인물 간의 갈등이 발생하게 된 필연적 원인을 밝히고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 1, 5)"><span class="choice-num">⑤</span><span>감각적 배경 묘사를 통해 인물 간의 갈등이 점진적으로 해소되는 낭만적 분위기를 조성하고 있다.</span></div>
+    </div>
+  </div>
+
+  <!-- 문제 2 -->
+  <div class="question-block" id="q2">
+    <div class="q-header">
+      <span class="q-number">2.</span>
+      <span class="q-text">윗글의 인물에 대한 이해로 가장 적절한 것은?</span>
+    </div>
+    <div class="choices">
+      <div class="choice" onclick="selectChoice(this, 2, 1)"><span class="choice-num">①</span><span>복만이 미리 상 위에 꺼내 둔 '소주병'과 '두 개의 잔'은 아들을 설득하여 자신의 뜻을 관철하려는 치밀한 의도를 보여준다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 2, 2)"><span class="choice-num">②</span><span>기준이 방 안에서 '벽 쪽에 등을 기댄 채 앉지 않은' 것은, 낯선 환경에 대한 두려움과 아버지에 대한 원망을 겉으로 표출한 것이다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 2, 3)"><span class="choice-num">③</span><span>복만이 불필요한 '군불'을 지피는 행위는, 아들의 방문으로 인해 느끼는 심리적 어색함과 긴장감을 감추기 위한 무의식적인 도피이다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 2, 4)"><span class="choice-num">④</span><span>기준이 '감나무'를 베어내자고 한 것은, 과거의 아픈 기억에서 벗어나지 못하는 아버지를 위로하고 새로운 삶을 제안하기 위해서이다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 2, 5)"><span class="choice-num">⑤</span><span>복만이 묻는 "밥은 먹고 가냐"라는 말에는, 아들의 실용주의적 가치관을 결국 인정하고 집을 처분하겠다는 체념적 수용이 깔려 있다.</span></div>
+    </div>
+  </div>
+
+  <!-- 문제 3 -->
+  <div class="question-block" id="q3">
+    <div class="q-header">
+      <span class="q-number">3.</span>
+      <span class="q-text">&lt;보기&gt;를 바탕으로 윗글을 감상한 내용으로 적절하지 않은 것은?</span>
+      <span class="q-badge">3점</span>
+    </div>
+    <div class="bogi-box">
+      <div class="bogi-label">보 기</div>
+      이 작품은 1980~90년대 급격한 도시화와 재개발 광풍이라는 시대적 배경을 바탕으로 하고 있다. 자본주의적 논리가 지배하는 사회에서 '공간'과 '사물'은 교환 가치와 경제적 효용성으로만 평가받게 된다. 이 과정에서 오래된 공동체의 기억, 인간적인 유대감, 사물이 지닌 고유한 존재 가치 등은 무가치한 것으로 치부되어 철거와 폐기의 대상이 된다. 작가는 두 인물의 시각 차이를 통해, 근대화의 폭력성 속에서도 우리가 끝내 지켜내야 할 삶의 기억과 인간적 가치의 의미를 묻고 있다.
+    </div>
+    <div class="choices">
+      <div class="choice" onclick="selectChoice(this, 3, 1)"><span class="choice-num">①</span><span>'재개발로 철거 예정인 달동네'라는 공간적 배경은 급격한 도시화 속에서 삶의 터전을 위협받고 밀려나는 소외된 이들의 현실을 투영하고 있군.</span></div>
+      <div class="choice" onclick="selectChoice(this, 3, 2)"><span class="choice-num">②</span><span>기준이 재개발 조합의 서류를 내밀며 '집을 처분'하자고 하는 것은, 공간을 추억이 아닌 자본주의적 교환 가치로만 환산하려는 당대의 세태를 대변하는 것이군.</span></div>
+      <div class="choice" onclick="selectChoice(this, 3, 3)"><span class="choice-num">③</span><span>복만이 아내의 죽음이 깃든 '집'에 집착하는 모습은, 경제적 논리에 의해 쉽게 지워지고 훼손되어서는 안 될 인간의 고귀한 기억과 유대감을 수호하려는 태도로 볼 수 있군.</span></div>
+      <div class="choice" onclick="selectChoice(this, 3, 4)"><span class="choice-num">④</span><span>열매를 맺지 못하는 '감나무'에 대해 "차지할 자리가 있으니까 있는 거지"라고 말하는 복만의 태도는, 대상의 가치를 경제적 효용성으로만 재단하는 자본주의적 폭력성에 대한 무언의 저항을 의미하군.</span></div>
+      <div class="choice" onclick="selectChoice(this, 3, 5)"><span class="choice-num">⑤</span><span>마당을 가로지르는 '아침 햇살' 속에서 끓고 있는 '국솥을 올리는 소리'는, 실용성을 중시하던 기준이 결국 아버지의 설득에 감화되어 도시의 가치관을 버리고 귀향을 결심하게 됨을 암시하는군.</span></div>
+    </div>
+  </div>
+
+  <!-- 지문 2: 겨울 시장 끝에서 -->
+  <div class="section-divider"><hr><span class="sd-label">두 번째 지문</span><hr></div>
+  <div class="passage-block">
+    <div class="passage-header">
+      <span class="passage-range">[4 – 7] 다음 글을 읽고 물음에 답하시오.</span>
+      <span class="passage-title">창작 소설 · 겨울 시장 끝에서</span>
+    </div>
+    <div class="synopsis">
+      <strong>[앞부분의 줄거리]</strong> 경기도 외곽의 오일장에서 삼십 년째 국밥집을 운영해 온 오정례는, 시장 전체가 대형 마트 건설 예정 부지로 수용된다는 통보를 받는다. 같은 골목에서 건어물 가게를 하던 남편 박성칠은 오 년 전 뇌졸중으로 쓰러진 뒤 말을 잃었고, 정례는 혼자 가게를 꾸려왔다. 딸 혜지는 결혼 문제로 정례와 크게 다툰 뒤 서울로 올라간 지 사 년이 넘었다. 어느 날, 오랫동안 연락이 끊겼던 혜지가 예고도 없이 시장 골목에 나타난다.
+    </div>
+    <div class="passage-body">
+      <p>눈이 내리기 시작한 것은 오후 두 시가 조금 넘어서였다. 정례는 국솥 앞에 서서 국자를 젓다가 문득 처마 밑으로 내다보았다. 눈발은 굵지 않았다. 포목집 처마에 걸린 전구 불빛 아래로 흩어지다가 사라지는 것들이었다. 장날이 아닌 날의 시장 골목은 늘 이렇게 조용했다. 좌판도 없고, 지나는 사람도 없이, 간판들만 추위 속에 매달려 있었다. 그 골목을 정례는 삼십 년째 보고 있었다. 몇 해 전부터는 빈 가게가 하나씩 늘었다. 이제 문을 여는 곳은 손으로 꼽을 정도였지만, 정례는 매일 아침 불을 올렸다. 누가 오든 오지 않든, 솥은 끓여두어야 한다고 생각했다.</p>
+      <p>혜지가 골목 어귀에 나타난 것은 그때였다. 정례는 국자를 내려놓지 않은 채 딸을 바라보았다. 검은 코트를 입고, 캐리어를 끌고 있었다. 걸음걸이는 빨랐지만 눈을 마주치려 하지 않았다. 정례는 아무 말도 하지 않았다. 국자를 솥에 걸어두고 행주로 손을 닦았다. 그게 전부였다.</p>
+      <p class="dialogue">"왔어."</p>
+      <p class="dialogue">"응."</p>
+      <p>혜지는 캐리어를 가게 안쪽에 세워두고 엄마 옆에 섰다. 무언가를 도우려는 것처럼 보였지만 손은 움직이지 않았다. 정례는 그릇을 꺼내 국을 담기 시작했다. 두 그릇이었다.</p>
+      <p class="dialogue">"아버지는요."</p>
+      <p class="dialogue">"방에 계셔. 주무시는지 모르겠다."</p>
+      <p>혜지는 안방 쪽 문을 바라보다가 시선을 거두었다. 정례는 그 옆모습을 보지 않는 척하면서 다 보았다. 어떤 표정이 스쳤는지도 보았고, 그 표정이 이내 사라지는 것도 보았다. 혜지는 그 자리에 잠시 서 있다가 손을 씻겠다며 뒤쪽으로 걸어갔다.</p>
+      <div class="omission">[중략 부분의 줄거리] 혜지는 저녁을 먹으면서, 시장 수용 보상금으로 서울 근처에 작은 가게를 새로 얻자고 말한다. 정례는 대꾸하지 않는다. 혜지는 이 시장이 이미 오래전에 끝난 것이라고, 잡고 있을수록 손해라고 말하지만, 정례는 밥상을 치우며 화제를 돌린다. 그날 밤 혜지는 어린 시절 자신의 방이었던 창고 방에서 잠을 청하다가, 벽에 걸린 낡은 달력을 발견한다. 달력은 혜지가 서울로 떠나던 해인 이천이 년에 멈춰 있었다. 혜지는 그것을 떼어내지 못하고 오래 바라보다 잠이 들었다.</div>
+      <p>이튿날 아침, 혜지가 일어났을 때 정례는 이미 가게에 나와 있었다. 새벽부터 솥에 불을 올린 것이었다. 장날이 아니어서 손님이 올 리 없었지만, 정례는 국을 끓였다. 혜지는 그것을 보고도 아무 말을 하지 않았다. 대신 가게 한쪽에 놓인 낡은 나무 의자를 끌어당겨 앉았다.</p>
+      <p>그 의자는 성칠이 만든 것이었다. 혜지가 태어나던 해에 성칠이 시장 목수한테 재료를 얻어다 손수 짠 것으로, 삼십 년이 넘도록 그 자리에 있었다. 등받이 한쪽이 기울어져 있었고, 앉으면 삐걱 소리가 났다. 정례는 여러 번 버리려다 그러지 못했다. 성칠이 쓰러지기 전 마지막으로 앉았던 것이 그 의자였기 때문이었는데, 정례는 그 이유를 혜지에게 말한 적이 없었다. 말하지 않아도 되는 것들이 세상에는 있다고 정례는 생각했다.</p>
+      <p class="dialogue">"이 의자, 아직도 있었네."</p>
+      <p>혜지가 말했다. 정례는 국자를 젓던 손을 멈추지 않았다.</p>
+      <p class="dialogue">"버리면 되나."</p>
+      <p class="dialogue">"버리는 게 아니라, 새로 사면 되는 거잖아요."</p>
+      <p class="dialogue">"아직 앉히잖냐."</p>
+      <p>혜지는 대꾸하지 않았다. 의자가 삐걱 소리를 냈다. 창밖으로 눈발이 어제보다 가늘어진 채 내리고 있었다.</p>
+      <p>정례는 국이 다 끓으면 성칠의 방으로 들어갈 것이었다. 숟가락으로 국을 식혀가며 남편의 입에 떠 넣는 일이 아침마다 한 시간씩 걸렸다. 성칠은 삼키는 것도 느렸고, 간혹 흘리기도 했다. 정례는 그럴 때마다 말없이 닦아주었다. 아프다거나 힘들다는 말을 한 번도 한 적이 없었다. 혜지는 그것을 강인함이라고 생각한 적도 있었고, 어떤 날은 그냥 무감각해진 것이 아닌가 싶기도 했다. 그도 아니면, 오래된 것들을 끝까지 품고 있는 방식이 정례에게는 원래 그런 모습인 것인지도 몰랐다.</p>
+      <p class="dialogue">"엄마는 무섭지 않아요?"</p>
+      <p>혜지가 물었다. 정례는 국자를 한 번 더 젓고 나서 고개를 들었다.</p>
+      <p class="dialogue">"뭐가."</p>
+      <p class="dialogue">"여기 다 없어지는 거. 이 가게도, 이 골목도."</p>
+      <p>정례는 잠시 솥 안을 내려다보았다. 국물이 느리게 끓고 있었다. 찬바람이 문틈으로 들어왔다. 정례는 그쪽을 보지 않았다.</p>
+      <p class="dialogue">"무섭다고 안 없어지냐."</p>
+      <p>그 말이 끝나고, 가게 안은 다시 조용해졌다. 정례는 국 한 그릇을 떠서 혜지 앞에 내밀었다. 혜지는 숟가락을 들었다가 내려놓았다가 했다. 국에서 김이 올라왔다. 정례는 그것을 보지 않고 성칠의 방으로 들어갔다.</p>
+      <p>안방 문이 닫히는 소리.</p>
+      <p>그리고 삐걱.</p>
+      <p>혜지가 의자에서 몸을 고쳐 앉는 소리가 났다. 이번에는 곧바로 숟가락을 들었다. 국은 아직 뜨거웠다. 혜지는 천천히 식혀가며 먹었다. 골목 안으로 눈발이 다시 굵어지고 있었다. 가게 안쪽 벽에는 낡은 성냥갑 광고지가 한 장 붙어 있었다. 귀퉁이가 말려 있는 것이 언제부터 저기 있었는지 혜지는 기억할 수 없었지만, 어릴 때도 저 자리에 있었다는 것은 알았다. 혜지는 국을 다 먹고 나서도 한동안 그 자리에 앉아 있었다. 의자가 한 번 더 삐걱 소리를 냈다. 엄마가 방에서 나올 때까지, <span class="underline-target">㉠혜지는 일어나지 않기로 했다.</span></p>
+    </div>
+    <div class="passage-source">— 창작 소설, 「겨울 시장 끝에서」</div>
+  </div>
+
+  <!-- 문제 4 -->
+  <div class="question-block" id="q4">
+    <div class="q-header">
+      <span class="q-number">4.</span>
+      <span class="q-text">윗글의 서술상 특징으로 가장 적절한 것은?</span>
+    </div>
+    <div class="choices">
+      <div class="choice" onclick="selectChoice(this, 4, 1)"><span class="choice-num">①</span><span>서술자가 작품 전면에 개입하여 인물의 행동과 태도에 대한 도덕적 평가를 내리고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 4, 2)"><span class="choice-num">②</span><span>인물의 행동과 시선 이동을 절제된 어조로 객관적으로 묘사하여 인물의 심리를 간접적으로 드러내고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 4, 3)"><span class="choice-num">③</span><span>공간적 배경의 빈번한 교체를 통해 인물 간의 갈등이 해소되어 가는 과정을 역동적으로 보여주고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 4, 4)"><span class="choice-num">④</span><span>과거와 현재의 사건을 교차하는 역순행적 구성을 취하여 인물들이 처한 비극적 운명의 원인을 밝히고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 4, 5)"><span class="choice-num">⑤</span><span>감각적인 배경 묘사를 활용하여 인물들이 맞이할 희망차고 긍정적인 미래의 분위기를 암시하고 있다.</span></div>
+    </div>
+  </div>
+
+  <!-- 문제 5 -->
+  <div class="question-block" id="q5">
+    <div class="q-header">
+      <span class="q-number">5.</span>
+      <span class="q-text">윗글의 인물에 대한 이해로 가장 적절한 것은?</span>
+    </div>
+    <div class="choices">
+      <div class="choice" onclick="selectChoice(this, 5, 1)"><span class="choice-num">①</span><span>정례가 장날이 아닌 날에도 솥에 불을 올리는 것은 시장 상인들에게 자신의 가게가 건재함을 과시하려는 의도에서 비롯되었다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 5, 2)"><span class="choice-num">②</span><span>혜지가 정례에게 이 시장이 오래전에 끝난 것이라고 말한 것은 병든 아버지를 방치한 어머니의 무능력을 우회적으로 비판한 것이다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 5, 3)"><span class="choice-num">③</span><span>혜지가 아침에 일어나 낡은 나무 의자를 끌어당겨 앉은 것은 아버지의 흔적을 독점함으로써 어머니에게 심리적 상처를 주려는 행동이다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 5, 4)"><span class="choice-num">④</span><span>혜지가 숟가락을 들었다가 내려놓았다가 하는 행동은 무심한 듯하면서도 묵묵히 일상을 유지하는 어머니의 태도 앞에서 느끼는 내적 동요를 보여준다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 5, 5)"><span class="choice-num">⑤</span><span>정례가 혜지에게 먼저 국 한 그릇을 내미는 것은 혜지의 제안을 수용하여 보상금을 받고 서울로 떠나겠다는 암묵적인 동의를 의미한다.</span></div>
+    </div>
+  </div>
+
+  <!-- 문제 6 -->
+  <div class="question-block" id="q6">
+    <div class="q-header">
+      <span class="q-number">6.</span>
+      <span class="q-text">윗글의 ㉠[혜지는 일어나지 않기로 했다.]에 담긴 혜지의 심리나 의도로 가장 적절한 것은?</span>
+      <span class="q-badge">3점</span>
+    </div>
+    <div class="choices">
+      <div class="choice" onclick="selectChoice(this, 6, 1)"><span class="choice-num">①</span><span>과거의 상처가 남아 있는 공간에서 벗어나기 위해 어머니와의 대화를 단절하고 서둘러 상경하려는 도피 심리이다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 6, 2)"><span class="choice-num">②</span><span>자신의 제안을 끝내 무시하는 어머니에 대한 반발심으로 가게의 영업을 방해하며 시위를 벌이려는 의도이다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 6, 3)"><span class="choice-num">③</span><span>'새로 사면 되는 거잖아요'에서 드러나는 '효율의 논리'를 바탕으로 자신의 생각을 굳건히 지키려는 의도이다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 6, 4)"><span class="choice-num">④</span><span>낡은 의자의 삐걱거림과 뜨거운 국물을 통해 어머니의 묵묵한 사랑과 지나온 삶의 시간을 비로소 대면하고 수용하려는 기다림의 태도이다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 6, 5)"><span class="choice-num">⑤</span><span>아버지를 돌보느라 지친 어머니를 원망하며 자신이 경제적 주도권을 쥐고 부모를 통제하겠다는 권위적인 태도이다.</span></div>
+    </div>
+  </div>
+
+  <!-- 문제 7 -->
+  <div class="question-block" id="q7">
+    <div class="q-header">
+      <span class="q-number">7.</span>
+      <span class="q-text">&lt;보기&gt;를 바탕으로 윗글을 감상한 내용으로 적절하지 않은 것은?</span>
+      <span class="q-badge">3점</span>
+    </div>
+    <div class="bogi-box">
+      <div class="bogi-label">보 기</div>
+      현대 문학 이론 중 '장소애' 또는 공간의 현상학에 따르면, 문학 속 '공간'은 단순히 사건이 일어나는 물리적 배경이 아니라 인물의 삶과 기억이 투영된 의미 있는 '장소'로 기능한다. 자본과 효율성의 논리는 세계를 교환 가치로만 측정되는 추상적 '공간'으로 만들려 하지만, 그 안에서 살아가는 인간은 오랜 시간 사물과 교감하며 축적해 온 구체적 '장소성'을 지키고자 한다. 이 작품 역시 근대적 재개발의 폭력성 앞에서, 효율성이 소거된 낡은 사물과 공간을 끝내 품어 안음으로써 존재의 뿌리와 인간적인 가치를 수호하려는 인물의 태도를 형상화하고 있다.
+    </div>
+    <div class="choices">
+      <div class="choice" onclick="selectChoice(this, 7, 1)"><span class="choice-num">①</span><span>정례가 손님이 없는 장날이 아닌 날에도 매일 '솥은 끓여두어야 한다'고 생각하는 것은, 경제적 효율성이라는 자본의 논리에 얽매이지 않고 자신의 삶이 축적된 장소의 가치를 지속하려는 태도이군.</span></div>
+      <div class="choice" onclick="selectChoice(this, 7, 2)"><span class="choice-num">②</span><span>혜지가 수용 보상금을 언급하며 시장이 '이미 오래전에 끝난 것'이라고 단정하는 모습은, 삶의 터전을 교환 가치로만 환산되는 추상적 공간으로 인식하는 현대인의 시각을 대변하는군.</span></div>
+      <div class="choice" onclick="selectChoice(this, 7, 3)"><span class="choice-num">③</span><span>성칠이 손수 짠 기울어진 '낡은 나무 의자'를 버리지 못하는 정례의 내면은, 쓸모가 사라진 사물이라도 그 안에 깃든 기억과 유대감을 소중히 여김으로써 구체적 장소성을 지키려는 행위로 볼 수 있군.</span></div>
+      <div class="choice" onclick="selectChoice(this, 7, 4)"><span class="choice-num">④</span><span>정례가 '무섭다고 안 없어지냐'라고 혜지에게 반문하는 것은, 결국 거대한 자본의 폭력성 앞에서 장소성을 지켜내려는 자신의 무력함을 인정하고 재개발이라는 시대적 흐름에 적극적으로 동참하겠다는 의지이군.</span></div>
+      <div class="choice" onclick="selectChoice(this, 7, 5)"><span class="choice-num">⑤</span><span>혜지가 어릴 때부터 그 자리에 있던 '낡은 성냥갑 광고지'를 오랫동안 바라보는 것은, 단순히 낡고 잊힌 사물이 아니라 자신의 과거와 정체성이 깃든 장소의 의미를 다시금 환기하는 과정이군.</span></div>
+    </div>
+  </div>
+
+  <!-- 지문 3: 회벽의 시간 -->
+  <div class="section-divider"><hr><span class="sd-label">세 번째 지문</span><hr></div>
+  <div class="passage-block">
+    <div class="passage-header">
+      <span class="passage-range">[8 – 10] 다음 글을 읽고 물음에 답하시오.</span>
+      <span class="passage-title">창작 소설 · 회벽(灰壁)의 시간</span>
+    </div>
+    <div class="synopsis">
+      <strong>[앞부분의 줄거리]</strong> 재개발이 진행 중인 낡은 동네에서 반세기 넘게 양복점 '명동라사'를 운영해 온 영수는, 주변 상인들이 모두 떠난 뒤에도 가게를 지키며 철거와 이주를 거부한다. 아들 기석은 보상금을 받고 떠나자고 설득하지만, 영수는 양복점이 가족을 먹여 살린 자신의 삶 그 자체라며 완강히 버틴다. 두 사람의 갈등이 깊어지는 가운데, 철거반이 양복점 앞까지 들이닥치고 공사 소음은 점점 거세진다. 답답함을 견디지 못한 기석은 가게의 낡은 집기와 원단들을 강제로 정리하려 하고, 이를 막으려는 영수와 격렬하게 충돌한다.
+    </div>
+    <div class="passage-body">
+      <p>며칠 뒤, 늦은 오후의 하늘은 금방이라도 비를 뿌릴 듯 납빛으로 무겁게 가라앉아 있었다. 밖에서는 이웃집 건물 한 채가 또다시 무너져 내리는 듯, 육중한 파열음과 함께 땅이 짐승처럼 길게 울부짖었다. 그 거대한 진동의 충격에 벽 틈새에 꽂혀 있던 묵직한 재단용 가위가 바닥으로 곤두박질치며 날카로운 쇳소리를 냈다.</p>
+      <p>영수는 깜짝 놀라며 굽은 허리를 펴고 자리에서 일어났다. 바닥에 나뒹구는 가위를 집어 드는 그의 거친 손끝이 형편없이 떨리고 있었다. 가위의 날은 이가 빠져 무뎌졌고, 황동으로 된 손잡이는 오랫동안 쥐고 있던 땀방울과 세월이 스며들어 검게 변색되어 있었다. 영수는 차가운 가위를 가슴 깊이 품은 채, 가림막 틈새로 폭포수처럼 쏟아져 들어오는 굴착기의 노란색 그림자를 멍하니 응시했다. 무언가 거대하고 폭력적인 것이 자신의 삶을 통째로 씹어 삼키려 아가리를 벌리고 다가오는 듯한 압도적인 무력감이 그의 앙상한 가슴을 짓눌렀다.</p>
+      <p>그의 멍한 머릿속으로 수십 년 전의 찬란하고도 고단했던 기억들이 무너지는 시멘트 먼지처럼 어지럽게 흩날렸다. 평화시장 뒷골목에서 처음 남의 밑에서 가위를 쥐었을 때의 서늘했던 감촉, 밤을 새워 지은 옷을 팔아 첫 월급을 받아 들고 아내에게 붉은 내복을 사주던 겨울날 밤의 따스한 온기, 그리고 마침내 이 작은 골목에 '명동라사'라는 자신의 이름을 딴 간판을 처음 달던 날의 벅찬 떨림. 그 눈물겨운 모든 시간이 저 밖의 무자비한 쇠뭉치 한 번에 하찮은 잿더미로 변하려 하고 있었다.</p>
+      <p>도시의 거대하고 탐욕스러운 욕망은 낡고 느리고 오래된 것들의 숨통을 무참히 끊어내며, 그 자리에 획일적이고 매끈한 고층 아파트를 쌓아 올리고자 혈안이 되어 있었다. 영수에게 철거란 단순한 거주 공간의 상실이나 재산권의 포기가 아니었다. 그것은 그가 온몸으로 부딪혀 살아온 모든 시간과, 세상을 향해 증명해 낸 존재 가치에 대한 일방적인 사형 선고와도 같았다.</p>
+      <p>완전한 해거름이 되어서야 기석이 다시 양복점 문을 조심스럽게 열고 들어왔다. 기석의 표정은 며칠 전 몸싸움을 벌였을 때보다 훨씬 수척하고 창백해져 있었다. 그는 바닥에 아무렇게나 흩어진 자투리 천 조각들과 먼지 덮인 실패들을 보며 짧고 깊은 한숨을 내쉬었다. 부자(父子) 사이에는 팽팽한 긴장 대신, 습기 찬 서늘한 침묵만이 무겁게 흘렀다. 어두워져 가는 실내에는 전등조차 켜지지 않아, 가림막 틈새로 스며드는 가로등의 주황색 불빛만이 두 사람의 지친 윤곽을 희미하게 비추고 있었다. 기석이 마른침을 삼키고 조심스럽게 입을 뗐다.</p>
+      <p class="dialogue">"아부지... 방금 조합에서 연락이 왔습니다. 내일 아침 아홉 시면 이 구역 전체 단전, 단수 들어간답니다. 그리고 오후엔 용역들 동원해서 펜스 치고 강제 진입할 거고요. 저도 이제 더는 못 막아요. 제발, 이제 그만... 그만 내려놓으세요. 매일 밤낮으로 아부지 걱정에 저도 회사 일이 손에 안 잡혀서 미칠 지경입니다."</p>
+      <p>기석의 쉰 목소리에는 이전의 원망이나 분노 대신, 피할 수 없는 현실에 대한 깊은 피로감과 아버지를 향한 애원이 짙게 묻어났다. 영수는 창밖의 핏빛 노을을 등진 채 서 있는 아들의 굽은 어깨와 힘없이 늘어진 두 팔을 가만히 바라보았다. 늘 자신만만하게 세상을 향해 날이 서 있던 젊은 아들도, 결국 이 거대하고 차가운 세상의 톱니바퀴 속에서 하루하루 지쳐가며 살아남기 위해 발버둥 치는 한 명의 초라한 가장일 뿐이었다는 사실이 새삼스레 영수의 가슴을 둔탁하게 찔렀다. 자신이 지키고자 했던 과거의 자존심이, 아들이 살아가야 할 현재의 목을 조르고 있었다는 뼈아픈 자각이 밀려왔다.</p>
+      <p>영수는 길게 숨을 내쉬며 시선을 돌려 다시 벽면의 괘종시계를 바라보았다. 십 년간 멈춰있던 세 시 반. 시계는 결코 다시 똑딱이지 않을 것이다. 부서져 버린 녹슨 태엽을 다시 감아 되돌릴 수 없듯, 이미 흘러가 버린 지난 시간은 돌아오지 않으며, 도도하게 밀려드는 시대의 흐름을 낡은 재단 가위 하나로 거스를 수 있는 장사는 세상에 없었다.</p>
+      <p>영수는 느릿하고 무거운 걸음으로 벽을 향해 다가갔다. 그리고 십 년간 단 한 번도 그 자리를 떠난 적 없던 괘종시계를 거친 양손으로 가만히 감싸 안고, 조심스럽게 벽에서 들어 내려놓았다. 시계가 떨어져 나간 벽의 자리에는, 주변의 바랜 벽지와 대비되는 네모나고 하얀 흔적만이 오래된 화석처럼 선명하고 흉터처럼 남겨져 있었다. 그것은 그의 삶이 이 공간에 남긴 마지막 그늘 같았다. 그는 가슴에 품은 낡은 시계 위로 수북이 쌓인 뽀얀 먼지를 자신의 낡은 스웨터 소매로 정성껏 닦아내며, 메마르고 갈라진 입술을 천천히 달싹였다.</p>
+      <p class="dialogue">"기석아."</p>
+      <p class="dialogue">"예, 아부지."</p>
+      <p class="dialogue">"나가서... 고물상 김 씨한테 구루마라도 하나 빌려와라. 다른 건 몰라도, 이 가위랑 다리미, 그리고 이 시계는 챙겨가야 내일이라도 밥술을 뜨지 않겄냐."</p>
+      <p>그의 목소리는 텅 빈 공간을 울리며 체념과 수용의 경계를 넘어섰다. 그 순간, 밖에서 야간 작업을 알리는 포클레인의 눈부신 작업등이 가림막을 넘어와 양복점 안을 길게 훑고 지나갔다. 공중을 부유하던 자잘한 시멘트 먼지들이 그 강렬하고도 차가운 빛줄기 속에서 반사되어, 마치 텅 빈 무대 위로 흩날리는 한겨울의 싸락눈처럼 하얗고 처연하게 반짝였다. 영수는 자신의 치열했던 낡은 시간이, 그리고 자신의 청춘이 그 눈부신 먼지 속으로 소리 없이 저물어가는 것을 고요하게, 그러나 흔들림 없는 눈빛으로 지켜보았다.</p>
+    </div>
+    <div class="passage-source">— 창작 소설, 「회벽(灰壁)의 시간」</div>
+  </div>
+
+  <!-- 문제 8 -->
+  <div class="question-block" id="q8">
+    <div class="q-header">
+      <span class="q-number">8.</span>
+      <span class="q-text">윗글의 서술상 특징으로 가장 적절한 것은?</span>
+    </div>
+    <div class="choices">
+      <div class="choice" onclick="selectChoice(this, 8, 1)"><span class="choice-num">①</span><span>특정 인물의 시선을 중심으로 외부 세계의 폭력적 상황과 인물의 내면 의식을 교차하여 서술하고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 8, 2)"><span class="choice-num">②</span><span>공간적 배경의 잦은 전환을 통해 인물 간의 대립이 점진적으로 해소되는 과정을 역동적으로 보여주고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 8, 3)"><span class="choice-num">③</span><span>서술자가 작품 전면에 직접 개입하여 시대 변화를 거부하는 인물의 완고한 태도에 대해 비판적 논평을 가하고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 8, 4)"><span class="choice-num">④</span><span>인물의 외양과 행동을 과장되게 묘사하는 희화화 기법을 사용하여 비극적인 상황이 주는 긴장감을 이완시키고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 8, 5)"><span class="choice-num">⑤</span><span>과거와 현재의 사건을 병렬적으로 배치하여 인물이 다가올 미래의 삶을 긍정적으로 수용하게 된 필연적 원인을 밝히고 있다.</span></div>
+    </div>
+  </div>
+
+  <!-- 문제 9 -->
+  <div class="question-block" id="q9">
+    <div class="q-header">
+      <span class="q-number">9.</span>
+      <span class="q-text">윗글의 내용을 바탕으로 '영수'의 행동에 대한 인과관계를 바르게 파악한 것은?</span>
+    </div>
+    <div class="choices">
+      <div class="choice" onclick="selectChoice(this, 9, 1)"><span class="choice-num">①</span><span>'영수'가 가위를 집어 든 것은, 철거반원들을 향해 물리적인 위협을 가하여 양복점을 지키겠다는 강경한 투쟁 의지가 생겨났기 때문이다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 9, 2)"><span class="choice-num">②</span><span>'영수'가 벽에 걸려 있던 괘종시계를 스스로 내려놓은 것은, 아들 기석의 간곡한 부탁을 듣고 보상금을 받아 더 나은 환경에서 양복점을 재개업할 희망을 품었기 때문이다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 9, 3)"><span class="choice-num">③</span><span>'영수'가 아들의 모습을 보고 자신의 고집이 아들의 현재를 목 조르고 있음을 자각한 것은, 늘 당당하던 아들이 세상의 톱니바퀴 속에서 지쳐가는 초라한 가장의 모습임을 깨달았기 때문이다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 9, 4)"><span class="choice-num">④</span><span>'영수'가 고물상 김 씨에게 구루마를 빌려오라고 말한 것은, 양복점의 집기들을 모두 버리고 아들의 뜻에 따라 철거 과정에 적극적으로 협조하겠다는 의지의 표현이다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 9, 5)"><span class="choice-num">⑤</span><span>'영수'가 먼지를 닦아내며 시계를 챙기는 것은, 시간이 멈춘 과거의 공간을 다시 복원하여 아들에게 자신이 평생 일군 가업을 물려주려는 결심을 굳혔기 때문이다.</span></div>
+    </div>
+  </div>
+
+  <!-- 문제 10 -->
+  <div class="question-block" id="q10">
+    <div class="q-header">
+      <span class="q-number">10.</span>
+      <span class="q-text">&lt;보기&gt;를 바탕으로 윗글을 감상한 내용으로 적절하지 않은 것은?</span>
+    </div>
+    <div class="bogi-box">
+      <div class="bogi-label">보 기</div>
+      현대 소설에서 대상이나 사물은 인물이 처한 사회적 조건과 내면 의식을 드러내는 객관적 상관물로 작용한다. 인물은 자신을 에워싼 거대한 시대적 변화의 폭력성을 거칠고 차가운 질감을 가진 물리적 소재들을 통해 온몸으로 실감하게 된다. 한편, 인물이 깊은 애착을 갖는 특정 사물은 더 이상 본래의 기능을 수행하지 못한 채 멈춰버린 시간을 내포하기도 한다. 이러한 사물은 지나간 세월에 대한 인물의 오랜 집착을 보여주는 동시에, 궁극적으로는 회복 불가능한 한 시대와의 단절을 상징적으로 드러내는 중요한 문학적 장치가 된다.
+    </div>
+    <div class="choices">
+      <div class="choice" onclick="selectChoice(this, 10, 1)"><span class="choice-num">①</span><span>건물을 무너뜨리는 육중한 파열음과 굴착기의 그림자는, 인물이 처한 시대적 변화의 폭력성을 거칠고 위압적인 물리적 현상으로 체감하게 하는 객관적 상관물로 기능하고 있군.</span></div>
+      <div class="choice" onclick="selectChoice(this, 10, 2)"><span class="choice-num">②</span><span>벽에 걸린 채 십 년째 오후 세 시 반을 가리키고 있는 낡은 괘종시계는, 본래의 시간을 알려주는 기능을 상실한 채 멈춰버린 시간을 내포하며 지나간 세월에 대한 영수의 집착을 상징적으로 드러내는 사물이군.</span></div>
+      <div class="choice" onclick="selectChoice(this, 10, 3)"><span class="choice-num">③</span><span>굴착기의 소음과 거대한 진동이라는 시대적 폭력에 의해 바닥으로 곤두박질친 무뎌진 재단용 가위는, 더 이상 자신의 존재 가치를 세상에 증명해 내기 어려워진 영수의 무력한 처지와 사회적 조건을 투영하고 있군.</span></div>
+      <div class="choice" onclick="selectChoice(this, 10, 4)"><span class="choice-num">④</span><span>영수가 벽에서 낡은 괘종시계를 스스로 들어 내려놓고 주변과 대비되는 네모나고 하얀 흔적을 마주하는 행위는, 자신이 고수해 온 과거의 시간에 대한 집착을 거두고 회복 불가능한 한 시대와의 단절을 수용하게 되었음을 의미하는군.</span></div>
+      <div class="choice" onclick="selectChoice(this, 10, 5)"><span class="choice-num">⑤</span><span>영수가 고물상 김 씨의 구루마를 빌려와 다리미와 낡은 괘종시계를 온전히 챙기려는 모습은, 본래의 기능을 회복한 사물들을 무기 삼아 자신을 에워싼 물리적 폭력성에 대항하여 과거의 질서를 성공적으로 재건하려는 인물의 투쟁 의지를 보여주는군.</span></div>
+    </div>
+  </div>
+
+  <button class="check-btn" onclick="checkAnswers()">채점하기</button>
+  <div id="score-area" style="margin-top:24px;"></div>
+
+</div>
+</div><!-- end tab-exam -->
+
+<!-- ══════════════════ 해설 탭 ══════════════════ -->
+<div id="tab-answer" class="panel">
+<div class="container">
+
+  <div class="answer-sheet">
+    <h2>정 답 표</h2>
+    <div class="answer-grid">
+      <div class="answer-card"><div class="ac-num">1번</div><div class="ac-answer">②</div><div class="ac-score">2점</div></div>
+      <div class="answer-card"><div class="ac-num">2번</div><div class="ac-answer">③</div><div class="ac-score">2점</div></div>
+      <div class="answer-card"><div class="ac-num">3번</div><div class="ac-answer">⑤</div><div class="ac-score">3점</div></div>
+      <div class="answer-card"><div class="ac-num">4번</div><div class="ac-answer">②</div><div class="ac-score">2점</div></div>
+      <div class="answer-card"><div class="ac-num">5번</div><div class="ac-answer">④</div><div class="ac-score">2점</div></div>
+      <div class="answer-card"><div class="ac-num">6번</div><div class="ac-answer">④</div><div class="ac-score">3점</div></div>
+      <div class="answer-card"><div class="ac-num">7번</div><div class="ac-answer">④</div><div class="ac-score">3점</div></div>
+      <div class="answer-card"><div class="ac-num">8번</div><div class="ac-answer">①</div><div class="ac-score">2점</div></div>
+      <div class="answer-card"><div class="ac-num">9번</div><div class="ac-answer">③</div><div class="ac-score">2점</div></div>
+      <div class="answer-card"><div class="ac-num">10번</div><div class="ac-answer">⑤</div><div class="ac-score">3점</div></div>
+    </div>
+  </div>
+
+  <!-- 해설 본문 -->
+  <div class="explanation-section">
+    <div class="exp-title">상세 해설 — 지문 1 「감나무」</div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <span class="exp-q-num">1번</span>
+        <span class="exp-correct-badge">정답 ②</span>
+      </div>
+      <div class="exp-body">
+        <div class="exp-section-label">✔ 정답 해설</div>
+        <p>이 글은 3인칭 전지적 작가 시점이되, 서술의 초점이 <strong>복만</strong>에게 맞춰진 <em>제한적 전지적 시점</em>을 취하고 있습니다. "복만이 알지 못하는 세월이 새겨져 있었다", "복만은 아들이 무슨 말을 꺼내려는지 이미 알고 있었다", "복만은 그 말 안에서 무언가를 들었다" 등 작품 밖의 서술자가 주로 복만의 시선과 내면을 통해 상황을 전달하므로 ②가 적절합니다.</p>
+        <div class="exp-section-label wrong-label">✗ 오답 해설</div>
+        <div class="choice-exp"><span class="cn">①</span><span>지문의 공간적 배경은 복만의 집(방 안 → 마루 → 마당)으로 좁게 고정되어 있으며, 빈번한 공간 교체는 나타나지 않습니다.</span></div>
+        <div class="choice-exp"><span class="cn">③</span><span>기준의 외양 묘사는 세월의 흐름과 낯섦을 드러내기 위한 것으로, 희화화나 비판적 태도와 무관합니다.</span></div>
+        <div class="choice-exp"><span class="cn">④</span><span>과거 기억이 언급되기는 하나, 사건은 저녁→밤→이튿날 아침의 순행적 흐름으로 전개됩니다. 역순행적 교차 서술 구조가 아닙니다.</span></div>
+        <div class="choice-exp"><span class="cn">⑤</span><span>'군불 냄새', '아침 햇살' 등의 묘사는 심리적 거리감을 부각하는 장치이며, 갈등이 낭만적으로 해소된다고 보기 어렵습니다. 기준의 "예"도 완전한 해소의 근거가 되지 않습니다.</span></div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <span class="exp-q-num">2번</span>
+        <span class="exp-correct-badge">정답 ③</span>
+      </div>
+      <div class="exp-body">
+        <div class="exp-section-label">✔ 정답 해설</div>
+        <p>"군불이 필요한 계절도 아니었다. …복만이 불을 지핀 것은 추위 때문만은 아니었다. 손을 어디에 두어야 할지 알 수 없을 때, 그는 늘 그 자리에 앉았다." — 30년 만에 아들을 맞이하는 심리적 어색함과 당혹감을 행동으로 보여주는 대목이므로 ③이 적절합니다.</p>
+        <div class="exp-section-label wrong-label">✗ 오답 해설</div>
+        <div class="choice-exp"><span class="cn">①</span><span>소주병과 잔은 아들을 기다리는 무언의 애정의 표현이지, 아들을 설득하려는 치밀한 계획이 아닙니다.</span></div>
+        <div class="choice-exp"><span class="cn">②</span><span>기준이 서지 않고 벽에 기댄 것은 오랜 단절로 인한 심리적 거리감 때문이지, 두려움이나 노골적 원망의 표출이 아닙니다.</span></div>
+        <div class="choice-exp"><span class="cn">④</span><span>감나무를 베자는 기준의 말은 "열매도 안 맺는 게 자리만 차지"한다는 실용적 가치관의 발로이며, 아버지를 위로하려는 이타적 의도가 아닙니다.</span></div>
+        <div class="choice-exp"><span class="cn">⑤</span><span>"밥은 먹고 가냐"는 갈등이 해소되지 않았음에도 자식의 끼니를 챙기는 부정(父情)의 표현입니다. 집 처분에 동의한다는 근거가 없습니다.</span></div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <span class="exp-q-num">3번</span>
+        <span class="exp-correct-badge">정답 ⑤</span>
+      </div>
+      <div class="exp-body">
+        <div class="exp-section-label">✔ 정답 해설</div>
+        <p>기준의 "예"라는 짧은 대답과 '국솥을 올리는 소리'는 끊어질 듯 이어지는 가족애의 여운을 보여주지만, 기준이 "도시의 가치관을 버리고 귀향을 결심"했다는 확정적 근거는 지문 어디에도 없습니다. 기준은 여전히 마루에 서서 감나무를 바라볼 뿐이며, 두 사람의 가치관 대립이 완전히 해소된 것이 아닙니다. ⑤는 지문의 범위를 벗어난 과도한 해석입니다.</p>
+        <div class="exp-section-label wrong-label">✗ 오답(적절한 감상) 확인</div>
+        <div class="choice-exp correct-exp"><span class="cn">①</span><span>철거 예정인 달동네 — &lt;보기&gt;의 '도시화와 재개발 광풍 속 소외된 이들의 현실'과 정확히 호응합니다.</span></div>
+        <div class="choice-exp correct-exp"><span class="cn">②</span><span>'집을 처분'하자는 기준 — &lt;보기&gt;의 '공간을 교환 가치로만 평가하는 자본주의적 논리'를 대변합니다.</span></div>
+        <div class="choice-exp correct-exp"><span class="cn">③</span><span>아내의 죽음이 깃든 집을 지키려는 복만 — &lt;보기&gt;의 '인간적 기억과 유대감의 수호'에 해당합니다.</span></div>
+        <div class="choice-exp correct-exp"><span class="cn">④</span><span>"차지할 자리가 있으니까 있는 거지" — &lt;보기&gt;의 '사물이 지닌 고유한 존재 가치'를 긍정하는 발언입니다.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="explanation-section">
+    <div class="exp-title">상세 해설 — 지문 2 「겨울 시장 끝에서」</div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <span class="exp-q-num">4번</span>
+        <span class="exp-correct-badge">정답 ②</span>
+      </div>
+      <div class="exp-body">
+        <div class="exp-section-label">✔ 정답 해설</div>
+        <p>'국자를 내려놓지 않은 채 딸을 바라봄', '안방 쪽 문을 바라보다가 시선을 거두는 혜지' 등 행동과 시선의 절제된 묘사를 통해 모녀 사이의 어색함과 복잡한 심경을 간접적으로 전달하고 있으므로 ②가 적절합니다.</p>
+        <div class="exp-section-label wrong-label">✗ 오답 해설</div>
+        <div class="choice-exp"><span class="cn">①</span><span>서술자가 작품 전면에 나서 도덕적 평가를 내리는 편집자적 논평은 나타나지 않습니다.</span></div>
+        <div class="choice-exp"><span class="cn">③</span><span>배경은 시장 골목과 국밥집으로 고정되어 있으며, 공간의 빈번한 교체는 없습니다.</span></div>
+        <div class="choice-exp"><span class="cn">④</span><span>혜지의 과거는 중략 요약에서 언급되지만, 작품 구조 자체가 역순행적 교차 서술을 취하고 있지는 않습니다.</span></div>
+        <div class="choice-exp"><span class="cn">⑤</span><span>눈발과 끓는 국솥의 묘사는 쓸쓸한 현실과 인물의 내면을 부각하는 장치이며, 희망찬 미래를 암시하지 않습니다.</span></div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <span class="exp-q-num">5번</span>
+        <span class="exp-correct-badge">정답 ④</span>
+      </div>
+      <div class="exp-body">
+        <div class="exp-section-label">✔ 정답 해설</div>
+        <p>혜지는 "무섭다고 안 없어지냐"며 담담히 일상을 지키는 어머니 앞에서 숟가락을 들었다가 내려놓기를 반복합니다. 이는 어머니의 묵묵하고 강인한 삶의 방식 앞에서 혜지가 느끼는 내적 당혹감과 심리적 동요를 행동으로 보여주는 장면입니다.</p>
+        <div class="exp-section-label wrong-label">✗ 오답 해설</div>
+        <div class="choice-exp"><span class="cn">①</span><span>정례가 매일 솥을 끓이는 것은 자신의 자리를 지키는 삶의 의지이지, 타인에게 건재함을 과시하는 행위가 아닙니다.</span></div>
+        <div class="choice-exp"><span class="cn">②</span><span>혜지의 발언은 실용적인 대안 제시에서 비롯된 것이며, 어머니의 간호 능력을 비판하는 의도가 아닙니다.</span></div>
+        <div class="choice-exp"><span class="cn">③</span><span>의자에 앉는 행위는 무의식적으로 아버지의 기억에 가까이 다가서는 것이지, 어머니에게 상처를 주려는 악의와 무관합니다.</span></div>
+        <div class="choice-exp"><span class="cn">⑤</span><span>정례가 국을 내미는 것은 자식을 향한 어머니의 본연의 애정이며, 서울 제안에 동의한다는 근거가 없습니다.</span></div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <span class="exp-q-num">6번</span>
+        <span class="exp-correct-badge">정답 ④</span>
+      </div>
+      <div class="exp-body">
+        <div class="exp-section-label">✔ 정답 해설</div>
+        <p>혜지는 아버지가 손수 짠 낡은 의자에 앉아 뜨거운 국을 천천히 식혀가며 먹고, 어릴 적부터 그 자리에 있던 성냥갑 광고지를 오래 바라봅니다. 이는 그동안 외면했던 가족의 기억과 어머니의 묵묵한 삶을 비로소 대면하고 수용하기 시작했음을 의미합니다. 도망치지 않고 어머니를 기다리겠다는 '수용의 기다림'으로 해석하는 ④가 가장 적절합니다.</p>
+        <div class="exp-section-label wrong-label">✗ 오답 해설</div>
+        <div class="choice-exp"><span class="cn">①</span><span>'일어나지 않기로 했다'는 자리를 지키고 기다리겠다는 의미로, 도피 심리와 정반대입니다.</span></div>
+        <div class="choice-exp"><span class="cn">②</span><span>국을 다 먹고 조용히 앉아 있는 모습은 성찰의 시간이지, 반발심이나 시위의 의도와 거리가 멉니다.</span></div>
+        <div class="choice-exp"><span class="cn">③</span><span>자리를 지킨다는 내면적 행위를 철거 반대 투쟁이라는 외부적 행동으로 비약하는 것은 문맥에 맞지 않습니다.</span></div>
+        <div class="choice-exp"><span class="cn">⑤</span><span>어머니의 일상을 바라보며 기다리는 장면에서 원망이나 권위적 통제 의도를 읽어내는 것은 잘못된 감상입니다.</span></div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <span class="exp-q-num">7번</span>
+        <span class="exp-correct-badge">정답 ④</span>
+      </div>
+      <div class="exp-body">
+        <div class="exp-section-label">✔ 정답 해설</div>
+        <p>"무섭다고 안 없어지냐"는 말은 두려움에 흔들리지 않고 오늘 해야 할 일(국을 끓이고, 남편을 돌보는 일)을 묵묵히 지켜내겠다는 초연하고 단단한 삶의 태도를 보여줍니다. 이를 '무력함의 인정'이나 '재개발에 적극적으로 동참하겠다는 의지'로 해석하는 것은 지문의 결을 완전히 거스르는 오독입니다.</p>
+        <div class="exp-section-label wrong-label">✗ 오답(적절한 감상) 확인</div>
+        <div class="choice-exp correct-exp"><span class="cn">①</span><span>손님 유무와 무관하게 매일 솥을 끓이는 행위 — &lt;보기&gt;의 '장소성을 스스로 실천하고 지켜나가는 행위'와 정확히 부합합니다.</span></div>
+        <div class="choice-exp correct-exp"><span class="cn">②</span><span>보상금을 계산하며 시장을 '끝난 것'으로 단정하는 혜지 — &lt;보기&gt;의 '교환 가치로만 측정되는 추상적 공간의 논리'를 대변합니다.</span></div>
+        <div class="choice-exp correct-exp"><span class="cn">③</span><span>낡은 나무 의자를 버리지 못하는 정례 — &lt;보기&gt;의 '효율성이 소거된 사물을 품어 안는' 태도에 해당합니다.</span></div>
+        <div class="choice-exp correct-exp"><span class="cn">⑤</span><span>낡은 성냥갑 광고지를 응시하는 혜지 — &lt;보기&gt;의 '대상과 교감하며 장소성을 재발견하는 행위'로 적절한 감상입니다.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="explanation-section">
+    <div class="exp-title">상세 해설 — 지문 3 「회벽(灰壁)의 시간」</div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <span class="exp-q-num">8번</span>
+        <span class="exp-correct-badge">정답 ①</span>
+      </div>
+      <div class="exp-body">
+        <div class="exp-section-label">✔ 정답 해설</div>
+        <p>굴착기의 파열음·그림자 등 외부의 폭력적 현실이 <strong>영수</strong>의 감각을 통해 포착되고, 이에 반응하는 영수의 무력감과 평화시장 시절부터 이어져 온 내면의 회상이 교차하며 형상화되고 있습니다. 특정 인물의 시선을 중심으로 외부 상황과 내면 의식을 교차 서술하는 방식이므로 ①이 적절합니다.</p>
+        <div class="exp-section-label wrong-label">✗ 오답 해설</div>
+        <div class="choice-exp"><span class="cn">②</span><span>사건은 양복점이라는 제한된 공간 안에서 연속적으로 일어나므로 공간적 배경의 잦은 전환은 없습니다.</span></div>
+        <div class="choice-exp"><span class="cn">③</span><span>서술자가 영수의 심리를 대변하지만, 직접 영수를 비판하는 편집자적 논평은 나타나지 않습니다.</span></div>
+        <div class="choice-exp"><span class="cn">④</span><span>굽은 등, 투박한 손 등의 묘사는 고단한 세월의 흔적이지 희화화와 무관합니다.</span></div>
+        <div class="choice-exp"><span class="cn">⑤</span><span>과거 기억이 회상으로 삽입되지만, 과거와 현재가 대등하게 병렬 배치된 구조가 아닙니다. 결말의 수용도 긍정적 미래가 아닌 비장한 체념입니다.</span></div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <span class="exp-q-num">9번</span>
+        <span class="exp-correct-badge">정답 ③</span>
+      </div>
+      <div class="exp-body">
+        <div class="exp-section-label">✔ 정답 해설</div>
+        <p>영수는 "늘 자신만만하던 아들도 …세상의 톱니바퀴 속에서 지쳐가는 초라한 가장"임을 깨닫고, "자신이 지키고자 했던 과거의 자존심이, 아들이 살아가야 할 현재의 목을 조르고 있었다는 뼈아픈 자각"을 합니다. 이것이 영수의 태도 변화를 이끄는 핵심 인과적 계기입니다.</p>
+        <div class="exp-section-label wrong-label">✗ 오답 해설</div>
+        <div class="choice-exp"><span class="cn">①</span><span>가위를 집어 든 것은 굴착기 진동에 바닥으로 떨어진 가위를 무의식적으로 주운 행위이며, 그 과정에서 무력감을 느낍니다.</span></div>
+        <div class="choice-exp"><span class="cn">②</span><span>시계를 내려놓는 것은 보상금이나 재개업의 희망이 아니라, 멈춘 시계처럼 과거를 되돌릴 수 없음을 인정하는 수용의 행위입니다.</span></div>
+        <div class="choice-exp"><span class="cn">④</span><span>구루마를 빌려오라는 것은 체념적 정리이지, 철거 과정에 적극 협조하겠다는 의지가 아닙니다.</span></div>
+        <div class="choice-exp"><span class="cn">⑤</span><span>먼지를 닦으며 시계를 챙기는 것은 가업을 물려주려는 결심이 아니라 자신의 정체성이 담긴 파편을 마지막으로 간직하려는 행위입니다.</span></div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <span class="exp-q-num">10번</span>
+        <span class="exp-correct-badge">정답 ⑤</span>
+      </div>
+      <div class="exp-body">
+        <div class="exp-section-label">✔ 정답 해설</div>
+        <p>지문에서 영수는 "시계는 결코 다시 똑딱이지 않을 것이다"라며 흘러간 시간의 불가역성을 명확히 인식합니다. 가위·다리미·시계를 챙기는 행위는 최소한의 생계 수단이자 자신의 정체성이 담긴 파편을 슬프게 품고 떠나는 '수용과 체념'입니다. 이를 "본래 기능을 회복한 사물로 과거의 질서를 재건하려는 투쟁 의지"로 읽는 것은 &lt;보기&gt;와 지문 모두를 거스르는 오독입니다.</p>
+        <div class="exp-section-label wrong-label">✗ 오답(적절한 감상) 확인</div>
+        <div class="choice-exp correct-exp"><span class="cn">①</span><span>파열음·굴착기 그림자 — 시대적 폭력성을 물리적으로 체감하게 하는 객관적 상관물로 적절합니다.</span></div>
+        <div class="choice-exp correct-exp"><span class="cn">②</span><span>10년째 세 시 반에 멈춘 괘종시계 — 기능 상실 + 멈춘 시간 + 세월의 집착을 상징하는 사물로 적절합니다.</span></div>
+        <div class="choice-exp correct-exp"><span class="cn">③</span><span>굴착기 소음에 의해 바닥으로 떨어진 무뎌진 재단 가위 — 영수의 무력한 처지와 사회적 조건을 투영합니다.</span></div>
+        <div class="choice-exp correct-exp"><span class="cn">④</span><span>시계를 내려놓고 흰 흔적을 마주하는 행위 — 과거 집착을 거두고 시대와의 단절을 수용함을 의미합니다.</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div><!-- end tab-answer -->
+
+<script>
+  // ── 탭 전환 ──
+  function showTab(name) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    document.querySelector(`.tab-btn[onclick="showTab('${name}')"]`).classList.add('active');
+  }
+
+  // ── 정답 데이터 ──
+  const ANSWERS = { 1:2, 2:3, 3:5, 4:2, 5:4, 6:4, 7:4, 8:1, 9:3, 10:5 };
+  const SCORES = { 1:2, 2:2, 3:3, 4:2, 5:2, 6:3, 7:3, 8:2, 9:2, 10:3 };
+  const userAnswers = {};
+
+  function selectChoice(el, qNum, choiceNum) {
+    const block = document.getElementById('q' + qNum);
+    block.querySelectorAll('.choice').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    userAnswers[qNum] = choiceNum;
+  }
+
+  function checkAnswers() {
+    let totalScore = 0, maxScore = 0, correct = 0;
+
+    for (let q = 1; q <= 10; q++) {
+      maxScore += SCORES[q];
+      const block = document.getElementById('q' + q);
+      const choices = block.querySelectorAll('.choice');
+      const correctIdx = ANSWERS[q] - 1;
+      const userIdx = userAnswers[q] ? userAnswers[q] - 1 : -1;
+
+      choices.forEach((c, i) => {
+        c.classList.remove('correct-answer', 'wrong-selected');
+      });
+      choices[correctIdx].classList.add('correct-answer');
+
+      if (userIdx >= 0 && userIdx !== correctIdx) {
+        choices[userIdx].classList.add('wrong-selected');
+      }
+      if (userAnswers[q] === ANSWERS[q]) {
+        totalScore += SCORES[q];
+        correct++;
+      }
+    }
+
+    const area = document.getElementById('score-area');
+    const pct = Math.round(totalScore / maxScore * 100);
+    area.innerHTML = `
+      <div class="score-display">
+        <div>
+          <div class="sd-label">총점</div>
+          <div class="sd-main">${totalScore} / ${maxScore}점</div>
+        </div>
+        <div>
+          <div class="sd-label">정답률</div>
+          <div class="sd-main">${pct}%</div>
+        </div>
+        <div class="sd-detail">${correct}문제 정답 · ${10 - correct}문제 오답</div>
+      </div>`;
+    area.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>
+</body>
+</html>
