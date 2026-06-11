@@ -288,6 +288,7 @@ let subjectFrameResizeId = 0;
 function resizeSubjectFrameForContent() {
   if (frame && frame.style.height) frame.style.height = '';
   if (window.resizeInkCanvas) window.resizeInkCanvas();
+  if (window.redrawInkLayer) window.redrawInkLayer();
 }
 
 function scheduleSubjectFrameResize() {
@@ -302,10 +303,15 @@ function resizeSubjectFrameForMobile() {
   scheduleSubjectFrameResize();
 }
 
-function bindFrameInkContextSync() {
-  const doc = getNestedFrameDocument(frame);
+function bindInkDocumentForContext(doc) {
   if (!doc || doc.body?.dataset.inkSyncBound === '1') return;
   if (doc.body) doc.body.dataset.inkSyncBound = '1';
+  doc.defaultView?.addEventListener('scroll', () => {
+    if (window.redrawInkLayer) window.redrawInkLayer();
+  }, { passive: true });
+  doc.defaultView?.visualViewport?.addEventListener('scroll', () => {
+    if (window.redrawInkLayer) window.redrawInkLayer();
+  }, { passive: true });
   doc.querySelectorAll('.tab-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       setTimeout(() => {
@@ -314,7 +320,14 @@ function bindFrameInkContextSync() {
       }, 30);
     });
   });
-  const nested = frame?.contentDocument?.querySelector('iframe');
+}
+
+function bindFrameInkContextSync() {
+  const rootDoc = frame?.contentDocument;
+  bindInkDocumentForContext(rootDoc);
+  const nestedDoc = getNestedFrameDocument(frame);
+  if (nestedDoc && nestedDoc !== rootDoc) bindInkDocumentForContext(nestedDoc);
+  const nested = rootDoc?.querySelector('iframe');
   if (nested && nested.dataset.inkSyncBound !== '1') {
     nested.dataset.inkSyncBound = '1';
     nested.addEventListener('load', () => {
@@ -389,8 +402,59 @@ function initGlobalInk() {
     undoBtn.disabled = strokes.length === 0;
     redoBtn.disabled = redoStack.length === 0;
   }
-  function toCanvasXY(e) {
+  function getSubjectInkMetrics() {
+    if (!document.body.classList.contains('subject-mode') || !frame) {
+      return { type: 'viewport', originX: 0, originY: 0, scrollX: 0, scrollY: 0, width: window.innerWidth, height: window.innerHeight };
+    }
+    try {
+      const rootRect = frame.getBoundingClientRect();
+      const rootDoc = frame.contentDocument;
+      const rootWin = frame.contentWindow;
+      if (!rootDoc || !rootWin) throw new Error('frame unavailable');
+      const hasOwnTabs = Boolean(rootDoc.querySelector('.tab-btn.active'));
+      const nested = !hasOwnTabs ? rootDoc.querySelector('iframe') : null;
+      const nestedDoc = nested?.contentDocument;
+      const nestedWin = nested?.contentWindow;
+      if (nestedDoc && nestedWin) {
+        const nestedRect = nested.getBoundingClientRect();
+        return {
+          type: 'subject-content',
+          originX: rootRect.left + nestedRect.left,
+          originY: rootRect.top + nestedRect.top,
+          scrollX: nestedWin.scrollX || nestedDoc.documentElement?.scrollLeft || nestedDoc.body?.scrollLeft || 0,
+          scrollY: nestedWin.scrollY || nestedDoc.documentElement?.scrollTop || nestedDoc.body?.scrollTop || 0,
+          width: nestedWin.innerWidth || nestedDoc.documentElement?.clientWidth || nestedRect.width,
+          height: nestedWin.innerHeight || nestedDoc.documentElement?.clientHeight || nestedRect.height,
+        };
+      }
+      return {
+        type: 'subject-content',
+        originX: rootRect.left,
+        originY: rootRect.top,
+        scrollX: rootWin.scrollX || rootDoc.documentElement?.scrollLeft || rootDoc.body?.scrollLeft || 0,
+        scrollY: rootWin.scrollY || rootDoc.documentElement?.scrollTop || rootDoc.body?.scrollTop || 0,
+        width: rootWin.innerWidth || rootDoc.documentElement?.clientWidth || rootRect.width,
+        height: rootWin.innerHeight || rootDoc.documentElement?.clientHeight || rootRect.height,
+      };
+    } catch (_) {
+      return { type: 'viewport', originX: 0, originY: 0, scrollX: 0, scrollY: 0, width: window.innerWidth, height: window.innerHeight };
+    }
+  }
+  function isWithinInkMetrics(e, metrics) {
+    if (metrics.type !== 'subject-content') return true;
+    return e.clientX >= metrics.originX && e.clientX <= metrics.originX + metrics.width && e.clientY >= metrics.originY && e.clientY <= metrics.originY + metrics.height;
+  }
+  function toCanvasXY(e, metrics = getSubjectInkMetrics()) {
+    if (metrics.type === 'subject-content') {
+      return { x: e.clientX - metrics.originX + metrics.scrollX, y: e.clientY - metrics.originY + metrics.scrollY };
+    }
     return { x: e.clientX, y: e.clientY };
+  }
+  function toScreenXY(point, stroke, metrics = getSubjectInkMetrics()) {
+    if (stroke.coordSpace === 'subject-content' && metrics.type === 'subject-content') {
+      return { x: point.x - metrics.scrollX + metrics.originX, y: point.y - metrics.scrollY + metrics.originY };
+    }
+    return point;
   }
   function getViewportSize() {
     const doc = document.documentElement;
@@ -428,18 +492,23 @@ function initGlobalInk() {
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
   }
-  function drawStroke(stroke) {
+  function drawStroke(stroke, metrics = getSubjectInkMetrics()) {
     if (!stroke.points || stroke.points.length < 2) return;
     applyStrokeStyle(stroke);
+    const firstPoint = toScreenXY(stroke.points[0], stroke, metrics);
     ctx.beginPath();
-    ctx.moveTo(stroke.points[0].x, stroke.points[0].y);
-    for (let i = 1; i < stroke.points.length; i++) ctx.lineTo(stroke.points[i].x, stroke.points[i].y);
+    ctx.moveTo(firstPoint.x, firstPoint.y);
+    for (let i = 1; i < stroke.points.length; i++) {
+      const point = toScreenXY(stroke.points[i], stroke, metrics);
+      ctx.lineTo(point.x, point.y);
+    }
     ctx.stroke();
     ctx.closePath();
   }
   function drawAll() {
+    const metrics = getSubjectInkMetrics();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (const s of strokes) drawStroke(s);
+    for (const s of strokes) drawStroke(s, metrics);
   }
   function inkStorageKey(scope = activeInkScope) {
     return `${INK_STROKES_PREFIX}${scope}`;
@@ -468,19 +537,23 @@ function initGlobalInk() {
   }
   window.syncInkContext = syncInkContext;
   window.resizeInkCanvas = resizeCanvas;
+  window.redrawInkLayer = drawAll;
   function beginStroke(e) {
     if (!document.body.classList.contains('ink-on')) return;
     if (e.target.closest && e.target.closest('#inkToolbar')) return;
+    const metrics = getSubjectInkMetrics();
+    if (!isWithinInkMetrics(e, metrics)) return;
     drawing = true;
-    currentStroke = { mode, size: penSize, color: penColor, points: [] };
-    currentStroke.points.push(toCanvasXY(e));
+    currentStroke = { mode, size: penSize, color: penColor, coordSpace: metrics.type, points: [] };
+    currentStroke.points.push(toCanvasXY(e, metrics));
     e.preventDefault();
   }
   function moveStroke(e) {
     if (!drawing || !currentStroke) return;
-    currentStroke.points.push(toCanvasXY(e));
+    const metrics = getSubjectInkMetrics();
+    currentStroke.points.push(toCanvasXY(e, metrics));
     drawAll();
-    drawStroke(currentStroke);
+    drawStroke(currentStroke, metrics);
     e.preventDefault();
   }
   function endStroke() {
@@ -490,7 +563,7 @@ function initGlobalInk() {
       strokes.push(currentStroke);
       if (strokes.length > 400) strokes = strokes.slice(strokes.length - 400);
       redoStack = [];
-            persistStrokes();
+      persistStrokes();
       updateUndoRedoUI();
     }
     currentStroke = null;
@@ -540,6 +613,7 @@ function initGlobalInk() {
   updateUndoRedoUI();
   window.addEventListener('resize', () => { scheduleSubjectFrameResize(); resizeCanvas(); });
   window.visualViewport?.addEventListener('resize', resizeCanvas);
+  window.visualViewport?.addEventListener('scroll', drawAll, { passive: true });
   window.addEventListener('beforeunload', persistStrokes);
 }
 
