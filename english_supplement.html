@@ -1,37 +1,1044 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>영어 부교재</title>
-  <style>
-    :root{color-scheme:light;font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif}
-    *{box-sizing:border-box}
-    body{margin:0;padding:24px;background:#f6f8fc;color:#0f172a}
-    main{max-width:860px;margin:0 auto;display:grid;gap:16px}
-    section{border:1px solid #dbe3ef;border-radius:18px;background:#fff;padding:22px;box-shadow:0 12px 28px rgba(15,23,42,.08)}
-    a.back{display:inline-flex;margin-bottom:10px;color:#15803d;text-decoration:none;font-weight:800}
-    h1{margin:0;font-size:clamp(1.5rem,4vw,2.2rem);letter-spacing:-.04em}
-    h2{margin:0 0 10px;color:#15803d;font-size:1.05rem}
-    p,li{line-height:1.7}
-    ul{margin:0;padding-left:1.2rem}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentos English 학습</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&family=Lora:ital,wght@0,500;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+--bg:#F7F5F0; --surface:#FFF; --ink:#1A1A2E; --sub:#5A5A72;
+--accent:#2E6B9E; --hi:#FFD166; --green:#2D8B55; --red:#C0392B;
+--border:#D6D2C8; --tagbg:#EAF2FB;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:'Noto Sans KR',sans-serif;font-size:15px;line-height:1.7;min-height:100vh;}
+
+/* ── HEADER ── */
+header{background:var(--accent);color:#fff;padding:22px 28px 18px;display:flex;flex-direction:column;gap:4px;}
+header .label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.75;font-family:'JetBrains Mono',monospace;}
+header h1{font-family:'Lora',serif;font-size:1.5rem;font-weight:700;line-height:1.25;}
+
+/* ── PASSAGE SELECTOR ── */
+.selector-bar{background:var(--surface);border-bottom:2px solid var(--border);padding:12px 24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.selector-bar label{font-size:12px;font-weight:700;color:var(--sub);white-space:nowrap;}
+.passage-select{
+font-family:'Noto Sans KR',sans-serif;font-size:13.5px;
+padding:8px 14px;border:1.5px solid var(--border);border-radius:8px;
+background:var(--bg);color:var(--ink);cursor:pointer;
+min-width:260px;flex:1;max-width:460px;
+appearance:none;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%235A5A72' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+background-repeat:no-repeat;background-position:right 12px center;
+padding-right:32px;
+}
+.passage-count{font-size:12px;color:var(--sub);font-family:'JetBrains Mono',monospace;}
+
+/* ── TABS ── */
+.tabs{display:flex;border-bottom:2px solid var(--border);background:var(--surface);overflow-x:auto;}
+.tab{padding:12px 20px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--sub);border-bottom:3px solid transparent;margin-bottom:-2px;transition:color .2s,border-color .2s;user-select:none;}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* ── CONTENT ── */
+.section{display:none;padding:24px 24px 48px;max-width:760px;margin:0 auto;}
+.section.active{display:block;}
+h2{font-family:'Lora',serif;font-size:1.1rem;color:var(--ink);margin-bottom:16px;border-bottom:1px solid var(--border);padding-bottom:8px;}
+
+/* ── PASSAGE ── */
+.passage-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px 26px;line-height:2.1;font-family:'Lora',serif;font-size:15.5px;}
+.sentence{cursor:pointer;border-radius:4px;padding:0 2px;transition:background .15s;}
+.sentence:hover{background:#EAF2FB;}
+.sentence.selected{background:var(--hi);}
+.sent-trans{display:none;margin-top:8px;padding:10px 14px;background:var(--tagbg);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;font-family:'Noto Sans KR',sans-serif;font-size:13.5px;line-height:1.65;}
+.sent-trans.show{display:block;}
+.trans-hint{font-size:12px;color:var(--sub);margin-bottom:12px;text-align:center;}
+
+/* ── VOCAB ── */
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;}
+.vocab-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:13px 15px;cursor:pointer;transition:box-shadow .15s;}
+.vocab-card:hover{box-shadow:0 2px 10px rgba(0,0,0,.09);}
+.vocab-word{font-family:'Lora',serif;font-size:14.5px;font-weight:700;color:var(--accent);margin-bottom:2px;}
+.vocab-meaning{font-size:13px;color:var(--ink);display:none;}
+.vocab-meaning.show{display:block;}
+.vocab-hint{font-size:11px;color:var(--sub);margin-top:3px;}
+
+/* ── GRAMMAR ── */
+.grammar-item{margin-bottom:22px;}
+.grammar-title{font-weight:700;font-size:14px;color:var(--accent);margin-bottom:6px;}
+.ex-box{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:13px 17px;font-family:'Lora',serif;font-size:14.5px;line-height:1.9;}
+.note{font-family:'Noto Sans KR',sans-serif;font-size:12.5px;color:var(--sub);margin-top:6px;line-height:1.55;}
+.hl-y{background:var(--hi);padding:0 2px;border-radius:3px;}
+.hl-b{background:#D0E8FF;padding:0 2px;border-radius:3px;}
+.hl-g{background:#C9F2D6;padding:0 2px;border-radius:3px;}
+
+/* ── QUIZ ── */
+.quiz-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 22px;margin-bottom:18px;}
+.quiz-q{font-family:'Lora',serif;font-size:15px;margin-bottom:12px;line-height:1.8;}
+.quiz-options{display:flex;flex-direction:column;gap:8px;}
+.opt-btn{padding:10px 15px;border:1.5px solid var(--border);border-radius:7px;background:var(--bg);cursor:pointer;text-align:left;font-size:13.5px;font-family:'Noto Sans KR',sans-serif;transition:border-color .15s,background .15s;}
+.opt-btn:hover:not(:disabled){border-color:var(--accent);background:var(--tagbg);}
+.opt-btn.correct{background:#D4F0DE;border-color:var(--green);color:var(--green);font-weight:700;}
+.opt-btn.wrong{background:#FAD7D4;border-color:var(--red);color:var(--red);}
+.quiz-fb{margin-top:10px;font-size:13px;color:var(--sub);display:none;}
+.quiz-fb.show{display:block;}
+.quiz-score{text-align:right;font-size:13px;color:var(--sub);margin-bottom:8px;font-family:'JetBrains Mono',monospace;}
+
+/* ── SUMMARY ── */
+.summary-block{background:var(--surface);border-left:4px solid var(--accent);border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:12px;font-size:14px;line-height:1.8;}
+.tag{display:inline-block;background:var(--tagbg);color:var(--accent);font-size:11px;font-weight:700;letter-spacing:.06em;padding:2px 8px;border-radius:20px;margin-bottom:5px;font-family:'JetBrains Mono',monospace;}
+.answer-box{margin-top:20px;padding:14px 18px;border:1.5px dashed var(--accent);border-radius:8px;font-size:13.5px;line-height:1.8;}
+
+/* ── MOBILE ── */
+@media(max-width:480px){
+header{padding:18px 16px 14px;}
+.section{padding:18px 14px 40px;}
+.passage-wrap{padding:16px 14px;font-size:14px;}
+.passage-select{min-width:0;}
+}
+</style>
 </head>
 <body>
-  <main>
-    <section>
-      <a class="back" href="./english_hub.html">← 영어 선택으로</a>
-      <h1>📗 영어 부교재</h1>
-      <p>부교재 지문과 추가 문제를 따로 복습하며 시험 범위를 빠르게 확인하는 공간입니다.</p>
-    </section>
-    <section>
-      <h2>학습 루틴</h2>
-      <ul>
-        <li>각 지문의 소재, 주제, 글의 흐름을 정리하기</li>
-        <li>오답이 나온 문항의 보기 근거를 다시 확인하기</li>
-        <li>본문과 겹치는 표현 또는 문법 포인트를 함께 표시하기</li>
-      </ul>
-    </section>
-  </main>
+
+<header>
+<span class="label">Mentos English · 경희고 1학년</span>
+<h1>부교재편 학습 노트</h1>
+</header>
+
+<!-- 지문 선택 -->
+<div class="selector-bar">
+<label>📖 지문 선택</label>
+<select class="passage-select" id="passageSelect" onchange="loadPassage(this.value)">
+<option value="0">20231123 · 6-2 &nbsp;구강 건강의 중요성과 신체에 대한 영향</option>
+<option value="1">20210923 · 6-4 &nbsp;젊은 사람들이 채식을 하는 이유</option>
+<option value="2">20221123 · 6-6 &nbsp;녹는 빙하와 해수면 상승으로 인한 하루 길이의 변화</option>
+<option value="3">20201123 · 6-7 &nbsp;재생 에너지의 사용이 환경에 끼치는 부정적 영향</option>
+<option value="4">20240923 · 6-8 &nbsp;장애가 있는 노동자들에게 AI가 가져다 주는 장점</option>
+<option value="5">20180622 · 6-12 &nbsp;대인 관계 형성 유지의 욕구</option>
+<option value="6">20210323 · 6-10 &nbsp;거짓말에 대한 뇌의 반응 속도</option>
+<option value="7">20220923 · 6-16 &nbsp;소속의 욕구 내에서 생물의 진화가 발달한다</option>
+<option value="8">20220323 · 6-14 &nbsp;우리의 삶에 널리 영향을 미치는 기후에 대한 지식</option>
+<option value="9">20191123 · 6-17 &nbsp;사고의 정련에 있어서 표현의 중요성</option>
+<option value="10">20230323 · 6-18 &nbsp;관광 확장에 기여한 요인들</option>
+<option value="11">20250323 · 6-20 &nbsp;동기 부여와 관계 형성의 중요성</option>
+<option value="12">20250923 · 6-22 &nbsp;인간 감각의 한계와 과학 기기의 역할</option>
+</select>
+<span class="passage-count" id="passageCount">13개 지문</span>
+</div>
+
+<!-- 탭 -->
+<nav class="tabs">
+<div class="tab active" onclick="showTab('passage')">📄 본문</div>
+<div class="tab" onclick="showTab('vocab')">📚 단어</div>
+<div class="tab" onclick="showTab('grammar')">🔍 문법</div>
+<div class="tab" onclick="showTab('quiz')">✏️ 빈칸 퀴즈</div>
+<div class="tab" onclick="showTab('summary')">📝 요약</div>
+</nav>
+
+<!-- 탭 컨텐츠 -->
+<div id="passage" class="section active"></div>
+<div id="vocab" class="section"></div>
+<div id="grammar" class="section"></div>
+<div id="quiz" class="section"></div>
+<div id="summary" class="section"></div>
+
+<script>
+/* ═══════════════════════════════════════
+DATA — 지문 추가는 이 배열에만 추가하면 됩니다
+═══════════════════════════════════════ */
+const PASSAGES = [
+
+/* ── 지문 0 : 구강 건강 ── */
+{
+meta: { code:'20231123', num:'6-2', subject:'구강 건강의 중요성과 신체에 대한 영향' },
+sentences: [
+{
+en: '❶ Nearly everything has to go through your mouth to get to the rest of you — from food and air to bacteria and viruses.',
+ko: '음식과 공기에서부터 박테리아와 바이러스까지, 거의 모든 것이 여러분의 나머지 부분에 도달하기 위해 여러분의 입을 거쳐야 한다.'
+},
+{
+en: '❷ A healthy mouth can help your body get what it needs and prevent it from harm — with adequate space for air to travel to your lungs, and healthy teeth and gums that prevent harmful microorganisms from entering your bloodstream.',
+ko: '건강한 입은 공기가 폐로 이동할 수 있는 적당한 공간, 그리고 해로운 미생물이 혈류로 들어가는 것을 막는 건강한 치아와 잇몸으로, 여러분의 몸이 필요한 것을 얻고 피해로부터 몸을 지키도록 도와줄 수 있다.'
+},
+{
+en: '❸ From the moment you are created, oral health affects every aspect of your life.',
+ko: '여러분이 생겨난 순간부터 구강 건강은 여러분의 삶의 모든 측면에 영향을 미친다.'
+},
+{
+en: '❹ What happens in the mouth is usually just the tip of the iceberg and a reflection of what is happening in other parts of the body.',
+ko: '입 안에서 일어나는 일은 대개 빙산의 일각일 뿐이며 신체의 다른 부분에서 일어나고 있는 일의 반영이다.'
+},
+{
+en: '❺ Poor oral health can be a cause of a disease that affects the entire body.',
+ko: '나쁜 구강 건강은 전체 몸에 영향을 끼치는 질병의 원인일 수 있다.'
+},
+{
+en: '❻ The microorganisms in an unhealthy mouth can enter the bloodstream and travel anywhere in the body, posing serious health risks.',
+ko: '건강하지 않은 입안의 미생물은 혈류로 들어가고 신체의 어느 곳이든 이동하여 심각한 건강상의 위험을 초래할 수 있다.'
+},
+],
+vocab: [
+{word:'nearly', meaning:'거의'},
+{word:'go through', meaning:'~을 거치다'},
+{word:'get to', meaning:'~에 도달하다, 이르다'},
+{word:'prevent ~ from …',meaning:'~로부터 …하는 것을 막다'},
+{word:'harm', meaning:'피해, 손해'},
+{word:'adequate', meaning:'적당한, 충분한'},
+{word:'lung', meaning:'폐, 허파'},
+{word:'gum', meaning:'잇몸'},
+{word:'bloodstream', meaning:'혈류, 혈액 순환'},
+{word:'oral health', meaning:'구강 건강, 구강 위생'},
+{word:'affect', meaning:'영향을 미치다'},
+{word:'aspect', meaning:'측면, 양상'},
+{word:'the tip of the iceberg', meaning:'빙산의 일각'},
+{word:'reflection', meaning:'반영, 투영'},
+{word:'entire', meaning:'전체의, 온'},
+{word:'pose', meaning:'<위험 등을> 초래하다'},
+{word:'serious', meaning:'심각한'},
+{word:'microorganism', meaning:'미생물'},
+],
+grammar: [
+{
+title:'① prevent A from -ing (A가 ~하는 것을 막다)',
+html:`healthy teeth and gums that <span class="hl-y">prevent</span> harmful microorganisms <span class="hl-y">from entering</span> your bloodstream`,
+note:'▸ prevent + 목적어 + from + Ving 구문. from 뒤에는 반드시 동명사(Ving)가 옴.'
+},
+{
+title:'② help + O + (to) V',
+html:`A healthy mouth can <span class="hl-b">help</span> your body <span class="hl-b">get</span> what it needs`,
+note:'▸ help 뒤 to 생략 가능. "help your body to get" = "help your body get".'
+},
+{
+title:'③ what절 — 명사절 / 관계대명사',
+html:`help your body get <span class="hl-g">what it needs</span><br>a reflection of <span class="hl-g">what is happening in other parts of the body</span>`,
+note:'▸ what = the thing(s) which. 선행사 포함 관계대명사로 명사절 역할.'
+},
+{
+title:'④ 분사구문 — posing (결과·동시 상황)',
+html:`travel anywhere in the body, <span class="hl-y">posing serious health risks</span>`,
+note:'▸ 현재분사구문으로 주절과 동시에 일어나는 결과적 상황 표현. "and pose ~"로 바꿔 쓸 수 있음.'
+},
+{
+title:'⑤ 관용표현 — the tip of the iceberg',
+html:`just <span class="hl-b">the tip of the iceberg</span> and a reflection of what is happening`,
+note:'▸ "빙산의 일각" — 드러난 부분은 실제 문제의 극히 일부에 불과하다는 비유.'
+},
+],
+quizzes: [
+{
+q:'A healthy mouth can help your body get what it needs and _____ it from harm.',
+opts:['protect','prevent','prohibit','push'],
+ans:1, fb:'정답: prevent — "prevent A from harm" (A를 해로부터 막다)'
+},
+{
+q:'Healthy teeth and gums prevent harmful microorganisms from _____ your bloodstream.',
+opts:['enter','entered','entering','to enter'],
+ans:2, fb:'정답: entering — prevent A from + Ving. from 뒤는 동명사.'
+},
+{
+q:'From the moment you are created, oral health _____ every aspect of your life.',
+opts:['effects','affects','reflects','infects'],
+ans:1, fb:'정답: affects — affect(영향을 미치다, 동사) vs effect(영향, 명사)'
+},
+{
+q:'What happens in the mouth is usually just _____ and a reflection of what is happening in other parts of the body.',
+opts:['the edge of the iceberg','the tip of the iceberg','the peak of the problem','the surface of the water'],
+ans:1, fb:'정답: the tip of the iceberg (빙산의 일각)'
+},
+{
+q:'The microorganisms in an unhealthy mouth can enter the bloodstream and travel anywhere in the body, _____ serious health risks.',
+opts:['posed','to pose','posing','poses'],
+ans:2, fb:'정답: posing — 분사구문, 주어(microorganisms)와 능동 관계 → 현재분사.'
+},
+],
+summary: {
+topic:'구강 건강의 중요성과 신체에 대한 영향',
+blocks:[
+{tag:'❶ 도입', text:'음식·공기·세균 등 거의 모든 것이 <strong>입을 통해</strong> 신체로 들어온다.'},
+{tag:'❷ 건강한 입의 역할', text:'적절한 공기 통로 확보 + 해로운 미생물의 혈류 진입 차단 → 필요한 것을 공급하고 피해를 방어.'},
+{tag:'❸ 구강 건강의 범위', text:'태어나는 순간부터 삶의 <strong>모든 측면</strong>에 영향.'},
+{tag:'❹ 빙산의 일각', text:'입 안의 증상은 신체 다른 부위의 <strong>반영·징후</strong>에 불과.'},
+{tag:'❺❻ 결론 — 위험성', text:'나쁜 구강 건강 → 전신 질환 원인. 미생물이 혈류를 타고 온몸으로 퍼져 <strong>심각한 건강 위험</strong> 초래.'},
+],
+answer:'① the importance of oral health and its impact on the body',
+answerNote:'구강 건강이 왜 중요한지(❷❸)와 나쁜 구강 건강이 신체에 미치는 악영향(❺❻)을 중심으로 전개.'
+}
+},
+
+/* ── 지문 1 : 채식 ── */
+{
+meta: { code:'20210923', num:'6-4', subject:'젊은 사람들이 채식을 하는 이유' },
+sentences: [
+{
+en: '❶ Vegetarian eating is moving into the mainstream as more and more young adults say "no" to meat, poultry, and fish.',
+ko: '채식은 점점 더 많은 젊은이들이 고기, 가금류, 생선에 반대함에 따라 주류가 되어가고 있다.'
+},
+{
+en: '❷ According to the American Dietetic Association, "approximately planned vegetarian diets are healthful, are nutritionally adequate, and provide health benefits in the prevention and treatment of certain diseases."',
+ko: 'American Dietetic Association에 따르면, 대략적으로 계획된 채식 식단이 건강에 좋고, 영양학적으로도 적당하고, 특정한 질병을 예방하고 치료하는 데 건강상의 이점을 제공한다.'
+},
+{
+en: '❸ But health concerns are not the only reason that young adults give for changing their diets.',
+ko: '그러나 건강에 대한 염려들이 젊은이들이 그들의 식단을 바꾸려고 하는 유일한 이유는 아니다.'
+},
+{
+en: '❹ Some make the choice out of concern for animal rights.',
+ko: '몇몇은 동물의 권리에 대한 관심 때문에 선택한다.'
+},
+{
+en: '❺ When faced with the statistics that show the majority of animals raised as food live in confinement, many teens give up meat to protest those conditions.',
+ko: '음식으로 길러지는 대다수의 동물들이 갇혀서 산다는 것을 보여주는 통계자료를 볼 때, 많은 십대들은 그러한 상황에 저항하기 위해 고기를 포기한다.'
+},
+{
+en: '❻ Others turn to vegetarianism to support the environment.',
+ko: '다른 사람들은 환경을 지지하기 위해 채식주의자가 된다.'
+},
+{
+en: '❼ Meat production uses vast amounts of water, land, grain, and energy and creates problems with animal waste and resulting pollution.',
+ko: '고기를 생산하는 것은 거대한 양의 물, 땅, 곡식과 에너지를 사용하고 가축에서 나오는 쓰레기와 그에 따른 오염 같은 문제들을 만들어낸다.'
+},
+],
+vocab: [
+{word:'vegetarian eating', meaning:'채식'},
+{word:'mainstream', meaning:'주류'},
+{word:'poultry', meaning:'가금류 (닭·오리·거위 등)'},
+{word:'approximately', meaning:'대략적으로'},
+{word:'healthful', meaning:'건강에 좋은'},
+{word:'nutritionally', meaning:'영양학적으로'},
+{word:'adequate', meaning:'적당한'},
+{word:'provide', meaning:'제공하다'},
+{word:'benefit', meaning:'이점'},
+{word:'prevention', meaning:'예방'},
+{word:'treatment', meaning:'치료'},
+{word:'certain', meaning:'특정한'},
+{word:'concern', meaning:'관심, 염려'},
+{word:'right', meaning:'권리'},
+{word:'statistics', meaning:'통계자료'},
+{word:'confinement', meaning:'감힘'},
+{word:'give up', meaning:'포기하다'},
+{word:'protest', meaning:'저항하다'},
+{word:'support', meaning:'지지하다'},
+{word:'vast', meaning:'거대한'},
+{word:'pollution', meaning:'오염'},
+],
+grammar: [
+{
+title:'① as — 비례·이유 접속사',
+html:`Vegetarian eating is moving into the mainstream <span class="hl-y">as</span> more and more young adults say "no" to meat`,
+note:'▸ "as"는 여기서 "~함에 따라" (비례)의 의미. 이유(~이기 때문에)와 구별.'
+},
+{
+title:'② not the only reason that — 동격 관계사절',
+html:`health concerns are not <span class="hl-b">the only reason that</span> young adults give for changing their diets`,
+note:'▸ that절이 reason을 수식하는 관계사절. "the reason why"와 동일. that 대신 why도 가능.'
+},
+{
+title:'③ out of concern for — 이유 전치사구',
+html:`Some make the choice <span class="hl-g">out of concern for</span> animal rights`,
+note:'▸ "out of + 명사" = ~때문에, ~에서 비롯하여. out of curiosity / out of fear 등.'
+},
+{
+title:'④ When faced with — 분사구문 (수동)',
+html:`<span class="hl-y">When faced with</span> the statistics that show the majority of animals…`,
+note:'▸ When (they are) faced with = 수동 분사구문. 접속사 when 생략 가능하지만 명확성을 위해 유지.'
+},
+{
+title:'⑤ 부사적 to부정사 — 목적',
+html:`many teens give up meat <span class="hl-b">to protest</span> those conditions<br>Others turn to vegetarianism <span class="hl-b">to support</span> the environment`,
+note:'▸ to + V는 목적(~하기 위해)을 나타내는 부사적 용법. "in order to"로 바꿔 쓸 수 있음.'
+},
+{
+title:'⑥ resulting — 현재분사 (형용사 역할)',
+html:`creates problems with animal waste and <span class="hl-g">resulting</span> pollution`,
+note:'▸ resulting pollution = pollution that results (from it). 현재분사가 명사를 앞에서 수식.'
+},
+],
+quizzes: [
+{
+q:'Vegetarian eating is moving into the mainstream _____ more and more young adults say "no" to meat.',
+opts:['because','when','as','though'],
+ans:2, fb:'정답: as — "~함에 따라" (비례). more and more와 함께 쓰여 점진적 변화를 나타냄.'
+},
+{
+q:'Health concerns are not the only reason _____ young adults give for changing their diets.',
+opts:['which','what','where','that'],
+ans:3, fb:'정답: that — reason을 수식하는 관계사절. the reason that/why 둘 다 가능.'
+},
+{
+q:'Some make the choice _____ concern for animal rights.',
+opts:['because of','out of','due to','thanks to'],
+ans:1, fb:'정답: out of — "out of + 추상명사" = ~때문에, ~에서 비롯하여.'
+},
+{
+q:'_____ with the statistics, many teens give up meat to protest those conditions.',
+opts:['Face','Facing','When faced','Having faced'],
+ans:2, fb:'정답: When faced — 수동 분사구문. "When (they are) faced with ~"의 줄임.'
+},
+{
+q:'Meat production uses vast amounts of water, land, grain, and energy and creates problems with animal waste and _____ pollution.',
+opts:['resulted','to result','result','resulting'],
+ans:3, fb:'정답: resulting — 현재분사가 명사(pollution)를 앞에서 수식. "pollution that results"의 의미.'
+},
+],
+summary: {
+topic:'젊은 사람들이 채식을 하는 이유',
+blocks:[
+{tag:'❶ 현상', text:'채식이 젊은층을 중심으로 <strong>주류</strong>가 되어가고 있다.'},
+{tag:'❷ 이유 ① 건강', text:'ADA에 따르면 채식 식단은 건강에 좋고 영양학적으로 적당하며 특정 질병 <strong>예방·치료</strong>에 도움.'},
+{tag:'❸ 전환 — 건강 이외의 이유', text:'건강만이 유일한 이유는 아님 → 다른 이유들 제시.'},
+{tag:'❹ 이유 ② 동물 권리', text:'갇힌 환경에서 사육되는 동물 통계를 접한 십대들이 <strong>항의</strong>의 의미로 고기 포기.'},
+{tag:'❺❻❼ 이유 ③ 환경', text:'육류 생산이 막대한 자원 소비와 오염 유발 → 환경 보호를 위해 <strong>채식주의</strong> 선택.'},
+],
+answer:'① reasons why young people go for vegetarian diets',
+answerNote:'지문은 ①건강, ②동물 권리, ③환경 보호 세 가지 채식 이유를 순서대로 제시하는 구조.'
+}
+},
+
+
+/* ── 지문 2 : 녹는 빙하와 하루 길이 ── */
+{
+meta: { code:'20221123', num:'6-6', subject:'녹는 빙하와 해수면 상승으로 인한 하루 길이의 변화' },
+sentences: [
+{ en: '❶ The most remarkable and unbelievable consequence of melting ice and rising seas is that together they are a kind of time machine, so real that they are altering the duration of our day.', ko: '녹는 얼음과 상승하는 바다의 가장 놀랍고 믿을 수 없는 결과는 그것들이 합쳐서 일종의 타임머신이라는 것이고, 이것은 너무나 현실적이어서 그것들이 우리 하루의 기간을 바꾸고 있다.' },
+{ en: '❷ It works like this: As the glaciers melt and the seas rise, gravity forces more water toward the equator.', ko: '그것은 이와 같이 작동한다. 즉, 빙하가 녹고 바다가 높아지면서 중력이 적도를 향해 더 많은 물을 밀어 넣는다.' },
+{ en: '❸ This changes the shape of the Earth ever so slightly, making it fatter around the middle, which in turn slows the rotation of the planet similarly to the way a ballet dancer slows her spin by spreading out her arms.', ko: '이것은 지구의 모양을 아주 약간 변화시켜 가운데 주변으로 그것을 더 볼록하게 만들고, 이것은 결과적으로 발레 무용수가 양팔을 뻗어서 그녀의 회전을 늦추는 방식과 유사한 방식으로 행성의 회전을 늦춘다.' },
+{ en: '❹ The slowdown isn\'t much, just a few thousandths of a second each year, but like the barely noticeable jump of rising seas every year, it adds up.', ko: '이 감속이 매년 단지 몇천 분의 1초로 크지는 않지만, 해마다 상승하는 바다의 알아차리기 힘든 증가처럼, 그것은 쌓인다.' },
+{ en: '❺ When dinosaurs lived on the Earth, a day lasted only about twenty-three hours.', ko: '공룡들이 지구에 살았을 때, 하루는 약 23시간만 지속되었다.' },
+],
+vocab: [
+{word:'remarkable', meaning:'놀라운, 놀랄 만한'},{word:'consequence', meaning:'결과'},{word:'a kind of', meaning:'일종의, ~같은'},
+{word:'alter', meaning:'바꾸다, 변경하다'},{word:'duration', meaning:'[지속] 기간'},{word:'glacier', meaning:'빙하'},
+{word:'melt', meaning:'녹다, 녹이다'},{word:'gravity', meaning:'중력'},{word:'equator', meaning:'적도'},
+{word:'slightly', meaning:'약간, 조금'},{word:'rotation', meaning:'회전, 자전'},{word:'planet', meaning:'행성'},
+{word:'spread out', meaning:'(몸을) 뻗다'},{word:'slowdown', meaning:'감속'},{word:'barely', meaning:'거의 ~않다'},
+{word:'noticeable', meaning:'눈에 띄는, 뚜렷한'},{word:'last', meaning:'지속하다, 계속하다'},
+],
+grammar: [
+{ title:'① so ~ that … (너무 ~해서 …하다)', html:`they are a kind of time machine, <span class="hl-y">so real that</span> they are altering the duration of our day`, note:'▸ so + 형용사/부사 + that + 결과절. "너무 ~해서 …하다"의 결과 구문.' },
+{ title:'② as — 비례 접속사', html:`<span class="hl-b">As</span> the glaciers melt and the seas rise, gravity forces more water toward the equator`, note:'▸ As = ~함에 따라. 두 가지 일이 동시에 진행됨.' },
+{ title:'③ making it fatter — 분사구문 (결과)', html:`changes the shape of the Earth ever so slightly, <span class="hl-g">making it fatter around the middle</span>`, note:'▸ 현재분사구문. "and makes it fatter"로 바꿔 쓸 수 있음.' },
+{ title:'④ which in turn — 계속적 관계대명사', html:`making it fatter around the middle, <span class="hl-y">which in turn slows the rotation</span> of the planet`, note:'▸ which = and this. "in turn"은 "결과적으로".' },
+{ title:'⑤ similarly to the way — 비유', html:`slows the rotation <span class="hl-b">similarly to the way a ballet dancer slows her spin</span>`, note:'▸ "similarly to the way (that) + S + V" = ~가 …하는 방식과 유사하게.' },
+],
+quizzes: [
+{ q:'The consequence of melting ice and rising seas is _____ together they are a kind of time machine.', opts:['what','that','which','how'], ans:1, fb:'정답: that — 주격 보어절을 이끄는 접속사 that.' },
+{ q:'As the glaciers melt, gravity forces more water _____ the equator.', opts:['from','against','toward','beyond'], ans:2, fb:'정답: toward — force A toward B = B를 향해 A를 밀다.' },
+{ q:'This changes the shape of the Earth, _____ it fatter around the middle.', opts:['made','makes','making','to make'], ans:2, fb:'정답: making — 결과를 나타내는 현재분사구문.' },
+{ q:'When dinosaurs lived on the Earth, a day _____ only about twenty-three hours.', opts:['lasted','passed','kept','held'], ans:0, fb:'정답: lasted — last는 자동사로 "지속되다"의 의미.' },
+],
+summary: {
+topic:'녹는 빙하와 해수면 상승으로 인한 하루 길이의 변화',
+blocks:[
+{tag:'❶ 핵심 주장', text:'빙하가 녹고 해수면이 상승하면 <strong>하루의 길이</strong>를 변화시키는 타임머신 역할.'},
+{tag:'❷ 작동 원리', text:'빙하 융해 → 해수면 상승 → 중력이 물을 <strong>적도 방향</strong>으로 밀어냄.'},
+{tag:'❸ 지구 변형', text:'적도 볼록 → <strong>지구 자전 속도 감소</strong> (발레리나 비유).'},
+{tag:'❹ 누적 효과', text:'감속량은 미미하지만 <strong>매년 누적</strong>됨.'},
+{tag:'❺ 역사적 근거', text:'공룡 시대 하루 = 약 <strong>23시간</strong> → 하루 길이가 점점 늘어왔음.'},
+],
+answer:'⑤ impact of melting ice and rising seas on the length of a day',
+answerNote:'녹는 빙하와 해수면 상승이 지구 자전을 늦춰 하루 길이를 변화시키는 메커니즘 설명.'
+}
+},
+
+/* ── 지문 3 : 재생 에너지 환경 영향 ── */
+{
+meta: { code:'20201123', num:'6-7', subject:'재생 에너지의 사용이 환경에 끼치는 부정적 영향' },
+sentences: [
+{ en: '❶ The use of renewable sources of energy to produce electricity has increasingly been encouraged as a way to harmonize the need to secure electricity supply with environmental protection objectives.', ko: '전력 생산을 위한 재생 가능한 에너지원의 사용은 전력 공급 확보의 필요성과 환경 보호 목적을 조화시키기 위한 방법으로 점점 장려되어 왔다.' },
+{ en: '❷ But the use of renewable sources also comes with its own consequences, which require consideration.', ko: '그러나 재생 가능한 자원의 이용 또한 그 자체의 결과가 수반되는데, 이는 고려할 필요가 있다.' },
+{ en: '❸ Renewable sources of energy include a variety of sources such as hydropower and ocean-based technologies.', ko: '재생 가능한 에너지원은 수력 발전과 해양 기반 기술처럼 다양한 자원을 포함한다.' },
+{ en: '❹ Additionally, solar, wind, geothermal and biomass renewable sources also have their own impact on the environment.', ko: '게다가, 태양열, 풍력, 지열 그리고 바이오매스 재생 에너지원 또한 환경에 저마다의 영향을 미친다.' },
+{ en: '❺ Hydropower dams, for example, have an impact on aquatic ecosystems and, more recently, have been identified as significant sources of greenhouse emissions.', ko: '예를 들어, 수력 발전 댐은 수생 생태계에 영향을 미치고, 더 최근에 온실가스 배출의 중요한 원인으로 확인되었다.' },
+{ en: '❻ Wind, solar, and biomass also cause negative environmental impacts, such as visual pollution, intensive land occupation and negative effects on bird populations.', ko: '풍력, 태양열 그리고 바이오매스 또한 시각 공해, 집약적인 토지 점유 그리고 조류 개체 수에 미치는 부정적인 영향과 같은 부정적인 환경 영향을 초래한다.' },
+],
+vocab: [
+{word:'renewable', meaning:'재생 가능한'},{word:'electricity', meaning:'전력'},{word:'increasingly', meaning:'점점'},
+{word:'encourage', meaning:'장려하다'},{word:'harmonize', meaning:'조화시키다'},{word:'secure', meaning:'확보하다'},
+{word:'supply', meaning:'공급'},{word:'objective', meaning:'목적'},{word:'consequence', meaning:'결과'},
+{word:'require', meaning:'필요가 있다'},{word:'consideration', meaning:'고려'},{word:'geothermal', meaning:'지열의'},
+{word:'impact', meaning:'영향을 미치다'},{word:'aquatic', meaning:'물속에서 자라는'},{word:'recently', meaning:'최근에'},
+{word:'identify', meaning:'확인하다'},{word:'significant', meaning:'중요한'},{word:'emission', meaning:'배출'},
+{word:'pollution', meaning:'공해'},{word:'intensive', meaning:'집약적인'},{word:'occupation', meaning:'점유'},
+],
+grammar: [
+{ title:'① has been encouraged — 현재완료 수동태', html:`The use <span class="hl-y">has increasingly been encouraged</span> as a way to harmonize…`, note:'▸ have/has + been + p.p. = 현재완료 수동태. 과거부터 현재까지 지속.' },
+{ title:'② which — 계속적 관계대명사', html:`comes with its own consequences, <span class="hl-b">which require consideration</span>`, note:'▸ 쉼표+which = "그리고 그것은". 앞 명사(consequences)를 부연.' },
+{ title:'③ such as — 예시 전치사', html:`include a variety of sources <span class="hl-g">such as hydropower and ocean-based technologies</span>`, note:'▸ such as = like = for example. 구체적 예시 나열.' },
+{ title:'④ have been identified as', html:`<span class="hl-y">have been identified as</span> significant sources of greenhouse emissions`, note:'▸ identify A as B의 수동 현재완료. "A를 B로 확인하다."' },
+],
+quizzes: [
+{ q:'The use of renewable energy has increasingly been _____ as a way to harmonize environmental goals.', opts:['encouraged','encouraging','encourage','to encourage'], ans:0, fb:'정답: encouraged — has been + p.p. 현재완료 수동태.' },
+{ q:'The use of renewable sources also comes with its own consequences, _____ require consideration.', opts:['that','what','which','where'], ans:2, fb:'정답: which — 쉼표 뒤 계속적 용법 관계대명사.' },
+{ q:'Hydropower dams have been identified _____ significant sources of greenhouse emissions.', opts:['for','as','with','by'], ans:1, fb:'정답: as — identify A as B = A를 B로 확인하다.' },
+{ q:'Wind, solar, and biomass also cause negative impacts, _____ as visual pollution.', opts:['such','like','same','so'], ans:0, fb:'정답: such — "such as"는 예시 표현.' },
+],
+summary: {
+topic:'재생 에너지의 사용이 환경에 끼치는 부정적 영향',
+blocks:[
+{tag:'❶ 배경', text:'재생 에너지는 전력 공급과 환경 보호를 조화시키는 방법으로 <strong>장려</strong>됨.'},
+{tag:'❷ 역접', text:'그러나 재생 에너지도 <strong>그 자체의 환경적 결과</strong>를 수반.'},
+{tag:'❸❹ 종류', text:'수력·해양·태양열·풍력·지열·바이오매스 등 다양.'},
+{tag:'❺ 예시 ① 수력', text:'댐 → 수생 생태계 영향 + 온실가스 <strong>주요 배출원</strong>.'},
+{tag:'❻ 예시 ②', text:'풍력·태양·바이오매스 → 시각 공해, 토지 집약, <strong>조류 감소</strong>.'},
+],
+answer:'① environmental side effects of using renewable energy sources',
+answerNote:'재생 에너지 각각이 초래하는 구체적 환경 부작용을 나열.'
+}
+},
+
+/* ── 지문 4 : AI와 장애 노동자 ── */
+{
+meta: { code:'20240923', num:'6-8', subject:'장애가 있는 노동자들에게 AI가 가져다 주는 장점' },
+sentences: [
+{ en: '❶ By improving accessibility of the workplace for workers that are typically at a disadvantage in the labour market, AI can improve inclusiveness in the workplace.', ko: '노동 시장에서 일반적으로 불리한 위치에 있는 노동자들을 위한 일터의 접근성을 향상시킴으로써, AI는 일터에서 포괄성을 향상시킬 수 있다.' },
+{ en: '❷ AI-powered assistive devices to aid workers with visual, speech or hearing difficulties are becoming more widespread, improving the access to, and the quality of work for people with disabilities.', ko: '시각, 발화 또는 청각 장애가 있는 노동자들을 돕기 위한 AI 동력의 보조 장치들이 더 널리 보급되어, 장애를 지닌 사람들의 업무 접근성과 업무의 질을 향상시키고 있다.' },
+{ en: '❸ For example, speech recognition solutions for people with dysarthric voices, or live captioning systems for deaf and hard of hearing people can facilitate communication with colleagues and access to jobs where inter-personal communication is necessary.', ko: '예를 들어, 구음 장애가 있는 사람들을 위한 발화 인식 솔루션이나 청각 장애인과 난청인을 위한 실시간 자막 시스템은 동료와의 의사소통과 대인 의사소통이 필요한 일에 대한 접근을 용이하게 할 수 있다.' },
+{ en: '❹ AI can also enhance the capabilities of low-skilled workers, with potentially positive effects on their wages and career prospects.', ko: 'AI는 또한 그들의 임금과 경력 전망에 잠재적으로 긍정적인 영향과 함께 저숙련 노동자들의 능력을 향상시킬 수 있다.' },
+{ en: '❺ For example, AI\'s capacity to translate written and spoken word in real-time can improve the performance of non-native speakers in the workplace.', ko: '예를 들어, 문자 언어와 음성 언어를 실시간으로 번역하는 AI의 능력은 일터에서 비원어민의 수행을 향상시킬 수 있다.' },
+{ en: '❻ Moreover, recent developments in AI-powered text generators can instantly improve the performance of lower-skilled individuals in domains such as writing, coding or customer service.', ko: '게다가, 최근의 AI 동력의 텍스트 생성기의 발전은 글쓰기, 코딩, 고객 서비스와 같은 영역에서 저숙련된 개인의 수행을 즉시 향상시킬 수 있다.' },
+],
+vocab: [
+{word:'accessibility', meaning:'접근성'},{word:'typically', meaning:'일반적으로, 보통'},{word:'disadvantage', meaning:'불리한 위치(상황)'},
+{word:'labour market', meaning:'노동 시장'},{word:'inclusiveness', meaning:'포괄성'},{word:'assistive device', meaning:'보조 장치'},
+{word:'aid', meaning:'돕다'},{word:'visual', meaning:'시각의'},{word:'widespread', meaning:'널리 보급된'},
+{word:'disability', meaning:'장애'},{word:'recognition', meaning:'인식, 알아봄'},{word:'captioning', meaning:'자막 (넣기)'},
+{word:'facilitate', meaning:'용이하게 하다'},{word:'colleague', meaning:'동료'},{word:'inter-personal', meaning:'대인의'},
+{word:'enhance', meaning:'향상시키다'},{word:'capability', meaning:'능력, 역량'},{word:'potentially', meaning:'잠재적으로'},
+{word:'wage', meaning:'임금, 급료'},{word:'prospects', meaning:'(성공할) 전망'},{word:'capacity', meaning:'능력'},
+{word:'translate', meaning:'번역[통역]하다'},{word:'non-native speaker', meaning:'비원어민'},{word:'generator', meaning:'생성기'},
+{word:'instantly', meaning:'즉시, 즉각'},{word:'domain', meaning:'영역, 분야'},
+],
+grammar: [
+{ title:'① By -ing — 수단·방법', html:`<span class="hl-y">By improving accessibility</span> of the workplace…, AI can improve inclusiveness`, note:'▸ by + 동명사 = ~함으로써. 수단·방법 전치사구.' },
+{ title:'② improving ~ — 분사구문 (결과)', html:`devices… are becoming more widespread, <span class="hl-b">improving the access to, and the quality of work</span>`, note:'▸ 현재분사구문으로 주절의 결과/동시 상황.' },
+{ title:'③ with + 명사 + 형용사 — 부대상황', html:`enhance the capabilities…, <span class="hl-g">with potentially positive effects on their wages</span>`, note:'▸ with + O + 형용사/분사 = 부대상황 표현.' },
+{ title:'④ capacity to V — 명사의 to부정사 수식', html:`<span class="hl-y">AI\'s capacity to translate</span> written and spoken word in real-time`, note:'▸ capacity/ability + to V = ~할 능력.' },
+],
+quizzes: [
+{ q:'_____ improving accessibility of the workplace, AI can improve inclusiveness.', opts:['With','By','For','In'], ans:1, fb:'정답: By — by + Ving = ~함으로써.' },
+{ q:'AI-powered assistive devices are becoming more widespread, _____ the access to work for people with disabilities.', opts:['improved','to improve','improve','improving'], ans:3, fb:'정답: improving — 부수적 결과를 나타내는 현재분사구문.' },
+{ q:'AI can enhance the capabilities of low-skilled workers, with potentially positive effects on their _____ and career prospects.', opts:['salaries','wages','incomes','earnings'], ans:1, fb:'정답: wages — wage = 임금, 급료. 지문에 사용된 단어.' },
+{ q:'AI\'s _____ to translate written and spoken word in real-time can improve performance.', opts:['ability','capacity','power','skill'], ans:1, fb:'정답: capacity — 지문에 사용된 단어.' },
+],
+summary: {
+topic:'장애가 있는 노동자들에게 AI가 가져다 주는 장점',
+blocks:[
+{tag:'❶ 포괄성', text:'AI가 노동 시장 불리 집단의 <strong>직장 접근성</strong>을 높여 포괄성 증진.'},
+{tag:'❷ 보조 장치', text:'시각·청각·언어 장애인 AI 보조 장치 확산 → <strong>업무 접근성·질 향상</strong>.'},
+{tag:'❸ 예시 ① 의사소통', text:'음성 인식·실시간 자막 → <strong>대인 업무 접근</strong> 가능.'},
+{tag:'❹ 저숙련 노동자', text:'AI가 역량 향상 → <strong>임금·경력 전망</strong> 긍정적.'},
+{tag:'❺❻ 예시 ②', text:'실시간 번역 + 텍스트 생성기 → <strong>비원어민·저숙련 개인</strong> 즉각 향상.'},
+],
+answer:'④ impacts of AI on supporting workers with disadvantages',
+answerNote:'AI가 장애인·저숙련·비원어민 등 불리한 집단을 구체적 예시 중심으로 지원하는 내용.'
+}
+},
+
+/* ── 지문 5 : 대인 관계 욕구 ── */
+{
+meta: { code:'20180622', num:'6-12', subject:'대인 관계 형성 유지의 욕구' },
+sentences: [
+{ en: '❶ Human beings are driven by a natural desire to form and maintain interpersonal relationships.', ko: '인간은 대인 관계를 형성하고 유지하려는 타고난 욕구에 의해 움직인다.' },
+{ en: '❷ From this perspective, people seek relationships with others to fill a fundamental need, and this need underlies many emotions, actions, and decisions throughout life.', ko: '이러한 관점에서, 인간은 근본적인 욕구를 충족시키기 위해 타인과의 관계를 추구하며, 이 욕구는 일생에 걸쳐 많은 감정, 행동, 그리고 결정들의 기초가 된다.' },
+{ en: '❸ Probably, the need to belong is a product of human beings\' evolutionary history as a social species.', ko: '아마도, 소속되려는 욕구는 사회적 종으로서의 인간 진화 역사의 산물이다.' },
+{ en: '❹ Human beings have long depended on the cooperation of others for the supply of food, protection from predators, and the acquisition of essential knowledge.', ko: '인간은 식량의 공급, 포식자로부터의 보호, 그리고 필수적인 지식의 습득을 위해 타인들의 협력에 오랫동안 의존해 왔다.' },
+{ en: '❺ Without the formation and maintenance of social bonds, early human beings probably would not have been able to cope with or adapt to their physical environments.', ko: '사회적 유대의 형성과 유지가 없다면, 초기 인간들은 아마도 그들의 물리적 환경에 대처하거나 적응하지 못했을 것이다.' },
+{ en: '❻ Thus, seeking closeness and meaningful relationships has long been vital for human survival.', ko: '따라서 친밀함과 의미 있는 관계를 추구하는 것은 오랫동안 인간의 생존에 필수적이었다.' },
+],
+vocab: [
+{word:'human being', meaning:'인간'},{word:'drive', meaning:'움직이다'},{word:'natural', meaning:'타고난'},
+{word:'desire', meaning:'욕구'},{word:'form', meaning:'형성하다'},{word:'interpersonal', meaning:'대인관계의'},
+{word:'perspective', meaning:'관점'},{word:'seek', meaning:'추구하다'},{word:'fundamental', meaning:'근본적인'},
+{word:'underlie', meaning:'기초가 되다'},{word:'belong', meaning:'소속되다'},{word:'evolutionary', meaning:'진화의'},
+{word:'species', meaning:'종'},{word:'depend on', meaning:'의존하다'},{word:'cooperation', meaning:'협력'},
+{word:'predator', meaning:'포식자'},{word:'acquisition', meaning:'습득'},{word:'essential', meaning:'필수적인'},
+{word:'formation', meaning:'형성'},{word:'maintenance', meaning:'유지'},{word:'bond', meaning:'유대'},
+{word:'cope with', meaning:'대처하다'},{word:'adapt', meaning:'적응하다'},{word:'closeness', meaning:'친밀함'},
+{word:'vital', meaning:'필수적인'},
+],
+grammar: [
+{ title:'① be driven by — 수동태', html:`Human beings <span class="hl-y">are driven by</span> a natural desire to form and maintain interpersonal relationships`, note:'▸ be driven by = ~에 의해 움직이다.' },
+{ title:'② to fill a fundamental need — 목적 to부정사', html:`people seek relationships with others <span class="hl-b">to fill a fundamental need</span>`, note:'▸ to + V = ~하기 위해. 목적의 부사적 용법.' },
+{ title:'③ Without — 가정법 과거완료 조건', html:`<span class="hl-g">Without the formation and maintenance of social bonds</span>, early human beings probably <span class="hl-g">would not have been able to</span> cope`, note:'▸ Without = If it had not been for ~. 가정법 과거완료.' },
+{ title:'④ has long been — 현재완료 + 부사', html:`seeking closeness <span class="hl-y">has long been vital</span> for human survival`, note:'▸ have/has + long + p.p. = 오랫동안 ~해왔다.' },
+],
+quizzes: [
+{ q:'Human beings are _____ by a natural desire to form and maintain interpersonal relationships.', opts:['motivated','driven','moved','pushed'], ans:1, fb:'정답: driven — be driven by = ~에 의해 움직이다.' },
+{ q:'The need to belong is probably a product of human beings\' _____ history as a social species.', opts:['evolutionary','historical','cultural','biological'], ans:0, fb:'정답: evolutionary — evolutionary history = 진화의 역사.' },
+{ q:'_____ the formation and maintenance of social bonds, early humans would not have been able to adapt.', opts:['Without','Unless','Despite','Although'], ans:0, fb:'정답: Without — 가정법 과거완료 조건 표현.' },
+{ q:'Seeking closeness has long been _____ for human survival.', opts:['essential','vital','critical','necessary'], ans:1, fb:'정답: vital — 지문에 사용된 단어.' },
+],
+summary: {
+topic:'대인 관계 형성 유지의 욕구',
+blocks:[
+{tag:'❶ 핵심', text:'인간은 대인 관계 형성·유지의 <strong>타고난 욕구</strong>에 의해 움직인다.'},
+{tag:'❷ 근본적 필요', text:'이 욕구는 삶 전반의 <strong>감정·행동·결정의 기초</strong>.'},
+{tag:'❸ 진화적 기원', text:'소속 욕구는 사회적 종으로서 <strong>진화 역사의 산물</strong>.'},
+{tag:'❹ 역사적 근거', text:'식량·보호·지식 위해 <strong>타인의 협력</strong>에 오랫동안 의존.'},
+{tag:'❺❻ 결론', text:'사회적 유대 없이 생존 불가 → 친밀한 관계 추구는 <strong>인간 생존에 필수적</strong>.'},
+],
+answer:'④ need to build social bonds for human survival',
+answerNote:'대인 관계 욕구의 진화적 기원과 생존 필요성을 논리적으로 연결.'
+}
+},
+
+/* ── 지문 6 : 거짓말과 뇌 반응 ── */
+{
+meta: { code:'20210323', num:'6-10', subject:'거짓말에 대한 뇌의 반응 속도' },
+sentences: [
+{ en: '❶ When two people are involved in an honest and open conversation, there is a back and forth flow of information.', ko: '두 사람이 솔직하고 진솔한 대화에 참여하면 정보가 왔다 갔다 하며 흘러간다.' },
+{ en: '❷ It is a smooth exchange.', ko: '그것은 순조로운 주고받기이다.' },
+{ en: '❸ Since each one is drawing on their past personal experiences, the pace of the exchange is as fast as memory.', ko: '각자가 자신의 개인적인 과거 경험에 의존하고 있기 때문에, 주고받는 속도가 기억만큼 빠르다.' },
+{ en: '❹ When one person lies, their responses will come more slowly because the brain needs more time to process the details of a new invention than to recall stored facts.', ko: '한 사람이 거짓말하면, 그 사람의 반응이 더 느리게 나올 텐데, 뇌는 저장된 사실을 기억해 내는 것에 비해 새로 꾸며 낸 이야기의 세부 사항을 처리하는 데에 더 많은 시간이 필요하기 때문이다.' },
+{ en: '❺ As they say, "Timing is everything."', ko: '사람들이 말하듯 "타이밍이 가장 중요하다."' },
+{ en: '❻ You will notice the time lag when you are having a conversation with someone who is making things up as they go.', ko: '말을 하면서 이야기를 꾸며 내고 있는 누군가와 이야기를 하고 있으면, 여러분은 시간의 지연을 알아차릴 것이다.' },
+{ en: '❼ Don\'t forget that the other person may be reading your body language as well, and if you seem to be disbelieving their story, they will have to pause to process that information, too.', ko: '상대가 여러분의 몸짓 언어 역시 읽고 있을지도 모른다는 것을 잊지 말아야 하는데, 만약 여러분이 그 사람의 이야기를 믿지 않고 있는 것처럼 보이면, 그 사람은 정보를 처리하기 위해 또 한 번 잠시 멈춰야 한다.' },
+],
+vocab: [
+{word:'be involved in', meaning:'에 참여하다'},{word:'honest', meaning:'솔직한'},{word:'back and forth', meaning:'왔다 갔다'},
+{word:'smooth', meaning:'순조로운'},{word:'exchange', meaning:'주고받기, 교환'},{word:'draw on', meaning:'~에 의존하다'},
+{word:'pace', meaning:'속도'},{word:'lie', meaning:'거짓말하다'},{word:'response', meaning:'반응'},
+{word:'process', meaning:'처리하다'},{word:'invention', meaning:'꾸며 낸 이야기'},{word:'recall', meaning:'기억해 내다'},
+{word:'stored', meaning:'저장된'},{word:'make ~ up', meaning:'~을 꾸며내다'},{word:'disbelieve', meaning:'믿지 않다'},
+{word:'pause', meaning:'잠시 멈추다'},
+],
+grammar: [
+{ title:'① Since — 이유 접속사', html:`<span class="hl-y">Since</span> each one is drawing on their past personal experiences, the pace is as fast as memory`, note:'▸ Since = because. 이유 접속사.' },
+{ title:'② as fast as — 원급 비교', html:`the pace of the exchange is <span class="hl-b">as fast as</span> memory`, note:'▸ as + 형용사/부사 원급 + as = ~만큼 ~한.' },
+{ title:'③ more A than to B — 비교급 병렬', html:`needs <span class="hl-g">more time to process the details of a new invention than to recall stored facts</span>`, note:'▸ "to V than to V" 병렬 구조.' },
+{ title:'④ who is making things up — 관계대명사절', html:`someone <span class="hl-y">who is making things up as they go</span>`, note:'▸ who는 someone 수식. "as they go" = 말하면서 즉석에서.' },
+],
+quizzes: [
+{ q:'_____ each one is drawing on their past personal experiences, the pace of the exchange is as fast as memory.', opts:['Although','Since','Unless','While'], ans:1, fb:'정답: Since — 이유 접속사 "~이기 때문에".' },
+{ q:'The brain needs more time to _____ the details of a new invention than to recall stored facts.', opts:['recall','recollect','process','remember'], ans:2, fb:'정답: process — "새로 꾸며낸 이야기의 세부 사항을 처리하다".' },
+{ q:'You will notice the time lag when talking with someone who is making things _____ as they go.', opts:['out','off','over','up'], ans:3, fb:'정답: up — make up = 꾸며내다, 지어내다.' },
+{ q:'If you seem to be disbelieving their story, they will have to _____ to process that information.', opts:['stop','pause','rest','wait'], ans:1, fb:'정답: pause — pause = 잠시 멈추다.' },
+],
+summary: {
+topic:'거짓말에 대한 뇌의 반응 속도',
+blocks:[
+{tag:'❶❷ 솔직한 대화', text:'솔직한 대화에서 정보 흐름이 <strong>순조롭고 빠름</strong>.'},
+{tag:'❸ 이유', text:'자신의 경험에 의존 → 주고받기 속도가 <strong>기억만큼 빠름</strong>.'},
+{tag:'❹ 핵심', text:'거짓말 시 뇌가 새 이야기 처리에 <strong>더 많은 시간</strong> 필요 → 반응 지연.'},
+{tag:'❺❻ 타이밍', text:'"타이밍이 전부" → 즉석 이야기 꾸밀 때 <strong>시간 지연</strong> 감지 가능.'},
+{tag:'❼ 상호 작용', text:'상대도 나의 몸짓 언어 읽음 → 의심 표정도 <strong>추가 처리 시간</strong> 유발.'},
+],
+answer:'① delayed responses as a sign of lying',
+answerNote:'거짓말 시 뇌가 새 정보를 처리해야 해 반응이 느려진다는 논리.'
+}
+},
+
+/* ── 지문 7 : 소속 욕구와 진화 ── */
+{
+meta: { code:'20220923', num:'6-16', subject:'소속의 욕구 내에서 생물의 진화가 발달한다' },
+sentences: [
+{ en: '❶ For creatures like us, evolution smiled upon those with a strong need to belong.', ko: '우리와 같은 창조물에게 있어 진화는 소속하려는 강한 욕구를 가진 것들에게 미소를 지었다.' },
+{ en: '❷ Survival and reproduction are the criteria of success by natural selection, and forming relationships with other people can be useful for both survival and reproduction.', ko: '생존과 번식은 자연 선택에 의한 성공의 기준이고, 다른 사람들과 관계를 형성하는 것은 생존과 번식 모두에 유용할 수 있다.' },
+{ en: '❸ Groups can share resources, care for sick members, scare off predators, fight together against enemies, divide tasks so as to improve efficiency, and contribute to survival in many other ways.', ko: '집단은 자원을 공유하고, 아픈 구성원을 돌보고, 포식자를 쫓아버리고, 적에 맞서서 함께 싸우고, 효율성을 향상시키기 위해 일을 나누고, 많은 다른 방식에서 생존에 기여한다.' },
+{ en: '❹ In particular, if an individual and a group want the same resource, the group will generally prevail, so competition for resources would especially favor a need to belong.', ko: '특히, 한 개인과 한 집단이 같은 자원을 원하면, 집단이 일반적으로 이기고, 그래서 자원에 대한 경쟁은 소속하려는 욕구를 특별히 좋아할 것이다.' },
+{ en: '❺ Belongingness will likewise promote reproduction, such as by bringing potential mates into contact with each other, and in particular by keeping parents together to care for their children, who are much more likely to survive if they have more than one caregiver.', ko: '마찬가지로 소속되어 있다는 것은 번식을 촉진시키는데, 이를테면 잠재적인 짝을 서로 만나게 해주거나, 특히 부모가 자녀들을 돌보기 위해 함께 있도록 함으로써인데, 자녀들은 한 명보다 많은 돌보는 이가 있으면 훨씬 더 생존하기 쉬울 것이다.' },
+],
+vocab: [
+{word:'creature', meaning:'창조물, 생명체'},{word:'evolution', meaning:'진화'},{word:'belong', meaning:'속하다'},
+{word:'survival', meaning:'생존'},{word:'reproduction', meaning:'번식'},{word:'criteria', meaning:'기준, 평가'},
+{word:'natural selection', meaning:'자연 선택'},{word:'resource', meaning:'자원'},{word:'scare off', meaning:'~를 쫓아버리다'},
+{word:'predator', meaning:'포식자'},{word:'efficiency', meaning:'효율(성)'},{word:'contribute to', meaning:'~에 기여하다'},
+{word:'in particular', meaning:'특히'},{word:'individual', meaning:'개인'},{word:'prevail', meaning:'이기다, 승리하다'},
+{word:'competition', meaning:'경쟁'},{word:'belongingness', meaning:'소속됨'},{word:'likewise', meaning:'마찬가지로'},
+{word:'promote', meaning:'촉진하다'},{word:'potential', meaning:'잠재적인'},{word:'mate', meaning:'짝'},
+{word:'caregiver', meaning:'돌보는 사람'},
+],
+grammar: [
+{ title:'① smiled upon — 비유 (의인화)', html:`evolution <span class="hl-y">smiled upon</span> those with a strong need to belong`, note:'▸ "smile upon" = ~에게 호의를 베풀다. 진화를 의인화한 표현.' },
+{ title:'② so as to — 목적', html:`divide tasks <span class="hl-b">so as to improve efficiency</span>`, note:'▸ so as to + V = in order to + V = ~하기 위해.' },
+{ title:'③ if절 + will — 조건문', html:`<span class="hl-g">if an individual and a group want the same resource</span>, the group <span class="hl-g">will generally prevail</span>`, note:'▸ if + 현재 → 미래/일반적 결과.' },
+{ title:'④ who ~ much more likely to — 관계대명사 + 비교', html:`their children, <span class="hl-y">who are much more likely to survive if they have more than one caregiver</span>`, note:'▸ who 계속적 용법. be likely to V = ~할 가능성이 있다. much = 비교급 강조.' },
+],
+quizzes: [
+{ q:'Survival and reproduction are the _____ of success by natural selection.', opts:['standards','criteria','conditions','measures'], ans:1, fb:'정답: criteria — criterion의 복수형. "기준".' },
+{ q:'Groups divide tasks _____ improve efficiency and contribute to survival.', opts:['so as to','in order','for','to'], ans:0, fb:'정답: so as to — 목적 표현.' },
+{ q:'If a group and an individual want the same resource, the group will generally _____.', opts:['survive','succeed','prevail','win'], ans:2, fb:'정답: prevail — "이기다, 승리하다". 지문 단어.' },
+{ q:'Belongingness will likewise _____ reproduction by bringing potential mates into contact.', opts:['increase','promote','boost','enhance'], ans:1, fb:'정답: promote — "촉진하다". 지문 단어.' },
+],
+summary: {
+topic:'소속의 욕구 내에서 생물의 진화가 발달한다',
+blocks:[
+{tag:'❶ 핵심', text:'진화는 <strong>소속 욕구가 강한</strong> 개체에게 유리하게 작용.'},
+{tag:'❷ 기준', text:'자연 선택 성공 기준 = <strong>생존과 번식</strong>. 관계 형성이 둘 다에 유익.'},
+{tag:'❸ 집단 이점', text:'자원 공유·돌봄·협력 등 집단이 <strong>생존에 유리</strong>.'},
+{tag:'❹ 자원 경쟁', text:'집단 vs 개인 경쟁 → 집단 우세 → <strong>소속 욕구</strong>가 자연 선택에 유리.'},
+{tag:'❺ 번식', text:'소속감이 짝 만남·양육 협력 촉진 → <strong>번식 성공률</strong> 향상.'},
+],
+answer:'② usefulness of belonging for human evolution',
+answerNote:'소속 욕구가 생존과 번식 두 측면에서 진화적으로 유리했음을 논증.'
+}
+},
+
+/* ── 지문 8 : 기후 지식과 삶 ── */
+{
+meta: { code:'20220323', num:'6-14', subject:'우리의 삶에 널리 영향을 미치는 기후에 대한 지식' },
+sentences: [
+{ en: '❶ The whole of human society operates on knowing the future weather.', ko: '전체 인간 사회는 미래의 날씨를 아는 것을 기반으로 운영된다.' },
+{ en: '❷ For example, farmers in India know when the monsoon rains will come next year and so they know when to plant the crops.', ko: '예를 들어, 인도의 농부들은 내년에 몬순 장마가 올 시기를 알고 그래서 그들은 작물을 심을 시기를 안다.' },
+{ en: '❸ Farmers in Indonesia know there are two monsoon rains each year, so next year they can have two harvests.', ko: '인도네시아의 농부들은 매년 몬순 장마가 두 번 있다는 것을 알고, 그래서 내년에 수확을 두 번 할 수 있다.' },
+{ en: '❹ This is based on their knowledge of the past, as the monsoons have always come at about the same time each year in living memory.', ko: '이것은 과거에 대한 그들의 지식에 기반을 두는데, 기억 속에서 몬순은 매년 항상 거의 같은 시기에 왔기 때문이다.' },
+{ en: '❺ But the need to predict goes deeper than this; it influences every part of our lives.', ko: '그러나 예측할 필요는 이것보다 더욱더 깊어지며, 그것은 우리 생활의 모든 부분에 영향을 미친다.' },
+{ en: '❻ Our houses, roads, railways, airports, offices, and so on are all designed for the local climate.', ko: '우리의 집, 도로, 철도, 공항, 사무실 등은 모두 지역의 기후에 맞추어 설계된다.' },
+{ en: '❼ For example, in England all the houses have central heating, as the outside temperature is usually below 20°C, but no air-conditioning, as temperatures rarely go beyond 26°C, while in Australia the opposite is true: most houses have air-conditioning but rarely central heating.', ko: '예를 들어, 영국에서는 외부 기온이 대체로 섭씨 20도 미만이기 때문에 모든 집은 중앙 난방을 갖추고 있지만 냉방기는 없는 반면, 호주에서는 그 정반대가 사실이어서 대부분의 집은 냉방기를 갖추었지만 중앙난방은 거의 없다.' },
+],
+vocab: [
+{word:'whole', meaning:'전체'},{word:'operate', meaning:'운영되다'},{word:'monsoon', meaning:'몬순'},
+{word:'plant', meaning:'심다'},{word:'crop', meaning:'작물'},{word:'harvest', meaning:'수확'},
+{word:'be based on', meaning:'~에 기초하다'},{word:'knowledge', meaning:'지식'},{word:'predict', meaning:'예측하다'},
+{word:'influence', meaning:'영향을 미치다'},{word:'railway', meaning:'철도'},{word:'local', meaning:'지역의'},
+{word:'climate', meaning:'기후'},{word:'central heating', meaning:'중앙 난방'},{word:'temperature', meaning:'기온'},
+{word:'below', meaning:'미만의'},{word:'air-conditioning', meaning:'냉방(기)'},{word:'rarely', meaning:'거의 없게'},
+{word:'beyond', meaning:'위로'},{word:'opposite', meaning:'정반대'},
+],
+grammar: [
+{ title:'① operates on -ing — 전치사 on + 동명사', html:`The whole of human society <span class="hl-y">operates on knowing</span> the future weather`, note:'▸ 전치사 뒤에 동사가 올 때 반드시 -ing형.' },
+{ title:'② know when to V — 의문사 + to부정사', html:`farmers in India know <span class="hl-b">when to plant the crops</span>`, note:'▸ 의문사 + to V = when they should plant. know의 목적어.' },
+{ title:'③ as — 이유 접속사', html:`all the houses have central heating, <span class="hl-g">as the outside temperature is usually below 20°C</span>`, note:'▸ as = because. 이유 접속사.' },
+{ title:'④ while — 대조 접속사', html:`but no air-conditioning…, <span class="hl-y">while in Australia the opposite is true</span>`, note:'▸ while = whereas = ~인 반면에. 대조 표현.' },
+],
+quizzes: [
+{ q:'The whole of human society operates on _____ the future weather.', opts:['know','knowing','to know','known'], ans:1, fb:'정답: knowing — 전치사(on) 뒤에는 반드시 동명사(-ing).' },
+{ q:'Farmers in India know _____ to plant the crops based on monsoon timing.', opts:['how','what','when','where'], ans:2, fb:'정답: when — "when to plant" = 언제 심을지. 의문사 + to부정사.' },
+{ q:'This is based on their knowledge of the past, _____ the monsoons have always come at about the same time.', opts:['so','while','as','though'], ans:2, fb:'정답: as — as = because. 이유 접속사.' },
+{ q:'In England, temperatures _____ go beyond 26°C, so most houses have no air-conditioning.', opts:['hardly','rarely','seldom','barely'], ans:1, fb:'정답: rarely — 지문에 사용된 단어.' },
+],
+summary: {
+topic:'우리의 삶에 널리 영향을 미치는 기후에 대한 지식',
+blocks:[
+{tag:'❶ 주제', text:'인간 사회 전체가 <strong>미래 날씨 예측</strong>을 기반으로 운영됨.'},
+{tag:'❷❸ 농업 예시', text:'인도·인도네시아 농부가 몬순 지식으로 <strong>파종·수확 시기</strong> 결정.'},
+{tag:'❹ 근거', text:'과거 반복 패턴에 기반한 <strong>경험적 지식</strong>.'},
+{tag:'❺ 확장', text:'예측 필요성이 농업을 넘어 <strong>삶의 모든 부분</strong>에 영향.'},
+{tag:'❻❼ 건축 예시', text:'집·도로·공항 등이 지역 기후에 맞게 설계 (영국 난방 vs. 호주 냉방).'},
+],
+answer:'④ knowledge of the climate widely affecting our lives',
+answerNote:'기후 지식이 농업부터 건축까지 삶 전반을 어떻게 형성하는지 구체 예시로 전개.'
+}
+},
+
+/* ── 지문 9 : 사고와 표현 ── */
+{
+meta: { code:'20191123', num:'6-17', subject:'사고의 정련에 있어서 표현의 중요성' },
+sentences: [
+{ en: '❶ You can say that information sits in one brain until it is communicated to another, unchanged in the conversation.', ko: '여러분은 정보가 다른 뇌로 전달될 때까지 한 뇌에 머물러 있으며 대화 속에서 변하지 않는다고 말할 수 있다.' },
+{ en: '❷ That\'s true of sheer information, like your phone number or the place you left your keys.', ko: '이것이 여러분의 전화번호 혹은 여러분이 열쇠를 놓아둔 장소와 같은 단순 정보에 대해서는 사실이다.' },
+{ en: '❸ But it\'s not true of knowledge.', ko: '하지만 이것은 지식에 대해서는 사실이 아니다.' },
+{ en: '❹ Knowledge relies on judgements, which you discover and polish in conversation with other people or with yourself.', ko: '지식은 판단에 의존하는데, 여러분은 다른 사람들 혹은 자신과의 대화 속에서 그 판단을 발견하고 다듬는다.' },
+{ en: '❺ Therefore you don\'t learn the details of your thinking until speaking or writing it out in detail and looking back critically at the result.', ko: '그러므로 여러분은 그것을 상세하게 이야기하거나 쓰고 그 결과를 비판적으로 되돌아볼 때까지 자신의 사고의 세부 내용을 알지 못한다.' },
+{ en: '❻ "Is what I just said foolish, or is what I just wrote a deep truth?"', ko: '"내가 방금 이야기한 것이 바보 같은가, 혹은 내가 방금 쓴 것이 깊은 진실인가?"' },
+{ en: '❼ In the speaking or writing, you uncover your bad ideas, often embarrassing ones, and good ideas too, sometimes fame-making ones.', ko: '말하거나 쓸 때 여러분은 자신의 형편없는 생각들, 종종 당황스러운 것들, 또한 좋은 생각들, 때로는 유명하게 만들어 주는 생각들을 발견하게 된다.' },
+{ en: '❽ Thinking requires its expression.', ko: '사고는 그것의 표현이 필요하다.' },
+],
+vocab: [
+{word:'communicate', meaning:'전달하다'},{word:'sheer', meaning:'단순한'},{word:'rely on', meaning:'의존하다'},
+{word:'judgement', meaning:'판단'},{word:'polish', meaning:'다듬다'},{word:'look back', meaning:'되돌아보다'},
+{word:'critically', meaning:'비판적으로'},{word:'uncover', meaning:'발견하다'},{word:'embarrassing', meaning:'당황스러운'},
+{word:'fame', meaning:'유명, 명성'},{word:'expression', meaning:'표현'},
+],
+grammar: [
+{ title:'① unchanged — 주격 보어 (형용사)', html:`information sits in one brain until it is communicated to another, <span class="hl-y">unchanged in the conversation</span>`, note:'▸ unchanged = 주어(information)의 상태를 나타내는 보어. "변하지 않은 채로".' },
+{ title:'② That\'s true of — 관용 표현', html:`<span class="hl-b">That\'s true of</span> sheer information, like your phone number`, note:'▸ be true of = ~에 대해 사실이다.' },
+{ title:'③ which ~ discover and polish — 계속적 관계대명사', html:`Knowledge relies on judgements, <span class="hl-g">which you discover and polish in conversation</span>`, note:'▸ 쉼표 + which = and you discover them. 계속적 용법.' },
+{ title:'④ until + 동명사', html:`you don\'t learn the details <span class="hl-y">until speaking or writing it out</span> in detail`, note:'▸ until + V-ing = ~할 때까지.' },
+],
+quizzes: [
+{ q:'Information sits in one brain until it is communicated to another, _____ in the conversation.', opts:['unchanged','changing','change','to change'], ans:0, fb:'정답: unchanged — 주어의 상태 보어. "변하지 않은 채로".' },
+{ q:'Knowledge _____ on judgements, which you discover and polish in conversation.', opts:['depends','relies','counts','bases'], ans:1, fb:'정답: relies — rely on = 의존하다.' },
+{ q:'You don\'t learn the details of your thinking until _____ or writing it out in detail.', opts:['speak','spoke','speaking','to speak'], ans:2, fb:'정답: speaking — until + 동명사(-ing).' },
+{ q:'In the speaking or writing, you _____ your bad ideas and good ideas too.', opts:['discover','uncover','reveal','expose'], ans:1, fb:'정답: uncover — "발견하다, 드러내다". 지문 단어.' },
+],
+summary: {
+topic:'사고의 정련에 있어서 표현의 중요성',
+blocks:[
+{tag:'❶❷ 단순 정보', text:'전화번호 같은 <strong>단순 정보</strong>는 대화 속에서도 변하지 않음.'},
+{tag:'❸❹ 지식의 차이', text:'지식은 판단에 의존 → <strong>대화·표현 속에서 발견·다듬어짐</strong>.'},
+{tag:'❺ 핵심', text:'말하거나 쓰고 비판적으로 돌아봐야 <strong>자신의 사고 세부 내용</strong>을 알 수 있음.'},
+{tag:'❻❼ 표현의 기능', text:'표현을 통해 형편없는 생각과 <strong>좋은 생각</strong>을 모두 발견.'},
+{tag:'❽ 결론', text:'"<strong>사고는 표현이 필요하다</strong>" — 표현 없이 사고는 완성 불가.'},
+],
+answer:'① critical roles of speaking or writing in refining thoughts',
+answerNote:'말하기·쓰기가 사고 자체를 발전시키는 역할을 한다는 논증.'
+}
+},
+
+/* ── 지문 10 : 관광 확장 요인 ── */
+{
+meta: { code:'20230323', num:'6-18', subject:'관광 확장에 기여한 요인들' },
+sentences: [
+{ en: '❶ As the social and economic situation of countries got better, wage levels and working conditions improved.', ko: '국가들의 사회적, 경제적 상황이 더 나아지면서, 임금 수준과 근로 여건이 개선되었다.' },
+{ en: '❷ Gradually people were given more time off.', ko: '점차 사람들은 더 많은 휴가를 받게 되었다.' },
+{ en: '❸ At the same time, forms of transport improved and it became faster and cheaper to get to places.', ko: '동시에, 운송 형태가 개선되었고 장소를 이동하는 것이 더 빠르고 더 저렴해졌다.' },
+{ en: '❹ England\'s industrial revolution led to many of these changes.', ko: '영국의 산업 혁명이 이러한 변화 중 많은 것을 일으켰다.' },
+{ en: '❺ Railways, in the nineteenth century, opened up now famous seaside resorts such as Blackpool and Brighton.', ko: '19세기에, 철도로 인해 Blackpool과 Brighton 같은 현재 유명한 해안가 리조트가 들어서게 되었다.' },
+{ en: '❻ With the railways came many large hotels.', ko: '철도가 생기면서 많은 대형 호텔이 생겨났다.' },
+{ en: '❼ In Canada, for example, the new coast-to-coast railway system made possible the building of such famous hotels as Banff Springs and Chateau Lake Louise in the Rockies.', ko: '예를 들어, 캐나다에서는 새로운 대륙 횡단 철도 시스템이 로키산맥의 Banff Springs와 Chateau Lake Louise 같은 유명한 호텔의 건설을 가능하게 했다.' },
+{ en: '❽ Later, the arrival of air transport opened up more of the world and led to tourism growth.', ko: '이후에 항공 운송의 출현은 세계의 더 많은 곳으로 가는 길을 열어 주었고 관광 산업의 성장을 이끌었다.' },
+],
+vocab: [
+{word:'social', meaning:'사회의'},{word:'economic', meaning:'경제의'},{word:'wage', meaning:'임금, 급료'},
+{word:'condition', meaning:'여건, 조건'},{word:'improve', meaning:'개선되다'},{word:'gradually', meaning:'점차'},
+{word:'time off', meaning:'휴가'},{word:'transport', meaning:'운송, 수송'},{word:'cheap', meaning:'저렴한, 싼'},
+{word:'industrial', meaning:'산업의'},{word:'revolution', meaning:'혁명'},{word:'railway', meaning:'철도'},
+{word:'seaside', meaning:'해안가'},{word:'resort', meaning:'리조트'},{word:'coast-to-coast', meaning:'대륙 횡단의'},
+{word:'arrival', meaning:'출현, 도래'},{word:'tourism', meaning:'관광 산업'},{word:'growth', meaning:'성장, 발전'},
+],
+grammar: [
+{ title:'① As — 비례 접속사', html:`<span class="hl-y">As the social and economic situation got better</span>, wage levels and working conditions improved`, note:'▸ as = ~함에 따라. 두 상황이 동시에 진행.' },
+{ title:'② it became + 형용사 + to V — 가주어-진주어', html:`it became <span class="hl-b">faster and cheaper to get to places</span>`, note:'▸ it(가주어) ~ to V(진주어). "~하는 것이 …해졌다."' },
+{ title:'③ 도치 — With the railways came …', html:`<span class="hl-g">With the railways came many large hotels</span>`, note:'▸ "with + 명사 + came + 주어" 도치 구문. 원래: "many large hotels came with the railways."' },
+{ title:'④ make + O + 형용사 — 5형식 (도치)', html:`the railway system <span class="hl-y">made possible the building</span> of such famous hotels`, note:'▸ make + O + 형용사. 목적어(the building)가 길어 보어(possible) 뒤로 도치.' },
+],
+quizzes: [
+{ q:'_____ the social and economic situation got better, wage levels and working conditions improved.', opts:['While','Because','As','When'], ans:2, fb:'정답: As — "~함에 따라" 비례·동시 접속사.' },
+{ q:'At the same time, it became faster and cheaper _____ to places.', opts:['get','got','getting','to get'], ans:3, fb:'정답: to get — it(가주어) + 형용사 + to V(진주어).' },
+{ q:'With the railways _____ many large hotels.', opts:['came','come','coming','comes'], ans:0, fb:'정답: came — 도치 구문. 과거시제.' },
+{ q:'The railway system made _____ the building of such famous hotels.', opts:['possible','possibly','possibility','impossibly'], ans:0, fb:'정답: possible — make + O + 형용사(보어).' },
+],
+summary: {
+topic:'관광 확장에 기여한 요인들',
+blocks:[
+{tag:'❶❷ 경제·노동 개선', text:'임금 상승·근로 여건 향상 → <strong>휴가 증가</strong>.'},
+{tag:'❸ 교통 발전', text:'운송 수단 개선 → <strong>더 빠르고 저렴한</strong> 이동.'},
+{tag:'❹ 산업 혁명', text:'영국 산업 혁명이 이러한 변화들의 <strong>주요 동인</strong>.'},
+{tag:'❺❻❼ 철도', text:'19세기 철도 → 해안가 리조트 개발·대형 호텔 건설.'},
+{tag:'❽ 항공', text:'항공 운송 출현 → 더 넓은 세계 접근 → <strong>관광 산업 성장</strong>.'},
+],
+answer:'① factors that caused tourism expansion',
+answerNote:'임금·휴가 증가 → 교통 발전(철도·항공) → 관광지 확대의 인과 흐름.'
+}
+},
+
+/* ── 지문 11 : 동기 부여와 관계 ── */
+{
+meta: { code:'20250323', num:'6-20', subject:'동기 부여와 관계 형성의 중요성' },
+sentences: [
+{ en: '❶ There is a wealth of evidence that when parents, teachers, supervisors, and coaches are perceived as involved and caring, people feel happier and more motivated.', ko: '부모, 교사, 상사, 그리고 코치가 관여되어 있고 배려한다고 여겨질 때, 사람들은 더 행복하고 더 동기가 부여된다는 수많은 증거가 있다.' },
+{ en: '❷ And it is not just those people with power — we need to feel valued and respected by peers and coworkers.', ko: '그리고 그것이 단지 권력을 가진 사람들만은 아닌데, 우리는 또래와 직장 동료들에게서도 소중히 여겨지고 존중받는다는 느낌을 받을 필요가 있다.' },
+{ en: '❸ Thus, when the need for relatedness is met, motivation and internalization are fueled, provided that support for autonomy and competence are also there.', ko: '따라서, 관계성에 대한 욕구가 충족될 때, 그리고 자율성과 유능함에 대한 지원도 제공된다면, 동기와 내면화는 자극된다.' },
+{ en: '❹ If we are trying to motivate others, a caring relationship is a crucial basis from which to begin.', ko: '만약 우리가 다른 사람들에게 동기를 부여하려고 한다면, 배려하는 관계는 시작할 수 있는 중요한 기반이 된다.' },
+{ en: '❺ And when we are trying to motivate ourselves, doing things to enhance a sense of connectedness to others can be crucial to long-term persistence.', ko: '그리고 우리가 스스로 동기를 부여하려고 할 때, 타인과의 유대감을 강화하기 위한 일을 하는 것은 장기적인 지속에 중요할 수 있다.' },
+{ en: '❻ So exercise with a friend, call someone when you have a difficult decision to make, and be there as a support for others as they take on challenges.', ko: '그러니 친구와 함께 운동하라, 당신이 어려운 결정을 내려야 할 때 누군가에게 전화하라, 그리고 다른 사람들이 도전에 맞설 때 그들을 위한 버팀목으로 그곳에 있어라.' },
+],
+vocab: [
+{word:'a wealth of', meaning:'수많은'},{word:'evidence', meaning:'증거'},{word:'supervisor', meaning:'상사'},
+{word:'perceive', meaning:'여기다, 인식하다'},{word:'motivate', meaning:'동기를 부여하다'},{word:'peer', meaning:'또래, 동료'},
+{word:'coworker', meaning:'(직장) 동료'},{word:'relatedness', meaning:'관계성'},{word:'meet', meaning:'충족시키다'},
+{word:'internalization', meaning:'내면화'},{word:'fuel', meaning:'자극하다'},{word:'competence', meaning:'유능함'},
+{word:'crucial', meaning:'중요한, 결정적인'},{word:'basis', meaning:'기반, 기초'},{word:'enhance', meaning:'강화하다'},
+{word:'a sense of connectedness', meaning:'유대감'},{word:'long-term', meaning:'장기적인'},
+{word:'take on', meaning:'~에 맞서다[도전하다]'},{word:'challenge', meaning:'도전'},
+],
+grammar: [
+{ title:'① evidence that — 동격절', html:`<span class="hl-y">There is a wealth of evidence that</span> when parents… are perceived as involved and caring, people feel happier`, note:'▸ evidence that + 절 = ~라는 증거. 동격절.' },
+{ title:'② be perceived as — 수동태 + as', html:`parents… <span class="hl-b">are perceived as</span> involved and caring`, note:'▸ perceive A as B = A를 B로 여기다 → 수동: be perceived as B.' },
+{ title:'③ provided that — 조건 접속사', html:`motivation and internalization are fueled, <span class="hl-g">provided that support for autonomy and competence are also there</span>`, note:'▸ provided that = if, on the condition that = ~한다는 조건 하에.' },
+{ title:'④ from which to begin — 전치사 + 관계대명사', html:`a crucial basis <span class="hl-y">from which to begin</span>`, note:'▸ "전치사 + 관계대명사 + to부정사" = a basis from which we can begin.' },
+],
+quizzes: [
+{ q:'There is a wealth of evidence _____ when coaches are perceived as caring, people feel more motivated.', opts:['which','what','that','how'], ans:2, fb:'정답: that — evidence의 내용을 설명하는 동격절 접속사.' },
+{ q:'When coaches are _____ as involved and caring, people feel happier.', opts:['seen','perceived','regarded','viewed'], ans:1, fb:'정답: perceived — be perceived as = ~로 여겨지다.' },
+{ q:'Motivation and internalization are fueled, _____ that support for autonomy and competence are also there.', opts:['provided','given','suppose','assuming'], ans:0, fb:'정답: provided — provided that = ~한다는 조건 하에.' },
+{ q:'Doing things to enhance a sense of connectedness can be crucial to long-term _____.', opts:['motivation','persistence','effort','commitment'], ans:1, fb:'정답: persistence — "지속, 끈기". 지문 단어.' },
+],
+summary: {
+topic:'동기 부여와 관계 형성의 중요성',
+blocks:[
+{tag:'❶ 핵심 증거', text:'돌보는 리더가 있을 때 사람들이 <strong>더 행복하고 동기 부여</strong>됨.'},
+{tag:'❷ 확장', text:'권력자뿐 아니라 또래·동료로부터도 <strong>소중히 여겨지는 느낌</strong> 필요.'},
+{tag:'❸ 조건', text:'관계성 충족 + 자율성·유능함 지원 → <strong>동기·내면화</strong> 자극.'},
+{tag:'❹ 타인 동기 부여', text:'다른 사람에게 동기 부여하려면 <strong>배려하는 관계</strong>가 출발점.'},
+{tag:'❺❻ 자기 동기', text:'유대감 강화 활동이 <strong>장기 지속</strong>에 핵심.'},
+],
+answer:'⑤ importance of building connected relationships in motivation',
+answerNote:'관계성이 동기 부여의 핵심 조건임을 외부·내부 양쪽에서 논증.'
+}
+},
+
+/* ── 지문 12 : 인간 감각과 과학 기기 ── */
+{
+meta: { code:'20250923', num:'6-22', subject:'인간 감각의 한계와 과학 기기의 역할' },
+sentences: [
+{ en: '❶ For many centuries, humans have taken advantage of tools that translate and bring into our perception natural phenomena that we can\'t perceive with our senses.', ko: '수 세기 동안, 인간은 우리의 감각으로는 지각할 수 없는 자연 현상을 바꾸고 우리의 지각으로 가져오는 도구들을 이용해 왔다.' },
+{ en: '❷ In some cases, this consists of simply amplifying signals that feed into our normal sensory inputs (e.g., telescopes can bring into clear view that which is too far away for our eyes to perceive on their own).', ko: '어떤 경우에는, 이것은 우리의 일반적인 감각 입력으로 들어오는 신호를 단순히 확장하는 것(예: 망원경은 너무 멀어서 우리 눈이 그 자체로 지각할 수 없는 것을 명확한 시야로 가져올 수 있다)으로 구성된다.' },
+{ en: '❸ Other instruments turn signals that we cannot perceive into ones that we can observe.', ko: '다른 도구들은 우리가 인지할 수 없는 신호들을 우리가 관찰할 수 있는 것으로 바꾼다.' },
+{ en: '❹ Some of these take the form of expanding the reach of our current senses, such as creating visible images based on the ultraviolet spectrum of light or changing sounds that are normally outside the range of what human ears can hear into audible signals.', ko: '이러한 도구들 중 일부는 자외선 스펙트럼 기반 가시 이미지 생성이나 인간 귀 가청 범위 밖의 소리를 들을 수 있는 신호로 바꾸는 것처럼, 현재 감각 범위를 확장하는 형태를 취한다.' },
+{ en: '❺ Alternatively, some instruments measure properties for which we have no sensory capacity at all and change them into that which we can observe.', ko: '아니면, 일부 도구들은 우리가 전혀 감각 수용 능력이 없는 속성을 측정하고 이를 우리가 관찰할 수 있는 것으로 바꾼다.' },
+],
+vocab: [
+{word:'take advantage of', meaning:'~을 이용하다'},{word:'translate', meaning:'바꾸다, 옮기다'},
+{word:'perception', meaning:'지각, 자각'},{word:'phenomenon', meaning:'현상 (pl. phenomena)'},
+{word:'perceive', meaning:'지각(감지)하다'},{word:'consist of', meaning:'~로 구성되다'},
+{word:'sensory', meaning:'감각의'},{word:'input', meaning:'입력'},{word:'telescope', meaning:'망원경'},
+{word:'instrument', meaning:'도구, 기구'},{word:'observe', meaning:'관찰하다'},{word:'expand', meaning:'확장하다'},
+{word:'visible', meaning:'가시적인'},{word:'ultraviolet', meaning:'자외(선)의'},{word:'range', meaning:'범위, 폭'},
+{word:'alternatively', meaning:'아니면'},{word:'property', meaning:'속성[특성]'},{word:'capacity', meaning:'수용 능력'},
+],
+grammar: [
+{ title:'① have taken advantage of — 현재완료', html:`humans <span class="hl-y">have taken advantage of</span> tools that translate…`, note:'▸ have + p.p. = 현재완료. "수 세기 동안 이용해 왔다".' },
+{ title:'② that which — 선행사 포함 관계대명사', html:`telescopes can bring into clear view <span class="hl-b">that which is too far away</span> for our eyes to perceive`, note:'▸ that which = what. "우리 눈이 지각할 수 없는 것".' },
+{ title:'③ too ~ for … to V', html:`that which is <span class="hl-g">too far away for our eyes to perceive</span> on their own`, note:'▸ too + 형용사 + for + 의미상 주어 + to V = 너무 ~해서 …가 V할 수 없다.' },
+{ title:'④ for which — 전치사 + 관계대명사', html:`properties <span class="hl-y">for which we have no sensory capacity at all</span>`, note:'▸ for which = for them. 전치사 + 관계대명사 구문.' },
+],
+quizzes: [
+{ q:'For many centuries, humans have taken _____ of tools that translate natural phenomena.', opts:['use','benefit','advantage','profit'], ans:2, fb:'정답: advantage — take advantage of = ~을 이용하다.' },
+{ q:'Telescopes can bring into clear view that which is _____ far away for our eyes to perceive.', opts:['very','so','too','quite'], ans:2, fb:'정답: too — too ~ for … to V = 너무 ~해서 …가 V할 수 없다.' },
+{ q:'Other instruments turn signals that we cannot perceive into ones that we can _____.', opts:['see','watch','observe','detect'], ans:2, fb:'정답: observe — "관찰하다". 지문 단어.' },
+{ q:'Some instruments measure properties for _____ we have no sensory capacity at all.', opts:['that','which','what','whom'], ans:1, fb:'정답: which — 전치사(for) + 관계대명사(which).' },
+],
+summary: {
+topic:'인간 감각의 한계와 과학 기기의 역할',
+blocks:[
+{tag:'❶ 핵심', text:'인간은 감각 불가 자연 현상을 인식할 수 있도록 <strong>도구를 활용</strong>해 왔다.'},
+{tag:'❷ 유형 ① 신호 증폭', text:'기존 감각 신호를 단순히 <strong>확대</strong> (예: 망원경).'},
+{tag:'❸ 유형 ② 신호 변환', text:'감지 불가 신호를 관찰 가능 형태로 <strong>변환</strong>.'},
+{tag:'❹ 세부 예시', text:'자외선 → 가시 이미지, 초음파 → 가청 신호 등 감각 <strong>범위 확장</strong>.'},
+{tag:'❺ 유형 ③', text:'감각 자체가 없는 속성도 측정해 <strong>관찰 가능한 것으로 변환</strong>.'},
+],
+answer:'② the tools that increase the ability of human senses',
+answerNote:'인간 감각의 한계를 극복하는 과학 도구의 세 가지 유형을 분류하여 설명.'
+}
+},
+
+]; // END PASSAGES
+
+
+/* ═════════════ RENDER ENGINE ═════════════ */
+let current = 0;
+let quizState = {}; // { passageIdx: {qIdx: chosen} }
+
+function loadPassage(idx) {
+current = parseInt(idx);
+quizState[current] = quizState[current] || {};
+renderAll();
+}
+
+function renderAll() {
+renderPassage();
+renderVocab();
+renderGrammar();
+renderQuiz();
+renderSummary();
+}
+
+/* ── 본문 ── */
+function renderPassage() {
+const p = PASSAGES[current];
+let html = `<h2>본문 읽기</h2><p class="trans-hint">문장을 클릭하면 한국어 해석이 나옵니다.</p><div class="passage-wrap">`;
+p.sentences.forEach((s, i) => {
+html += `
+<span class="sentence" onclick="toggleTrans(${i})" id="sent-${i}">${s.en}</span>
+<div class="sent-trans" id="trans-${i}">${s.ko}</div>
+${i < p.sentences.length - 1 ? '<br><br>' : ''}
+`;
+});
+html += `</div>`;
+document.getElementById('passage').innerHTML = html;
+}
+
+function toggleTrans(i) {
+const t = document.getElementById('trans-' + i);
+const s = document.getElementById('sent-' + i);
+t.classList.toggle('show');
+s.classList.toggle('selected');
+}
+
+/* ── 단어 ── */
+function renderVocab() {
+const p = PASSAGES[current];
+let html = `<h2>핵심 어휘</h2><div class="vocab-grid">`;
+p.vocab.forEach((v, i) => {
+html += `
+<div class="vocab-card" onclick="toggleVocab(${i})">
+<div class="vocab-word">${v.word}</div>
+<div class="vocab-meaning" id="vm-${i}">${v.meaning}</div>
+<div class="vocab-hint" id="vh-${i}">탭하여 확인 ↓</div>
+</div>`;
+});
+html += `</div>`;
+document.getElementById('vocab').innerHTML = html;
+}
+
+function toggleVocab(i) {
+const m = document.getElementById('vm-' + i);
+const h = document.getElementById('vh-' + i);
+m.classList.toggle('show');
+h.style.display = m.classList.contains('show') ? 'none' : 'block';
+}
+
+/* ── 문법 ── */
+function renderGrammar() {
+const p = PASSAGES[current];
+let html = `<h2>주요 문법 포인트</h2>`;
+p.grammar.forEach(g => {
+html += `
+<div class="grammar-item">
+<div class="grammar-title">${g.title}</div>
+<div class="ex-box">${g.html}</div>
+<p class="note">${g.note}</p>
+</div>`;
+});
+document.getElementById('grammar').innerHTML = html;
+}
+
+/* ── 퀴즈 ── */
+function renderQuiz() {
+const p = PASSAGES[current];
+const state = quizState[current] || {};
+const answered = Object.keys(state).length;
+let html = `<h2>빈칸 채우기 퀴즈</h2>`;
+html += `<div class="quiz-score">정답 ${Object.values(state).filter((v,i) => v === p.quizzes[i]?.ans).length} / ${p.quizzes.length}</div>`;
+p.quizzes.forEach((q, qi) => {
+const chosen = state[qi];
+const locked = chosen !== undefined;
+html += `<div class="quiz-card"><div class="quiz-q">Q${qi+1}. ${q.q}</div><div class="quiz-options">`;
+q.opts.forEach((o, oi) => {
+let cls = '';
+if (locked) {
+if (oi === q.ans) cls = 'correct';
+else if (oi === chosen) cls = 'wrong';
+}
+html += `<button class="opt-btn ${cls}" ${locked ? 'disabled' : ''} onclick="checkAns(${qi},${oi})">${oi+1}. ${o}</button>`;
+});
+html += `</div><div class="quiz-fb ${locked ? 'show' : ''}" id="qfb-${qi}">${q.fb}</div></div>`;
+});
+document.getElementById('quiz').innerHTML = html;
+}
+
+function checkAns(qi, chosen) {
+quizState[current] = quizState[current] || {};
+quizState[current][qi] = chosen;
+renderQuiz();
+}
+
+/* ── 요약 ── */
+function renderSummary() {
+const s = PASSAGES[current].summary;
+let html = `<h2>지문 구조 & 핵심 요약</h2>`;
+html += `<div class="summary-block"><span class="tag">주제</span><br>${s.topic}</div>`;
+s.blocks.forEach(b => {
+html += `<div class="summary-block"><span class="tag">${b.tag}</span><br>${b.text}</div>`;
+});
+html += `<div class="answer-box">🎯 <strong>정답: ${s.answer}</strong><br><span style="font-size:13px;color:var(--sub)">${s.answerNote}</span></div>`;
+document.getElementById('summary').innerHTML = html;
+}
+
+/* ── 탭 전환 ── */
+function showTab(id) {
+document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+event.target.classList.add('active');
+}
+
+/* ── 지문 수 표시 ── */
+document.getElementById('passageCount').textContent = PASSAGES.length + '개 지문';
+
+/* ── 초기 로드 ── */
+loadPassage(0);
+</script>
 </body>
 </html>
