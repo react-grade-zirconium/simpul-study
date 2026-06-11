@@ -9,6 +9,13 @@
     html,body{width:100%;min-height:100%;background:#fff;color:#0f172a;font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif}
     body{padding:24px}
     main{width:min(1040px,100%);margin:0 auto;display:grid;gap:18px}
+
+    .page-nav{display:flex;gap:10px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+    .page-nav::-webkit-scrollbar{display:none}
+    .page-nav a{display:inline-flex;align-items:center;justify-content:center;border:1px solid #dbe3ef;border-radius:999px;background:#fff;color:#334155;padding:10px 16px;text-decoration:none;font-size:.95rem;font-weight:900;white-space:nowrap;transition:background .15s ease,border-color .15s ease,color .15s ease,transform .15s ease}
+    .page-nav a:hover,.page-nav a:focus-visible{transform:translateY(-1px);outline:none}
+    .page-nav a.active-hiragana{background:#dc2626;border-color:#b91c1c;color:#fff}
+    .page-nav a.active-katakana{background:#2563eb;border-color:#1d4ed8;color:#fff}
     .intro{border-radius:16px;background:#fef2f2;padding:22px;border:1px solid #fecaca}
     .badge{display:inline-flex;border-radius:999px;background:#dc2626;color:#fff;padding:6px 10px;font-size:.8rem;font-weight:900}
     h1{margin-top:10px;font-size:clamp(1.6rem,4vw,2.35rem);letter-spacing:-.04em}
@@ -24,6 +31,11 @@
 </head>
 <body>
   <main>
+    <nav class="page-nav" aria-label="일본어 학습 이동">
+      <a href="./japanese_hub.html">내용 정리</a>
+      <a class="active-hiragana" href="./japanese_hiragana.html" aria-current="page">히라가나 외우기</a>
+      <a href="./japanese_katakana.html">가타카나 외우기</a>
+    </nav>
     <section class="intro">
       <span class="badge">ひらがな</span>
       <h1>히라가나 외우기</h1>

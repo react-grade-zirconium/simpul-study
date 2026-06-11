@@ -15,19 +15,19 @@
     p{margin-top:8px;color:#64748b;line-height:1.65;font-size:.96rem}
     .tabs{display:flex;gap:10px;overflow-x:auto;padding:4px;scrollbar-width:none}
     .tabs::-webkit-scrollbar{display:none}
-    .tab-btn{border:1px solid #dbe3ef;border-radius:999px;background:#fff;color:#334155;padding:10px 16px;font-family:inherit;font-size:.95rem;font-weight:900;white-space:nowrap;cursor:pointer;transition:background .15s ease,border-color .15s ease,color .15s ease,transform .15s ease}
+    .tab-btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid #dbe3ef;border-radius:999px;background:#fff;color:#334155;padding:10px 16px;font-family:inherit;font-size:.95rem;font-weight:900;white-space:nowrap;cursor:pointer;text-decoration:none;transition:background .15s ease,border-color .15s ease,color .15s ease,transform .15s ease}
     .tab-btn:hover,.tab-btn:focus-visible{background:#fef2f2;border-color:#fca5a5;outline:none;transform:translateY(-1px)}
     .tab-btn.active{background:#dc2626;border-color:#b91c1c;color:#fff;box-shadow:0 8px 18px rgba(220,38,38,.18)}
     .tab-panel{display:none}
     .tab-panel.active{display:block}
     .tab-panel h2{font-size:1.22rem;color:#b91c1c;margin-bottom:10px}
-    .kana-panel{padding:0;overflow:hidden}
-    .kana-panel-head{padding:20px 24px 14px}
-    .kana-panel h2{margin-bottom:6px}
     .study-list{display:grid;gap:10px;margin-top:14px;list-style:none}
     .study-list li{border:1px solid #e2e8f0;border-radius:14px;background:#f8fafc;padding:14px;line-height:1.6;color:#334155}
-    .kana-frame{display:block;width:100%;height:clamp(760px,calc(100dvh - 210px),1040px);border:0;border-top:1px solid #e2e8f0;background:#fff}
-    @media (max-width:620px){body{padding:14px}.hero,.tab-panel{padding:20px 16px}.kana-panel{padding:0}.kana-panel-head{padding:16px}.tabs{gap:8px}.tab-btn{padding:9px 12px;font-size:.88rem}.kana-frame{height:clamp(760px,calc(100dvh - 180px),980px)}}
+    .jump-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
+    .jump-card{display:grid;gap:8px;border:1px solid #fecaca;border-radius:18px;background:#fff7f7;color:#7f1d1d;text-decoration:none;padding:18px;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease}
+    .jump-card:hover,.jump-card:focus-visible{border-color:#f87171;box-shadow:0 10px 24px rgba(248,113,113,.18);transform:translateY(-2px);outline:none}
+    .jump-card strong{font-size:1.08rem}.jump-card span{color:#64748b;line-height:1.5}
+    @media (max-width:620px){body{padding:14px}.hero,.tab-panel{padding:20px 16px}.tabs{gap:8px}.tab-btn{padding:9px 12px;font-size:.88rem}.jump-list{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -39,9 +39,9 @@
     </section>
 
     <nav class="tabs" role="tablist" aria-label="일본어 학습 탭">
-      <button id="summaryTab" class="tab-btn active" type="button" role="tab" aria-selected="true" aria-controls="summary" data-tab="summary">내용 정리</button>
-      <button id="hiraganaTab" class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="hiragana" data-tab="hiragana">히라가나 외우기</button>
-      <button id="katakanaTab" class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="katakana" data-tab="katakana">가타카나 외우기</button>
+      <button id="summaryTab" class="tab-btn active" type="button" role="tab" aria-selected="true" aria-controls="summary">내용 정리</button>
+      <a id="hiraganaTab" class="tab-btn" role="tab" aria-selected="false" href="./japanese_hiragana.html">히라가나 외우기</a>
+      <a id="katakanaTab" class="tab-btn" role="tab" aria-selected="false" href="./japanese_katakana.html">가타카나 외우기</a>
     </nav>
 
     <section id="summary" class="tab-panel active" role="tabpanel" aria-labelledby="summaryTab">
@@ -52,42 +52,17 @@
         <li><strong>인사 표현:</strong> 상황별 기본 인사와 감사·사과 표현을 반복합니다.</li>
         <li><strong>문장 구조:</strong> 주제 표시 조사와 기본 어순을 예문으로 정리합니다.</li>
       </ul>
-    </section>
-
-    <section id="hiragana" class="tab-panel kana-panel" role="tabpanel" aria-labelledby="hiraganaTab">
-      <div class="kana-panel-head">
-        <h2>히라가나 외우기</h2>
-        <p>히라가나 전용 학습 화면을 크게 불러옵니다.</p>
+      <div class="jump-list" aria-label="일본어 문자 학습 바로가기">
+        <a class="jump-card" href="./japanese_hiragana.html">
+          <strong>ひらがな 히라가나 외우기</strong>
+          <span>새 화면으로 이동해서 히라가나 카드를 크게 봅니다.</span>
+        </a>
+        <a class="jump-card" href="./japanese_katakana.html">
+          <strong>カタカナ 가타카나 외우기</strong>
+          <span>새 화면으로 이동해서 가타카나 카드를 크게 봅니다.</span>
+        </a>
       </div>
-      <iframe class="kana-frame" src="./japanese_hiragana.html" title="히라가나 외우기"></iframe>
-    </section>
-
-    <section id="katakana" class="tab-panel kana-panel" role="tabpanel" aria-labelledby="katakanaTab">
-      <div class="kana-panel-head">
-        <h2>가타카나 외우기</h2>
-        <p>가타카나 전용 학습 화면을 크게 불러옵니다.</p>
-      </div>
-      <iframe class="kana-frame" src="./japanese_katakana.html" title="가타카나 외우기"></iframe>
     </section>
   </main>
-
-  <script>
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    const tabPanels = document.querySelectorAll('.tab-panel');
-
-    tabButtons.forEach((button) => {
-      button.addEventListener('click', () => {
-        const target = button.dataset.tab;
-        tabButtons.forEach((tabButton) => {
-          const active = tabButton === button;
-          tabButton.classList.toggle('active', active);
-          tabButton.setAttribute('aria-selected', String(active));
-        });
-        tabPanels.forEach((panel) => {
-          panel.classList.toggle('active', panel.id === target);
-        });
-      });
-    });
-  </script>
 </body>
 </html>
