@@ -38,6 +38,8 @@ body.subject-mode .main{display:flex}body.subject-mode .header{display:none}body
 .memo{grid-column:1/-1;padding:14px}.memo h3{font-size:.92rem;margin-bottom:8px}.memo textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:8px;padding:10px;font-family:inherit;resize:vertical}
 .memo-actions{margin-top:8px;display:flex;justify-content:flex-end}
 .memo-actions button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:9px 12px;font-weight:600;cursor:pointer}
+#goalSaveBtn,#memoSaveBtn,#profileSaveBtn,#inkSaveBtn{touch-action:manipulation}
+button.button-interacting,#goalSaveBtn:active,#memoSaveBtn:active,#profileSaveBtn:active,#inkSaveBtn:active{transform:scale(.97);background:#dbeafe!important;border-color:#2563eb!important;color:#1d4ed8!important}
 iframe{display:block;width:100%;height:100%;min-height:100%;border:0;background:#fff}
 .ink-toolbar{position:fixed;left:0;right:0;top:0;transform:none;display:flex;gap:10px;align-items:center;flex-wrap:nowrap;width:100%;min-height:54px;padding:8px 16px;z-index:1400;box-shadow:0 8px 22px rgba(15,23,42,.15);touch-action:none;overflow-x:auto;white-space:nowrap;border-radius:0;justify-content:center}
 .ink-toolbar.dragging{opacity:.9}

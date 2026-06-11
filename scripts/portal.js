@@ -40,6 +40,34 @@ const PROFILE_PHOTO_KEY = 'studymax_profile_photo';
 const SIDEBAR_COLLAPSED_KEY = 'studymax_subject_sidebar_collapsed';
 const SUBJECT_TAB_INK_SCOPE_NOTE = 'Dashboard, each subject, and each in-subject tab must keep separate ink storage whenever a subject adds tabbed content.';
 
+function bindResponsiveActivation(button, handler) {
+  if (!button || typeof handler !== 'function') return;
+  let lastPointerActivation = 0;
+  let pointerStart = null;
+  const run = (event) => {
+    button.classList.add('button-interacting');
+    window.setTimeout(() => button.classList.remove('button-interacting'), 180);
+    handler(event);
+  };
+  button.addEventListener('pointerdown', (event) => {
+    if (event.pointerType === 'mouse') return;
+    pointerStart = { id: event.pointerId, x: event.clientX, y: event.clientY };
+  });
+  button.addEventListener('pointerup', (event) => {
+    if (event.pointerType === 'mouse' || !pointerStart || pointerStart.id !== event.pointerId) return;
+    const moved = Math.hypot(event.clientX - pointerStart.x, event.clientY - pointerStart.y);
+    pointerStart = null;
+    if (moved > 10) return;
+    lastPointerActivation = Date.now();
+    run(event);
+  });
+  button.addEventListener('pointercancel', () => { pointerStart = null; });
+  button.addEventListener('click', (event) => {
+    if (Date.now() - lastPointerActivation < 500) return;
+    run(event);
+  });
+}
+
 function updateProfileHeader() {
   const nameEl = document.getElementById('profileNameLabel');
   const classEl = document.getElementById('profileClassLabel');
@@ -90,7 +118,7 @@ function initProfileModal() {
     reader.readAsDataURL(file);
   });
 
-  saveBtn.addEventListener('click', () => {
+  bindResponsiveActivation(saveBtn, () => {
     const classNo = Number(classInput.value || 0);
     const numberNo = Number(numberInput.value || 0);
     const name = nameInput.value.trim();
@@ -501,7 +529,7 @@ function initGlobalInk() {
   sizeInput.addEventListener('input', () => { penSize = Number(sizeInput.value); });
   colorInput.addEventListener('input', () => { penColor = colorInput.value; });
   clearBtn.addEventListener('click', () => { clearInk(); setMsg('전체 지움'); });
-  saveBtn.addEventListener('click', saveInk);
+  bindResponsiveActivation(saveBtn, saveInk);
   canvas.addEventListener('pointerdown', beginStroke, { passive: false });
   canvas.addEventListener('pointermove', moveStroke, { passive: false });
   ['pointerup', 'pointerleave', 'pointercancel'].forEach((evt) => canvas.addEventListener(evt, endStroke));
@@ -522,9 +550,9 @@ loadMemo();
 
 function initCorePortalFeatures() {
   initSubjectSidebarToggle();
-  if (goalSaveBtn) goalSaveBtn.addEventListener('click', saveGoal);
+  bindResponsiveActivation(goalSaveBtn, saveGoal);
   if (goalInput) goalInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') saveGoal(); });
-  if (memoSaveBtn) memoSaveBtn.addEventListener('click', saveMemo);
+  bindResponsiveActivation(memoSaveBtn, saveMemo);
   if (memoInput) memoInput.addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') saveMemo(); });
   initProfileModal();
   initGlobalInk();
