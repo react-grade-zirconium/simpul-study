@@ -306,12 +306,25 @@ function resizeSubjectFrameForMobile() {
 function bindInkDocumentForContext(doc) {
   if (!doc || doc.body?.dataset.inkSyncBound === '1') return;
   if (doc.body) doc.body.dataset.inkSyncBound = '1';
-  doc.defaultView?.addEventListener('scroll', () => {
-    if (window.redrawInkLayer) window.redrawInkLayer();
-  }, { passive: true });
-  doc.defaultView?.visualViewport?.addEventListener('scroll', () => {
-    if (window.redrawInkLayer) window.redrawInkLayer();
-  }, { passive: true });
+  let redrawFrame = 0;
+  const scheduleInkRedraw = () => {
+    if (redrawFrame) return;
+    redrawFrame = window.requestAnimationFrame(() => {
+      redrawFrame = 0;
+      if (window.redrawInkLayer) window.redrawInkLayer();
+    });
+  };
+  const scrollTargets = new Set([
+    doc.defaultView,
+    doc.defaultView?.visualViewport,
+    doc,
+    doc.scrollingElement,
+    doc.documentElement,
+    doc.body,
+  ]);
+  scrollTargets.forEach((target) => {
+    target?.addEventListener?.('scroll', scheduleInkRedraw, { passive: true });
+  });
   doc.querySelectorAll('.tab-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       setTimeout(() => {
