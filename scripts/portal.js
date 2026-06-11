@@ -431,6 +431,28 @@ function initGlobalInk() {
       const bottom = Math.min(...rects.map((rect) => rect.bottom));
       return { left, top, right, bottom, width: Math.max(0, right - left), height: Math.max(0, bottom - top) };
     };
+    const getOcclusionRects = (doc, originX, originY, clip) => {
+      if (!doc || !clip || clip.width <= 0 || clip.height <= 0) return [];
+      const win = doc.defaultView;
+      if (!win) return [];
+      const selectors = ['header', '.page-header', '.tab-bar', '.quiz-type-bar', '[data-ink-occlude]'];
+      const elements = new Set(selectors.flatMap((selector) => Array.from(doc.querySelectorAll(selector))));
+      return Array.from(elements).flatMap((el) => {
+        const style = win.getComputedStyle(el);
+        const explicitlyOccluding = el.hasAttribute('data-ink-occlude');
+        if (!explicitlyOccluding && style.position !== 'sticky' && style.position !== 'fixed') return [];
+        const rect = el.getBoundingClientRect();
+        if (rect.width <= 0 || rect.height <= 0) return [];
+        const screenRect = {
+          left: originX + rect.left,
+          top: originY + rect.top,
+          right: originX + rect.right,
+          bottom: originY + rect.bottom,
+        };
+        const visibleRect = intersectRects(clip, screenRect);
+        return visibleRect.width > 0 && visibleRect.height > 0 ? [visibleRect] : [];
+      });
+    };
     try {
       const rootRect = frame.getBoundingClientRect();
       const rootViewportRect = { left: rootRect.left, top: rootRect.top, right: rootRect.right, bottom: rootRect.bottom };
@@ -459,6 +481,7 @@ function initGlobalInk() {
           width: nestedWin.innerWidth || nestedDoc.documentElement?.clientWidth || nestedRect.width,
           height: nestedWin.innerHeight || nestedDoc.documentElement?.clientHeight || nestedRect.height,
           clip,
+          occlusions: getOcclusionRects(nestedDoc, nestedViewportRect.left, nestedViewportRect.top, clip),
         };
       }
       const clip = intersectRects(viewportRect, rootViewportRect);
@@ -471,6 +494,7 @@ function initGlobalInk() {
         width: rootWin.innerWidth || rootDoc.documentElement?.clientWidth || rootRect.width,
         height: rootWin.innerHeight || rootDoc.documentElement?.clientHeight || rootRect.height,
         clip,
+        occlusions: getOcclusionRects(rootDoc, rootRect.left, rootRect.top, clip),
       };
     } catch (_) {
       return viewportMetrics;
@@ -549,6 +573,14 @@ function initGlobalInk() {
     ctx.stroke();
     ctx.closePath();
   }
+  function applySubjectOcclusionMasks(rects) {
+    if (!rects?.length) return;
+    ctx.save();
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.globalAlpha = 1;
+    rects.forEach((rect) => ctx.fillRect(rect.left, rect.top, rect.width, rect.height));
+    ctx.restore();
+  }
   function applySubjectClipFade(clip) {
     const fade = Math.min(22, Math.floor(clip.height / 5), Math.floor(clip.width / 5));
     if (fade < 3) return;
@@ -577,6 +609,7 @@ function initGlobalInk() {
       ctx.rect(clip.left, clip.top, clip.width, clip.height);
       ctx.clip();
       for (const s of strokes) drawStroke(s, metrics);
+      applySubjectOcclusionMasks(metrics.occlusions);
       applySubjectClipFade(clip);
       ctx.restore();
       return;
