@@ -1,52 +1,1044 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>한국사 학습</title>
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{width:100%;min-height:100%;background:#f6f8fc;color:#0f172a;font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif}
-    body{padding:24px;overflow:auto}
-    main{width:min(860px,100%);margin:0 auto;display:grid;gap:16px}
-    section{border:1px solid #dbe3ef;border-radius:20px;background:#fff;padding:22px;box-shadow:0 12px 32px rgba(15,23,42,.08)}
-    .hero{background:linear-gradient(135deg,#fff7ed 0%,#ffffff 52%,#eff6ff 100%)}
-    .badge{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;background:#ffedd5;color:#9a3412;padding:7px 12px;font-size:.88rem;font-weight:900}
-    h1{margin-top:14px;font-size:clamp(1.55rem,4vw,2.18rem);line-height:1.25;letter-spacing:-.04em}
-    h2{font-size:1.08rem;color:#1d4ed8;margin-bottom:10px}
-    p,li{color:#334155;line-height:1.7;font-size:.96rem}
-    .lead{margin-top:8px;color:#64748b}
-    .timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
-    .era{border:1px solid #e2e8f0;border-radius:16px;background:#f8fafc;padding:14px;text-align:left}
-    .era strong{display:block;margin-bottom:6px;color:#0f172a;font-size:.98rem}
-    ul{padding-left:1.1rem;display:grid;gap:6px}
-    @media (max-width:640px){body{padding:14px}section{padding:18px 16px}.timeline{grid-template-columns:1fr}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한국사 정리 — 조선 후기 정치 / 대외 교류</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+--primary: #c0392b;
+--primary-light: #fdf0ee;
+--accent: #2980b9;
+--bg: #f8f9fa;
+--surface: #fff;
+--border: #dadce0;
+--text: #202124;
+--text-sec: #5f6368;
+--shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);font-size:14.5px;line-height:1.75;}
+
+.page-header{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--border);padding:12px 20px 0;}
+.subject-label{font-size:11px;letter-spacing:.12em;color:var(--text-sec);text-transform:uppercase;margin-bottom:2px;}
+.page-title{font-family:'Noto Serif KR',serif;font-size:21px;font-weight:700;color:var(--text);margin-bottom:10px;}
+.tab-bar{display:flex;overflow-x:auto;scrollbar-width:none;}
+.tab-bar::-webkit-scrollbar{display:none;}
+.tab-btn{padding:10px 16px 8px;border:none;background:transparent;font-family:'Noto Sans KR',sans-serif;font-size:13px;color:var(--text-sec);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:5px;transition:color .2s;}
+.tab-btn.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:700;}
+.tab-btn:hover{color:var(--primary);}
+.tab-number{width:20px;height:20px;border-radius:50%;background:#f1f3f4;font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
+.tab-btn.active .tab-number{background:var(--primary);color:#fff;}
+
+.content-wrap{max-width:960px;margin:0 auto;padding:24px 20px 80px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+.section-title{font-family:'Noto Serif KR',serif;font-size:19px;font-weight:700;border-bottom:2px solid var(--primary);padding-bottom:8px;margin:32px 0 16px;color:var(--text);}
+.section-title:first-child{margin-top:0;}
+.subsection-title{font-size:15px;font-weight:700;color:var(--primary);padding-left:10px;border-left:3px solid var(--primary);margin:20px 0 10px;}
+.sub2-title{font-size:14px;font-weight:700;color:var(--accent);padding-left:8px;border-left:2px solid var(--accent);margin:14px 0 8px;}
+
+.def-box{background:var(--primary-light);border-left:4px solid var(--primary);border-radius:0 8px 8px 0;padding:13px 16px;font-size:14px;line-height:1.75;margin-bottom:12px;}
+.def-box strong{color:var(--primary);}
+.blue-box{background:#eaf4fb;border-left:4px solid var(--accent);border-radius:0 8px 8px 0;padding:13px 16px;font-size:14px;line-height:1.75;margin-bottom:12px;}
+.blue-box strong{color:var(--accent);}
+
+.factor-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.factor-grid.three{grid-template-columns:1fr 1fr 1fr;}
+.factor-grid.four{grid-template-columns:1fr 1fr 1fr 1fr;}
+@media(max-width:640px){.factor-grid,.factor-grid.three,.factor-grid.four{grid-template-columns:1fr;}}
+.factor-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;}
+.factor-card.red{border-top:3px solid #c0392b;}
+.factor-card.blue{border-top:3px solid #2980b9;}
+.factor-card.green{border-top:3px solid #27ae60;}
+.factor-card.orange{border-top:3px solid #e67e22;}
+.factor-card.purple{border-top:3px solid #8e44ad;}
+.factor-card h4{font-size:13px;font-weight:700;margin-bottom:7px;}
+.factor-card p,.factor-card li{font-size:13px;color:var(--text-sec);line-height:1.65;}
+.factor-card ul{padding-left:15px;}
+
+.badge{padding:2px 9px;border-radius:20px;font-size:12px;font-weight:700;display:inline-block;margin:1px;}
+.badge-red{background:#fce8e6;color:#c0392b;}
+.badge-blue{background:#eaf4fb;color:#2980b9;}
+.badge-green{background:#e6f4ea;color:#27ae60;}
+.badge-orange{background:#fef3e2;color:#e67e22;}
+.badge-purple{background:#f3e8fd;color:#8e44ad;}
+.badge-gray{background:#f1f3f4;color:#5f6368;}
+
+.cmp-table{width:100%;border-collapse:collapse;border-radius:10px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:12px;}
+.cmp-table thead{background:var(--primary);color:#fff;}
+.cmp-table th{padding:9px 13px;font-size:13px;text-align:left;}
+.cmp-table td{padding:8px 13px;font-size:13px;line-height:1.55;border-bottom:1px solid var(--border);}
+.cmp-table tbody tr:nth-child(even){background:#f8f9fa;}
+.cmp-table td:first-child{font-weight:600;color:var(--primary);white-space:nowrap;}
+
+.blue-table thead{background:var(--accent);}
+.blue-table td:first-child{color:var(--accent);}
+
+.note{background:#fffde7;border:1px solid #ffe082;color:#5d4037;border-radius:8px;padding:11px 15px;font-size:13px;line-height:1.65;margin-bottom:10px;}
+.warning{background:#fce8e6;border:1px solid #f28b82;color:#b31412;border-radius:8px;padding:11px 15px;font-size:13px;line-height:1.65;margin-bottom:10px;}
+.info{background:#e8f4fb;border:1px solid #90caf9;color:#1565c0;border-radius:8px;padding:11px 15px;font-size:13px;line-height:1.65;margin-bottom:10px;}
+
+.flow-row{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
+.flow-item{background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:7px 12px;font-size:13px;font-weight:600;}
+.flow-arrow{color:var(--primary);font-weight:700;font-size:16px;}
+
+.timeline{border-left:3px solid var(--primary);padding-left:18px;margin-bottom:12px;}
+.tl-item{position:relative;margin-bottom:14px;}
+.tl-item::before{content:'';position:absolute;left:-24px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--primary);border:2px solid #fff;box-shadow:0 0 0 2px var(--primary);}
+.tl-dot-blue::before{background:var(--accent);box-shadow:0 0 0 2px var(--accent);}
+.tl-year{font-size:12px;font-weight:700;color:var(--primary);margin-bottom:2px;}
+.tl-year.blue{color:var(--accent);}
+.tl-content{font-size:13.5px;line-height:1.7;}
+
+.totop{position:fixed;bottom:28px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--primary);color:#fff;border:none;font-size:18px;cursor:pointer;box-shadow:0 2px 8px rgba(192,57,43,.4);z-index:200;}
+
+.info-list{list-style:none;padding:0;margin-bottom:10px;}
+.info-list li{padding:7px 12px 7px 28px;position:relative;font-size:13.5px;line-height:1.65;border-bottom:1px solid #f1f3f4;}
+.info-list li::before{content:'▸';position:absolute;left:10px;color:var(--primary);font-weight:700;}
+
+.trade-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+@media(max-width:600px){.trade-grid{grid-template-columns:1fr;}}
+.trade-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:13px;}
+.trade-card h4{font-size:13px;font-weight:700;margin-bottom:7px;display:flex;align-items:center;gap:6px;}
+.trade-out{color:#c0392b;font-size:11px;font-weight:700;background:#fce8e6;padding:1px 7px;border-radius:10px;}
+.trade-in{color:#27ae60;font-size:11px;font-weight:700;background:#e6f4ea;padding:1px 7px;border-radius:10px;}
+.quiz-section{margin-top:56px;padding-top:32px;border-top:3px solid var(--primary);}
+.quiz-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+.quiz-header h3{font-family:"Noto Serif KR",serif;font-size:18px;font-weight:700;}
+.scoreboard{display:flex;gap:8px;flex-wrap:wrap;}
+.score-chip{padding:4px 13px;border-radius:20px;font-size:12px;font-weight:700;border:1.5px solid;}
+.score-chip.ox{background:#fce8e6;color:#c0392b;border-color:#c0392b;}
+.score-chip.mc{background:#eaf4fb;color:#2980b9;border-color:#2980b9;}
+.score-chip.hard{background:#f3e8fd;color:#8e44ad;border-color:#8e44ad;}
+.quiz-type-bar{display:flex;border-bottom:2px solid var(--border);overflow-x:auto;margin-bottom:16px;}
+.qtype-btn{padding:9px 20px;border:none;background:transparent;font-family:"Noto Sans KR",sans-serif;font-size:13px;color:var(--text-sec);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:6px;transition:color .2s;}
+.qtype-btn.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:700;}
+.qtype-count{width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.07);font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
+.q-progress-wrap{margin-bottom:16px;}
+.q-progress-label{font-size:12px;color:var(--text-sec);margin-bottom:6px;}
+.q-progress-bar{height:6px;background:#e0e0e0;border-radius:3px;}
+.q-progress-fill{height:100%;border-radius:3px;transition:width .4s;}
+.q-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin-bottom:14px;}
+.q-card.answered-correct{border-color:#27ae60;background:#f6fef8;}
+.q-card.answered-wrong{border-color:#c0392b;background:#fff7f7;}
+.q-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.q-num{font-size:12px;font-weight:700;color:var(--text-sec);}
+.q-difficulty{padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;}
+.diff-basic{background:#fce8e6;color:#c0392b;}
+.diff-mid{background:#eaf4fb;color:#2980b9;}
+.diff-hard{background:#f3e8fd;color:#8e44ad;}
+.q-answered-mark{font-size:14px;}
+.q-text{font-size:14px;line-height:1.75;margin-bottom:14px;color:var(--text);white-space:pre-wrap;}
+.ox-row{display:flex;gap:10px;}
+.ox-btn{flex:1;padding:14px 10px;border-radius:12px;border:2px solid var(--border);background:#fff;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;font-family:"Noto Sans KR",sans-serif;transition:all .15s;}
+.ox-btn:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light);}
+.ox-sym{font-size:26px;}
+.ox-lbl{font-size:12px;color:var(--text-sec);}
+.ox-btn.ox-correct-picked{background:#e6f4ea;border-color:#27ae60;box-shadow:0 0 0 3px #c8e6c9;}
+.ox-btn.ox-wrong-picked{background:#fce8e6;border-color:#c0392b;box-shadow:0 0 0 3px #ffcdd2;}
+.ox-btn.ox-correct-reveal{background:#e6f4ea;border-color:#27ae60;opacity:.75;}
+.mc-options{display:flex;flex-direction:column;gap:8px;}
+.mc-opt{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);text-align:left;width:100%;font-family:"Noto Sans KR",sans-serif;font-size:13.5px;background:#fff;cursor:pointer;transition:all .15s;}
+.mc-opt:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light);}
+.mc-opt:disabled{cursor:default;}
+.mc-opt.mc-correct{background:#e6f4ea;border-color:#27ae60;font-weight:600;}
+.mc-opt.mc-wrong{background:#fce8e6;border-color:#c0392b;}
+.mc-opt-letter{width:24px;height:24px;border-radius:50%;background:#f1f3f4;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.mc-opt.mc-correct .mc-opt-letter{background:#27ae60;color:#fff;}
+.mc-opt.mc-wrong .mc-opt-letter{background:#c0392b;color:#fff;}
+.mc-opt-text{flex:1;line-height:1.55;}
+.q-feedback{border-radius:10px;padding:12px 16px;font-size:13.5px;line-height:1.65;margin-top:10px;}
+.q-feedback.correct{background:#e6f4ea;border:1px solid #81c995;color:#1e6b35;}
+.q-feedback.wrong{background:#fce8e6;border:1px solid #f28b82;color:#b31412;}
+.quiz-result{background:#fff;border:2px solid var(--primary);border-radius:16px;padding:24px;text-align:center;display:none;margin-top:16px;}
+.quiz-result.visible{display:block;}
+.result-score-big{font-size:48px;font-weight:700;color:var(--primary);}
+.result-score-big span{font-size:24px;color:var(--text-sec);}
+.result-score-label{font-size:18px;margin:8px 0 16px;color:var(--text);}
+.mini-bar-row{display:flex;align-items:center;gap:10px;margin:6px 0;font-size:13px;}
+.mini-bar-bg{flex:1;height:8px;background:#e0e0e0;border-radius:4px;overflow:hidden;}
+.mini-bar-fill{height:100%;border-radius:4px;}
+.reset-btn{margin-top:16px;padding:10px 24px;border-radius:20px;border:none;background:var(--primary);color:#fff;font-family:"Noto Sans KR",sans-serif;font-size:14px;font-weight:700;cursor:pointer;}
+.reset-btn:hover{background:#96281b;}
+.primary-light-box{background:var(--primary-light);}
+</style>
 </head>
 <body>
-  <main>
-    <section class="hero" aria-labelledby="historyTitle">
-      <span class="badge">🏛️ 한국사</span>
-      <h1 id="historyTitle">한국사 학습</h1>
-      <p class="lead">시대 흐름과 핵심 사건을 연결해서 시험 범위를 빠르게 점검하세요.</p>
-      <div class="timeline" aria-label="한국사 시대별 학습 흐름">
-        <article class="era"><strong>고대·고려</strong><p>국가 형성, 통치 체제, 대외 관계를 정리합니다.</p></article>
-        <article class="era"><strong>조선·근대</strong><p>제도 변화와 개항 이후의 흐름을 비교합니다.</p></article>
-        <article class="era"><strong>현대</strong><p>광복 이후 정치·경제·사회 변화를 연결합니다.</p></article>
-      </div>
-    </section>
-    <section>
-      <h2>오늘의 학습 루틴</h2>
-      <ul>
-        <li>연표에 사건을 먼저 배치하고 원인과 결과를 한 줄로 적기</li>
-        <li>왕·정부·단체별 핵심 정책을 표로 비교하기</li>
-        <li>사료 키워드에서 시대와 사건을 추론하는 연습하기</li>
-      </ul>
-    </section>
-    <section>
-      <h2>복습 팁</h2>
-      <p>단순 암기보다 “왜 일어났는지 → 무엇이 바뀌었는지” 순서로 말해 보면 서술형과 사료형 문제를 함께 대비할 수 있습니다.</p>
-    </section>
-  </main>
+
+<div class="page-header">
+<div class="subject-label">한국사 · 정치사 / 대외교류</div>
+<div class="page-title">조선 후기 정치 & 고대·고려 대외 교류</div>
+<div class="tab-bar" id="tabBar">
+<button class="tab-btn active" onclick="switchTab(0)"><span class="tab-number">1</span>붕당정치와 변질</button>
+<button class="tab-btn" onclick="switchTab(1)"><span class="tab-number">2</span>탕평·세도·민란</button>
+<button class="tab-btn" onclick="switchTab(2)"><span class="tab-number">3</span>흥선대원군</button>
+<button class="tab-btn" onclick="switchTab(3)"><span class="tab-number">4</span>고대 국제관계·대외교류</button>
+<button class="tab-btn" onclick="switchTab(4)"><span class="tab-number">5</span>고려 대외관계·몽골·원명</button>
+</div>
+</div>
+
+<div class="content-wrap">
+
+<!-- ===== 탭 0: 붕당정치 ===== -->
+<div class="tab-panel active" id="panel-0">
+
+<div class="section-title">04. 조선 후기의 새로운 흐름 — 1. 통치체제의 변화</div>
+
+<div class="subsection-title">① 비변사의 강화</div>
+<div class="def-box">
+<strong>비변사</strong>: 원래 여진·왜에 대방하는 <strong>임시 관청</strong><br>
+→ 왜란·호란을 거치며 <strong>최고통치기구</strong>로 변화<br>
+→ 의정부·6조의 행정기능 축소
+</div>
+
+<div class="subsection-title">② 군사제도 변화</div>
+<div class="factor-grid">
+<div class="factor-card red">
+<h4>🏯 중앙군</h4>
+<p>임진왜란 중 <strong>훈련도감</strong> 설치</p>
+<p>5위를 대신하여 <strong>5군영</strong>으로 재편</p>
+</div>
+<div class="factor-card blue">
+<h4>🗡 지방군</h4>
+<p>양반~노비로 이루어진 <strong>속오군</strong> 편성</p>
+</div>
+</div>
+
+<div class="section-title">2. 붕당정치의 전개와 변질</div>
+
+<div class="subsection-title">① 붕당정치의 전개</div>
+<div class="timeline">
+<div class="tl-item">
+<div class="tl-year">선조기</div>
+<div class="tl-content">
+이조전랑 임명 문제로 <strong>동인·서인 분열</strong><br>
+본래 붕당정치는 지방 사족의 의견까지 폭넓게 수렴하고 붕당 간 <strong>비판적 견제</strong>가 가능하다는 장점이 있었음<br>
+<span style="color:var(--primary);">→ 붕당 간 권력다툼 심화, 붕당정치 변질</span>
+</div>
+</div>
+<div class="tl-item">
+<div class="tl-year">광해군기</div>
+<div class="tl-content">
+서인과 대결 중 동인이 <strong>북인·남인</strong>으로 분열<br>
+정권을 잡은 <strong>북인이 권력 독점</strong><br>
+서인이 인조반정 주도, 정권 장악
+</div>
+</div>
+<div class="tl-item">
+<div class="tl-year">인조기</div>
+<div class="tl-content">
+<strong>서인이 정국 주도</strong>, 남인은 정권 참여
+</div>
+</div>
+<div class="tl-item">
+<div class="tl-year">효종기 (후기)</div>
+<div class="tl-content">
+북벌 문제로 <strong>서인·남인 대립</strong><br>
+서인은 북벌 주장, 남인은 북벌 반대
+</div>
+</div>
+<div class="tl-item">
+<div class="tl-year">현종기</div>
+<div class="tl-content">
+두 차례의 <strong>예송논쟁</strong> 발생<br>
+· 1차 예송: 서인 승리, 정권 주도<br>
+· 2차 예송: 남인 승리, 정권 주도<br>
+→ 두 차례 예송을 거치며 상대 붕당을 권력에서 <strong>완전히 몰아내려는 움직임</strong>이 강해짐
+</div>
+</div>
+<div class="tl-item">
+<div class="tl-year">숙종기</div>
+<div class="tl-content">
+세 차례의 <strong>환국 발생</strong>: 환국 과정 중 상대붕당에 대한 탄압·복복이 이루어짐<br>
+· 경진환국: 서인 승리<br>
+· 기사환국: 남인 승리<br>
+· 갑술환국: 서인 승리<br>
+→ <strong>환국 이후 남인은 사실상 몰락</strong><br>
+→ 남인에 대한 처벌 문제로 서인이 <strong>노론·소론으로 분열</strong>
+</div>
+</div>
+</div>
+
+<div class="subsection-title">② 붕당정치의 문제점</div>
+<div class="factor-grid">
+<div class="factor-card red">
+<h4>권력 독점</h4>
+<p>비변사 고위관직과 이조전랑 등 주요 관직을 <strong>특정 붕당이 장악</strong>, 권력 독점</p>
+</div>
+<div class="factor-card orange">
+<h4>왕권 위협·혼란 심화</h4>
+<p>왕권 위협, 정치적 혼란 심화</p>
+</div>
+</div>
+<div class="warning">⚠️ 결과: <strong>탕평책의 필요성 대두</strong></div>
+
+<div id="quiz-0" class="quiz-section"></div>
+</div>
+
+<!-- ===== 탭 1: 탕평·세도·민란 ===== -->
+<div class="tab-panel" id="panel-1">
+
+<div class="section-title">3. 영·정조의 탕평정치</div>
+
+<div class="subsection-title">① 영조의 탕평책</div>
+<div class="blue-box">
+<strong>배경</strong>: 숙종이 죽은 후 노론·소론 대립 심화<br>
+<strong>전개</strong>: 영조가 붕당 대립 완화·세력 균형을 이루고자 탕평책 추진<br>
+→ 서원 정리, 이전랑 권한 약화, 균역법 시행, 신문고 부활, 가혹한 처벌 금지
+</div>
+
+<div class="subsection-title">② 정조의 탕평책</div>
+<div class="blue-box">
+<strong>배경</strong>: 외척 제거, 노론·소론·남인 고루 등용 → 탕평책 추진<br>
+<strong>정책</strong>:
+<ul style="margin-top:6px;padding-left:18px;">
+<li>규장각 설치, 서얼 출신들을 규장각 검서관으로 등용</li>
+<li>초계문신제(관료를 재교육하는 제도) 실시, 젊은 관리 육성</li>
+<li>장용영 설치, 군사적 기반 마련</li>
+<li>수원화성 건설</li>
+</ul>
+</div>
+
+<div class="subsection-title">③ 탕평책의 의의와 한계</div>
+<div class="factor-grid">
+<div class="factor-card blue">
+<h4>✅ 의의</h4>
+<p>붕당 간 대립 완화, 정국 안정</p>
+</div>
+<div class="factor-card red">
+<h4>❌ 한계</h4>
+<p>붕당 정치의 폐단을 <strong>완전히 없애지 못함</strong></p>
+</div>
+</div>
+
+<div class="section-title">4. 세도정치의 전개와 그 영향</div>
+
+<div class="subsection-title">① 세도정치 배경·전개</div>
+<div class="def-box">
+<strong>배경</strong>: 정조 사망, 순조 즉위<br>
+<strong>전개</strong>: 순조의 장인 <strong>김조순</strong> 중심, 안동 김씨가 권력 장악<br>
+→ 이후 <strong>안동 김씨, 풍양 조씨</strong> 중심 세도정치가 순조·헌종·철종 60여 년간 지속 → <strong>세도가문</strong>
+</div>
+
+<div class="subsection-title">② 세도정치의 특징과 폐단</div>
+<table class="cmp-table">
+<thead><tr><th>특징</th><th>내용</th></tr></thead>
+<tbody>
+<tr><td>권력 독점</td><td>비변사 장악, 중앙 군영 지휘권 독점 → 권력 독점</td></tr>
+<tr><td>왕권 약화</td><td>세도가 견제 X → 왕권↓, 정치 기강 문란</td></tr>
+<tr><td>부정부패</td><td>매관매직, 과거 시험 부정 등 폐단</td></tr>
+<tr><td>삼정의 문란</td><td>전정의 폐단(조세), 군정의 폐단(군포), 환곡의 폐단(환곡) → 백성 삶 ↓</td></tr>
+</tbody>
+</table>
+<div class="note">📝 탐관오리의 백성 수탈(삼정이 문란) → 백성 삶 ↓ | 중앙: 암행어사 파견(for 부정 부패 통제) but 효과 X</div>
+
+<div class="section-title">5. 다양한 봉기의 발생</div>
+
+<div class="subsection-title">① 홍경래의 난 (1811)</div>
+<div class="factor-grid">
+<div class="factor-card red">
+<h4>배경</h4>
+<ul>
+<li>세도 정치의 여러 폐단 → 농민 삶 ↓</li>
+<li>경제적 기반을 잃는 농민: 임노동자·화전민이 됨</li>
+<li>소청·벽서를 통한 저항 → 폐단 개선 X → 봉기</li>
+</ul>
+</div>
+<div class="factor-card blue">
+<h4>전개</h4>
+<ul>
+<li>홍경래: <strong>몰락 양반</strong></li>
+<li>서북지방(평안도) 차별 + 세도 정권 수탈에 불만</li>
+<li>농민·상민·광산 노동자 등 참가</li>
+<li>한때 <strong>청천강 이북 점거</strong>, 강성</li>
+<li>관군에 의해 <strong>5개월만 진압</strong></li>
+</ul>
+</div>
+</div>
+<div class="note">📝 의의: 세도 정권 무능·부패 폭로, 농민 봉기 활성화에 영향</div>
+
+<div class="subsection-title">② 임술농민봉기 (1862)</div>
+<div class="factor-grid">
+<div class="factor-card orange">
+<h4>전개</h4>
+<ul>
+<li>단성·진주에서 탐관오리들의 수탈을 견디지 못하고 농민 봉기</li>
+<li>진주에서 경상 우병사 <strong>백낙신</strong>의 수탈을 견디지 못하고 몰락 양반 <strong>유계춘</strong> 중심으로 봉기 (<strong>진주농민봉기</strong>)</li>
+<li>이후 전국 70여 개 고을로 확산 (<strong>임술농민봉기</strong>)</li>
+</ul>
+</div>
+<div class="factor-card purple">
+<h4>영향</h4>
+<ul>
+<li>삼정이정청(삼정의 폐단을 해결하기 위해 만든 임시관청) 설치 → 근본적 문제 해결 X</li>
+<li>농민 봉기 속 <strong>농민들의 사회참여의식 ↑</strong>, 양반 중심 질서 균열</li>
+</ul>
+</div>
+</div>
+
+<div id="quiz-1" class="quiz-section"></div>
+</div>
+
+<!-- ===== 탭 2: 흥선대원군 ===== -->
+<div class="tab-panel" id="panel-2">
+
+<div class="section-title">6. 흥선대원군의 집권과 통치체제 정비</div>
+
+<div class="subsection-title">① 흥선대원군의 집권</div>
+<div class="def-box">
+<strong>배경</strong>: 19세기 조선에서 세도 정치와 삼정의 문란으로 인한 농민봉기 확산, 서양 세력의 침략적 접근으로 위기감 고조<br>
+<strong>집권</strong>: 나이 어린 고종이 즉위 → <strong>흥선대원군</strong>이 국정 주도, 개혁 개시
+</div>
+
+<div class="subsection-title">② 통치체제 정비</div>
+<table class="cmp-table">
+<thead><tr><th>개혁 내용</th><th>내용</th></tr></thead>
+<tbody>
+<tr><td>외척 세력 제거</td><td>안동 김씨 세력을 몰아내고 남인·북인 등 종친 세력 등용 → 정치적 기반 강화 시도</td></tr>
+<tr><td>비변사 폐지</td><td>세도 가의 핵심기구인 비변사 사실상 폐지 → 의정부·삼군부 기능 부활, 정치·군사 업무 맡김</td></tr>
+<tr><td>법전 편찬</td><td>새로운 법전인 『대전회통』 편찬 → 통치체제 재정비</td></tr>
+<tr><td>군사 강화</td><td>수군 강화·방어진지 구축 → 서양 침략 대비</td></tr>
+</tbody>
+</table>
+
+<div class="section-title">7. 경복궁 중건과 민생안정 정책의 실시</div>
+
+<div class="subsection-title">① 경복궁 중건</div>
+<div class="def-box">
+<strong>의도</strong>: 흥선대원군은 무너진 왕실의 권위를 바로 세우고자 임진왜란 때 불탔던 경복궁을 다시 지음<br>
+<strong>중건으로 인한 부작용</strong>:
+<ul style="margin-top:6px;padding-left:18px;">
+<li>재정 마련을 위해 원납전이라는 기부금을 강제로 걷음</li>
+<li>고액 화폐인 <strong>당백전</strong> 발행 → 명목상 상평통보의 100배, 실질 가치 5~6배 → <strong>화폐 가치 하락, 물가 폭등</strong></li>
+<li>묘지를 확보하고자 양반들의 묘지를 벰, 백성들을 공사에 강제 동원 → 양반을 비롯한 백성 모두의 <strong>불만 심화</strong></li>
+</ul>
+</div>
+
+<div class="subsection-title">② 민생안정 정책 실시</div>
+<table class="cmp-table">
+<thead><tr><th>정책</th><th>내용</th><th>효과</th></tr></thead>
+<tbody>
+<tr><td>양전 사업 (토지 조사)</td><td>전정의 문란 개혁</td><td rowspan="3">관리 부정 ↓, 백성 세금 부담 ↓</td></tr>
+<tr><td>호포제</td><td>양반에게도 군포 징수 실시 → 군정의 문란 개혁</td></tr>
+<tr><td>사창제</td><td>환곡 운영을 민간에 맡김 → 향리의 중간 착복 막음 → 환곡 개혁</td></tr>
+</tbody>
+</table>
+
+<div class="subsection-title">③ 서원 철폐</div>
+<div class="factor-grid">
+<div class="factor-card red">
+<h4>배경</h4>
+<p>서원은 붕당·지방 사족의 근거지 + 세도 정치기 면세·면역의 특권 누리며 백성 수탈</p>
+</div>
+<div class="factor-card blue">
+<h4>정책</h4>
+<p>흥선대원군은 서원의 면세 규정 철폐, 전국 서원 중 <strong>47곳만 남기고 나머지 모두 철폐</strong></p>
+</div>
+</div>
+<div class="factor-grid">
+<div class="factor-card green">
+<h4>✅ 긍정적 영향</h4>
+<p>민생 안정, 국가 재정 확충</p>
+</div>
+<div class="factor-card orange">
+<h4>⚠️ 부정적 영향</h4>
+<p>지방 유생, 양반 반발<br>→ 이후 흥선대원군이 <strong>권력에서 물러나는 배경</strong></p>
+</div>
+</div>
+
+<div id="quiz-2" class="quiz-section"></div>
+</div>
+
+<!-- ===== 탭 3: 고대 국제관계·대외교류 ===== -->
+<div class="tab-panel" id="panel-3">
+
+<div class="section-title">II. 근대 이전 한국사의 탐구</div>
+<div class="section-title">1. 국제 관계와 대외교류 — 01. 고대의 국제관계와 대외교류</div>
+
+<div class="subsection-title">① 조공책봉 관계</div>
+<div class="def-box">
+<strong>조공책봉 관계</strong>: 주변국들이 황제국(중국)에게 예물을 바치고(<strong>조공</strong>), 황제가 주변국 군주의 지배권을 인정해 주는 것(<strong>책봉</strong>)<br>
+<strong>특징</strong>:
+<ul style="margin-top:6px;padding-left:18px;">
+<li>실질적 종속 관계 X, <strong>의례적인 외교 관계</strong></li>
+<li>경제적·문화적 이익을 위해 국제 질서에 참여</li>
+</ul>
+</div>
+
+<div class="subsection-title">② 삼국 시대의 국제 질서 변화</div>
+<div class="timeline">
+<div class="tl-item">
+<div class="tl-year">삼국 초기</div>
+<div class="tl-content">
+삼국은 중국 위진 남북조의 분열을 틈타 고대 국가로 성장<br>
+<strong>고구려의 독자적 천하관 확립</strong><br>
+· 주로 북조의 북위, 남조의 송과 교류<br>
+· 남북조 모두와 조공책봉 관계<br>
+· 신라·동부여 등을 속국으로 여김<br>
+<strong>백제</strong>: 주로 남조와 교류
+</div>
+</div>
+<div class="tl-item">
+<div class="tl-year">7세기 이후</div>
+<div class="tl-content">
+남북조를 통합한 <strong>수·당</strong>이 이른 당은 중국 중심 국제 질서 확립하려 함<br>
+→ 고구려는 이에 따르지 X, 수 차례의 <strong>수·당 침략 방어</strong><br>
+→ <strong>신라가 당과 손잡고 백제·고구려 멸망</strong>시킴<br>
+→ 이후 당의 군대를 몰아내고 <strong>삼국 통일 완수</strong>
+</div>
+</div>
+</div>
+
+<div class="subsection-title">③ 고대 국가의 대외 교류 — 동아시아 문화권 형성</div>
+<div class="def-box">
+중국 왕조와 <strong>조공·책봉</strong> 관계<br>
+→ <strong>한자, 유교, 불교, 율령</strong> 등 도입
+</div>
+
+<div class="sub2-title">일본에 전한 문물 (아스카 문화: 삼국이 일본에 문물을 전해주면서 생긴 일본의 고대 문화)</div>
+<table class="cmp-table blue-table">
+<thead><tr><th>국가</th><th>전한 문물</th></tr></thead>
+<tbody>
+<tr><td>고구려</td><td>불교, 회화, 종이, 붓</td></tr>
+<tr><td>백제</td><td>유학, 불교, 회화, 천문, 역법</td></tr>
+<tr><td>신라</td><td>조선술, 축제술</td></tr>
+<tr><td>가야</td><td>토기 제작 기술</td></tr>
+</tbody>
+</table>
+
+<div class="subsection-title">④ 통일신라와 발해의 대외교류</div>
+<div class="note">📝 배경: 고구려의 옛 땅에서 발해 건국, 남북국 시대 이룸.</div>
+
+<div class="sub2-title">신라의 대외 교류</div>
+<div class="factor-grid">
+<div class="factor-card blue">
+<h4>신라방 형성</h4>
+<p>산동반도 등지에 신라인 집단 거주지인 <strong>신라방</strong> 형성</p>
+<p>→ 대표적으로 신라관(발해관), 법화원</p>
+</div>
+<div class="factor-card green">
+<h4>중계 무역</h4>
+<p>당-일본 사이 중계 무역을 통해 이익</p>
+</div>
+<div class="factor-card red">
+<h4>장보고 (9세기)</h4>
+<p>완도에 <strong>청해진</strong> 설치<br>→ 해적 소탕, 신라·당·일본 해상무역 장악</p>
+</div>
+</div>
+
+<div class="sub2-title">발해의 대외 교류 — 교통로 설치</div>
+<table class="cmp-table blue-table">
+<thead><tr><th>교통로</th><th>목적지</th></tr></thead>
+<tbody>
+<tr><td>거란도</td><td>거란</td></tr>
+<tr><td>영주도</td><td>영주, 베이징</td></tr>
+<tr><td>조공도</td><td>신라관 (발해관)</td></tr>
+<tr><td>신라도</td><td>신라 (함경)</td></tr>
+<tr><td>일본도</td><td>일본</td></tr>
+</tbody>
+</table>
+
+<div id="quiz-3" class="quiz-section"></div>
+</div>
+
+<!-- ===== 탭 4: 고려 대외관계·몽골·원명 ===== -->
+<div class="tab-panel" id="panel-4">
+
+<div class="section-title">02. 고려의 국제 관계와 대외교류</div>
+
+<div class="subsection-title">① 고려 전기의 국제관계와 대외교류</div>
+<div class="def-box">
+<strong>다원적 국제관계 형성</strong>: 거란과 대립(북진정책), 송과는 친선 관계, 여진 포섭 등
+</div>
+
+<div class="sub2-title">거란의 침입과 결과</div>
+<div class="timeline">
+<div class="tl-item tl-dot-blue">
+<div class="tl-year blue">1차 침입</div>
+<div class="tl-content">
+서희의 <strong>외교 담판</strong><br>
+→ <strong>강동 6주 확보</strong>
+</div>
+</div>
+<div class="tl-item tl-dot-blue">
+<div class="tl-year blue">2차 침입</div>
+<div class="tl-content">
+고려가 송과 친선을 유지하자 다시 침략<br>
+→ 고려의 <strong>강화 요청</strong>, 거란이 승인
+</div>
+</div>
+<div class="tl-item tl-dot-blue">
+<div class="tl-year blue">3차 침입</div>
+<div class="tl-content">
+<strong>강감찬</strong>이 귀주에서 거란군을 크게 물리침 (<strong>귀주 대첩</strong>)<br>
+→ 이후: 고려·송·거란 세력 균형 유지
+</div>
+</div>
+</div>
+
+<div class="sub2-title">여진과의 갈등</div>
+<div class="def-box">
+<strong>배경</strong>: 12세기 초 거란이 쇠퇴 → 여진이 성장, 고려와 충돌<br>
+<strong>전개</strong>:
+<ul style="margin-top:6px;padding-left:18px;">
+<li>고려, <strong>별무반</strong> 조직: 여진 정벌을 위해 조직한 군대. 신기군, 신보군, 항마군으로 구성</li>
+<li>→ 여진 정벌, <strong>동북 9성 확보</strong></li>
+<li>여진이 기병을 중심으로 세력 확대 → 금을 세우고 요를 무너뜨린 뒤 송 공격</li>
+<li>금 세력 우위 & 국제 정세 안정 → 금이 고려에 군신관계 요구 → 고려가 승낙</li>
+</ul>
+</div>
+
+<div class="sub2-title">고려 전기의 대외교류 (무역)</div>
+<div class="trade-grid">
+<div class="trade-card">
+<h4>거란 <span class="trade-out">수출</span> <span class="trade-in">수입</span></h4>
+<p>농기구·곡식·문방구 수출 / 은·피·말 수입</p>
+</div>
+<div class="trade-card">
+<h4>여진 <span class="trade-out">수출</span> <span class="trade-in">수입</span></h4>
+<p>농기구·곡식·포목 수출 / 은·피·말 수입</p>
+</div>
+<div class="trade-card">
+<h4>송 <span class="trade-out">수출</span> <span class="trade-in">수입</span></h4>
+<p>인삼·금은·나전칠기·화문석·종이·먹 수출 / 비단·약재·서적·자기 수입</p>
+</div>
+<div class="trade-card">
+<h4>일본 <span class="trade-out">수출</span> <span class="trade-in">수입</span></h4>
+<p>곡식·인삼·서적 수출 / 유황·수은 수입</p>
+</div>
+</div>
+<div class="info">ℹ️ 아라비아: 수은·향신료·산호 교역</div>
+
+<div class="section-title">2. 몽골 제국의 등장과 원과의 교류</div>
+
+<div class="subsection-title">② 몽골의 침입</div>
+<div class="def-box">
+<strong>배경</strong>: 13세기 초 금이 쇠퇴하고 몽골이 세력 확대, 대제국 건설<br>
+→ 강동성에서의 합동작전을 계기로 몽골은 고려와 형제의 맹약<br>
+→ but 몽골은 <strong>몽골 사신 피살 사건</strong>을 계기로 고려 침략<br>
+<strong>전개</strong>: 고려는 수도를 <strong>강화도로 옮기고 항전</strong><br>
+→ 무신정권 붕괴, 몽골과 강화·개경 환도<br>
+<strong>영향</strong>: 원은 고려의 국왕 즉위에 관여하는 등 고려에 <strong>정치적 간섭</strong>
+</div>
+
+<div class="subsection-title">③ 원 간섭기 — 원과의 교류</div>
+<div class="factor-grid">
+<div class="factor-card blue">
+<h4>원과의 교류</h4>
+<ul>
+<li>국왕 이하 관료, 상인, 유학생 등 많은 사람들이 원 방문</li>
+<li>이슬람 계통 사람이 고려에 귀화</li>
+<li>고려에 <strong>몽골풍</strong> 전파, 원에 <strong>고려양</strong> 전파</li>
+</ul>
+</div>
+<div class="factor-card red">
+<h4>원·명 교체기와 명과의 관계</h4>
+<ul>
+<li>공민왕의 개혁정치: 원·명 교체기를 이용하며 명과 외교관계, 반원 정책 추진</li>
+<li>명이 고려에 <strong>철령위</strong> 설치 통보</li>
+<li>→ 우왕·최영이 <strong>요동 정벌</strong> 추진</li>
+<li>→ 이성계가 <strong>위화도 회군</strong> 단행, 요동 정벌 중단, 명과 관계 회복</li>
+</ul>
+</div>
+</div>
+
+<div id="quiz-4" class="quiz-section"></div>
+</div>
+
+</div><!-- /content-wrap -->
+
+<button class="totop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+const QUIZ_DATA = {
+0: {
+ox: [
+{ q:"비변사는 원래 여진과 왜에 대방하기 위해 만들어진 임시 관청이었다.", a:true, exp:"비변사는 원래 여진·왜의 침입에 대방하기 위한 임시 관청이었다. 이후 왜란·호란을 거치며 최고 통치기구로 변화하였고, 의정부·6조의 기능이 축소되었다." },
+{ q:"임진왜란 이후 중앙군은 기존의 5위를 유지하면서 훈련도감을 추가로 설치하였다.", a:false, exp:"임진왜란 중 훈련도감이 설치되었고, 기존의 5위를 대신하여 5군영으로 재편되었다. 5위를 유지한 것이 아니라 5군영으로 교체된 것이다." },
+{ q:"붕당의 시초는 선조 때 이조전랑 임명 문제로 동인과 서인이 분열된 것이다.", a:true, exp:"선조 때 이조전랑 임명 문제를 계기로 동인과 서인이 분열된 것이 붕당정치의 시작이다. 붕당정치는 원래 지방 사족의 의견을 수렴하고 붕당 간 비판적 견제가 가능하다는 장점이 있었다." },
+{ q:"광해군 때 서인이 북인과 남인으로 분열되었다.", a:false, exp:"광해군 때 서인과 대결 중 동인이 북인과 남인으로 분열되었다. 서인이 아닌 동인이 분열된 것이다." },
+{ q:"인조반정을 주도한 것은 서인이다.", a:true, exp:"광해군 때 정권을 잡은 북인이 권력을 독점하자, 서인이 인조반정을 주도하여 광해군을 몰아내고 정권을 장악하였다." },
+{ q:"1차 예송에서는 남인이 승리하여 정권을 주도하였다.", a:false, exp:"1차 예송에서는 서인이 승리하여 정권을 주도하였다. 2차 예송에서 남인이 승리하여 정권을 주도하였다." },
+{ q:"숙종 때 경진환국·기사환국·갑술환국의 세 차례 환국이 발생하였다.", a:true, exp:"숙종 때 세 차례의 환국이 발생하였다. 경진환국(서인 승리) → 기사환국(남인 승리) → 갑술환국(서인 승리) 순으로 이루어졌다." },
+{ q:"갑술환국 이후 남인은 사실상 몰락하였다.", a:true, exp:"갑술환국에서 서인이 다시 승리한 이후 남인은 사실상 몰락하였다. 이후 남인에 대한 처벌 문제로 서인이 노론과 소론으로 분열되었다." },
+{ q:"붕당정치의 문제점으로 비변사 고위관직과 이조전랑 등 주요 관직을 특정 붕당이 독점하는 것이 있었다.", a:true, exp:"붕당정치의 폐단으로 비변사 고위관직과 이조전랑 등 주요 관직을 특정 붕당이 장악하여 권력을 독점하고, 왕권을 위협하며 정치적 혼란이 심화되었다. 이로 인해 탕평책의 필요성이 대두되었다." },
+{ q:"속오군은 중앙군으로 편성되어 양반만으로 이루어진 군대였다.", a:false, exp:"속오군은 지방군으로 편성되었으며, 양반부터 노비까지 다양한 계층으로 이루어진 군대였다. 중앙군이 아닌 지방군이다." }
+],
+mc: [
+{ q:"비변사에 대한 설명으로 옳은 것은?", opts:["처음부터 최고 통치기구로 설치되었다","원래 여진·왜에 대방하는 임시 관청이었으나 왜란·호란을 거쳐 최고 통치기구로 변화하였다","비변사의 강화로 의정부·6조의 기능이 강화되었다","임진왜란 이후 즉시 폐지되었다"], a:1, exp:"비변사는 원래 여진·왜에 대방하는 임시 관청이었다. 왜란·호란을 거치며 최고 통치기구로 변화하였고, 결과적으로 의정부·6조의 행정 기능이 축소되었다." },
+{ q:"임진왜란 중 설치되어 5위를 대신한 중앙군 체제는?", opts:["훈련도감","5군영","속오군","별무반"], a:1, exp:"임진왜란 중 훈련도감이 설치되었고, 이후 5위를 대신하여 5군영으로 중앙군이 재편되었다. 속오군은 지방군, 별무반은 고려의 대여진 군사 조직이다." },
+{ q:"붕당정치의 긍정적 특성으로 옳은 것은?", opts:["특정 붕당이 권력을 독점하여 국정 안정에 기여","지방 사족의 의견까지 폭넓게 수렴하고 붕당 간 비판적 견제가 가능","왕권을 강화하여 강력한 중앙집권 실현","외교 문제에서 일관된 정책 유지"], a:1, exp:"붕당정치의 본래 장점은 지방 사족의 의견까지 폭넓게 수렴하고 붕당 간 비판적 견제가 가능하다는 것이었다. 그러나 시간이 지나면서 붕당 간 권력다툼이 심화되고 붕당정치가 변질되었다." },
+{ q:"광해군 때 동인이 분열된 결과로 옳은 것은?", opts:["이조전랑 임명 문제로 북인과 남인으로 분열, 북인 집권","서인과의 대결 중 북인과 남인으로 분열, 북인이 권력 독점","예송논쟁으로 서인과 남인으로 분열","인조반정으로 서인과 북인으로 분열"], a:1, exp:"광해군 때 서인과 대결 중 동인이 북인과 남인으로 분열되었고, 정권을 잡은 북인이 권력을 독점하였다. 이에 반발한 서인이 인조반정을 주도하였다." },
+{ q:"현종 때 두 차례 예송논쟁의 결과로 옳게 짝지어진 것은?", opts:["1차: 남인 승리 / 2차: 서인 승리","1차: 서인 승리 / 2차: 남인 승리","1차·2차 모두 서인 승리","1차·2차 모두 남인 승리"], a:1, exp:"1차 예송에서는 서인이 승리하여 정권을 주도하였고, 2차 예송에서는 남인이 승리하여 정권을 주도하였다." },
+{ q:"숙종 때 환국에 대한 설명으로 옳지 않은 것은?", opts:["세 차례의 환국이 발생하였다","갑술환국에서 남인이 최종 승리하였다","환국 과정 중 상대 붕당에 대한 탄압이 이루어졌다","환국 이후 남인은 사실상 몰락하였다"], a:1, exp:"갑술환국에서는 서인이 승리하였다. 남인은 기사환국에서 승리하였으나, 갑술환국으로 서인이 다시 집권하면서 남인은 사실상 몰락하였다." },
+{ q:"서인이 노론과 소론으로 분열된 원인은?", opts:["예송논쟁에서 의견 차이","북벌 문제에서 의견 차이","남인에 대한 처벌 문제에서 의견 차이","이조전랑 임명 문제에서 의견 차이"], a:2, exp:"갑술환국 이후 남인에 대한 처벌 문제를 놓고 서인 내부에서 의견이 갈려 노론(강경파)과 소론(온건파)으로 분열되었다." },
+{ q:"붕당정치 변질의 결과로 가장 적절한 것은?", opts:["왕권 강화와 중앙집권 실현","지방 사족의 정치 참여 확대","탕평책의 필요성 대두","성리학적 질서 확립"], a:2, exp:"붕당 간 권력다툼이 심화되고 특정 붕당이 권력을 독점하면서 왕권이 위협받고 정치적 혼란이 심화되었다. 이로 인해 탕평책의 필요성이 대두되었다." },
+{ q:"효종 때 서인과 남인 대립의 주요 쟁점은?", opts:["예송논쟁","이조전랑 임명","북벌 문제","세자 책봉 문제"], a:2, exp:"효종 때는 북벌 문제를 놓고 서인과 남인이 대립하였다. 서인은 북벌을 주장하고, 남인은 북벌에 반대하였다." },
+{ q:"지방군으로서 양반부터 노비까지 다양한 계층으로 이루어진 조선 후기 군사 조직은?", opts:["5군영","훈련도감","속오군","별무반"], a:2, exp:"속오군은 조선 후기 지방군으로, 양반부터 노비까지 다양한 계층으로 편성되었다. 5군영과 훈련도감은 중앙군이고, 별무반은 고려의 군사 조직이다." }
+],
+hard: [
+{ q:"붕당정치의 전개 과정에서 옳은 것만 고른 것은?\nㄱ. 선조 때 이조전랑 임명 문제로 동인과 서인이 분열되었다.\nㄴ. 광해군 때 서인이 북인과 남인으로 분열되었다.\nㄷ. 인조반정을 주도한 것은 서인이다.\nㄹ. 현종 때 두 차례 예송논쟁에서 모두 서인이 승리하였다.", opts:["ㄱ, ㄷ","ㄴ, ㄹ","ㄱ, ㄴ, ㄷ","ㄱ, ㄷ, ㄹ"], a:0, exp:"ㄱ(참): 선조 때 이조전랑 임명 문제로 동인·서인 분열. ㄴ(거짓): 광해군 때 동인이 북인·남인으로 분열됨(서인 아님). ㄷ(참): 인조반정 주도는 서인. ㄹ(거짓): 1차 예송은 서인 승리, 2차 예송은 남인 승리." },
+{ q:"비변사에 대한 설명으로 옳은 것만 고른 것은?\nㄱ. 원래 여진·왜에 대방하는 임시 관청이었다.\nㄴ. 왜란·호란을 거치며 최고 통치기구로 변화하였다.\nㄷ. 비변사의 강화로 의정부·6조의 기능이 강화되었다.\nㄹ. 흥선대원군은 비변사를 사실상 폐지하였다.", opts:["ㄱ, ㄴ","ㄱ, ㄴ, ㄹ","ㄴ, ㄷ, ㄹ","ㄱ, ㄴ, ㄷ, ㄹ"], a:1, exp:"ㄱ(참): 비변사는 원래 여진·왜 대방 임시 관청. ㄴ(참): 왜란·호란 이후 최고 통치기구로 변화. ㄷ(거짓): 비변사 강화로 의정부·6조 기능이 축소됨. ㄹ(참): 흥선대원군이 비변사를 사실상 폐지하고 의정부·삼군부 기능을 부활시켰다." },
+{ q:"숙종 때 환국의 전개 순서로 옳은 것은?", opts:["경진환국→기사환국→갑술환국","기사환국→경진환국→갑술환국","갑술환국→경진환국→기사환국","경진환국→갑술환국→기사환국"], a:0, exp:"숙종 때 환국 순서: 경진환국(서인 승리) → 기사환국(남인 승리) → 갑술환국(서인 승리). 갑술환국 이후 남인은 사실상 몰락하고, 남인 처벌 문제로 서인이 노론·소론으로 분열되었다." },
+{ q:"조선 후기 붕당정치 변질 과정에서 나타난 현상으로 옳지 않은 것은?", opts:["붕당 간 권력다툼 심화","특정 붕당의 관직 독점","탕평책의 필요성 대두","지방 사족의 정치 참여 확대"], a:3, exp:"지방 사족의 정치 참여 확대는 붕당정치 초기의 긍정적 특성이지, 변질 이후의 현상이 아니다. 변질 이후에는 붕당 간 권력다툼 심화, 관직 독점, 왕권 위협, 탕평책 필요성 대두가 나타났다." },
+{ q:"현종 때 예송논쟁에 대한 설명으로 옳은 것만 고른 것은?\nㄱ. 두 차례의 예송논쟁이 발생하였다.\nㄴ. 예송논쟁은 왕실 상례 문제에서 비롯되었다.\nㄷ. 1차와 2차 예송 모두 서인이 승리하였다.\nㄹ. 예송을 거치며 상대 붕당을 권력에서 완전히 몰아내려는 움직임이 강해졌다.", opts:["ㄱ, ㄴ","ㄱ, ㄴ, ㄹ","ㄷ, ㄹ","ㄱ, ㄴ, ㄷ, ㄹ"], a:1, exp:"ㄱ(참): 두 차례 예송논쟁 발생. ㄴ(참): 왕실 상례(복상 기간) 문제에서 비롯됨. ㄷ(거짓): 1차는 서인 승리, 2차는 남인 승리. ㄹ(참): 예송을 거치며 상대 붕당을 완전히 몰아내려는 움직임이 강해졌다." },
+{ q:"조선 후기 군사제도 변화에 대한 설명으로 옳은 것만 고른 것은?\nㄱ. 임진왜란 중 훈련도감이 설치되었다.\nㄴ. 5위를 대신하여 5군영으로 중앙군이 재편되었다.\nㄷ. 속오군은 중앙군으로 양반만으로 구성된 부대이다.\nㄹ. 지방군인 속오군은 양반부터 노비까지 편성되었다.", opts:["ㄱ, ㄴ, ㄹ","ㄱ, ㄴ, ㄷ","ㄴ, ㄷ, ㄹ","ㄱ, ㄷ, ㄹ"], a:0, exp:"ㄱ(참): 임진왜란 중 훈련도감 설치. ㄴ(참): 5위 대신 5군영으로 재편. ㄷ(거짓): 속오군은 지방군으로 양반~노비까지 다양한 계층 구성. ㄹ(참): 속오군은 양반부터 노비까지 이루어진 지방군이다." },
+{ q:"붕당정치 전개 과정과 각 시기 특징을 바르게 연결한 것은?", opts:["선조기 — 동인이 북인·남인으로 분열","광해군기 — 서인이 정국 주도","인조기 — 서인이 정국 주도, 남인 참여","현종기 — 북벌 문제로 서인·남인 대립"], a:2, exp:"인조기에는 인조반정을 주도한 서인이 정국을 주도하였고, 남인은 정권에 참여하였다. 선조기는 동인·서인 분열, 광해군기는 북인 정국 주도, 현종기는 예송논쟁이 주요 쟁점이었다." },
+{ q:"붕당정치가 변질된 이유와 결과를 가장 포괄적으로 설명한 것은?", opts:["외적 침략으로 인한 혼란으로 붕당 간 협력 필요성 증가","붕당 간 권력다툼이 심화되고 특정 붕당의 권력 독점이 이루어져 왕권이 위협받고 탕평책이 필요하게 됨","성리학 해석 차이로 인한 학파간 갈등이 심화됨","지방 사족의 세력이 커지면서 중앙 정계를 장악함"], a:1, exp:"붕당정치는 원래 지방 사족 의견 수렴과 비판적 견제라는 장점이 있었으나, 붕당 간 권력다툼이 심화되고 특정 붕당이 주요 관직을 독점하면서 왕권을 위협하고 정치적 혼란을 초래하였다. 이로 인해 탕평책의 필요성이 대두되었다." },
+{ q:"서인이 노론과 소론으로 분열된 원인과 성격으로 옳은 것은?", opts:["북벌 문제 → 노론(북벌 찬성), 소론(반대)","예송논쟁 → 노론(서인 입장), 소론(남인 입장)","남인에 대한 처벌 문제 → 노론(강경), 소론(온건)","이조전랑 임명 문제 → 노론(자파 중심), 소론(남인 포용)"], a:2, exp:"갑술환국 이후 남인에 대한 처벌 문제를 놓고 서인 내부에서 강경파(노론)와 온건파(소론)로 분열되었다." },
+{ q:"[시기 배열] 다음 사건을 시간 순서대로 바르게 나열한 것은?\nㄱ. 인조반정 ㄴ. 갑술환국 ㄷ. 동인·서인 분열 ㄹ. 기사환국 ㅁ. 경진환국", opts:["ㄷ-ㄱ-ㅁ-ㄹ-ㄴ","ㄱ-ㄷ-ㄴ-ㄹ-ㅁ","ㄷ-ㄴ-ㄱ-ㄹ-ㅁ","ㄱ-ㄷ-ㅁ-ㄹ-ㄴ"], a:0, exp:"동인·서인 분열(선조기) → 인조반정(인조기) → 경진환국(숙종, 서인 승리) → 기사환국(숙종, 남인 승리) → 갑술환국(숙종, 서인 승리). 이후 남인 몰락, 서인이 노론·소론으로 분열." }
+]
+},
+1: {
+ox: [
+{ q:"영조의 탕평책 배경은 숙종이 죽은 후 노론과 소론의 대립이 심화된 것이다.", a:true, exp:"영조의 탕평책 배경은 숙종 사후 노론·소론 대립이 심화된 것이다. 영조는 붕당 대립을 완화하고 세력 균형을 이루고자 탕평책을 추진하였다." },
+{ q:"정조는 규장각을 설치하고 서얼 출신들을 규장각 검서관으로 등용하였다.", a:true, exp:"정조는 규장각을 설치하여 학문 연구와 정책 수립의 중심 기관으로 삼았으며, 서얼 출신들을 규장각 검서관으로 등용하여 능력 중심 인재 발탁을 추진하였다." },
+{ q:"영조는 붕당 대립 완화를 위해 서원을 대폭 증설하였다.", a:false, exp:"서원을 대폭 증설한 것이 아니라, 영조는 서원을 정리하고 이조전랑의 권한을 약화시키는 등의 탕평책을 추진하였다. 서원 대폭 철폐는 흥선대원군의 정책이다." },
+{ q:"정조는 장용영을 설치하여 군사적 기반을 마련하였다.", a:true, exp:"정조는 장용영을 설치하여 왕의 친위 부대를 갖추고 군사적 기반을 마련하였다. 또한 수원화성을 건설하였다." },
+{ q:"세도정치는 순조, 헌종, 철종 3대에 걸쳐 약 60여 년간 지속되었다.", a:true, exp:"세도정치는 정조 사망 후 순조 즉위부터 안동 김씨, 풍양 조씨 중심으로 순조·헌종·철종 3대 60여 년간 지속되었다." },
+{ q:"세도정치기에 삼정의 문란은 전정·군정·환곡의 폐단을 의미한다.", a:true, exp:"삼정의 문란은 전정의 폐단(토지세/조세), 군정의 폐단(군포), 환곡의 폐단을 의미한다. 세도정치기 탐관오리들의 수탈로 백성들의 삶이 크게 어려워졌다." },
+{ q:"홍경래의 난은 경상도 차별과 세도 정권 수탈에 불만을 품은 홍경래가 일으켰다.", a:false, exp:"홍경래는 서북지방(평안도) 차별과 세도 정권의 수탈에 불만을 품고 1811년 난을 일으켰다. 경상도가 아닌 평안도(서북지방) 차별이 주요 원인이었다." },
+{ q:"임술농민봉기는 진주농민봉기를 시작으로 전국 70여 개 고을로 확산된 봉기이다.", a:true, exp:"1862년 진주에서 경상 우병사 백낙신의 수탈을 견디지 못한 농민들이 봉기하였고(진주농민봉기), 이것이 전국 70여 개 고을로 확산되어 임술농민봉기가 되었다." },
+{ q:"삼정이정청은 삼정의 폐단을 근본적으로 해결하는 데 성공하였다.", a:false, exp:"삼정이정청은 임술농민봉기의 영향으로 설치된 임시 기관이지만, 삼정의 폐단을 근본적으로 해결하지는 못하였다." },
+{ q:"정조의 초계문신제는 관료를 재교육하는 제도이다.", a:true, exp:"초계문신제는 젊은 관료들을 규장각에서 재교육하는 제도로, 정조가 능력 있는 관리를 육성하기 위해 시행하였다." }
+],
+mc: [
+{ q:"영조의 탕평책 내용으로 옳지 않은 것은?", opts:["서원 정리","이조전랑 권한 약화","균역법 시행","장용영 설치"], a:3, exp:"장용영 설치는 정조의 탕평책에 해당한다. 영조의 탕평책 내용으로는 서원 정리, 이조전랑 권한 약화, 균역법 시행, 신문고 부활, 가혹한 처벌 금지 등이 있다." },
+{ q:"정조의 탕평책으로 옳은 것을 고른 것은?", opts:["규장각 설치, 초계문신제 실시","서원 철폐, 균역법 시행","장용영 설치, 수원화성 건설","①과 ③ 모두"], a:3, exp:"정조의 탕평책에는 규장각 설치·초계문신제 실시(①)와 장용영 설치·수원화성 건설(③)이 모두 포함된다. 서원 철폐는 흥선대원군, 균역법은 영조의 정책이다." },
+{ q:"세도정치기의 특징으로 옳지 않은 것은?", opts:["비변사 장악과 군영 지휘권 독점","매관매직과 과거 시험 부정","삼정의 문란으로 백성 삶 악화","탕평책 추진으로 정치 안정"], a:3, exp:"탕평책 추진은 영조·정조 시기의 정책이며, 세도정치기에는 세도 가문의 권력 독점과 폐단이 나타났다. ①②③은 모두 세도정치기의 특징이다." },
+{ q:"세도정치가 지속된 시기로 옳은 것은?", opts:["영조·정조·순조","순조·헌종·철종","정조·순조·헌종","헌종·철종·고종"], a:1, exp:"세도정치는 정조 사망 이후 순조 즉위부터 시작하여 순조·헌종·철종 3대에 걸쳐 약 60여 년간 지속되었다." },
+{ q:"홍경래의 난(1811)에 대한 설명으로 옳은 것은?", opts:["홍경래는 몰락 양반으로 전라도 차별에 불만을 품었다","농민·상민·광산 노동자 등이 참가하였으며 한때 청천강 이북을 점거하였다","관군에 의해 1개월만에 진압되었다","임술농민봉기의 직접적 원인이 되었다"], a:1, exp:"홍경래의 난은 몰락 양반 홍경래가 서북지방(평안도) 차별과 세도 정권 수탈에 불만을 품고 1811년 일으킨 봉기이다. 농민·상민·광산 노동자 등이 참가하였으며 한때 청천강 이북을 점거하였으나 5개월 만에 진압되었다." },
+{ q:"임술농민봉기(1862)의 도화선이 된 사건은?", opts:["홍경래의 난","경상 우병사 백낙신의 수탈에 저항한 진주농민봉기","삼정이정청 설치에 반발한 봉기","세도가문의 서원 철폐에 반발한 봉기"], a:1, exp:"임술농민봉기는 진주에서 경상 우병사 백낙신의 수탈을 견디지 못한 몰락 양반 유계춘을 중심으로 봉기가 일어난 것을 시작으로(진주농민봉기), 이후 전국 70여 개 고을로 확산되었다." },
+{ q:"탕평책의 한계로 옳은 것은?", opts:["붕당 간 대립이 전혀 완화되지 않았다","붕당 정치의 폐단을 완전히 없애지 못하였다","탕평책 추진 이후 세도정치가 곧바로 사라졌다","영조와 정조 모두 탕평책을 추진하지 않았다"], a:1, exp:"탕평책의 의의는 붕당 간 대립 완화와 정국 안정이었으나, 한계는 붕당 정치의 폐단을 완전히 없애지 못한 것이었다." },
+{ q:"삼정이정청에 대한 설명으로 옳은 것은?", opts:["세도정치의 폐단을 근본적으로 해결하였다","임술농민봉기의 영향으로 설치된 임시 기관으로 근본적 문제 해결에는 실패하였다","흥선대원군이 설치하여 삼정의 문란을 완전히 해결하였다","정조가 탕평책의 일환으로 설치하였다"], a:1, exp:"삼정이정청은 임술농민봉기의 영향으로 삼정의 폐단을 해결하기 위해 설치된 임시 기관이다. 그러나 근본적인 문제를 해결하지 못하였다." },
+{ q:"세도정치기 삼정의 문란 중 환곡의 폐단이란?", opts:["토지에 부과하는 세금이 불공정하게 책정된 것","군포 징수 과정에서의 부정부패","환곡 운영 과정에서 탐관오리들이 중간에서 착복하는 것","과거 시험 문제가 사전에 유출되는 것"], a:2, exp:"환곡의 폐단은 원래 흉년에 곡식을 빌려주고 수확 후 갚는 구휼 제도인 환곡이 탐관오리들의 착복 수단으로 변질된 것이다." },
+{ q:"세도정치의 배경을 바르게 설명한 것은?", opts:["영조가 사망하고 정조가 즉위하면서 시작","정조 사망 후 순조가 즉위하면서 순조의 장인 김조순 중심의 안동 김씨가 권력 장악","인조반정 이후 서인이 권력 독점","홍경래의 난을 진압한 세력이 권력을 장악"], a:1, exp:"세도정치는 정조 사망 후 순조 즉위를 배경으로, 순조의 장인 김조순 중심의 안동 김씨가 권력을 장악하면서 시작되었다." }
+],
+hard: [
+{ q:"영조와 정조의 탕평책 비교로 옳은 것만 고른 것은?\nㄱ. 영조는 균역법을 시행하여 군포 부담을 줄였다.\nㄴ. 정조는 장용영을 설치하고 수원화성을 건설하였다.\nㄷ. 영조는 서얼 출신들을 규장각 검서관으로 등용하였다.\nㄹ. 두 왕의 탕평책 모두 붕당 정치의 폐단을 완전히 해소하였다.", opts:["ㄱ, ㄴ","ㄴ, ㄷ","ㄱ, ㄴ, ㄷ","ㄱ, ㄴ, ㄷ, ㄹ"], a:0, exp:"ㄱ(참): 영조는 균역법 시행으로 군포 부담을 1필로 줄였다. ㄴ(참): 정조는 장용영 설치와 수원화성 건설. ㄷ(거짓): 서얼 출신을 규장각 검서관으로 등용한 것은 정조이다. ㄹ(거짓): 두 왕의 탕평책 모두 붕당 정치의 폐단을 완전히 해소하지는 못하였다." },
+{ q:"세도정치기의 폐단으로 옳은 것만 고른 것은?\nㄱ. 비변사 장악을 통한 권력 독점\nㄴ. 매관매직과 과거 시험 부정\nㄷ. 삼정의 문란으로 백성 삶 악화\nㄹ. 왕권 강화로 정치 기강 확립", opts:["ㄱ, ㄴ, ㄷ","ㄴ, ㄷ, ㄹ","ㄱ, ㄷ, ㄹ","ㄱ, ㄴ, ㄷ, ㄹ"], a:0, exp:"ㄱ(참): 비변사 장악, 군영 지휘권 독점. ㄴ(참): 매관매직, 과거 시험 부정. ㄷ(참): 삼정 문란으로 백성 삶 악화. ㄹ(거짓): 세도정치기에는 왕권이 약화되고 정치 기강이 문란해졌다." },
+{ q:"홍경래의 난과 임술농민봉기의 공통점으로 옳은 것만 고른 것은?\nㄱ. 세도정치의 폐단이 배경이 되었다.\nㄴ. 삼정의 문란에 대한 불만이 원인이었다.\nㄷ. 농민층을 포함한 다양한 계층이 참여하였다.\nㄹ. 결국 근본적인 문제를 해결하는 데 성공하였다.", opts:["ㄱ, ㄷ","ㄴ, ㄷ","ㄱ, ㄴ, ㄷ","ㄱ, ㄴ, ㄷ, ㄹ"], a:0, exp:"ㄱ(참): 두 봉기 모두 세도정치의 폐단이 배경. ㄷ(참): 다양한 계층 참여. ㄴ은 임술농민봉기에 더 직접적이며, 홍경래의 난은 평안도 차별도 중요 원인. ㄹ(거짓): 두 봉기 모두 근본적 문제 해결 실패." },
+{ q:"임술농민봉기(1862)의 영향으로 옳지 않은 것은?", opts:["삼정이정청 설치","농민들의 사회참여의식 향상","양반 중심 질서의 균열","삼정의 폐단 근본적 해결"], a:3, exp:"임술농민봉기의 영향으로 삼정이정청이 설치되었으나 근본적인 문제는 해결되지 않았다. 봉기 속에서 농민들의 사회참여의식이 높아지고 양반 중심 질서가 균열되었다." },
+{ q:"탕평책 필요성과 결과를 종합적으로 설명한 것으로 가장 적절한 것은?", opts:["외세 침략으로 국방이 약화되어 군사력 강화를 위한 정책이 필요해짐","붕당 간 권력다툼 심화와 특정 붕당의 권력 독점으로 왕권이 위협받자 영조·정조가 탕평책을 추진하여 어느 정도 정국 안정을 이루었으나 붕당 정치의 폐단을 완전히 해소하지는 못함","서민 경제의 붕괴로 인한 민란 발생을 막기 위해 추진된 경제 정책","성리학 해석의 차이로 인한 학파 갈등을 해소하기 위한 학문 정책"], a:1, exp:"탕평책의 배경: 붕당 간 권력다툼 심화, 특정 붕당의 권력 독점, 왕권 위협. 영조·정조가 탕평책을 추진하여 붕당 대립을 완화하고 정국을 안정시켰으나, 붕당 정치의 폐단을 완전히 없애지는 못하였고 이후 세도정치로 이어졌다." },
+{ q:"[시기 배열] 다음 사건을 시간 순으로 올바르게 나열한 것은?\nㄱ. 임술농민봉기 ㄴ. 홍경래의 난 ㄷ. 영조의 균역법 시행 ㄹ. 정조의 수원화성 건설", opts:["ㄷ-ㄹ-ㄴ-ㄱ","ㄹ-ㄷ-ㄴ-ㄱ","ㄴ-ㄷ-ㄹ-ㄱ","ㄷ-ㄴ-ㄹ-ㄱ"], a:0, exp:"영조의 균역법 시행(1750년대) → 정조의 수원화성 건설(1794~1796) → 홍경래의 난(1811) → 임술농민봉기(1862) 순이다." },
+{ q:"세도정치의 배경·전개·특징에 대한 설명으로 옳지 않은 것은?", opts:["정조 사망 후 순조 즉위를 배경으로 시작되었다","순조의 장인 김조순 중심의 안동 김씨가 권력을 장악하였다","세도정치기에 왕권이 강화되어 정치 기강이 확립되었다","이후 풍양 조씨 등도 세력을 확장하였다"], a:2, exp:"세도정치기에는 세도 가문이 비변사를 장악하고 권력을 독점하면서 왕권이 약화되고 정치 기강이 문란해졌다. 왕권이 강화된 것은 사실과 반대이다." },
+{ q:"홍경래의 난의 역사적 의의로 가장 적절한 것은?", opts:["세도 정권을 무너뜨리고 새로운 정치 질서를 수립하였다","세도 정권의 무능과 부패를 폭로하고 농민 봉기 활성화에 영향을 주었다","삼정의 문란을 근본적으로 해결하는 계기가 되었다","양반 중심의 신분 질서를 완전히 붕괴시켰다"], a:1, exp:"홍경래의 난의 의의는 세도 정권의 무능과 부패를 폭로하고 이후 농민 봉기가 활성화되는 데 영향을 주었다는 점이다." },
+{ q:"정조의 탕평책에 해당하는 것만 고른 것은?\nㄱ. 규장각 설치 및 서얼 출신 검서관 등용\nㄴ. 초계문신제 실시\nㄷ. 균역법 시행\nㄹ. 장용영 설치", opts:["ㄱ, ㄴ, ㄹ","ㄴ, ㄷ, ㄹ","ㄱ, ㄷ, ㄹ","ㄱ, ㄴ, ㄷ, ㄹ"], a:0, exp:"ㄱ(정조): 규장각 설치, 서얼 검서관 등용. ㄴ(정조): 초계문신제 실시. ㄷ(영조): 균역법은 영조의 정책. ㄹ(정조): 장용영 설치. 따라서 정조의 정책은 ㄱ, ㄴ, ㄹ이다." },
+{ q:"삼정의 문란 중 군정의 폐단에 해당하는 것은?", opts:["토지세를 불공정하게 부과하는 것","군포 징수 과정에서의 부정부패 (사망자나 어린아이에게도 군포 징수)","환곡을 강제로 배급하고 과도한 이자를 취하는 것","과거 시험에서의 부정행위"], a:1, exp:"군정의 폐단은 군포 징수 과정에서의 부정부패로, 죽은 사람이나 어린아이에게도 군포를 징수하는 등의 폐단이 있었다. 전정의 폐단은 토지세 불공정 부과, 환곡의 폐단은 환곡의 착복과 강제 배급이다." }
+]
+},
+2: {
+ox: [
+{ q:"흥선대원군의 집권 배경 중 하나는 서양 세력의 침략적 접근으로 인한 위기감 고조이다.", a:true, exp:"흥선대원군의 집권 배경으로는 세도정치와 삼정의 문란으로 인한 농민봉기 확산, 서양 세력의 침략적 접근으로 인한 위기감 고조가 있었다." },
+{ q:"흥선대원군은 안동 김씨 세력을 대거 등용하여 정치적 기반을 강화하였다.", a:false, exp:"흥선대원군은 안동 김씨 세력을 몰아내고 남인·북인 등 종친 세력을 등용하여 정치적 기반을 강화하였다." },
+{ q:"흥선대원군은 세도 가의 핵심기구였던 비변사를 사실상 폐지하였다.", a:true, exp:"흥선대원군은 세도 가의 핵심기구였던 비변사를 사실상 폐지하고, 의정부와 삼군부의 기능을 부활시켜 정치·군사 업무를 맡겼다." },
+{ q:"경복궁 중건을 위해 발행한 당백전의 명목상 가치는 상평통보의 100배였으나 실질 가치는 5~6배에 불과하였다.", a:true, exp:"당백전은 명목상 상평통보의 100배 가치로 발행되었으나 실질 가치는 5~6배에 불과하였다. 이로 인해 화폐 가치가 하락하고 물가가 폭등하였다." },
+{ q:"흥선대원군의 호포제는 양반에게도 군포를 징수하는 정책이었다.", a:true, exp:"호포제는 기존에 상민에게만 부과하던 군포를 양반에게도 징수하는 정책으로, 군정의 문란을 개혁하기 위한 것이었다." },
+{ q:"흥선대원군은 전국의 모든 서원을 철폐하였다.", a:false, exp:"흥선대원군은 전국 서원 중 47곳만 남기고 나머지를 모두 철폐하였다. 전국의 모든 서원을 철폐한 것은 아니다." },
+{ q:"사창제는 환곡 운영을 민간에 맡겨 향리의 중간 착복을 막으려 한 제도이다.", a:true, exp:"사창제는 환곡 운영을 민간에 맡겨 관리들의 중간 착복을 막고 환곡의 폐단을 개혁하려 한 제도이다." },
+{ q:"흥선대원군의 서원 철폐는 지방 유생과 양반의 지지를 받았다.", a:false, exp:"서원 철폐는 지방 유생과 양반들의 강한 반발을 받았다. 이 반발이 이후 흥선대원군이 권력에서 물러나는 배경 중 하나가 되었다." },
+{ q:"대전회통은 흥선대원군이 편찬한 새로운 법전으로 통치체제 재정비를 위한 것이었다.", a:true, exp:"『대전회통』은 흥선대원군이 통치체제를 재정비하기 위해 편찬한 새로운 법전이다." },
+{ q:"경복궁 중건 당시 강제동원은 양반을 비롯한 백성 모두의 불만을 심화시켰다.", a:true, exp:"경복궁 중건을 위해 양반들의 묘지를 베고 백성들을 강제로 공사에 동원하였다. 이로 인해 양반을 비롯한 백성 모두의 불만이 심화되었다." }
+],
+mc: [
+{ q:"흥선대원군의 통치체제 정비 내용으로 옳지 않은 것은?", opts:["안동 김씨 세력 배제 및 종친 세력 등용","비변사 사실상 폐지, 의정부·삼군부 기능 부활","대전회통 편찬","안동 김씨와 연합하여 세도정치 강화"], a:3, exp:"흥선대원군은 안동 김씨 세력을 몰아내고 종친 세력을 등용하였다. 안동 김씨와 연합한 것이 아니라 배척한 것이 핵심이다." },
+{ q:"경복궁 중건으로 인한 부작용으로 옳은 것은?", opts:["왕실 권위 강화와 백성의 지지 획득","당백전 발행으로 화폐 가치 하락, 물가 폭등","군사력 강화로 서양 세력 침략 방어 성공","서원 철폐로 양반의 지지 확보"], a:1, exp:"경복궁 중건 부작용: 당백전 발행으로 화폐 가치 하락, 물가 폭등. 원납전 강제 징수, 양반 묘지 벰, 백성 강제 동원으로 불만이 심화되었다." },
+{ q:"흥선대원군의 민생안정 정책 중 군정의 문란을 개혁하기 위한 것은?", opts:["양전 사업(토지 조사)","호포제","사창제","서원 철폐"], a:1, exp:"호포제는 기존에 상민에게만 부과하던 군포를 양반에게도 징수하는 제도로 군정의 문란을 개혁하기 위한 것이다. 양전 사업은 전정, 사창제는 환곡 개혁이다." },
+{ q:"사창제에 대한 설명으로 옳은 것은?", opts:["조세를 국가가 직접 징수하여 부정부패를 막는 제도","군포 부담을 균등하게 나누는 제도","환곡 운영을 민간에 맡겨 향리의 중간 착복을 막는 제도","서원에 국가 보조금을 지급하는 제도"], a:2, exp:"사창제는 환곡 운영을 민간에 맡기는 제도이다. 기존에 관이 운영하던 환곡을 민간에 위탁하여 향리의 중간 착복을 막고 환곡의 폐단을 개혁하려 하였다." },
+{ q:"흥선대원군이 서원을 대폭 철폐한 이유로 옳지 않은 것은?", opts:["서원이 붕당·지방 사족의 근거지였기 때문에","세도정치기 서원이 면세·면역 특권을 누리며 백성을 수탈하였기 때문에","성리학 보급에 기여하므로 재정 지원 중단이 필요했기 때문에","국가 재정 확충을 위해"], a:2, exp:"흥선대원군이 서원을 철폐한 이유는 서원이 붕당의 근거지이자 면세·면역 특권으로 백성을 수탈하였기 때문이며, 민생 안정과 국가 재정 확충을 위한 것이었다." },
+{ q:"흥선대원군의 서원 철폐 결과로 옳은 것은?", opts:["지방 유생과 양반의 지지를 받았다","민생 안정과 국가 재정 확충에 기여하였으나 지방 유생과 양반의 반발을 샀다","서원이 완전히 사라졌다","성리학의 발전에 크게 기여하였다"], a:1, exp:"서원 철폐의 긍정적 영향은 민생 안정과 국가 재정 확충이었다. 부정적 영향은 지방 유생과 양반의 강한 반발로, 이것이 흥선대원군이 권력에서 물러나는 배경 중 하나가 되었다." },
+{ q:"다음 중 흥선대원군이 편찬한 새로운 법전은?", opts:["경국대전","대전통편","대전회통","속대전"], a:2, exp:"흥선대원군은 통치체제 재정비를 위해 새로운 법전인 『대전회통』을 편찬하였다. 경국대전은 세조 때, 대전통편은 정조 때, 속대전은 영조 때 편찬된 법전이다." },
+{ q:"흥선대원군의 삼정 개혁 내용이 잘못 연결된 것은?", opts:["전정의 문란 → 양전 사업","군정의 문란 → 호포제","환곡의 폐단 → 사창제","세도정치의 폐단 → 당백전 발행"], a:3, exp:"당백전 발행은 삼정 개혁이 아니라 경복궁 중건을 위한 재정 마련 방법이었다. 결과적으로 화폐 가치 하락과 물가 폭등을 일으켰다." },
+{ q:"흥선대원군 집권 배경과 개혁의 방향을 잘 설명한 것은?", opts:["외세 침략에 대응하기 위한 외교 정책 중심의 개혁","세도정치의 폐단과 서양 세력의 위협에 대응하기 위해 왕권 강화와 민생 안정을 추구한 개혁","성리학 발전을 위한 학문 중심 개혁","상공업 진흥을 위한 경제 중심 개혁"], a:1, exp:"흥선대원군의 집권 배경은 세도정치의 폐단과 서양 세력의 위협이었다. 개혁의 방향은 안동 김씨 배제, 비변사 폐지, 법전 편찬 등 왕권 강화와 삼정 개혁, 서원 철폐 등 민생 안정을 추구하는 것이었다." },
+{ q:"경복궁 중건 과정에서 발행된 당백전의 문제점은?", opts:["너무 적은 수량으로 유통이 어려웠다","명목 가치와 실질 가치의 차이로 화폐 가치 하락, 물가 폭등 초래","서양 열강의 경제적 침탈을 직접 야기하였다","양반들의 재정 부담을 크게 증가시켰다"], a:1, exp:"당백전은 명목상 상평통보의 100배로 발행되었으나 실질 가치는 5~6배에 불과하여 화폐 가치가 하락하고 물가가 폭등하였다." }
+],
+hard: [
+{ q:"흥선대원군의 통치체제 정비에 대한 설명으로 옳은 것만 고른 것은?\nㄱ. 안동 김씨 세력을 몰아내고 종친 세력을 등용하였다.\nㄴ. 비변사를 사실상 폐지하고 의정부·삼군부를 부활시켰다.\nㄷ. 새로운 법전인 대전회통을 편찬하였다.\nㄹ. 삼군부를 폐지하고 비변사의 기능을 강화하였다.", opts:["ㄱ, ㄴ, ㄷ","ㄴ, ㄷ, ㄹ","ㄱ, ㄷ, ㄹ","ㄱ, ㄴ, ㄷ, ㄹ"], a:0, exp:"ㄱ(참): 안동 김씨 배제, 종친 세력 등용. ㄴ(참): 비변사 사실상 폐지, 의정부·삼군부 기능 부활. ㄷ(참): 대전회통 편찬. ㄹ(거짓): 삼군부를 폐지한 것이 아니라 부활시킨 것이며, 비변사 기능을 폐지한 것이다." },
+{ q:"경복궁 중건의 의도와 실제 결과를 분석한 것으로 옳은 것은?", opts:["의도와 결과 모두 왕실 권위 강화에 성공하였다","왕실 권위 회복이 의도였으나 당백전 발행·강제 동원 등으로 백성과 양반 모두의 불만을 초래하였다","외적 방어를 위한 군사시설 건축으로 서양 침략을 성공적으로 막아냈다","서원 철폐와 연계하여 양반의 지지를 받았다"], a:1, exp:"경복궁 중건의 의도는 임진왜란 때 불탄 경복궁을 다시 지어 왕실 권위를 회복하는 것이었다. 그러나 원납전 강제 징수, 당백전 발행(화폐 가치 하락·물가 폭등), 양반 묘지 벰, 백성 강제 동원 등으로 양반과 백성 모두의 불만이 심화되었다." },
+{ q:"흥선대원군의 삼정 개혁을 잘못 설명한 것은?", opts:["양전 사업은 전정의 문란을 해결하기 위한 토지 조사이다","호포제는 양반에게도 군포를 징수하여 군정 개혁을 목표로 한다","사창제는 환곡 운영을 국가가 직접 장악하여 폐단을 없애려 한 제도이다","삼정 개혁은 관리 부정 감소와 백성 세금 부담 감소를 목표로 하였다"], a:2, exp:"사창제는 환곡 운영을 국가가 직접 장악한 것이 아니라 민간에 맡기는 제도이다. 관이 운영할 때 향리가 중간 착복하는 문제를 막기 위해 민간에 위탁한 것이다." },
+{ q:"흥선대원군의 서원 철폐에 대한 설명으로 옳은 것만 고른 것은?\nㄱ. 전국 서원 중 47곳만 남기고 나머지를 모두 철폐하였다.\nㄴ. 서원의 면세·면역 특권을 없애 백성 수탈을 방지하고자 하였다.\nㄷ. 서원 철폐 이후 지방 유생과 양반의 지지를 얻었다.\nㄹ. 서원 철폐는 민생 안정과 국가 재정 확충에 기여하였다.", opts:["ㄱ, ㄴ, ㄹ","ㄴ, ㄷ, ㄹ","ㄱ, ㄷ, ㄹ","ㄱ, ㄴ, ㄷ, ㄹ"], a:0, exp:"ㄱ(참): 47곳만 남기고 나머지 철폐. ㄴ(참): 면세·면역 특권 폐지, 백성 수탈 방지. ㄷ(거짓): 지방 유생과 양반의 강한 반발을 받았다. ㄹ(참): 민생 안정과 국가 재정 확충에 기여하였다." },
+{ q:"흥선대원군이 권력에서 물러난 핵심 이유로 가장 적절한 것은?", opts:["외세 침략에 대한 강경 대응 정책 때문에","경복궁 중건 과정의 부작용과 서원 철폐로 인한 양반 반발이 겹쳤기 때문에","탕평책을 포기하고 특정 붕당을 우대하였기 때문에","삼정 개혁이 지나치게 강경하여 기존 관료층의 이익을 전면 부정하였기 때문에"], a:1, exp:"흥선대원군이 권력에서 물러난 배경: ①경복궁 중건 과정에서의 당백전 발행(화폐 가치 하락·물가 폭등), 강제 동원으로 백성과 양반 모두의 불만 심화. ②서원 철폐로 인한 지방 유생·양반의 강한 반발." },
+{ q:"흥선대원군의 개혁이 갖는 역사적 의의와 한계는?", opts:["왕권 강화와 민생 안정을 추구하여 부분적으로 성과를 거두었으나 경복궁 중건 부작용과 서원 철폐 반발 등으로 권력에서 물러나게 됨","세도정치를 완전히 종식시키고 조선의 근대화를 이루어냄","외세 침략을 완전히 막아내고 국권을 수호하였음","삼정의 문란을 근본적으로 해결하여 민생 안정에 완전히 성공함"], a:0, exp:"흥선대원군 개혁의 역사적 평가: 왕권 강화(비변사 폐지, 의정부·삼군부 부활, 대전회통 편찬)와 민생 안정(삼정 개혁, 서원 철폐)을 추구하여 부분적 성과를 거두었다. 그러나 경복궁 중건의 부작용과 서원 철폐로 인한 반발이 겹쳐 이후 권력에서 물러나게 되었다." }
+]
+},
+3: {
+ox: [
+{ q:"조공책봉 관계는 주변국이 황제국에 예물을 바치고, 황제가 주변국 군주의 지배권을 인정해 주는 관계이다.", a:true, exp:"조공책봉 관계는 주변국들이 황제국(중국)에게 예물을 바치고(조공), 황제가 주변국 군주의 지배권을 인정해 주는 것(책봉)으로, 실질적 종속 관계가 아닌 의례적 외교 관계이다." },
+{ q:"조공책봉 관계는 실질적인 종속 관계로 주변국이 황제국에 완전히 복속되는 것을 의미한다.", a:false, exp:"조공책봉 관계는 실질적 종속 관계가 아니라 의례적인 외교 관계이다. 주변국들은 경제적·문화적 이익을 위해 이러한 국제 질서에 참여하였다." },
+{ q:"고구려는 남북조 모두와 조공책봉 관계를 맺었다.", a:true, exp:"고구려는 주로 북조의 북위, 남조의 송과 교류하였으며 남북조 모두와 조공책봉 관계를 맺었다. 또한 독자적 천하관을 확립하여 신라·동부여 등을 속국으로 여겼다." },
+{ q:"7세기 이후 수·당이 중국 중심 국제 질서를 확립하려 할 때 고구려는 이에 순응하였다.", a:false, exp:"7세기 이후 수·당이 중국 중심 국제 질서를 확립하려 하였으나, 고구려는 이에 따르지 않고 수 차례의 수·당 침략을 방어하였다." },
+{ q:"백제는 주로 남조와 교류하였다.", a:true, exp:"백제는 주로 중국 남조와 교류하였다. 백제는 일본에 유학·불교·회화·천문·역법 등의 문물을 전하기도 하였다." },
+{ q:"아스카 문화는 삼국이 일본에 문물을 전해주면서 생긴 일본의 고대 문화이다.", a:true, exp:"아스카 문화는 삼국(고구려·백제·신라·가야)이 일본에 문물을 전해주면서 생긴 일본의 고대 문화이다." },
+{ q:"장보고는 청해진을 설치하여 신라·당·일본 사이의 해상무역을 장악하였다.", a:true, exp:"9세기 신라의 장보고는 완도에 청해진을 설치하여 해적을 소탕하고, 신라·당·일본 3국 간 해상 무역을 장악하였다." },
+{ q:"발해의 신라도는 신라와 연결되는 교통로였다.", a:true, exp:"발해의 신라도는 신라(함경 지역)와 연결되는 교통로였다. 발해는 거란도·영주도·조공도·신라도·일본도 등 다양한 교통로를 설치하였다." },
+{ q:"가야는 일본에 조선술과 축제술을 전하였다.", a:false, exp:"조선술과 축제술을 일본에 전한 것은 신라이다. 가야는 일본에 토기 제작 기술을 전하였다." },
+{ q:"통일신라 시기 산동반도 등지에 신라인 집단 거주지인 신라방이 형성되었다.", a:true, exp:"통일신라 시기 산동반도 등지에 신라인 집단 거주지인 신라방이 형성되었으며, 대표적으로 신라관(발해관)과 법화원이 있었다." }
+],
+mc: [
+{ q:"조공책봉 관계의 특징으로 옳은 것은?", opts:["황제국이 주변국을 완전히 지배하는 실질적 종속 관계","의례적인 외교 관계로 경제적·문화적 이익을 위해 참여","주변국이 황제국의 군사력으로 완전히 종속","황제국이 주변국의 내정에 직접 개입"], a:1, exp:"조공책봉 관계는 실질적 종속이 아닌 의례적인 외교 관계이다. 주변국들은 경제적·문화적 이익을 위해 이 국제 질서에 참여하였다." },
+{ q:"7세기 이후 고구려가 멸망하게 된 직접적 원인은?", opts:["수의 침략으로 멸망","신라가 당과 손잡고 공격하여 멸망","백제의 침공으로 멸망","발해에 의해 멸망"], a:1, exp:"7세기에 신라가 당과 동맹을 맺어 백제와 고구려를 차례로 멸망시켰다. 이후 신라는 당의 군대를 몰아내고 삼국 통일을 완수하였다." },
+{ q:"백제가 일본에 전한 문물로 옳지 않은 것은?", opts:["유학","불교","회화","토기 제작 기술"], a:3, exp:"토기 제작 기술을 일본에 전한 것은 가야이다. 백제는 유학·불교·회화·천문·역법 등을 일본에 전하였다." },
+{ q:"9세기 완도에 청해진을 설치하여 해상무역을 장악한 인물은?", opts:["원효","의상","장보고","최치원"], a:2, exp:"9세기 신라의 장보고는 완도에 청해진을 설치하여 해적을 소탕하고 신라·당·일본 사이의 해상무역을 장악하였다." },
+{ q:"발해의 교통로 중 거란과 연결되는 것은?", opts:["일본도","신라도","거란도","조공도"], a:2, exp:"발해의 거란도는 거란과 연결되는 교통로이다. 발해는 거란도·영주도·조공도·신라도·일본도 등 5가지 교통로를 운영하였다." },
+{ q:"동아시아 문화권 형성의 주요 매개로 옳은 것은?", opts:["이슬람 문화와의 교류","중국 왕조와의 조공·책봉 관계를 통한 한자·유교·불교·율령 도입","몽골 제국의 팽창","일본과의 직접 교류"], a:1, exp:"동아시아 문화권은 중국 왕조와의 조공·책봉 관계를 통해 한자·유교·불교·율령 등이 도입되면서 형성되었다." },
+{ q:"고구려의 독자적 천하관에 대한 설명으로 옳은 것은?", opts:["중국 황제에게 완전히 복속된 관계 유지","신라·동부여 등을 속국으로 여겼으며 남북조 모두와 교류하였다","백제와 함께 일본 중심 천하관을 공유하였다","당의 천하관을 수용하고 따랐다"], a:1, exp:"고구려는 독자적 천하관을 확립하여 신라·동부여 등을 속국으로 여겼으며, 남북조 모두와 조공책봉 관계를 맺었다." },
+{ q:"통일신라의 대외교류에 대한 설명으로 옳지 않은 것은?", opts:["산동반도 등지에 신라방이 형성되었다","장보고가 완도에 청해진을 설치하였다","당-일본 사이의 중계 무역으로 이익을 얻었다","발해와 적극적으로 교류하여 남북국 문화 융합을 이루었다"], a:3, exp:"통일신라와 발해는 경쟁·대립 관계이기도 하였으며, 적극적으로 문화를 융합하였다는 것은 사실과 다르다." },
+{ q:"아스카 문화에 대한 설명으로 옳은 것은?", opts:["중국 당나라의 문화가 일본에 전해지면서 형성된 문화","삼국이 일본에 문물을 전해주면서 생긴 일본의 고대 문화","발해가 일본에 문물을 전하면서 형성된 문화","고구려 단독으로 일본에 문물을 전한 결과 형성된 문화"], a:1, exp:"아스카 문화는 삼국(고구려·백제·신라·가야)이 일본에 문물을 전해주면서 생긴 일본의 고대 문화이다." },
+{ q:"발해 건국의 배경은?", opts:["신라의 삼국 통일","고구려의 멸망 이후 고구려 옛 땅에서 발해 건국","백제의 부흥 운동","당나라의 한반도 지배 정책"], a:1, exp:"발해는 고구려의 옛 땅에서 건국되었다. 고구려 멸망 이후 그 유민들이 고구려 영역에 발해를 건국하면서 통일신라와 함께 남북국 시대를 이루었다." }
+],
+hard: [
+{ q:"조공책봉 관계에 대한 설명으로 옳은 것만 고른 것은?\nㄱ. 실질적 종속 관계가 아닌 의례적 외교 관계이다.\nㄴ. 주변국은 경제적·문화적 이익을 위해 참여하였다.\nㄷ. 황제국이 주변국의 내정에 직접 개입하는 관계이다.\nㄹ. 한자·유교·불교·율령 등 문화 교류의 매개가 되었다.", opts:["ㄱ, ㄴ, ㄹ","ㄴ, ㄷ, ㄹ","ㄱ, ㄷ, ㄹ","ㄱ, ㄴ, ㄷ, ㄹ"], a:0, exp:"ㄱ(참): 의례적 외교 관계. ㄴ(참): 경제적·문화적 이익 위해 참여. ㄷ(거짓): 내정에 직접 개입하는 관계가 아니다. ㄹ(참): 한자·유교·불교·율령 등 문화 교류의 매개." },
+{ q:"삼국의 대외 교류에 대한 설명으로 옳지 않은 것은?", opts:["고구려는 독자적 천하관을 확립하고 남북조 모두와 조공책봉 관계를 맺었다","백제는 주로 남조와 교류하였다","신라는 조선술·축제술을 일본에 전하였다","가야는 유학·불교·회화·천문·역법을 일본에 전하였다"], a:3, exp:"유학·불교·회화·천문·역법을 일본에 전한 것은 백제이다. 가야는 토기 제작 기술을 전하였다." },
+{ q:"통일신라의 대외 교류 사례로 옳은 것만 고른 것은?\nㄱ. 산동반도에 신라방 형성\nㄴ. 장보고가 완도에 청해진 설치\nㄷ. 당-일본 사이 중계 무역\nㄹ. 발해 건국 후 고구려 문화 계승", opts:["ㄱ, ㄴ, ㄷ","ㄴ, ㄷ, ㄹ","ㄱ, ㄷ, ㄹ","ㄱ, ㄴ, ㄷ, ㄹ"], a:0, exp:"ㄱ(참): 신라방 형성. ㄴ(참): 청해진 설치. ㄷ(참): 당-일본 중계 무역. ㄹ(발해 관련): 발해의 역사이지 통일신라의 대외 교류 사례가 아니다." },
+{ q:"발해의 교통로 5가지를 바르게 제시한 것은?", opts:["거란도, 영주도, 조공도, 신라도, 일본도","당도, 신라도, 일본도, 고구려도, 발해도","거란도, 당도, 신라도, 일본도, 서역도","고려도, 거란도, 신라도, 일본도, 중원도"], a:0, exp:"발해의 5가지 교통로: 거란도(→거란), 영주도(→영주·베이징), 조공도(→신라관/발해관), 신라도(→신라/함경), 일본도(→일본)이다." },
+{ q:"7세기 동아시아 국제 관계 변화에 대한 설명으로 옳은 것만 고른 것은?\nㄱ. 수·당이 남북조를 통합하고 중국 중심 국제 질서 확립을 시도하였다.\nㄴ. 고구려는 수·당의 침략에 복속하여 중국 중심 질서를 받아들였다.\nㄷ. 신라는 당과 동맹하여 백제와 고구려를 멸망시켰다.\nㄹ. 이후 신라는 당의 군대를 몰아내고 삼국 통일을 완수하였다.", opts:["ㄱ, ㄷ, ㄹ","ㄴ, ㄷ, ㄹ","ㄱ, ㄴ, ㄷ","ㄱ, ㄴ, ㄷ, ㄹ"], a:0, exp:"ㄱ(참): 수·당이 중국 중심 국제 질서 확립 시도. ㄴ(거짓): 고구려는 복속하지 않고 수 차례 침략을 방어하였다. ㄷ(참): 신라-당 동맹으로 백제·고구려 멸망. ㄹ(참): 신라가 당의 군대를 몰아내고 삼국 통일 완수." },
+{ q:"고구려의 대외 관계를 가장 잘 설명한 것은?", opts:["당나라의 천하관에 복속하여 안정적 관계를 유지하였다","독자적 천하관을 확립하여 신라·동부여 등을 속국으로 여기고 남북조 모두와 교류하였으나 수·당의 침략에 맞서 싸웠다","백제와 동맹하여 신라와의 관계를 중시하였다","주로 일본과의 교류에 집중하였다"], a:1, exp:"고구려는 독자적 천하관을 확립하여 신라·동부여 등을 속국으로 여겼으며, 남북조 모두와 조공책봉 관계를 맺었다. 7세기 수·당이 중국 중심 국제 질서 확립을 시도하였으나 고구려는 이에 따르지 않고 여러 차례 침략을 방어하였다." }
+]
+},
+4: {
+ox: [
+{ q:"거란의 1차 침입 때 서희의 외교 담판으로 강동 6주를 확보하였다.", a:true, exp:"거란의 1차 침입 때 서희는 외교 담판을 벌여 거란이 물러나게 하고, 오히려 강동 6주를 확보하는 성과를 거두었다." },
+{ q:"귀주 대첩은 거란의 2차 침입 때 강감찬이 거란군을 크게 물리친 전투이다.", a:false, exp:"귀주 대첩은 거란의 3차 침입 때 강감찬이 귀주에서 거란군을 크게 물리친 전투이다." },
+{ q:"별무반은 여진 정벌을 위해 조직된 군대로 신기군·신보군·항마군으로 구성되었다.", a:true, exp:"별무반은 12세기 여진 정벌을 위해 고려가 조직한 군대로, 신기군(기병), 신보군(보병), 항마군(승병)으로 구성되었다." },
+{ q:"여진은 금을 세운 후 고구려에 군신관계를 요구하였다.", a:false, exp:"여진은 금을 세우고 요를 무너뜨린 후 고려에 군신관계를 요구하였다. 고구려가 아닌 고려이다." },
+{ q:"몽골의 침입 당시 고려는 수도를 강화도로 옮기고 항전하였다.", a:true, exp:"몽골이 침입하자 고려는 수도를 강화도로 옮기고 항전하였다. 이후 무신정권이 붕괴되고 몽골과 강화를 맺어 개경으로 환도하였다." },
+{ q:"원 간섭기에 고려에서 원으로는 몽골풍이, 원에서 고려로는 고려양이 전파되었다.", a:false, exp:"원 간섭기에 고려에는 몽골풍이 전파되었고, 원에는 고려양이 전파되었다. 방향이 반대이다." },
+{ q:"공민왕은 원·명 교체기를 이용하여 명과 외교 관계를 맺고 반원 정책을 추진하였다.", a:true, exp:"공민왕은 원·명 교체기에 명과 외교 관계를 수립하고 반원 정책을 추진하였다." },
+{ q:"위화도 회군은 이성계가 요동 정벌을 강행하면서 명과의 관계가 단절된 사건이다.", a:false, exp:"위화도 회군은 이성계가 요동 정벌을 포기하고 군대를 돌려 개경으로 돌아온 사건이다. 이후 요동 정벌이 중단되고 명과의 관계가 회복되었다." },
+{ q:"고려 전기의 대외교류에서 송과의 무역은 인삼·금은·나전칠기 등을 수출하고 비단·약재·서적·자기 등을 수입하였다.", a:true, exp:"고려는 송과의 무역에서 인삼·금은·나전칠기·화문석·종이·먹 등을 수출하고, 비단·약재·서적·자기 등을 수입하였다." },
+{ q:"몽골 사신 피살 사건은 몽골이 고려를 침략하는 계기가 되었다.", a:true, exp:"고려와 몽골이 강동성에서 합동작전을 벌인 후 형제의 맹약을 맺었으나, 몽골 사신이 고려에서 피살되는 사건이 발생하자 이를 계기로 몽골이 고려를 침략하였다." }
+],
+mc: [
+{ q:"거란의 3차 침입 관련 설명으로 옳은 것은?", opts:["서희의 외교 담판으로 강동 6주를 확보하였다","강감찬이 귀주에서 거란군을 크게 물리쳤다(귀주 대첩)","고려가 강화도로 수도를 옮기고 항전하였다","고려·송·거란의 세력 균형이 깨지는 계기가 되었다"], a:1, exp:"거란의 3차 침입 때 강감찬이 귀주에서 거란군을 크게 물리친 것이 귀주 대첩이다. 강동 6주 확보는 1차 침입, 강화도 천도는 몽골 침입과 관련된 사건이다." },
+{ q:"고려가 별무반을 조직한 이유는?", opts:["거란의 침략에 대비하기 위해","여진 정벌을 위해","몽골의 침략에 대비하기 위해","왜구 격퇴를 위해"], a:1, exp:"별무반은 12세기 여진 정벌을 위해 고려가 조직한 군대이다. 신기군·신보군·항마군으로 구성되었다." },
+{ q:"원 간섭기 고려와 원의 교류 내용으로 옳은 것은?", opts:["고려에 고려양이, 원에 몽골풍이 전파되었다","고려에 몽골풍이, 원에 고려양이 전파되었다","이슬람 계통 사람의 고려 귀화는 없었다","원과의 교류가 완전히 단절되었다"], a:1, exp:"원 간섭기에 고려에는 몽골풍이 전파되었고, 원에는 고려양이 전파되었다." },
+{ q:"위화도 회군의 결과로 옳은 것은?", opts:["요동 정벌 성공, 영토 확장","요동 정벌 중단, 명과의 관계 회복","고려와 명의 전쟁 발발","원과의 관계 회복"], a:1, exp:"이성계의 위화도 회군으로 요동 정벌이 중단되었고, 이후 명과의 관계가 회복되었다." },
+{ q:"거란 침입 이후 동아시아 국제 정세에 대한 설명으로 옳은 것은?", opts:["고려가 완전히 거란에 복속되었다","고려·송·거란 세 나라의 세력 균형이 유지되었다","고려와 송의 동맹으로 거란이 멸망하였다","여진이 고려를 지원하여 거란을 물리쳤다"], a:1, exp:"귀주 대첩 이후 고려·송·거란 세 나라의 세력 균형이 유지되었다." },
+{ q:"고려 전기 대외 교류에서 거란과의 무역 내용으로 옳은 것은?", opts:["인삼·금은·나전칠기 수출 / 비단·약재·서적 수입","농기구·곡식·문방구 수출 / 은·피·말 수입","곡식·인삼·서적 수출 / 유황·수은 수입","수은·향신료·산호 교역"], a:1, exp:"거란과의 무역: 농기구·곡식·문방구 수출, 은·피·말 수입. 인삼·금은·나전칠기 수출은 송과의 무역이다." },
+{ q:"몽골 침입 당시 고려의 대응으로 옳은 것은?", opts:["즉시 항복하고 몽골에 복속하였다","수도를 강화도로 옮기고 항전하였다","별무반을 조직하여 몽골에 대응하였다","서희의 외교 담판으로 몽골을 물리쳤다"], a:1, exp:"몽골이 침입하자 고려는 수도를 강화도로 옮기고 항전하였다. 이후 무신정권이 붕괴되고 몽골과 강화를 맺어 개경으로 환도하였다." },
+{ q:"공민왕의 개혁정치에 대한 설명으로 옳은 것은?", opts:["원과의 관계를 강화하고 명을 배척하였다","원·명 교체기를 이용하여 명과 외교 관계를 맺고 반원 정책을 추진하였다","요동 정벌을 단행하여 영토를 확장하였다","세도 가문을 지원하여 정치 안정을 이루었다"], a:1, exp:"공민왕은 원·명 교체기를 이용하여 명과 외교 관계를 맺고 반원 정책을 추진하였다." },
+{ q:"고려와 아라비아의 교류에 대한 설명으로 옳은 것은?", opts:["농기구와 곡식을 주로 교역하였다","수은·향신료·산호를 교역하였다","인삼·금은·나전칠기를 수출하였다","유황·수은을 수입하였다"], a:1, exp:"고려와 아라비아는 수은·향신료·산호를 교역하였다. 아라비아 상인들이 고려를 방문하여 교역하였다." },
+{ q:"몽골 침입의 결과 원이 고려에 미친 영향으로 옳지 않은 것은?", opts:["고려의 국왕 즉위에 관여하는 등 정치적 간섭","몽골풍의 유행","이슬람 계통 사람들의 고려 귀화","고려의 완전한 자주성 유지와 독립적 외교"], a:3, exp:"원 간섭기에는 원이 고려 국왕 즉위에 관여하고 정치적으로 간섭하였다. 완전한 자주성을 유지한 것은 사실과 다르다." }
+],
+hard: [
+{ q:"거란의 3차 침입과 결과에 대한 설명으로 옳은 것만 고른 것은?\nㄱ. 강감찬이 귀주에서 거란군을 크게 물리쳤다.\nㄴ. 이후 고려·송·거란의 세력 균형이 유지되었다.\nㄷ. 1차 침입 때와 마찬가지로 서희의 외교 담판으로 해결되었다.\nㄹ. 귀주 대첩 이후 거란의 세력이 더욱 강성해졌다.", opts:["ㄱ, ㄴ","ㄴ, ㄷ","ㄱ, ㄷ","ㄱ, ㄴ, ㄹ"], a:0, exp:"ㄱ(참): 강감찬이 귀주에서 거란군을 크게 물리쳤다(귀주 대첩). ㄴ(참): 이후 고려·송·거란의 세력 균형 유지. ㄷ(거짓): 3차 침입은 귀주 대첩으로 해결, 서희의 외교 담판은 1차 침입. ㄹ(거짓): 귀주 대첩 이후 거란은 세력이 약해졌다." },
+{ q:"고려 전기 여진과의 갈등 전개 과정으로 옳은 것은?", opts:["별무반 조직→동북 9성 확보→여진이 금 건국→고려에 군신관계 요구→고려 승낙","금 건국→별무반 조직→동북 9성 확보→고려 승낙","동북 9성 확보→별무반 조직→금 건국→군신관계","여진의 군신관계 요구→별무반 조직→동북 9성 확보"], a:0, exp:"순서: 여진 성장·충돌 → 고려 별무반 조직 → 여진 정벌, 동북 9성 확보 → 여진이 금 건국, 요 멸망, 송 공격 → 금이 고려에 군신관계 요구 → 고려 승낙." },
+{ q:"원 간섭기 고려와 원의 교류에 대한 설명으로 옳은 것만 고른 것은?\nㄱ. 국왕 이하 관료·상인·유학생 등이 원을 방문하였다.\nㄴ. 이슬람 계통 사람이 고려에 귀화하였다.\nㄷ. 고려에 몽골풍이, 원에 고려양이 전파되었다.\nㄹ. 원은 고려의 내정에 전혀 간섭하지 않았다.", opts:["ㄱ, ㄴ, ㄷ","ㄴ, ㄷ, ㄹ","ㄱ, ㄷ, ㄹ","ㄱ, ㄴ, ㄷ, ㄹ"], a:0, exp:"ㄱ(참): 많은 사람들이 원을 방문하였다. ㄴ(참): 이슬람 계통 사람들이 고려에 귀화하였다. ㄷ(참): 고려에 몽골풍, 원에 고려양 전파. ㄹ(거짓): 원은 고려의 국왕 즉위에 관여하는 등 정치적으로 간섭하였다." },
+{ q:"위화도 회군의 배경·전개·결과를 종합한 설명으로 옳은 것은?", opts:["원과의 관계 강화를 위해 이성계가 명 공격을 감행하다가 실패한 사건","명이 철령위 설치를 통보하자 우왕·최영이 요동 정벌을 추진하였으나 이성계가 위화도에서 회군하여 요동 정벌이 중단되고 명과의 관계가 회복됨","고려가 요동을 정복하여 영토를 확장한 사건","거란의 침입에 맞서 이성계가 귀주에서 크게 승리한 사건"], a:1, exp:"위화도 회군: 명이 고려에 철령위 설치 통보 → 우왕·최영이 요동 정벌 추진 → 이성계가 위화도에서 회군 단행 → 요동 정벌 중단, 명과의 관계 회복." },
+{ q:"고려 전기의 다원적 국제 관계에 대한 설명으로 옳은 것만 고른 것은?\nㄱ. 거란과는 대립하였고 송과는 친선 관계를 맺었다.\nㄴ. 거란의 3차 침입을 서희의 외교 담판으로 해결하였다.\nㄷ. 여진이 금을 건국한 후 고려에 군신관계를 요구하였다.\nㄹ. 거란의 1차 침입 때 강감찬의 귀주 대첩이 있었다.", opts:["ㄱ, ㄷ","ㄴ, ㄷ","ㄱ, ㄴ, ㄷ","ㄱ, ㄷ, ㄹ"], a:0, exp:"ㄱ(참): 거란과 대립(북진정책), 송과 친선 관계. ㄴ(거짓): 3차 침입은 강감찬의 귀주 대첩으로 해결, 서희의 외교 담판은 1차 침입. ㄷ(참): 금 건국 후 고려에 군신관계 요구. ㄹ(거짓): 귀주 대첩은 3차 침입 때의 사건이다." },
+{ q:"고려의 대외 무역을 국가별로 옳게 설명한 것은?", opts:["일본: 인삼·금은 수출 / 비단·약재 수입","송: 곡식·인삼 수출 / 유황·수은 수입","거란: 농기구·곡식·문방구 수출 / 은·피·말 수입","아라비아: 농기구·문방구 교역"], a:2, exp:"거란: 농기구·곡식·문방구 수출 / 은·피·말 수입. 일본: 곡식·인삼·서적 수출 / 유황·수은 수입. 송: 인삼·금은·나전칠기 수출 / 비단·약재·서적·자기 수입. 아라비아: 수은·향신료·산호 교역." }
+]
+}
+};
+
+const TYPE_CONFIG = [
+{ key:'ox', label:'OX 퀴즈', icon:'⭕', cls:'ox' },
+{ key:'mc', label:'객관식', icon:'📋', cls:'mc' },
+{ key:'hard', label:'고난이도', icon:'🔥', cls:'hard' }
+];
+const COLOR_MAP = { ox:'#c0392b', mc:'#2980b9', hard:'#8e44ad' };
+
+const state = {};
+for (let u = 0; u < 5; u++) {
+state[u] = {
+activeType: 0,
+scores: { ox:[0,0], mc:[0,0], hard:[0,0] },
+answered: { ox:[], mc:[], hard:[] }
+};
+}
+
+function buildQuizSection(unitIdx) {
+const container = document.getElementById('quiz-' + unitIdx);
+if (!container) return;
+container.innerHTML = '';
+const s = state[unitIdx];
+const tc = TYPE_CONFIG[s.activeType];
+const typeKey = tc.key;
+const questions = QUIZ_DATA[unitIdx][typeKey];
+
+const header = document.createElement('div');
+header.className = 'quiz-header';
+header.innerHTML = `<h3>✏️ 개념 확인 퀴즈</h3><div class="scoreboard" id="scoreboard-${unitIdx}"></div>`;
+container.appendChild(header);
+
+const typeBar = document.createElement('div');
+typeBar.className = 'quiz-type-bar';
+TYPE_CONFIG.forEach((tc2, ti) => {
+const btn = document.createElement('button');
+btn.className = 'qtype-btn' + (ti === s.activeType ? ' active' : '');
+const done = (state[unitIdx].answered[tc2.key] || []).filter(v => v !== undefined).length;
+btn.innerHTML = `${tc2.icon} ${tc2.label} <span class="qtype-count">${done}</span>`;
+btn.onclick = () => { state[unitIdx].activeType = ti; buildQuizSection(unitIdx); };
+typeBar.appendChild(btn);
+});
+container.appendChild(typeBar);
+
+const answered = s.answered[typeKey] || [];
+const doneCount = answered.filter(v => v !== undefined).length;
+const prog = document.createElement('div');
+prog.className = 'q-progress-wrap';
+prog.innerHTML = `<div class="q-progress-label">${doneCount}/10 완료</div>
+<div class="q-progress-bar"><div class="q-progress-fill" style="width:${doneCount*10}%;background:${COLOR_MAP[typeKey]};"></div></div>`;
+container.appendChild(prog);
+
+questions.forEach((qdata, qi) => {
+container.appendChild(buildQCard(unitIdx, typeKey, qi, qdata, s));
+});
+
+if (doneCount === 10) {
+const correct = s.scores[typeKey][0];
+const pct = correct * 10;
+const grade = pct >= 90 ? '🏆 완벽!' : pct >= 70 ? '👍 잘했어요!' : pct >= 50 ? '📚 복습 필요' : '💪 다시 도전!';
+const result = document.createElement('div');
+result.className = 'quiz-result visible';
+result.innerHTML = `
+<div class="result-score-big">${correct}<span>/10</span></div>
+<div class="result-score-label">${pct}% · ${grade}</div>
+<div style="max-width:320px;margin:0 auto 8px;">${buildMiniBar(unitIdx)}</div>
+<button class="reset-btn" onclick="resetType(${unitIdx},'${typeKey}')">🔄 다시 풀기</button>`;
+container.appendChild(result);
+}
+updateScoreboard(unitIdx);
+}
+
+function buildMiniBar(unitIdx) {
+const s = state[unitIdx];
+return TYPE_CONFIG.map(tc => {
+const [correct, total] = s.scores[tc.key];
+const pct = total > 0 ? Math.round(correct/total*100) : 0;
+return `<div class="mini-bar-row">
+<span style="width:70px;font-size:12px;text-align:left;">${tc.icon} ${tc.label}</span>
+<div class="mini-bar-bg"><div class="mini-bar-fill" style="width:${pct}%;background:${COLOR_MAP[tc.key]};"></div></div>
+<span style="width:40px;font-size:12px;text-align:right;">${correct}/${total}</span>
+</div>`;
+}).join('');
+}
+
+function buildQCard(unitIdx, typeKey, qi, qdata, s) {
+const answered = s.answered[typeKey] || [];
+const done = answered[qi] !== undefined;
+const ans = answered[qi];
+const isCorrect = (typeKey === 'ox') ? (ans === true) : (ans === qdata.a);
+
+const card = document.createElement('div');
+card.className = 'q-card';
+if (done) card.classList.add(isCorrect ? 'answered-correct' : 'answered-wrong');
+
+const diffLabel = typeKey === 'ox' ? ['기초','diff-basic'] : typeKey === 'mc' ? ['중급','diff-mid'] : ['고난이도','diff-hard'];
+const markHtml = done ? `<span class="q-answered-mark">${isCorrect ? '✅' : '❌'}</span>` : '';
+
+card.innerHTML = `
+<div class="q-meta">
+<span class="q-num">Q${qi+1}</span>
+<span class="q-difficulty ${diffLabel[1]}">${diffLabel[0]}</span>
+${markHtml}
+</div>
+<div class="q-text">${qdata.q}</div>
+`;
+
+if (typeKey === 'ox') {
+const oxRow = document.createElement('div');
+oxRow.className = 'ox-row';
+[true, false].forEach(val => {
+const btn = document.createElement('button');
+btn.className = 'ox-btn';
+if (done) {
+btn.disabled = true;
+if (val === qdata.a && ans === val) btn.classList.add('ox-correct-picked');
+else if (val !== qdata.a && ans === val) btn.classList.add('ox-wrong-picked');
+else if (val === qdata.a && ans !== val) btn.classList.add('ox-correct-reveal');
+}
+btn.innerHTML = `<span class="ox-sym">${val ? '⭕' : '❌'}</span><span class="ox-lbl">${val ? '맞다' : '틀리다'}</span>`;
+if (!done) btn.onclick = () => submitOX(unitIdx, qi, val, qdata);
+oxRow.appendChild(btn);
+});
+card.appendChild(oxRow);
+} else {
+const mcOpts = document.createElement('div');
+mcOpts.className = 'mc-options';
+const letters = ['A','B','C','D'];
+qdata.opts.forEach((opt, oi) => {
+const btn = document.createElement('button');
+btn.className = 'mc-opt';
+if (done) {
+btn.disabled = true;
+if (oi === qdata.a) btn.classList.add('mc-correct');
+else if (oi === ans) btn.classList.add('mc-wrong');
+}
+btn.innerHTML = `<span class="mc-opt-letter">${letters[oi]}</span><span class="mc-opt-text">${opt}</span>`;
+if (!done) btn.onclick = () => submitMC(unitIdx, qi, oi, qdata, typeKey);
+mcOpts.appendChild(btn);
+});
+card.appendChild(mcOpts);
+}
+
+if (done) {
+const fb = document.createElement('div');
+fb.className = 'q-feedback ' + (isCorrect ? 'correct' : 'wrong');
+fb.innerHTML = `<strong>${isCorrect ? '✅ 정답!' : '❌ 오답'}</strong>&nbsp;&nbsp;${qdata.exp}`;
+card.appendChild(fb);
+}
+return card;
+}
+
+function submitOX(unitIdx, qi, chosen, qdata) {
+const s = state[unitIdx];
+const correct = chosen === qdata.a;
+s.answered['ox'][qi] = correct;
+if (correct) s.scores['ox'][0]++;
+s.scores['ox'][1]++;
+afterSubmit(unitIdx, 'ox');
+}
+
+function submitMC(unitIdx, qi, chosen, qdata, typeKey) {
+const s = state[unitIdx];
+const correct = chosen === qdata.a;
+s.answered[typeKey][qi] = chosen;
+if (correct) s.scores[typeKey][0]++;
+s.scores[typeKey][1]++;
+afterSubmit(unitIdx, typeKey);
+}
+
+function afterSubmit(unitIdx, typeKey) {
+buildQuizSection(unitIdx);
+const answered = state[unitIdx].answered[typeKey];
+const nextIdx = answered.findIndex((v, i) => v === undefined && i < 10);
+if (nextIdx >= 0) {
+const cards = document.querySelectorAll('#quiz-' + unitIdx + ' .q-card');
+if (cards[nextIdx]) {
+setTimeout(() => cards[nextIdx].scrollIntoView({ behavior:'smooth', block:'center' }), 100);
+}
+}
+}
+
+function resetType(unitIdx, typeKey) {
+state[unitIdx].answered[typeKey] = [];
+state[unitIdx].scores[typeKey] = [0, 0];
+buildQuizSection(unitIdx);
+document.getElementById('quiz-' + unitIdx).scrollIntoView({ behavior:'smooth' });
+}
+
+function updateScoreboard(unitIdx) {
+const sb = document.getElementById('scoreboard-' + unitIdx);
+if (!sb) return;
+sb.innerHTML = TYPE_CONFIG.map(tc => {
+const [correct, total] = state[unitIdx].scores[tc.key];
+return `<span class="score-chip ${tc.cls}">${tc.icon} ${total}/10 (${correct}점)</span>`;
+}).join('');
+}
+
+function switchTab(idx) {
+document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+document.querySelectorAll('.tab-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
+window.scrollTo({ top: 0, behavior: 'smooth' });
+const qSection = document.getElementById('quiz-' + idx);
+if (qSection && !qSection.innerHTML.trim()) buildQuizSection(idx);
+}
+
+buildQuizSection(0);
+</script>
 </body>
 </html>
