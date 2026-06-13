@@ -16,6 +16,14 @@
     p,li{line-height:1.7}
     ul{margin:0;padding-left:1.2rem}
   </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('body *').forEach((element) => {
+        const text = element.textContent.replace(/\s+/g, '').toUpperCase();
+        if (!element.children.length && text === 'MENTOS') element.remove();
+      });
+    });
+  </script>
 </head>
 <body>
   <main>
