@@ -1,49 +1,175 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>통합과학 지구 학습</title>
-  <style>
-    :root{color-scheme:light;font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif}
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{min-height:100vh;background:#f6f8fc;color:#0f172a;padding:24px}
-    main{max-width:860px;margin:0 auto;display:grid;gap:16px}
-    section{border:1px solid #dbe3ef;border-radius:18px;background:#fff;padding:20px;box-shadow:0 12px 28px rgba(15,23,42,.08)}
-    .badge{display:inline-flex;align-items:center;gap:6px;margin-bottom:10px;border-radius:999px;background:#eff6ff;color:#1d4ed8;padding:7px 12px;font-size:.84rem;font-weight:900}
-    h1{font-size:clamp(1.45rem,4vw,2.2rem);line-height:1.25;letter-spacing:-.04em}
-    h2{margin-bottom:10px;color:#1d4ed8;font-size:1.05rem}
-    p,li{line-height:1.7;color:#334155}
-    ul{padding-left:1.2rem}
-    .back{display:inline-flex;width:max-content;align-items:center;gap:6px;color:#2563eb;text-decoration:none;font-weight:800}
-    .back:hover,.back:focus-visible{text-decoration:underline;outline:none}
-    @media (max-width:520px){body{padding:14px}section{padding:18px}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>지구시스템과 판 구조론 — 통합과학</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+ --primary: #2563eb; --primary-light: #eff6ff;
+ --green: #16a34a; --green-light: #f0fdf4;
+ --purple: #7c3aed; --purple-light: #f5f3ff;
+ --orange: #ea580c; --orange-light: #fff7ed;
+ --teal: #0d9488; --teal-light: #f0fdfa;
+ --rose: #e11d48; --rose-light: #fff1f2;
+ --bg: #f8fafc; --surface: #fff;
+ --border: #e2e8f0; --text: #0f172a; --text-sec: #475569;
+ --shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;font-size:14.5px;line-height:1.8;background:var(--bg);color:var(--text);}
+
+/* ── HEADER ── */
+.page-header{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:var(--shadow);}
+.header-inner{max-width:980px;margin:0 auto;padding:12px 20px 0;}
+.subject-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-sec);margin-bottom:4px;}
+.page-title{font-size:19px;font-weight:700;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.badge-unit{font-size:11px;font-weight:700;background:var(--primary);color:#fff;border-radius:20px;padding:2px 10px;}
+.tab-bar{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin-top:10px;padding-bottom:0;}
+.tab-bar::-webkit-scrollbar{display:none;}
+.tab-group-label{font-size:10.5px;color:#94a3b8;font-weight:600;letter-spacing:.05em;padding:0 6px;display:flex;align-items:flex-end;padding-bottom:10px;white-space:nowrap;}
+.tab-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;font-size:13px;font-weight:500;color:var(--text-sec);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap;font-family:'Noto Sans KR',sans-serif;transition:color .15s;}
+.tab-btn:hover{color:var(--text);}
+.tab-btn.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:700;}
+.tab-num{width:18px;height:18px;border-radius:50%;background:var(--border);color:var(--text-sec);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.tab-btn.active .tab-num{background:var(--primary);color:#fff;}
+
+/* ── CONTENT ── */
+.content-wrap{max-width:980px;margin:0 auto;padding:28px 20px 100px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+.unit-banner{display:inline-flex;align-items:center;gap:6px;background:var(--primary-light);color:var(--primary);font-size:12px;font-weight:700;border-radius:20px;padding:4px 14px;margin-bottom:20px;}
+
+/* ── SECTION TITLES ── */
+.section-title{font-size:17px;font-weight:700;color:var(--text);border-bottom:2px solid var(--primary);padding-bottom:6px;margin:32px 0 16px;}
+.section-title:first-of-type{margin-top:0;}
+.subsection-title{font-size:14.5px;font-weight:700;border-left:3px solid var(--primary);padding-left:10px;margin:20px 0 10px;color:var(--text);}
+.sub2-title{font-size:13px;font-weight:700;background:#f8fafc;border-radius:6px;padding:4px 10px;display:inline-block;margin:12px 0 8px;}
+
+/* ── BOX LIBRARY ── */
+.def-box,.green-box,.purple-box,.teal-box,.orange-box,.rose-box{border-radius:0 8px 8px 0;padding:12px 16px;margin:10px 0;}
+.def-box{border-left:4px solid var(--primary);background:var(--primary-light);}
+.green-box{border-left:4px solid var(--green);background:var(--green-light);}
+.purple-box{border-left:4px solid var(--purple);background:var(--purple-light);}
+.teal-box{border-left:4px solid var(--teal);background:var(--teal-light);}
+.orange-box{border-left:4px solid var(--orange);background:var(--orange-light);}
+.rose-box{border-left:4px solid var(--rose);background:var(--rose-light);}
+.note{background:#fefce8;border-left:4px solid #ca8a04;border-radius:0 8px 8px 0;padding:12px 16px;margin:10px 0;}
+.tip{background:var(--green-light);border-left:4px solid var(--green);border-radius:0 8px 8px 0;padding:12px 16px;margin:10px 0;}
+.warning{background:var(--rose-light);border-left:4px solid var(--rose);border-radius:0 8px 8px 0;padding:12px 16px;margin:10px 0;}
+
+/* ── FACTOR GRID ── */
+.factor-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:14px 0;}
+.factor-grid.three{grid-template-columns:repeat(3,1fr);}
+.factor-grid.four{grid-template-columns:repeat(4,1fr);}
+.factor-card{background:var(--surface);border-radius:10px;border:1px solid var(--border);padding:14px;box-shadow:var(--shadow);}
+.factor-card .card-title{font-size:13px;font-weight:700;margin-bottom:6px;padding-bottom:6px;border-bottom:2px solid;}
+.factor-card.blue .card-title{color:var(--primary);border-color:var(--primary);}
+.factor-card.green .card-title{color:var(--green);border-color:var(--green);}
+.factor-card.purple .card-title{color:var(--purple);border-color:var(--purple);}
+.factor-card.orange .card-title{color:var(--orange);border-color:var(--orange);}
+.factor-card.teal .card-title{color:var(--teal);border-color:var(--teal);}
+.factor-card.rose .card-title{color:var(--rose);border-color:var(--rose);}
+
+/* ── TABLES ── */
+.cmp-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px;}
+.cmp-table th,.cmp-table td{border:1px solid var(--border);padding:9px 12px;text-align:left;vertical-align:top;}
+.cmp-table thead th{font-weight:700;font-size:12.5px;}
+.cmp-table.blue-th thead{background:var(--primary);color:#fff;}
+.cmp-table.green-th thead{background:var(--green);color:#fff;}
+.cmp-table.purple-th thead{background:var(--purple);color:#fff;}
+.cmp-table.teal-th thead{background:var(--teal);color:#fff;}
+.cmp-table.orange-th thead{background:var(--orange);color:#fff;}
+.cmp-table tbody tr:nth-child(even){background:#f8fafc;}
+.cmp-table tbody td:first-child{font-weight:700;}
+
+.ex-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px;}
+.ex-table th{background:#334155;color:#fff;padding:8px 12px;font-size:12.5px;font-weight:700;border:1px solid #475569;}
+.ex-table td{border:1px solid var(--border);padding:8px 12px;vertical-align:top;}
+.ex-table tbody tr:nth-child(even){background:#f8fafc;}
+
+/* ── BADGES ── */
+.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:700;border-radius:20px;padding:2px 9px;margin:1px;}
+.badge-blue{background:var(--primary-light);color:var(--primary);}
+.badge-green{background:var(--green-light);color:var(--green);}
+.badge-purple{background:var(--purple-light);color:var(--purple);}
+.badge-orange{background:var(--orange-light);color:var(--orange);}
+.badge-teal{background:var(--teal-light);color:var(--teal);}
+.badge-rose{background:var(--rose-light);color:var(--rose);}
+.badge-gray{background:#f1f5f9;color:#475569;}
+
+/* ── FLOW ── */
+.flow-row{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin:12px 0;}
+.flow-item{background:var(--primary-light);color:var(--primary);font-weight:700;font-size:13px;border-radius:8px;padding:7px 14px;border:1px solid #bfdbfe;}
+.flow-arrow{color:#94a3b8;font-size:18px;font-weight:700;}
+
+/* ── RULE CARD ── */
+.rule-card{border:2px solid;border-radius:10px;padding:14px 16px;margin:14px 0;}
+.rule-card.blue{border-color:var(--primary);background:var(--primary-light);}
+.rule-card.green{border-color:var(--green);background:var(--green-light);}
+.rule-card.orange{border-color:var(--orange);background:var(--orange-light);}
+.rule-card.rose{border-color:var(--rose);background:var(--rose-light);}
+.rule-card.purple{border-color:var(--purple);background:var(--purple-light);}
+.rule-card.teal{border-color:var(--teal);background:var(--teal-light);}
+.rule-card-title{font-size:14px;font-weight:700;margin-bottom:8px;}
+
+/* ── BOUNDARY CARDS (판 경계) ── */
+.boundary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0;}
+.boundary-card{background:var(--surface);border-radius:10px;padding:16px;box-shadow:var(--shadow);border-top:4px solid;}
+.boundary-card.bc-blue{border-top-color:var(--primary);}
+.boundary-card.bc-orange{border-top-color:var(--orange);}
+.boundary-card.bc-teal{border-top-color:var(--teal);}
+.boundary-card h4{font-size:13.5px;font-weight:700;margin-bottom:8px;}
+.boundary-card ul{padding-left:16px;font-size:12.5px;color:var(--text-sec);}
+.boundary-card ul li{margin-bottom:4px;}
+
+/* ── TOTOP ── */
+.totop{position:fixed;bottom:28px;right:22px;background:var(--primary);color:#fff;border:none;border-radius:50%;width:42px;height:42px;font-size:18px;cursor:pointer;box-shadow:0 4px 12px rgba(37,99,235,.35);display:flex;align-items:center;justify-content:center;z-index:200;}
+
+/* ── CONCEPT MAP ── */
+.map-root{margin-bottom:20px;}
+.map-root-head{display:flex;align-items:center;gap:8px;background:var(--primary);color:#fff;border:none;border-radius:10px 10px 0 0;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;width:100%;font-family:'Noto Sans KR',sans-serif;}
+.map-children{border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:14px;display:flex;flex-wrap:wrap;gap:8px;background:var(--surface);}
+.map-node{background:var(--primary-light);color:var(--primary);border:1px solid #bfdbfe;border-radius:8px;padding:6px 14px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;}
+.map-node:hover{background:var(--primary);color:#fff;}
+.map-group{display:flex;flex-direction:column;gap:4px;}
+.map-subrow{border-left:3px solid var(--border);padding-left:10px;display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+.map-subchip{background:#f1f5f9;color:var(--text-sec);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:11.5px;font-weight:600;cursor:pointer;font-family:'Noto Sans KR',sans-serif;}
+.map-subchip:hover{background:var(--primary);color:#fff;border-color:var(--primary);}
+
+/* ── COLORS for map roots ── */
+.map-root-head.green{background:var(--green);}
+.map-root-head.purple{background:var(--purple);}
+
+@media(max-width:680px){
+ .factor-grid,.factor-grid.three,.factor-grid.four,.boundary-grid{grid-template-columns:1fr;}
+ .page-title{font-size:16px;}
+ .tab-btn{padding:7px 10px;font-size:12px;}
+}
+</style>
 </head>
 <body>
-  <main>
-    <a class="back" href="./science_hub.html">← 과학 파트 선택으로 돌아가기</a>
-    <section>
-      <span class="badge">🌎 지구 파트</span>
-      <h1>통합과학 지구 학습</h1>
-      <p>핵심 개념을 먼저 확인하고, 그래프·자료 해석과 문제 적용 순서로 복습하세요.</p>
-    </section>
-    <section>
-      <h2>핵심 학습 주제</h2>
-      <ul>
-        <li>지권·수권·기권·외권의 상호 작용 사례 찾기</li>
-        <li>날씨와 기후 자료에서 변화 경향과 원인 해석하기</li>
-        <li>별과 우주 단원의 관측 자료를 모형과 연결하기</li>
-      </ul>
-    </section>
-    <section>
-      <h2>오늘의 학습 루틴</h2>
-      <ul>
-        <li>지도·그래프·사진 자료에서 관측 위치와 기준을 확인하기</li>
-        <li>지구계 상호 작용은 원인과 영향을 화살표로 연결하기</li>
-        <li>천문 단원은 그림을 그려 위치 관계를 먼저 정리하기</li>
-      </ul>
-    </section>
-  </main>
-</body>
-</html>
+
+<header class="page-header">
+ <div class="header-inner">
+ <div class="subject-label">통합과학 · III. 시스템과 상호작용</div>
+ <div class="page-title">
+ 🌍 지구시스템과 판 구조론
+ <span class="badge-unit">고등학교 1학년</span>
+ </div>
+ <div class="tab-bar">
+ <span class="tab-group-label">기초</span>
+ <button class="tab-btn active" onclick="switchTab(0)"><span class="tab-num">1</span>지구시스템 구성</button>
+ <button class="tab-btn" onclick="switchTab(1)"><span class="tab-num">2</span>에너지·물질 순환</button>
+ <span class="tab-group-label">지권</span>
+ <button class="tab-btn" onclick="switchTab(2)"><span class="tab-num">3</span>지권 변화·판 구조론</button>
+ <button class="tab-btn" onclick="switchTab(3)"><span class="tab-num">4</span>판 경계와 지형</button>
+ <span class="tab-group-label">개요</span>
+ <button class="tab-btn" onclick="switchTab(4)"><span class="tab-num">5</span>개념 한눈에 보기</button>
+ </div>
+ </div>
+</header>
+
+<!-- ══════════════════════════════════════════
+ TAB 0 · 지구시스템
