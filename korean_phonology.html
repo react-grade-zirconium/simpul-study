@@ -3,1326 +3,1229 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>국어 음운 총정리</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+<title>공통국어1 — 음운 핵심 정리</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --primary: #2563EB;
-    --primary-light: #EFF6FF;
-    --primary-mid: #BFDBFE;
-    --accent: #0F6E56;
-    --accent-light: #E1F5EE;
-    --warn: #BA7517;
-    --warn-light: #FAEEDA;
-    --danger: #A32D2D;
-    --danger-light: #FCEBEB;
-    --purple: #534AB7;
-    --purple-light: #EEEDFE;
-    --bg: #F8F7F4;
-    --surface: #FFFFFF;
-    --border: rgba(0,0,0,0.1);
-    --border-strong: rgba(0,0,0,0.18);
-    --text: #1a1a1a;
-    --text-muted: #555;
-    --text-hint: #888;
-    --tab-active-bg: #FFFFFF;
-    --tab-bar-bg: #EEF2FF;
-    --radius: 10px;
-    --radius-sm: 6px;
-  }
+:root {
+  --primary:#2563eb;--primary-light:#eff6ff;
+  --green:#16a34a;--green-light:#f0fdf4;
+  --purple:#7c3aed;--purple-light:#f5f3ff;
+  --orange:#ea580c;--orange-light:#fff7ed;
+  --teal:#0d9488;--teal-light:#f0fdfa;
+  --rose:#e11d48;--rose-light:#fff1f2;
+  --bg:#f8fafc;--surface:#fff;--border:#e2e8f0;
+  --text:#0f172a;--text-sec:#475569;
+  --shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);font-size:14.5px;line-height:1.75;}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+.page-header{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--border);padding:10px 20px 0;}
+.subject-label{font-size:11px;letter-spacing:.13em;color:var(--text-sec);text-transform:uppercase;margin-bottom:2px;}
+.page-title{font-size:19px;font-weight:700;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.badge-unit{font-size:11.5px;font-weight:600;color:#fff;padding:2px 9px;border-radius:20px;background:var(--primary);}
+.tab-bar{display:flex;overflow-x:auto;scrollbar-width:none;gap:0;}
+.tab-bar::-webkit-scrollbar{display:none;}
+.tab-group-label{font-size:10px;color:var(--text-sec);padding:0 6px;white-space:nowrap;display:flex;align-items:flex-end;padding-bottom:8px;border-bottom:3px solid transparent;letter-spacing:.06em;opacity:.7;}
+.tab-btn{padding:8px 14px 6px;border:none;background:transparent;font-family:'Noto Sans KR',sans-serif;font-size:12.5px;color:var(--text-sec);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:4px;transition:color .2s;}
+.tab-btn.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:700;}
+.tab-btn:hover:not(.active){color:var(--primary);border-bottom-color:#bfdbfe;}
+.tab-num{width:18px;height:18px;border-radius:50%;background:#f1f5f9;font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+.tab-btn.active .tab-num{background:var(--primary);color:#fff;}
 
-  html { height: 100%; overflow: hidden; }
+.content-wrap{max-width:980px;margin:0 auto;padding:26px 20px 100px;}
+.tab-panel{display:none;}.tab-panel.active{display:block;}
 
-  body {
-    font-family: 'Noto Sans KR', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    height: 100%;
-    overflow: auto;
-    font-size: 15px;
-    line-height: 1.75;
-  }
+.unit-banner{display:inline-flex;align-items:center;gap:8px;background:var(--primary-light);border:1px solid #bfdbfe;border-radius:8px;padding:6px 14px;font-size:12.5px;font-weight:700;color:var(--primary);margin-bottom:16px;}
 
-  header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 18px 32px 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
-  }
+.section-title{font-size:17px;font-weight:700;border-bottom:2px solid var(--primary);padding-bottom:7px;margin:28px 0 13px;display:flex;align-items:center;gap:7px;}
+.section-title:first-of-type{margin-top:0;}
+.section-title .icon{font-size:16px;}
+.subsection-title{font-size:14px;font-weight:700;color:var(--primary);padding-left:10px;border-left:3px solid var(--primary);margin:18px 0 9px;}
+.sub2-title{font-size:13px;font-weight:700;color:var(--text-sec);background:#f8fafc;padding:4px 10px;border-radius:6px;display:inline-block;margin:13px 0 7px;}
 
-  .header-top {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-  }
+.def-box{background:var(--primary-light);border-left:4px solid var(--primary);border-radius:0 8px 8px 0;padding:11px 14px;font-size:14px;line-height:1.8;margin-bottom:10px;}
+.def-box strong{color:var(--primary);}
+.green-box{background:var(--green-light);border-left:4px solid var(--green);border-radius:0 8px 8px 0;padding:11px 14px;font-size:14px;line-height:1.8;margin-bottom:10px;}
+.green-box strong{color:var(--green);}
+.purple-box{background:var(--purple-light);border-left:4px solid var(--purple);border-radius:0 8px 8px 0;padding:11px 14px;font-size:14px;line-height:1.8;margin-bottom:10px;}
+.teal-box{background:var(--teal-light);border-left:4px solid var(--teal);border-radius:0 8px 8px 0;padding:11px 14px;font-size:14px;line-height:1.8;margin-bottom:10px;}
+.orange-box{background:var(--orange-light);border-left:4px solid var(--orange);border-radius:0 8px 8px 0;padding:11px 14px;font-size:14px;line-height:1.8;margin-bottom:10px;}
+.rose-box{background:var(--rose-light);border-left:4px solid var(--rose);border-radius:0 8px 8px 0;padding:11px 14px;font-size:14px;line-height:1.8;margin-bottom:10px;}
+.note{background:#fefce8;border:1px solid #fde047;color:#713f12;border-radius:8px;padding:10px 14px;font-size:13px;line-height:1.65;margin-bottom:10px;}
+.warning{background:var(--rose-light);border:1px solid #fda4af;color:#9f1239;border-radius:8px;padding:10px 14px;font-size:13px;line-height:1.65;margin-bottom:10px;}
+.tip{background:var(--green-light);border:1px solid #86efac;color:#14532d;border-radius:8px;padding:10px 14px;font-size:13px;line-height:1.65;margin-bottom:10px;}
 
-  .header-badge {
-    background: var(--primary-light);
-    color: var(--primary);
-    font-size: 12px;
-    font-weight: 500;
-    padding: 3px 10px;
-    border-radius: 20px;
-    border: 1px solid var(--primary-mid);
-  }
+.factor-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:11px;}
+.factor-grid.three{grid-template-columns:1fr 1fr 1fr;}
+.factor-grid.four{grid-template-columns:1fr 1fr 1fr 1fr;}
+@media(max-width:640px){.factor-grid,.factor-grid.three,.factor-grid.four{grid-template-columns:1fr;}}
+.factor-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:13px;box-shadow:var(--shadow);}
+.factor-card.blue{border-top:3px solid var(--primary);}
+.factor-card.green{border-top:3px solid var(--green);}
+.factor-card.purple{border-top:3px solid var(--purple);}
+.factor-card.orange{border-top:3px solid var(--orange);}
+.factor-card.teal{border-top:3px solid var(--teal);}
+.factor-card.rose{border-top:3px solid var(--rose);}
+.factor-card.gray{border-top:3px solid #94a3b8;}
+.factor-card h4{font-size:13px;font-weight:700;margin-bottom:6px;}
+.factor-card p,.factor-card li{font-size:13px;color:var(--text-sec);line-height:1.7;}
+.factor-card ul{padding-left:14px;}
+.factor-card code{font-size:12.5px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:var(--primary);}
 
-  h1 {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--text);
-    letter-spacing: -0.3px;
-  }
+.cmp-table{width:100%;border-collapse:collapse;border-radius:10px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:10px;font-size:13.5px;}
+.cmp-table thead{background:var(--primary);color:#fff;}
+.cmp-table th{padding:8px 12px;text-align:left;font-size:13px;}
+.cmp-table td{padding:8px 12px;border-bottom:1px solid var(--border);line-height:1.6;}
+.cmp-table tbody tr:nth-child(even){background:#f8fafc;}
+.cmp-table td:first-child{font-weight:600;color:var(--primary);}
+.green-th thead{background:var(--green);}.green-th td:first-child{color:var(--green);}
+.purple-th thead{background:var(--purple);}.purple-th td:first-child{color:var(--purple);}
+.teal-th thead{background:var(--teal);}.teal-th td:first-child{color:var(--teal);}
+.rose-th thead{background:var(--rose);}.rose-th td:first-child{color:var(--rose);}
+.orange-th thead{background:var(--orange);}.orange-th td:first-child{color:var(--orange);}
 
-  .tab-bar {
-    display: flex;
-    gap: 2px;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .tab-bar::-webkit-scrollbar { display: none; }
+/* 예시 전용 테이블 */
+.ex-table{width:100%;border-collapse:collapse;border-radius:10px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:10px;font-size:13px;}
+.ex-table thead{background:#334155;color:#fff;}
+.ex-table th{padding:7px 12px;text-align:left;font-size:12px;}
+.ex-table td{padding:7px 12px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6;}
+.ex-table tbody tr:nth-child(even){background:#f8fafc;}
+.ex-table td:first-child{font-weight:700;color:#1e40af;font-size:13.5px;}
+.ex-table td:nth-child(2){color:#6d28d9;font-weight:600;}
+.ex-table td:nth-child(3){color:var(--text-sec);}
 
-  .tab-btn {
-    background: none;
-    border: none;
-    padding: 10px 18px;
-    font-size: 13.5px;
-    font-family: 'Noto Sans KR', sans-serif;
-    font-weight: 400;
-    color: var(--text-muted);
-    cursor: pointer;
-    border-bottom: 2.5px solid transparent;
-    white-space: nowrap;
-    transition: color 0.18s, border-color 0.18s;
-    border-radius: 0;
-  }
+/* 자음 체계표 */
+.phono-table{width:100%;border-collapse:collapse;border-radius:10px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:10px;text-align:center;font-size:12px;}
+.phono-table th,.phono-table td{border:1px solid var(--border);padding:6px 8px;}
+.phono-table thead{background:var(--primary);color:#fff;}
+.phono-table .row-head{background:#f1f5f9;font-weight:700;color:var(--text);text-align:left;font-size:11.5px;line-height:1.5;}
+.phono-table .sub-head{background:#e8f0f8;font-size:11px;color:var(--primary);font-weight:600;}
+.phono-table .consonant{font-size:16px;font-weight:700;color:var(--primary);}
+.phono-table .empty{background:#fafafa;color:#e2e8f0;}
 
-  .tab-btn:hover { color: var(--primary); }
+.badge{padding:2px 9px;border-radius:20px;font-size:11.5px;font-weight:700;display:inline-block;margin:2px;}
+.badge-blue{background:#dbeafe;color:#1d4ed8;}
+.badge-green{background:#dcfce7;color:#15803d;}
+.badge-purple{background:#ede9fe;color:#6d28d9;}
+.badge-orange{background:#ffedd5;color:#c2410c;}
+.badge-teal{background:#ccfbf1;color:#0f766e;}
+.badge-rose{background:#ffe4e6;color:#be123c;}
+.badge-gray{background:#f1f5f9;color:#475569;}
 
-  .tab-btn.active {
-    color: var(--primary);
-    border-bottom-color: var(--primary);
-    font-weight: 500;
-  }
+.rule-card{background:var(--surface);border:2px solid var(--primary);border-radius:12px;padding:13px 16px;margin-bottom:12px;box-shadow:var(--shadow);}
+.rule-card .rule-head{font-size:13.5px;font-weight:700;color:var(--primary);margin-bottom:8px;}
+.rule-card.rose{border-color:var(--rose);}.rule-card.rose .rule-head{color:var(--rose);}
+.rule-card.green{border-color:var(--green);}.rule-card.green .rule-head{color:var(--green);}
+.rule-card.teal{border-color:var(--teal);}.rule-card.teal .rule-head{color:var(--teal);}
+.rule-card.purple{border-color:var(--purple);}.rule-card.purple .rule-head{color:var(--purple);}
+.rule-card.orange{border-color:var(--orange);}.rule-card.orange .rule-head{color:var(--orange);}
 
-  main {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 24px 20px 44px;
-  }
+.flow-row{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
+.flow-item{background:var(--surface);border:1.5px solid var(--primary);border-radius:8px;padding:5px 11px;font-size:13px;font-weight:600;color:var(--primary);}
+.flow-item.rose{border-color:var(--rose);color:var(--rose);}
+.flow-item.green{border-color:var(--green);color:var(--green);}
+.flow-arrow{color:var(--text-sec);font-weight:700;font-size:16px;}
 
-  .tab-panel { display: none; }
-  .tab-panel.active { display: block; }
+.totop{position:fixed;bottom:28px;right:24px;width:42px;height:42px;border-radius:50%;background:var(--primary);color:#fff;border:none;font-size:17px;cursor:pointer;box-shadow:0 2px 8px rgba(37,99,235,.35);z-index:200;}
 
-  /* Section headings */
-  .section-title {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--primary-mid);
-  }
+/* ===== 개념 지도 (TREE MAP) ===== */
+.map-tree{display:flex;flex-direction:column;gap:18px;}
+.map-root{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);overflow:hidden;}
+.map-root-head{padding:11px 16px;font-size:14.5px;font-weight:700;color:#fff;cursor:pointer;display:flex;align-items:center;gap:8px;transition:opacity .15s;border:none;width:100%;text-align:left;font-family:'Noto Sans KR',sans-serif;}
+.map-root-head:hover{opacity:.88;}
+.map-root-head .map-icon{font-size:16px;}
+.map-children{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px 14px;background:#fafbfc;}
+.map-node{background:var(--surface);border:1.5px solid var(--border);border-radius:9px;padding:8px 13px;font-size:12.5px;font-weight:600;color:var(--text);cursor:pointer;transition:all .15s;font-family:'Noto Sans KR',sans-serif;text-align:left;line-height:1.5;}
+.map-node:hover{transform:translateY(-1px);box-shadow:0 3px 8px rgba(0,0,0,.1);}
+.map-node .map-sub{display:block;font-size:11px;color:var(--text-sec);font-weight:400;margin-top:3px;line-height:1.5;}
 
-  .subsection-title {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--primary);
-    margin: 24px 0 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
+/* nested group: parent node + sub-chip row */
+.map-group{display:flex;flex-direction:column;gap:7px;background:var(--surface);border:1.5px solid var(--border);border-radius:9px;padding:9px 13px 11px;}
+.map-group > .map-node{border:none;padding:0;background:none !important;box-shadow:none;cursor:pointer;}
+.map-group > .map-node:hover{transform:none;background:none !important;}
+.map-group > .map-node:hover .map-group-title{color:var(--primary);}
+.map-group-title{font-weight:700;}
+.map-subrow{display:flex;flex-wrap:wrap;gap:6px;padding-left:13px;border-left:2px solid var(--border);}
+.map-subchip{font-size:11.5px;font-weight:600;padding:5px 11px;border-radius:7px;background:#f8fafc;border:1px solid var(--border);color:var(--text-sec);cursor:pointer;transition:all .15s;font-family:'Noto Sans KR',sans-serif;}
+.map-subchip:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(0,0,0,.08);}
 
-  .subsection-title::before {
-    content: '';
-    display: inline-block;
-    width: 4px;
-    height: 16px;
-    background: var(--primary);
-    border-radius: 2px;
-  }
+/* color variants matching tab groups */
+.map-root.c-blue .map-root-head{background:var(--primary);}
+.map-root.c-blue .map-node{border-color:#bfdbfe;}
+.map-root.c-blue .map-node:hover{border-color:var(--primary);background:var(--primary-light);}
+.map-root.c-blue .map-subchip:hover{border-color:var(--primary);background:var(--primary-light);color:var(--primary);}
 
-  /* Cards */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 18px 20px;
-    margin-bottom: 16px;
-  }
+.map-root.c-rose .map-root-head{background:var(--rose);}
+.map-root.c-rose .map-node{border-color:#fecdd3;}
+.map-root.c-rose .map-node:hover{border-color:var(--rose);background:var(--rose-light);}
+.map-root.c-rose .map-subchip:hover{border-color:var(--rose);background:var(--rose-light);color:var(--rose);}
 
-  .card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 12px;
-    margin-bottom: 16px;
-  }
+.map-root.c-green .map-root-head{background:var(--green);}
+.map-root.c-green .map-node{border-color:#bbf7d0;}
+.map-root.c-green .map-node:hover{border-color:var(--green);background:var(--green-light);}
+.map-root.c-green .map-subchip:hover{border-color:var(--green);background:var(--green-light);color:var(--green);}
 
-  .info-card {
-    background: var(--primary-light);
-    border: 1px solid var(--primary-mid);
-    border-radius: var(--radius);
-    padding: 14px 16px;
-  }
+.map-root.c-orange .map-root-head{background:var(--orange);}
+.map-root.c-orange .map-node{border-color:#fed7aa;}
+.map-root.c-orange .map-node:hover{border-color:var(--orange);background:var(--orange-light);}
+.map-root.c-orange .map-subchip:hover{border-color:var(--orange);background:var(--orange-light);color:var(--orange);}
 
-  .info-card .label {
-    font-size: 12px;
-    color: var(--primary);
-    font-weight: 500;
-    margin-bottom: 4px;
-  }
+.map-root.c-purple .map-root-head{background:var(--purple);}
+.map-root.c-purple .map-node{border-color:#ddd6fe;}
+.map-root.c-purple .map-node:hover{border-color:var(--purple);background:var(--purple-light);}
+.map-root.c-purple .map-subchip:hover{border-color:var(--purple);background:var(--purple-light);color:var(--purple);}
 
-  .info-card .value {
-    font-size: 15px;
-    color: #1e3a8a;
-    font-weight: 500;
-  }
+.map-root.c-teal .map-root-head{background:var(--teal);}
+.map-root.c-teal .map-node{border-color:#99f6e4;}
+.map-root.c-teal .map-node:hover{border-color:var(--teal);background:var(--teal-light);}
+.map-root.c-teal .map-subchip:hover{border-color:var(--teal);background:var(--teal-light);color:var(--teal);}
 
-  /* Definition box */
-  .def-box {
-    background: #F0FDF4;
-    border-left: 3px solid var(--accent);
-    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-    padding: 12px 16px;
-    margin: 12px 0;
-    font-size: 14.5px;
-    color: #064e3b;
-  }
+.map-root.c-gray .map-root-head{background:#475569;}
+.map-root.c-gray .map-node{border-color:#cbd5e1;}
+.map-root.c-gray .map-node:hover{border-color:#475569;background:#f1f5f9;}
+.map-root.c-gray .map-subchip:hover{border-color:#475569;background:#f1f5f9;color:#475569;}
 
-  .warn-box {
-    background: var(--warn-light);
-    border-left: 3px solid var(--warn);
-    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-    padding: 12px 16px;
-    margin: 12px 0;
-    font-size: 14px;
-    color: #451a03;
-  }
-
-  .danger-box {
-    background: var(--danger-light);
-    border-left: 3px solid var(--danger);
-    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-    padding: 12px 16px;
-    margin: 12px 0;
-    font-size: 14px;
-    color: #450a0a;
-  }
-
-  .purple-box {
-    background: var(--purple-light);
-    border-left: 3px solid var(--purple);
-    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-    padding: 12px 16px;
-    margin: 12px 0;
-    font-size: 14px;
-    color: #1e1b4b;
-  }
-
-  /* Table */
-  .tbl-wrap {
-    overflow-x: auto;
-    margin: 14px 0;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-  }
-
-  .consonant-chart-frame {
-    overflow-x: auto;
-    margin: 14px 0;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--surface);
-    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
-  }
-
-  .consonant-chart-image {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13.5px;
-  }
-
-  th {
-    background: #F0F4FF;
-    color: var(--primary);
-    font-weight: 500;
-    padding: 9px 12px;
-    text-align: center;
-    border-bottom: 1px solid var(--border);
-    white-space: nowrap;
-  }
-
-  td {
-    padding: 8px 12px;
-    border-bottom: 0.5px solid var(--border);
-    text-align: center;
-    vertical-align: middle;
-  }
-
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: #FAFBFF; }
-
-  td.left { text-align: left; }
-
-  /* Example pills */
-  .ex-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin: 10px 0;
-  }
-
-  .ex-pill {
-    background: var(--surface);
-    border: 1px solid var(--border-strong);
-    border-radius: 20px;
-    padding: 4px 13px;
-    font-size: 13.5px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .ex-pill .arrow {
-    color: var(--text-hint);
-    font-size: 11px;
-  }
-
-  .ex-pill .result {
-    color: var(--primary);
-    font-weight: 500;
-  }
-
-  /* Rule badge */
-  .rule-badge {
-    display: inline-block;
-    background: var(--primary);
-    color: #fff;
-    font-size: 12px;
-    font-weight: 500;
-    padding: 2px 9px;
-    border-radius: 4px;
-    margin-right: 6px;
-  }
-
-  .rule-badge.green { background: var(--accent); }
-  .rule-badge.amber { background: var(--warn); }
-  .rule-badge.red { background: var(--danger); }
-  .rule-badge.purple { background: var(--purple); }
-
-  /* Number circle */
-  .num {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: var(--primary);
-    color: #fff;
-    font-size: 12px;
-    font-weight: 500;
-    flex-shrink: 0;
-  }
-
-  .num.green { background: var(--accent); }
-  .num.amber { background: var(--warn); }
-
-  /* Formula */
-  .formula {
-    font-family: 'Noto Serif KR', serif;
-    background: #F8F7F4;
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius-sm);
-    padding: 10px 16px;
-    font-size: 15px;
-    text-align: center;
-    margin: 10px 0;
-    letter-spacing: 1px;
-  }
-
-  /* Two column layout */
-  .two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin: 12px 0;
-  }
-
-  @media (max-width: 600px) {
-    .two-col { grid-template-columns: 1fr; }
-    .card-grid { grid-template-columns: 1fr 1fr; }
-    header { padding: 14px 16px 0; }
-    main { padding: 18px 14px 40px; }
-    h1 { font-size: 18px; }
-    .consonant-chart-frame {
-      margin-left: -6px;
-      margin-right: -6px;
-    }
-    .consonant-chart-image {
-      min-width: 680px;
-    }
-  }
-
-  /* Exception box */
-  .exception-list {
-    font-size: 13.5px;
-    color: var(--text-muted);
-  }
-  .exception-list li {
-    list-style: none;
-    padding: 3px 0;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .exception-list li::before {
-    content: '※';
-    color: var(--danger);
-    font-size: 12px;
-  }
-
-  /* Sub item */
-  .sub-item {
-    background: #FAFBFF;
-    border: 1px solid #E0E7FF;
-    border-radius: var(--radius-sm);
-    padding: 12px 14px;
-    margin: 8px 0;
-    font-size: 14px;
-  }
-
-  .sub-item .sub-title {
-    font-weight: 500;
-    color: var(--primary);
-    margin-bottom: 6px;
-    font-size: 13.5px;
-  }
-
-  p { margin: 6px 0; }
-  strong { font-weight: 500; }
-
-  .text-muted { color: var(--text-muted); font-size: 13.5px; }
-
-  /* Morpheme example */
-  .morph-ex {
-    background: #FFFBEB;
-    border: 1px solid #FCD34D;
-    border-radius: var(--radius);
-    padding: 14px 18px;
-    margin: 12px 0;
-    font-size: 15px;
-  }
-
-  .morph-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    align-items: center;
-    margin: 8px 0;
-  }
-
-  .morph-unit {
-    text-align: center;
-  }
-
-  .morph-word {
-    font-size: 17px;
-    font-weight: 500;
-    color: var(--text);
-    border-bottom: 2px solid #FCD34D;
-    padding: 0 4px 2px;
-  }
-
-  .morph-tag {
-    font-size: 11px;
-    color: var(--text-hint);
-    margin-top: 3px;
-  }
-
-  .morph-plus {
-    font-size: 18px;
-    color: var(--text-hint);
-    padding: 0 2px;
-  }
+@media(max-width:640px){.map-children{gap:6px;}.map-node{font-size:12px;padding:7px 11px;}}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="header-top">
-    <h1>음운 총정리</h1>
+<div class="page-header">
+  <div class="subject-label">공통국어1 · 국어 문법</div>
+  <div class="page-title">음운 핵심 정리 <span class="badge-unit">음운 · 음운 변동</span></div>
+  <div class="tab-bar">
+    <span class="tab-group-label">기초</span>
+    <button class="tab-btn active" onclick="switchTab(0)"><span class="tab-num">1</span>음운 기초</button>
+    <button class="tab-btn" onclick="switchTab(1)"><span class="tab-num">2</span>모음 체계</button>
+    <button class="tab-btn" onclick="switchTab(2)"><span class="tab-num">3</span>자음 체계</button>
+    <span class="tab-group-label">음운 변동</span>
+    <button class="tab-btn" onclick="switchTab(3)"><span class="tab-num">4</span>교체</button>
+    <button class="tab-btn" onclick="switchTab(4)"><span class="tab-num">5</span>첨가</button>
+    <button class="tab-btn" onclick="switchTab(5)"><span class="tab-num">6</span>탈락</button>
+    <button class="tab-btn" onclick="switchTab(6)"><span class="tab-num">7</span>축약</button>
+    <span class="tab-group-label">부록</span>
+    <button class="tab-btn" onclick="switchTab(7)"><span class="tab-num">8</span>연음·두음법칙</button>
+    <button class="tab-btn" onclick="switchTab(8)"><span class="tab-num">9</span>형태소·단어</button>
+    <span class="tab-group-label">지도</span>
+    <button class="tab-btn" onclick="switchTab(9)"><span class="tab-num">10</span>개념 한눈에 보기</button>
   </div>
-  <nav class="tab-bar" id="tabBar">
-    <button class="tab-btn active" data-tab="tab1">음운 기초</button>
-    <button class="tab-btn" data-tab="tab2">자음 체계</button>
-    <button class="tab-btn" data-tab="tab3">모음 체계</button>
-    <button class="tab-btn" data-tab="tab4">형태소</button>
-    <button class="tab-btn" data-tab="tab5">교체</button>
-    <button class="tab-btn" data-tab="tab6">탈락</button>
-    <button class="tab-btn" data-tab="tab7">첨가</button>
-    <button class="tab-btn" data-tab="tab8">자투리 개념</button>
-  </nav>
-</header>
+</div>
 
-<main>
+<div class="content-wrap">
 
-<!-- TAB 1: 음운 기초 -->
-<div class="tab-panel active" id="tab1">
-  <div class="section-title">음운 기초 개념</div>
+<!-- ===== TAB 0: 음운 기초 ===== -->
+<div class="tab-panel active" id="panel-0">
+  <div class="unit-banner">📌 음운의 개념과 변동 유형</div>
 
-  <div class="def-box">
-    <strong>음운</strong>이란 말의 뜻을 구별해 주는 소리의 <strong>가장 작은 단위</strong>입니다.
-  </div>
-
-  <div class="subsection-title">음운의 분류</div>
-  <div class="two-col">
-    <div class="card">
-      <div style="font-weight:500; margin-bottom:10px;">분절 음운 (음소)</div>
-      <div class="sub-item">
-        <div class="sub-title">자음 (19개)</div>
-        발음 기관의 공기 방해 <strong>有</strong>
-      </div>
-      <div class="sub-item">
-        <div class="sub-title">모음</div>
-        발음 기관의 공기 방해 <strong>無</strong>
-      </div>
+  <div class="section-title" id="a-eumun"><span class="icon">🔤</span>음운이란?</div>
+  <div class="def-box"><strong>음운</strong>: 말의 뜻을 구별해 주는 소리의 가장 작은 단위</div>
+  <div class="factor-grid">
+    <div class="factor-card blue">
+      <h4>분절 음운 (음소)</h4>
+      <ul>
+        <li><strong>자음</strong>: 발음 기관의 공기 방해 있음(有)</li>
+        <li><strong>모음</strong>: 발음 기관의 공기 방해 없음(無)</li>
+      </ul>
     </div>
-    <div class="card">
-      <div style="font-weight:500; margin-bottom:10px;">비분절 음운 (운소)</div>
+    <div class="factor-card purple">
+      <h4>비분절 음운 (운소)</h4>
       <p>소리의 길이, 높이, 세기, 억양 등</p>
-      <div class="ex-list" style="margin-top:10px;">
-        <div class="ex-pill">[말] <span class="arrow">→</span> <span class="result">馬</span></div>
-        <div class="ex-pill">[말:] <span class="arrow">→</span> <span class="result">言</span></div>
-      </div>
+      <p style="margin-top:6px;font-size:12.5px;color:var(--purple);">[말:]→馬(말), [말:ː]→言(말씀) — 길이로 의미 구별</p>
     </div>
   </div>
 
-  <div class="subsection-title">최소 대립쌍 & 최소 대립</div>
-  <div class="card">
-    <p><span class="rule-badge">최소 대립쌍</span> 하나의 음운만 다른 단어 쌍</p>
-    <div class="ex-list" style="margin:10px 0;">
-      <div class="ex-pill">말 / 발</div>
-      <div class="ex-pill">남 / 님</div>
-      <div class="ex-pill">눈 / 눈ː</div>
+  <div class="section-title" id="a-choesodaerip"><span class="icon">🔍</span>최소 대립쌍과 최소 대립</div>
+  <div class="factor-grid">
+    <div class="factor-card green">
+      <h4>최소 대립쌍</h4>
+      <p>하나의 음운만 다른 단어의 쌍</p>
+      <p style="margin-top:6px;font-size:12.5px;">예) '말/발', '남/님', '산/간', '불/풀', '살/쌀'</p>
     </div>
-    <p style="margin-top:12px;"><span class="rule-badge green">최소 대립</span> 최소 대립쌍에서 서로 다른 음운 그 자체</p>
-    <div class="ex-list" style="margin:10px 0;">
-      <div class="ex-pill">ㅁ / ㅂ</div>
-      <div class="ex-pill">ㅏ / ㅣ</div>
-      <div class="ex-pill"> 장단 </div>
+    <div class="factor-card teal">
+      <h4>최소 대립</h4>
+      <p>최소 대립쌍에서 <strong>서로 다른 음운</strong></p>
+      <p style="margin-top:6px;font-size:12.5px;">예) 'ㅁ/ㅂ', 'ㅏ/ㅣ', 'ㅅ/ㅆ', 'ㅂ/ㅍ', 'ㄴ/ㄱ'</p>
     </div>
   </div>
 
-  <div class="subsection-title">음운 변동의 유형</div>
-  <div class="card-grid">
-    <div class="info-card">
-      <div class="label">교체</div>
-      <div class="value">A → B</div>
-      <div class="text-muted" style="margin-top:4px;">한 음운이 다른 음운으로 바뀜</div>
+  <div class="section-title" id="a-byeondong"><span class="icon">🔀</span>음운 변동의 4가지 유형</div>
+  <div class="factor-grid four">
+    <div class="factor-card blue" style="text-align:center;">
+      <h4 style="justify-content:center;">교체 (A→B)</h4>
+      <p>한 음운이 다른 음운으로</p>
+      <p style="margin-top:4px;font-size:11.5px;">비음화·유음화·구개음화<br>된소리되기·반모음화</p>
     </div>
-    <div class="info-card" style="background:var(--accent-light); border-color:#9FE1CB;">
-      <div class="label" style="color:var(--accent);">탈락</div>
-      <div class="value" style="color:#064e3b;">A → ∅</div>
-      <div class="text-muted" style="margin-top:4px;">한 음운이 없어짐</div>
+    <div class="factor-card green" style="text-align:center;">
+      <h4 style="justify-content:center;">첨가 (Ø→A)</h4>
+      <p>없던 음운이 추가됨</p>
+      <p style="margin-top:4px;font-size:11.5px;">반모음 첨가<br>ㄴ 첨가·사잇소리</p>
     </div>
-    <div class="info-card" style="background:var(--warn-light); border-color:#FAC775;">
-      <div class="label" style="color:var(--warn);">첨가</div>
-      <div class="value" style="color:#451a03;">∅ → A</div>
-      <div class="text-muted" style="margin-top:4px;">없던 음운이 생김</div>
+    <div class="factor-card rose" style="text-align:center;">
+      <h4 style="justify-content:center;">탈락 (A→Ø)</h4>
+      <p>한 음운이 없어짐</p>
+      <p style="margin-top:4px;font-size:11.5px;">ㅎ·ㄹ 탈락<br>겹받침 단순화·ㅡ·동음 탈락</p>
     </div>
-    <div class="info-card" style="background:var(--purple-light); border-color:#AFA9EC;">
-      <div class="label" style="color:var(--purple);">축약</div>
-      <div class="value" style="color:#1e1b4b;">A + B → C</div>
-      <div class="text-muted" style="margin-top:4px;">두 음운이 합쳐져 하나가 됨</div>
+    <div class="factor-card orange" style="text-align:center;">
+      <h4 style="justify-content:center;">축약 (A+B→C)</h4>
+      <p>두 음운이 하나로 합쳐짐</p>
+      <p style="margin-top:4px;font-size:11.5px;">거센소리되기</p>
     </div>
   </div>
 </div>
 
-<!-- TAB 2: 자음 체계 -->
-<div class="tab-panel" id="tab2">
-  <div class="section-title">자음 체계 (19개)</div>
+<!-- ===== TAB 1: 모음 체계 ===== -->
+<div class="tab-panel" id="panel-1">
+  <div class="unit-banner">👄 모음 체계</div>
 
+  <div class="section-title" id="a-danmoeum"><span class="icon">📊</span>단모음 체계도 (10개)</div>
+  <table class="phono-table">
+    <thead>
+      <tr><th rowspan="2" style="width:80px;">혀의 높이</th><th colspan="2">전설 모음</th><th colspan="2">후설 모음</th></tr>
+      <tr><th class="sub-head">평순</th><th class="sub-head">원순</th><th class="sub-head">평순</th><th class="sub-head">원순</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="row-head">고모음</td><td class="consonant">ㅣ</td><td class="consonant">ㅟ</td><td class="consonant">ㅡ</td><td class="consonant">ㅜ</td></tr>
+      <tr><td class="row-head">중모음</td><td class="consonant">ㅔ</td><td class="consonant">ㅚ</td><td class="consonant">ㅓ</td><td class="consonant">ㅗ</td></tr>
+      <tr><td class="row-head">저모음</td><td class="consonant">ㅐ</td><td class="empty">—</td><td class="consonant">ㅏ</td><td class="empty">—</td></tr>
+    </tbody>
+  </table>
+  <div class="note">📌 <strong>ㅣ ㅟ ㅡ ㅜ / ㅔ ㅚ ㅓ ㅗ / ㅐ ㅏ</strong> 순서로 암기</div>
+
+  <div class="section-title" id="a-yangseong"><span class="icon">⚖️</span>양성·음성 모음 / 이중모음 / 모음 조화</div>
+  <div class="factor-grid three">
+    <div class="factor-card orange">
+      <h4>양성 모음</h4>
+      <p><strong>ㅏ, ㅗ</strong> — 밝고 가벼운 느낌 (찰랑찰랑)</p>
+    </div>
+    <div class="factor-card purple">
+      <h4>음성 모음</h4>
+      <p><strong>나머지</strong> — 어둡고 무거운 느낌 (출렁출렁)</p>
+    </div>
+    <div class="factor-card teal">
+      <h4>이중모음 — 반모음 + 단모음</h4>
+      <ul style="margin-top:4px;">
+        <li>'ㅣ' 계열: ㅑ, ㅒ, ㅕ, ㅖ, ㅛ, ㅠ, ㅢ</li>
+        <li>'ㅗ/ㅜ' 계열: ㅘ, ㅙ, ㅝ, ㅞ</li>
+        <li>반모음 뒤엔 홀자 못 옴</li>
+      </ul>
+    </div>
+  </div>
+  <div class="def-box"><strong>모음 조화</strong>: 양성끼리, 음성끼리 어울리는 현상 → 100% 지켜지지는 않음</div>
+  <table class="ex-table">
+    <thead><tr><th>어간</th><th>어미</th><th>결합형</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>잡다 (ㅏ)</td><td>-아서</td><td>잡아서</td><td>양성+양성 ✅</td></tr>
+      <tr><td>먹다 (ㅓ)</td><td>-어서</td><td>먹어서</td><td>음성+음성 ✅</td></tr>
+      <tr><td>오다 (ㅗ)</td><td>-아서</td><td>와서</td><td>양성+양성 ✅</td></tr>
+      <tr><td>서다 (ㅓ)</td><td>-어서</td><td>서서</td><td>음성+음성 ✅</td></tr>
+      <tr><td>주다 (ㅜ)</td><td>-어서</td><td>주어서</td><td>음성+음성 ✅</td></tr>
+      <tr><td>도와 (ㅗ+ㅏ)</td><td>—</td><td>도와</td><td>양성 ✅</td></tr>
+      <tr><td>쌓다 (ㅏ)</td><td>-아서</td><td>쌓아서</td><td>양성 ✅</td></tr>
+      <tr><td>고맙다</td><td>-아서</td><td>고마워서</td><td>ㅂ불규칙 예외</td></tr>
+      <tr><td>아름답다</td><td>-아서</td><td>아름다워서</td><td>ㅂ불규칙 예외</td></tr>
+      <tr><td>쉬다 (ㅜㅣ)</td><td>-어서</td><td>쉬어서</td><td>음성+음성 ✅</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== TAB 2: 자음 체계 ===== -->
+<div class="tab-panel" id="panel-2">
+  <div class="unit-banner">🗣️ 자음 체계 (19개)</div>
+
+  <div class="section-title" id="a-jaeum"><span class="icon">📊</span>자음 체계표</div>
+  <div class="def-box"><strong>자음</strong>: 소리를 낼 때 공기의 흐름이 발음 기관의 장애를 받는 소리</div>
+  <table class="phono-table">
+    <thead>
+      <tr>
+        <th colspan="2">발음 방법</th>
+        <th>입술소리<br><span style="font-weight:400;font-size:10px;">(양순음)</span></th>
+        <th>잇몸소리<br><span style="font-weight:400;font-size:10px;">(치조음)</span></th>
+        <th>센입천장<br><span style="font-weight:400;font-size:10px;">(경구개음)</span></th>
+        <th>여린입천장<br><span style="font-weight:400;font-size:10px;">(연구개음)</span></th>
+        <th>목청소리<br><span style="font-weight:400;font-size:10px;">(후음)</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="row-head" rowspan="3">파열음<br><span style="font-size:10px;font-weight:400;">공기 흐름을 막았다 터뜨림</span></td>
+        <td class="sub-head">예사소리(평음)</td>
+        <td class="consonant">ㅂ</td><td class="consonant">ㄷ</td><td class="empty">—</td><td class="consonant">ㄱ</td><td class="empty">—</td>
+      </tr>
+      <tr><td class="sub-head">된소리(경음)</td><td class="consonant">ㅃ</td><td class="consonant">ㄸ</td><td class="empty">—</td><td class="consonant">ㄲ</td><td class="empty">—</td></tr>
+      <tr><td class="sub-head">거센소리(격음)</td><td class="consonant">ㅍ</td><td class="consonant">ㅌ</td><td class="empty">—</td><td class="consonant">ㅋ</td><td class="empty">—</td></tr>
+      <tr>
+        <td class="row-head" rowspan="3">파찰음<br><span style="font-size:10px;font-weight:400;">파열+마찰</span></td>
+        <td class="sub-head">예사소리</td><td class="empty">—</td><td class="empty">—</td><td class="consonant">ㅈ</td><td class="empty">—</td><td class="empty">—</td>
+      </tr>
+      <tr><td class="sub-head">된소리</td><td class="empty">—</td><td class="empty">—</td><td class="consonant">ㅉ</td><td class="empty">—</td><td class="empty">—</td></tr>
+      <tr><td class="sub-head">거센소리</td><td class="empty">—</td><td class="empty">—</td><td class="consonant">ㅊ</td><td class="empty">—</td><td class="empty">—</td></tr>
+      <tr>
+        <td class="row-head" rowspan="2">마찰음<br><span style="font-size:10px;font-weight:400;">입 안에서 공기가 마찰</span></td>
+        <td class="sub-head">예사소리</td><td class="empty">—</td><td class="consonant">ㅅ</td><td class="empty">—</td><td class="empty">—</td>
+        <td class="consonant" style="font-size:12px;">ㅎ<br><span style="font-size:9.5px;font-weight:400;">평음/경음<br>된소리 ✕</span></td>
+      </tr>
+      <tr><td class="sub-head">된소리</td><td class="empty">—</td><td class="consonant">ㅆ</td><td class="empty">—</td><td class="empty">—</td><td class="empty">—</td></tr>
+      <tr>
+        <td class="row-head" colspan="2">콧소리 (비음)<br><span style="font-size:10px;font-weight:400;">코강·비강으로 공기 흐름</span></td>
+        <td class="consonant">ㅁ</td><td class="consonant">ㄴ</td><td class="empty">—</td><td class="consonant">ㅇ</td><td class="empty">—</td>
+      </tr>
+      <tr>
+        <td class="row-head" colspan="2">흐름소리 (유음)</td>
+        <td class="empty">—</td><td class="consonant">ㄹ</td><td class="empty">—</td><td class="empty">—</td><td class="empty">—</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="factor-grid three">
+    <div class="factor-card blue"><h4>예사소리(평음) 9개</h4><p>ㄱ ㄷ ㅂ ㅈ ㅅ ㄴ ㅁ ㅇ ㄹ</p></div>
+    <div class="factor-card rose"><h4>된소리(경음) 5개</h4><p>ㄲ ㄸ ㅃ ㅉ ㅆ</p></div>
+    <div class="factor-card orange"><h4>거센소리(격음) 4개</h4><p>ㅋ ㅌ ㅍ ㅊ</p></div>
+  </div>
+  <div class="note">📌 ㅎ: 마찰음·목청소리. 평음 또는 경음에 해당, <strong>된소리 없음</strong></div>
+</div>
+
+<!-- ===== TAB 3: 교체 ===== -->
+<div class="tab-panel" id="panel-3">
+  <div class="unit-banner">🔄 음운의 교체 (A → B)</div>
+
+  <div class="section-title" id="a-eumjeol"><span class="icon">①</span>음절 끝소리 규칙 (대표음으로 교체)</div>
+  <div class="sub2-title">7대표음</div>
+  <div class="def-box">받침은 음절 끝에서 <strong>ㄱ, ㄴ, ㄷ, ㄹ, ㅁ, ㅂ, ㅇ</strong> 7가지 중 하나로만 발음됨</div>
+  <table class="ex-table">
+    <thead><tr><th>표기</th><th>발음</th><th>적용 대표음</th></tr></thead>
+    <tbody>
+      <tr><td>낮, 낫, 낯, 낱</td><td>[낟]</td><td>ㄷ — ㅈ·ㅅ·ㅊ·ㅌ 모두 ㄷ</td></tr>
+      <tr><td>부엌</td><td>[부억]</td><td>ㄱ — ㅋ→ㄱ</td></tr>
+      <tr><td>꽃</td><td>[꼳]</td><td>ㄷ — ㅊ→ㄷ</td></tr>
+      <tr><td>숲</td><td>[숩]</td><td>ㅂ — ㅍ→ㅂ</td></tr>
+      <tr><td>앞</td><td>[압]</td><td>ㅂ</td></tr>
+      <tr><td>넋</td><td>[넉]</td><td>ㄱ — 겹받침 ㄱㅅ → ㄱ</td></tr>
+      <tr><td>닭</td><td>[닥]</td><td>ㄱ — 겹받침 ㄹㄱ → ㄱ</td></tr>
+      <tr><td>삶</td><td>[삼]</td><td>ㅁ — 겹받침 ㄹㅁ → ㅁ</td></tr>
+      <tr><td>흙</td><td>[흑]</td><td>ㄱ — 겹받침 ㄹㄱ → ㄱ</td></tr>
+      <tr><td>밟다</td><td>[밥따]</td><td>ㅂ — 예외: ㄹㅂ에서 ㅂ 발음</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sub2-title">형식 vs 실질 형태소 — 받침 뒤 모음</div>
+  <div class="factor-grid">
+    <div class="factor-card blue">
+      <h4>형식 형태소(조사·어미) 앞 → 연음</h4>
+      <p>낫+이(조사) → <strong>낫이[나시]</strong></p>
+      <p style="margin-top:6px;font-size:12.5px;">받침 자음이 그대로 뒤 음절 초성으로 이동</p>
+      <ul style="margin-top:6px;">
+        <li>꽃이 → [꼬치]</li>
+        <li>닭이 → [달기]</li>
+        <li>흙이 → [흘기]</li>
+        <li>앞이 → [아피]</li>
+        <li>밭에 → [바테]</li>
+      </ul>
+    </div>
+    <div class="factor-card rose">
+      <h4>실질 형태소 앞 → 7대표음 후 연음</h4>
+      <p>낫+안 → <strong>낫 안[나단]</strong></p>
+      <p style="margin-top:6px;font-size:12.5px;">7대표음 적용 후 그 대표음이 뒤로 이동</p>
+      <ul style="margin-top:6px;">
+        <li>꽃 아래 → [꼬다래]</li>
+        <li>낯 앞 → [나답]</li>
+        <li>숲 앞 → [수밥]</li>
+        <li>밭 아래 → [바다래]</li>
+        <li>부엌 안 → [부어간]</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="section-title" id="a-bieumhwa"><span class="icon">②</span>비음화</div>
+  <div class="def-box">파열음 <strong>'ㄱ, ㄷ, ㅂ'</strong>이 비음 <strong>'ㄴ, ㅁ'</strong> 앞에서 <strong>[ㅇ, ㄴ, ㅁ]</strong>으로 교체</div>
+  <table class="ex-table">
+    <thead><tr><th>표기</th><th>발음</th><th>변화</th></tr></thead>
+    <tbody>
+      <tr><td>국물</td><td>[궁물]</td><td>ㄱ→ㅇ (ㅁ 앞)</td></tr>
+      <tr><td>닫는</td><td>[단는]</td><td>ㄷ→ㄴ (ㄴ 앞)</td></tr>
+      <tr><td>잡는</td><td>[잠는]</td><td>ㅂ→ㅁ (ㄴ 앞)</td></tr>
+      <tr><td>먹는</td><td>[멍는]</td><td>ㄱ→ㅇ (ㄴ 앞)</td></tr>
+      <tr><td>박물관</td><td>[방물관]</td><td>ㄱ→ㅇ (ㅁ 앞)</td></tr>
+      <tr><td>작년</td><td>[장년]</td><td>ㄱ→ㅇ (ㄴ 앞)</td></tr>
+      <tr><td>밥맛</td><td>[밤맏]</td><td>ㅂ→ㅁ (ㅁ 앞)</td></tr>
+      <tr><td>입문</td><td>[임문]</td><td>ㅂ→ㅁ (ㅁ 앞)</td></tr>
+      <tr><td>부엌문</td><td>[부엉문]</td><td>ㄱ→ㅇ (ㅁ 앞)</td></tr>
+      <tr><td>넋만</td><td>[넝만]</td><td>겹받침 ㄱ→ㅇ (ㅁ 앞)</td></tr>
+    </tbody>
+  </table>
+  <div class="sub2-title">ㄹ의 비음화</div>
+  <div class="factor-grid">
+    <div class="factor-card blue">
+      <h4>i) ㄹ이 파열음 'ㄱ, ㄷ, ㅂ' 뒤에서 [ㄴ]이 됨</h4>
+      <p>섬리 → [섬니] → [심니]</p>
+      <p style="font-size:12px;margin-top:4px;">독립[동닙], 협력[협녁], 백릭[뱅닉]</p>
+    </div>
+    <div class="factor-card purple">
+      <h4>ii) ㄹ이 'ㅁ, ㅇ' 뒤에서 [ㄴ]이 됨</h4>
+      <p>종로→[종노], 담력[담녁], 항로[항노]</p>
+    </div>
+  </div>
+
+  <div class="section-title" id="a-yueumhwa"><span class="icon">③</span>유음화</div>
+  <div class="def-box"><strong>'ㄴ'</strong>이 'ㄹ'의 앞이나 뒤에서 <strong>[ㄹ]</strong>이 됨</div>
+  <table class="ex-table">
+    <thead><tr><th>표기</th><th>발음</th><th>방향</th></tr></thead>
+    <tbody>
+      <tr><td>신라</td><td>[실라]</td><td>순행 (ㄹ이 앞)</td></tr>
+      <tr><td>난로</td><td>[날로]</td><td>역행 (ㄹ이 뒤)</td></tr>
+      <tr><td>칼날</td><td>[칼랄]</td><td>순행</td></tr>
+      <tr><td>설날</td><td>[설랄]</td><td>순행</td></tr>
+      <tr><td>물놀이</td><td>[물로리]</td><td>순행</td></tr>
+      <tr><td>관련</td><td>[괄련]</td><td>역행</td></tr>
+      <tr><td>혼란</td><td>[홀란]</td><td>역행</td></tr>
+      <tr><td>연락</td><td>[열락]</td><td>역행</td></tr>
+      <tr><td>언론</td><td>[얼론]</td><td>역행</td></tr>
+      <tr><td>줄넘기</td><td>[줄럼기]</td><td>순행</td></tr>
+    </tbody>
+  </table>
+  <div class="warning">⚠️ 예외(유음화 불적용): 의견란[의견난], 임진란[임진난], 생산량[생산냥], 결단력[결단녁], 공권력[공권녁], 횡단로[횡단노], 입원료[이붠뇨]</div>
+
+  <div class="section-title" id="a-gugaeeumhwa"><span class="icon">④</span>구개음화</div>
+  <div class="def-box">치조음 <strong>'ㄷ, ㅌ'</strong>이 모음 'ㅣ'나 반모음 'j'로 시작하는 <strong>형식 형태소</strong>를 만나 <strong>[ㅈ, ㅊ]</strong>이 됨</div>
+  <table class="ex-table">
+    <thead><tr><th>표기</th><th>발음</th><th>변화</th></tr></thead>
+    <tbody>
+      <tr><td>해돋이</td><td>[해도지]</td><td>ㄷ+이→ㅈ</td></tr>
+      <tr><td>굳이</td><td>[구지]</td><td>ㄷ+이→ㅈ</td></tr>
+      <tr><td>같이</td><td>[가치]</td><td>ㅌ+이→ㅊ</td></tr>
+      <tr><td>끝이</td><td>[끄치]</td><td>ㅌ+이→ㅊ</td></tr>
+      <tr><td>밭이</td><td>[바치]</td><td>ㅌ+이→ㅊ</td></tr>
+      <tr><td>솥이</td><td>[소치]</td><td>ㅌ+이→ㅊ</td></tr>
+      <tr><td>볕이</td><td>[벼치]</td><td>ㅌ+이→ㅊ</td></tr>
+      <tr><td>곧이듣다</td><td>[고지드따]</td><td>ㄷ+이→ㅈ</td></tr>
+      <tr><td>굳히다</td><td>[구치다]</td><td>ㄷ+ㅎ→ㅊ (거센소리 후 구개음화)</td></tr>
+      <tr><td>닫히다</td><td>[다치다]</td><td>ㄷ+ㅎ→ㅊ</td></tr>
+    </tbody>
+  </table>
+  <div class="note">📌 반드시 <strong>형식 형태소</strong>(조사·어미) 앞에서만. '디디다', '틈'처럼 실질 형태소에선 불가.</div>
+
+  <div class="section-title" id="a-doensori"><span class="icon">⑤</span>된소리되기 (경음화)</div>
+  <div class="rule-card rose">
+    <div class="rule-head">i) 파열음 'ㄱ, ㄷ, ㅂ' 뒤에 'ㄱ, ㄷ, ㅂ, ㅅ, ㅈ'이 올 때</div>
+    <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+      <span class="badge badge-rose">국밥[국빱]</span><span class="badge badge-rose">깎다[깍따]</span><span class="badge badge-rose">밥솥[밥쏟]</span><span class="badge badge-rose">뚝배기[뚝빼기]</span><span class="badge badge-rose">옷자락[옫짜락]</span>
+    </div>
+  </div>
+  <div class="rule-card rose">
+    <div class="rule-head">ii) 어간의 받침 'ㄴ, ㄹ' 뒤에 어미의 첫소리 'ㄱ, ㄷ, ㅅ, ㅈ'이 올 때</div>
+    <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+      <span class="badge badge-rose">감다[감따]</span><span class="badge badge-rose">담고[담꼬]</span><span class="badge badge-rose">신고[신꼬]</span><span class="badge badge-rose">껴안다[껴안따]</span><span class="badge badge-rose">굴다[굴따]</span>
+    </div>
+  </div>
+  <div class="rule-card rose">
+    <div class="rule-head">iii) 한자어에서 'ㄹ' 받침 뒤에 'ㄷ, ㅅ, ㅈ'이 올 때</div>
+    <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+      <span class="badge badge-rose">갈등[갈뜽]</span><span class="badge badge-rose">발전[발쩐]</span><span class="badge badge-rose">말살[말쌀]</span><span class="badge badge-rose">발달[발딸]</span><span class="badge badge-rose">물질[물찔]</span>
+    </div>
+  </div>
+  <div class="rule-card rose">
+    <div class="rule-head">iv) 관형사형 어미 '-(으)ㄴ, -는, -(으)ㄹ, -을' 뒤에 'ㄱ, ㄷ, ㅂ, ㅅ, ㅈ'이 올 때</div>
+    <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+      <span class="badge badge-rose">갈 것[갈 껃]</span><span class="badge badge-rose">할 바[할 빠]</span><span class="badge badge-rose">만날 사람[만날 싸람]</span><span class="badge badge-rose">볼 데[볼 떼]</span><span class="badge badge-rose">먹을 것[머글 껃]</span>
+    </div>
+  </div>
+
+  <div class="section-title" id="a-banmoeumhwa"><span class="icon">⑥</span>모음 교체 (반모음화)</div>
+  <div class="def-box"><strong>'ㅣ, ㅗ, ㅜ'</strong>가 'ㅏ, ㅓ'를 만나 <strong>반모음</strong>이 됨 (단모음 → 이중모음)</div>
+  <table class="ex-table">
+    <thead><tr><th>표기</th><th>반모음화</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><td>피어</td><td>펴 / [피여]</td><td>ㅣ+ㅓ</td></tr>
+      <tr><td>이어</td><td>여 / [이여]</td><td>ㅣ+ㅓ</td></tr>
+      <tr><td>되어</td><td>돼 / [되여]</td><td>ㅗ+ㅓ</td></tr>
+      <tr><td>보아</td><td>봐</td><td>ㅗ+ㅏ</td></tr>
+      <tr><td>두어</td><td>둬 / [두워]</td><td>ㅜ+ㅓ</td></tr>
+      <tr><td>쏘아</td><td>쏴</td><td>ㅗ+ㅏ</td></tr>
+      <tr><td>기어</td><td>겨 / [기여]</td><td>허용</td></tr>
+      <tr><td>지어</td><td>져 / [지여]</td><td>허용</td></tr>
+      <tr><td>쪼아</td><td>좌 / [쪼아]</td><td>허용</td></tr>
+      <tr><td>뛰어</td><td>[뛰여]</td><td>허용</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ===== TAB 4: 첨가 ===== -->
+<div class="tab-panel" id="panel-4">
+  <div class="unit-banner">➕ 음운의 첨가 (Ø → A)</div>
+
+  <!-- ① 반모음 첨가 -->
+  <div class="section-title" id="a-banmoeumcheomga"><span class="icon">①</span>반모음 첨가</div>
   <div class="def-box">
-    소리를 낼 때 공기의 흐름이 발음 기관의 장애를 받는 소리
+    모음 <strong>'ㅣ'로 끝나는 어간</strong> + <strong>'-어'</strong><br>
+    → <span class="badge badge-blue">[어]</span> 원칙 &nbsp;&nbsp;
+       <span class="badge badge-green">[여]</span> 허용 — 반모음 'j' 첨가<br><br>
+    <strong>'-이오', '-아니오'</strong> → <span class="badge badge-green">[이요], [아니요]</span> 허용<br>
+    cf) '아니오' ← 감탄자 &nbsp;/&nbsp; '예' ← 보조사
+  </div>
+  <table class="ex-table">
+    <thead><tr><th>표기</th><th>원칙 발음</th><th>허용 발음 (반모음 첨가)</th></tr></thead>
+    <tbody>
+      <tr><td>피어</td><td>[피어]</td><td>[피여]</td></tr>
+      <tr><td>이어</td><td>[이어]</td><td>[이여]</td></tr>
+      <tr><td>기어</td><td>[기어]</td><td>[기여]</td></tr>
+      <tr><td>지어</td><td>[지어]</td><td>[지여]</td></tr>
+      <tr><td>끼어</td><td>[끼어]</td><td>[끼여]</td></tr>
+      <tr><td>시어</td><td>[시어]</td><td>[시여]</td></tr>
+      <tr><td>비어</td><td>[비어]</td><td>[비여]</td></tr>
+      <tr><td>아니오</td><td>[아니오]</td><td>[아니요]</td></tr>
+      <tr><td>이것이오</td><td>[이거시오]</td><td>[이거시요]</td></tr>
+      <tr><td>책이오</td><td>[채기오]</td><td>[채기요]</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ② ㄴ 첨가 -->
+  <div class="section-title" id="a-ncheomga"><span class="icon">②</span>'ㄴ' 첨가 (합성어 / 파생어)</div>
+  <div class="def-box">
+    받침 '자음' + <strong>이, 야, 여, 요, 유</strong> → <strong>[니, 냐, 녀, 뇨, 뉴]</strong>
   </div>
 
-  <figure class="consonant-chart-frame" aria-label="자음 체계표 이미지">
-    <img class="consonant-chart-image" src="./assets/korean-consonant-chart.svg" alt="자음 체계표: 조음방법과 조음위치에 따라 ㅂ, ㄷ, ㄱ, ㅃ, ㄸ, ㄲ, ㅍ, ㅌ, ㅋ, ㅈ, ㅉ, ㅊ, ㅅ, ㅎ, ㅆ, ㅁ, ㄴ, ㅇ, ㄹ을 분류한 표" />
-  </figure>
-
-  <div class="warn-box">
-    ※ <strong>ㅎ</strong>은 평음 또는 경음으로 분류. 구분(×)
+  <div class="subsection-title">합성어 vs 파생어 처리 차이</div>
+  <div class="factor-grid">
+    <div class="factor-card green">
+      <h4>합성어 — ㄴ 첨가만</h4>
+      <p>솜이불 → [솜니불]</p>
+      <p style="margin-top:5px;font-size:12.5px;color:var(--text-sec);">두 실질 형태소가 결합. 바로 ㄴ 첨가 적용.</p>
+    </div>
+    <div class="factor-card purple">
+      <h4>파생어 — 음절 끝소리 규칙 → ㄴ 첨가 → 비음화</h4>
+      <p>홑이불 → [홑이불] → [혼이불] → [혼니불] → [혼니불]</p>
+      <p style="margin-top:5px;font-size:12.5px;color:var(--text-sec);">접사 결합. 먼저 음절 끝소리 적용 후 ㄴ 첨가.</p>
+    </div>
   </div>
-</div>
 
-<!-- TAB 3: 모음 체계 -->
-<div class="tab-panel" id="tab3">
-  <div class="section-title">모음 체계</div>
+  <table class="ex-table">
+    <thead><tr><th>표기</th><th>발음</th><th>과정 / 종류</th></tr></thead>
+    <tbody>
+      <tr><td>솜이불</td><td>[솜니불]</td><td>ㄴ 첨가 — 합성어</td></tr>
+      <tr><td>홑이불</td><td>[혼니불]</td><td>음절끝소리(ㅌ→ㄷ→혼) → ㄴ 첨가 → 비음화 — 파생어</td></tr>
+      <tr><td>색연필</td><td>[생년필]</td><td>ㄴ 첨가 → 비음화</td></tr>
+      <tr><td>눈요기</td><td>[눈뇨기]</td><td>ㄴ 첨가</td></tr>
+      <tr><td>밤일</td><td>[밤닐]</td><td>ㄴ 첨가</td></tr>
+      <tr><td>막일</td><td>[망닐]</td><td>ㄴ 첨가 → 비음화</td></tr>
+      <tr><td>한여름</td><td>[한녀름]</td><td>ㄴ 첨가</td></tr>
+      <tr><td>들일</td><td>[들릴]</td><td>ㄴ 첨가 → 유음화</td></tr>
+      <tr><td>꽃잎</td><td>[꼰닙]</td><td>음절끝소리 → ㄴ 첨가 → 비음화</td></tr>
+      <tr><td>나뭇잎</td><td>[나문닙]</td><td>사잇소리(ㅅ) → 음절끝소리 → ㄴ 첨가 → 비음화</td></tr>
+    </tbody>
+  </table>
 
-  <div class="subsection-title">단모음 체계도 (10개)</div>
+  <!-- ③ 사잇소리 현상 -->
+  <div class="section-title" id="a-saiitsori"><span class="icon">③</span>사잇소리 현상 (합성어)</div>
+  <div class="def-box">
+    앞 또는 뒤에 <strong>공명음(ㅁ, ㄴ, ㅇ, ㄹ+모음)</strong>이 올 경우 예외 있음
+  </div>
 
-  <div class="tbl-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th rowspan="2">혀의 높이</th>
-          <th colspan="2">전설 모음</th>
-          <th colspan="2">후설 모음</th>
-        </tr>
-        <tr>
-          <th>평순</th>
-          <th>원순</th>
-          <th>평순</th>
-          <th>원순</th>
-        </tr>
-      </thead>
+  <!-- i) -->
+  <div class="rule-card green">
+    <div class="rule-head">i) 모음 끝 + 예사소리 시작 → 'ㅅ' 첨가 → 된소리로 발음 <span class="badge badge-green">사이 시옷 표기 O</span></div>
+    <table class="ex-table" style="margin-top:8px;">
+      <thead><tr><th>원형</th><th>합성어 표기</th><th>발음</th></tr></thead>
       <tbody>
-        <tr>
-          <td style="font-weight:500;">고모음</td>
-          <td style="font-size:20px;">ㅣ</td>
-          <td style="font-size:20px;">ㅟ</td>
-          <td style="font-size:20px;">ㅡ</td>
-          <td style="font-size:20px;">ㅜ</td>
-        </tr>
-        <tr>
-          <td style="font-weight:500;">중모음</td>
-          <td style="font-size:20px;">ㅔ</td>
-          <td style="font-size:20px;">ㅚ</td>
-          <td style="font-size:20px;">ㅓ</td>
-          <td style="font-size:20px;">ㅗ</td>
-        </tr>
-        <tr>
-          <td style="font-weight:500;">저모음</td>
-          <td style="font-size:20px;">ㅐ</td>
-          <td></td>
-          <td style="font-size:20px;">ㅏ</td>
-          <td></td>
-        </tr>
+        <tr><td>코+등</td><td>콧등</td><td>[코뜽 / 콛뜽]</td></tr>
+        <tr><td>배+사람</td><td>뱃사람</td><td>[배싸람]</td></tr>
+        <tr><td>나무+가지</td><td>나뭇가지</td><td>[나묻까지]</td></tr>
+        <tr><td>냇+가</td><td>냇가</td><td>[내까]</td></tr>
+        <tr><td>깃+발</td><td>깃발</td><td>[기빨]</td></tr>
+        <tr><td>나루+배</td><td>나룻배</td><td>[나루빼]</td></tr>
+        <tr><td>머리+카락</td><td>머릿카락</td><td>[머릳카락]</td></tr>
+        <tr><td>아래+집</td><td>아랫집</td><td>[아래찝]</td></tr>
+        <tr><td>위+집</td><td>윗집</td><td>[위찝]</td></tr>
+        <tr><td>초+불</td><td>촛불</td><td>[초뿔]</td></tr>
       </tbody>
     </table>
   </div>
 
-  <div class="subsection-title">반모음과 이중모음</div>
-  <div class="two-col">
-    <div class="card">
-      <div style="font-weight:500; margin-bottom:8px;">반모음 (혼자 쓰일 수 없음)</div>
-      <div class="sub-item">
-        <div class="sub-title">'ㅣ' 계열 [j]</div>
-        ㅑ, ㅕ, ㅛ, ㅠ, ㅒ, ㅖ, ㅘ(+)
-      </div>
-      <div class="sub-item">
-        <div class="sub-title">'ㅗ/ㅜ' 계열 [w]</div>
-        ㅘ, ㅙ, ㅝ, ㅞ
-      </div>
-    </div>
-    <div class="card">
-      <div style="font-weight:500; margin-bottom:8px;">이중모음</div>
-      <div class="def-box" style="font-size:14px;">
-        반모음 + 단모음의 결합
-      </div>
-      <p class="text-muted" style="margin-top:8px;">ex) ㅘ = [w] + ㅏ</p>
-    </div>
+  <!-- ii) -->
+  <div class="rule-card teal">
+    <div class="rule-head">ii) 모음 끝 + 'ㅁ, ㄴ' 시작 → 'ㄴ' 덧남 → 비음화 <span class="badge badge-teal">사이 시옷 표기 O</span></div>
+    <table class="ex-table" style="margin-top:8px;">
+      <thead><tr><th>원형</th><th>합성어 표기</th><th>발음</th></tr></thead>
+      <tbody>
+        <tr><td>시내+물</td><td>시냇물</td><td>[시낻물 → 시냄물]</td></tr>
+        <tr><td>아래+니</td><td>아랫니</td><td>[아랜니]</td></tr>
+        <tr><td>위+날개</td><td>윗날개</td><td>[윈날개]</td></tr>
+        <tr><td>뒤+면</td><td>뒷면</td><td>[뒨면]</td></tr>
+        <tr><td>코+날</td><td>콧날</td><td>[콘날]</td></tr>
+        <tr><td>배+머리</td><td>뱃머리</td><td>[밴머리]</td></tr>
+        <tr><td>제사+날</td><td>제삿날</td><td>[제산날]</td></tr>
+        <tr><td>보름+달</td><td>보름달</td><td>→ 예외 없음 [보름달]</td></tr>
+        <tr><td>입+맛</td><td>입맛</td><td>[임맛] — 자음 뒤 사잇소리 표기 없음</td></tr>
+        <tr><td>코+물</td><td>콧물</td><td>[콘물]</td></tr>
+      </tbody>
+    </table>
   </div>
 
-  <div class="subsection-title">모음 조화</div>
-  <div class="card">
-    <div class="warn-box">양성끼리, 음성끼리 어울리는 경향. 현대 국어에서는 100% 지켜지지 않음.</div>
-    <div class="two-col" style="margin-top:12px;">
-      <div class="sub-item">
-        <div class="sub-title" style="color:var(--warn);">양성 모음</div>
-        ㅏ, ㅗ — 밝고 가벼운 느낌<br>
-        <span class="text-muted">ex) 찰랑찰랑, -아/-아서</span>
-      </div>
-      <div class="sub-item">
-        <div class="sub-title" style="color:var(--accent);">음성 모음</div>
-        나머지 — 어둡고 무거운 느낌<br>
-        <span class="text-muted">ex) 출렁출렁, -어/-어서</span>
-      </div>
+  <!-- iii) -->
+  <div class="rule-card purple">
+    <div class="rule-head">iii) 모음 끝 + 'ㅣ' 또는 'j' 시작 → 'ㄴㄴ' 덧남 <span class="badge badge-purple">사이 시옷 표기 O</span></div>
+    <table class="ex-table" style="margin-top:8px;">
+      <thead><tr><th>원형</th><th>합성어 표기</th><th>발음 과정</th></tr></thead>
+      <tbody>
+        <tr><td>나무+잎</td><td>나뭇잎</td><td>[나무읍] → [나묻읍] → [나문닙]<br><span style="font-size:11.5px;color:var(--text-sec);">음절끝소리 → ㄴ 첨가 → 비음화</span></td></tr>
+        <tr><td>베개+잇</td><td>베갯잇</td><td>[베갠닏]</td></tr>
+        <tr><td>깨+잎</td><td>깻잎</td><td>[깬닙]</td></tr>
+        <tr><td>뒤+일</td><td>뒷일</td><td>[뒨닐]</td></tr>
+        <tr><td>예사+일</td><td>예삿일</td><td>[예산닐]</td></tr>
+        <tr><td>혼+인</td><td>혼잇날</td><td>[혼인날 → 혼인날]</td></tr>
+        <tr><td>두+일</td><td>뒷일</td><td>[뒨닐]</td></tr>
+        <tr><td>사이+이름</td><td>사잇이름</td><td>[사인니름]</td></tr>
+        <tr><td>가위+일</td><td>가윗일</td><td>[가윈닐]</td></tr>
+        <tr><td>우리+일</td><td>우릿일</td><td>[우린닐]</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- iv) -->
+  <div class="rule-card orange">
+    <div class="rule-head">iv) 한자 합성어 6개 — 예외적으로 사이 시옷 표기 (어근+어근) <span class="badge badge-orange">사이 시옷 표기 O</span></div>
+    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+      <span class="badge badge-orange" style="font-size:13px;padding:4px 12px;">곳간</span>
+      <span class="badge badge-orange" style="font-size:13px;padding:4px 12px;">셋방</span>
+      <span class="badge badge-orange" style="font-size:13px;padding:4px 12px;">숫자</span>
+      <span class="badge badge-orange" style="font-size:13px;padding:4px 12px;">찻간</span>
+      <span class="badge badge-orange" style="font-size:13px;padding:4px 12px;">툇간</span>
+      <span class="badge badge-orange" style="font-size:13px;padding:4px 12px;">횟수</span>
+    </div>
+    <p style="margin-top:10px;font-size:13px;color:var(--text-sec);">나머지 한자어 합성어에는 사이 시옷을 표기하지 않음.</p>
+  </div>
+
+  <!-- v) -->
+  <div class="rule-card blue">
+    <div class="rule-head">v) 자음 끝 + 예사소리 시작 → 된소리 발음 <span class="badge badge-blue">사이 시옷 표기 X</span></div>
+    <table class="ex-table" style="margin-top:8px;">
+      <thead><tr><th>표기</th><th>발음</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>눈사람</td><td>[눈싸람]</td><td>자음(ㄴ) 뒤 → 된소리, 표기 없음</td></tr>
+        <tr><td>문고리</td><td>[문꼬리]</td><td>자음(ㄴ) 뒤 → 된소리, 표기 없음</td></tr>
+        <tr><td>산길</td><td>[산낄]</td><td>자음(ㄴ) 뒤 → 된소리</td></tr>
+        <tr><td>밤길</td><td>[밤낄]</td><td>자음(ㅁ) 뒤 → 된소리</td></tr>
+        <tr><td>강가</td><td>[강까]</td><td>자음(ㅇ) 뒤 → 된소리</td></tr>
+        <tr><td>봄비</td><td>[봄삐]</td><td>자음(ㅁ) 뒤 → 된소리</td></tr>
+        <tr><td>물고기</td><td>[물꼬기]</td><td>자음(ㄹ) 뒤 → 된소리</td></tr>
+        <tr><td>발바닥</td><td>[발빠닥]</td><td>자음(ㄹ) 뒤 → 된소리</td></tr>
+        <tr><td>길가</td><td>[길까]</td><td>자음(ㄹ) 뒤 → 된소리</td></tr>
+        <tr><td>손등</td><td>[손뜽]</td><td>자음(ㄴ) 뒤 → 된소리</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">📌 i)~iii): 앞말이 <strong>모음으로 끝날 때</strong> → <strong>사이 시옷 표기</strong><br>
+  v): 앞말이 <strong>자음으로 끝날 때</strong> → 된소리로 발음되지만 <strong>표기는 하지 않음</strong></div>
+
+</div>
+<!-- ===== TAB 5 이후는 기존 내용 그대로 ===== -->
+<div class="tab-panel" id="panel-5">
+  <div class="unit-banner">✂️ 음운의 탈락 (A → Ø)</div>
+
+  <div class="section-title" id="a-jaeumtallak"><span class="icon">①</span>자음 탈락</div>
+
+  <div class="rule-card">
+    <div class="rule-head">ㅎ 탈락 — 'ㅎ' 뒤에 모음이 올 경우 <strong>발음만</strong> 탈락 (표기 유지)</div>
+    <table class="ex-table" style="margin-top:8px;">
+      <thead><tr><th>표기</th><th>발음</th><th>과정</th></tr></thead>
+      <tbody>
+        <tr><td>쌓이다</td><td>[싸이다]</td><td>ㅎ 탈락</td></tr>
+        <tr><td>놓아</td><td>[노아]</td><td>ㅎ 탈락</td></tr>
+        <tr><td>닳아</td><td>[다라]</td><td>ㅎ 탈락→연음</td></tr>
+        <tr><td>많아</td><td>[마나]</td><td>겹받침 ㄴㅎ→ㅎ 탈락</td></tr>
+        <tr><td>좋아</td><td>[조아]</td><td>ㅎ 탈락</td></tr>
+        <tr><td>낳아</td><td>[나아]</td><td>ㅎ 탈락</td></tr>
+        <tr><td>찧어</td><td>[찌어]</td><td>ㅎ 탈락</td></tr>
+        <tr><td>뚫어</td><td>[뚜러]</td><td>겹받침→ㅎ 탈락→연음</td></tr>
+        <tr><td>끓이다</td><td>[끄리다]</td><td>ㅎ 탈락→유음화</td></tr>
+        <tr><td>싫어</td><td>[시러]</td><td>겹받침 ㄹㅎ→ㅎ 탈락→연음</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="rule-card rose">
+    <div class="rule-head">ㄹ 탈락 — 'ㄹ' 뒤에 'ㄴ, ㅂ, ㅅ'이 올 경우 <strong>발음+표기 모두</strong> 탈락</div>
+    <table class="ex-table" style="margin-top:8px;">
+      <thead><tr><th>기본형</th><th>활용형</th><th>결과</th></tr></thead>
+      <tbody>
+        <tr><td>딸님</td><td>→따님</td><td>[따님]</td></tr>
+        <tr><td>살+는</td><td>→사는</td><td>[사는]</td></tr>
+        <tr><td>만들+는</td><td>→만드는</td><td>[만드는]</td></tr>
+        <tr><td>알+습니다</td><td>→압니다</td><td>[암니다]</td></tr>
+        <tr><td>울+는</td><td>→우는</td><td>[우는]</td></tr>
+        <tr><td>놀+는</td><td>→노는</td><td>[노는]</td></tr>
+        <tr><td>갈+ㅂ시다</td><td>→갑시다</td><td>[갑씨다]</td></tr>
+        <tr><td>열+는</td><td>→여는</td><td>[여는]</td></tr>
+        <tr><td>돌+는</td><td>→도는</td><td>[도는]</td></tr>
+        <tr><td>알+ㅂ니다</td><td>→압니다</td><td>[암니다]</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-title" id="a-gyeopbatchim"><span class="icon">②</span>겹받침 탈락 (자음군 단순화)</div>
+  <div class="factor-grid">
+    <div class="factor-card rose">
+      <h4>뒷 자음 탈락 → 앞 자음 발음</h4>
+      <p>ㅂㅅ, ㄱㅅ, ㄴㅈ, ㄴㅎ, ㄹㅂ, ㄹㅅ, ㄹㅎ, ㄹㅌ</p>
+    </div>
+    <div class="factor-card blue">
+      <h4>앞 자음 탈락 → 뒤 자음 발음</h4>
+      <p>ㄹㄱ, ㄹㅁ, ㄹㅍ</p>
+    </div>
+  </div>
+  <table class="ex-table">
+    <thead><tr><th>표기</th><th>발음</th><th>규칙</th></tr></thead>
+    <tbody>
+      <tr><td>넋[넉]</td><td>[넉]</td><td>ㄱㅅ → ㄱ (뒷자음 탈락)</td></tr>
+      <tr><td>앉다</td><td>[안따]</td><td>ㄴㅈ → ㄴ</td></tr>
+      <tr><td>없다</td><td>[업따]</td><td>ㅂㅅ → ㅂ</td></tr>
+      <tr><td>닭[닥]</td><td>[닥]</td><td>ㄹㄱ → ㄱ (앞자음 탈락)</td></tr>
+      <tr><td>삶[삼]</td><td>[삼]</td><td>ㄹㅁ → ㅁ</td></tr>
+      <tr><td>읊다</td><td>[읍따]</td><td>ㄹㅍ → ㅂ</td></tr>
+      <tr><td>흙[흑]</td><td>[흑]</td><td>ㄹㄱ → ㄱ</td></tr>
+      <tr><td>밟다</td><td>[밥따]</td><td>예외: ㄹㅂ에서 ㅂ 발음</td></tr>
+      <tr><td>넓죽하다</td><td>[넙쭈카다]</td><td>예외: 넓죽·넓둥·넓적 → [넙]</td></tr>
+      <tr><td>읽고</td><td>[일꼬]</td><td>예외: ㄹ기/ㄴ가/ㄱ → ㄹ로 발음</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-title" id="a-moeumtallak"><span class="icon">③</span>모음 탈락</div>
+  <div class="rule-card green">
+    <div class="rule-head">ㅡ 탈락 — 어간 끝 'ㅡ'가 'ㅏ/ㅓ'로 시작하는 어미 앞에서 탈락</div>
+    <table class="ex-table" style="margin-top:8px;">
+      <thead><tr><th>기본형</th><th>활용</th><th>결과</th></tr></thead>
+      <tbody>
+        <tr><td>따르다</td><td>따르-+-아</td><td>따라</td></tr>
+        <tr><td>쓰다</td><td>쓰-+-어</td><td>써</td></tr>
+        <tr><td>끄다</td><td>끄-+-어</td><td>꺼</td></tr>
+        <tr><td>크다</td><td>크-+-어</td><td>커</td></tr>
+        <tr><td>뜨다</td><td>뜨-+-어</td><td>떠</td></tr>
+        <tr><td>모으다</td><td>모으-+-아</td><td>모아</td></tr>
+        <tr><td>잠그다</td><td>잠그-+-아</td><td>잠가</td></tr>
+        <tr><td>치르다</td><td>치르-+-어</td><td>치러</td></tr>
+        <tr><td>나쁘다</td><td>나쁘-+-아</td><td>나빠</td></tr>
+        <tr><td>바쁘다</td><td>바쁘-+-아</td><td>바빠</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="rule-card teal">
+    <div class="rule-head">동음 탈락 — 어간 끝 'ㅏ/ㅓ'가 'ㅏ/ㅓ' 어미 앞에서 탈락 (모음 조화)</div>
+    <table class="ex-table" style="margin-top:8px;">
+      <thead><tr><th>기본형</th><th>활용</th><th>결과</th></tr></thead>
+      <tbody>
+        <tr><td>가다</td><td>가-+-아서</td><td>가서</td></tr>
+        <tr><td>서다</td><td>서-+-어서</td><td>서서</td></tr>
+        <tr><td>자다</td><td>자-+-아도</td><td>자도</td></tr>
+        <tr><td>사다</td><td>사-+-아서</td><td>사서</td></tr>
+        <tr><td>켜다</td><td>켜-+-어서</td><td>켜서</td></tr>
+        <tr><td>펴다</td><td>펴-+-어서</td><td>펴서</td></tr>
+        <tr><td>차다</td><td>차-+-아서</td><td>차서</td></tr>
+        <tr><td>세다</td><td>세-+-어서</td><td>세서</td></tr>
+        <tr><td>타다</td><td>타-+-아라</td><td>타라</td></tr>
+        <tr><td>되다</td><td>되-+-어서</td><td>돼서 (반모음화도 동반)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== TAB 6: 축약 ===== -->
+<div class="tab-panel" id="panel-6">
+  <div class="unit-banner">🔥 음운의 축약 (A+B → C)</div>
+
+  <div class="section-title" id="a-geosensori"><span class="icon">⚡</span>거센소리되기 (자음 축약, 격음화)</div>
+  <div class="def-box">
+    예사소리 <strong>'ㄱ, ㄷ, ㅂ, ㅈ'</strong>이 <strong>'ㅎ'</strong>과 만나 거센소리 <strong>'ㅋ, ㅌ, ㅍ, ㅊ'</strong>이 됨<br>
+    자음군 단순화보다 <strong>우선</strong>하여 적용됨
+  </div>
+
+  <div class="note">📌 예외: 많던 → [만던] ✗ &nbsp;&nbsp; 많던 → <strong>[만턴]</strong> ✅ — 거센소리되기가 먼저!</div>
+
+  <table class="ex-table">
+    <thead><tr><th>표기</th><th>발음</th><th>변화</th></tr></thead>
+    <tbody>
+      <tr><td>먹히다</td><td>[머키다]</td><td>ㄱ+ㅎ → ㅋ</td></tr>
+      <tr><td>잡히다</td><td>[자피다]</td><td>ㅂ+ㅎ → ㅍ</td></tr>
+      <tr><td>맞히다</td><td>[마치다]</td><td>ㅈ+ㅎ → ㅊ</td></tr>
+      <tr><td>좋다</td><td>[조타]</td><td>ㅎ+ㄷ → ㅌ</td></tr>
+      <tr><td>낳다</td><td>[나타]</td><td>ㅎ+ㄷ → ㅌ</td></tr>
+      <tr><td>많다</td><td>[만타]</td><td>겹받침 ㄴㅎ → ㅎ+ㄷ → ㅌ (거센소리 우선)</td></tr>
+      <tr><td>않다</td><td>[안타]</td><td>겹받침 ㄴㅎ → ㅎ+ㄷ → ㅌ</td></tr>
+      <tr><td>싫다</td><td>[실타]</td><td>겹받침 ㄹㅎ → ㅎ+ㄷ → ㅌ</td></tr>
+      <tr><td>밝히다</td><td>[발키다]</td><td>겹받침 → ㄱ+ㅎ → ㅋ</td></tr>
+      <tr><td>굳히다</td><td>[구치다]</td><td>ㄷ+ㅎ → ㅌ → 구개음화 → ㅊ</td></tr>
+    </tbody>
+  </table>
+
+  <div class="factor-grid">
+    <div class="factor-card blue">
+      <h4>쌍받침 (ㅆ, ㄲ 등)</h4>
+      <p>음운 개수 <strong>1개</strong> → 음절 끝소리 규칙은 <strong>교체</strong></p>
+    </div>
+    <div class="factor-card rose">
+      <h4>겹받침 (ㄼ, ㄹㄱ 등)</h4>
+      <p>음운 개수 <strong>2개</strong> → 자음군 단순화는 <strong>탈락</strong></p>
     </div>
   </div>
 </div>
 
-<!-- TAB 4: 형태소 -->
-<div class="tab-panel" id="tab4">
-  <div class="section-title">형태소 & 단어</div>
+<!-- ===== TAB 7: 연음·두음법칙 ===== -->
+<div class="tab-panel" id="panel-7">
+  <div class="unit-banner">🔗 연음 · 두음법칙</div>
 
-  <div class="subsection-title">형태소의 분류</div>
+  <div class="section-title" id="a-yeoneum"><span class="icon">➡️</span>연음 (음운 변동 아님!)</div>
+  <div class="def-box">
+    자음으로 끝나는 말 뒤에 <strong>모음으로 시작하는 형식 형태소</strong>가 오면<br>
+    자음이 자연스럽게 뒤 음절 초성으로 넘어감 → <strong>음운 변동 아님</strong>
+  </div>
+  <table class="ex-table">
+    <thead><tr><th>표기</th><th>발음</th><th>연음 자음</th></tr></thead>
+    <tbody>
+      <tr><td>산에</td><td>[사네]</td><td>ㄴ</td></tr>
+      <tr><td>집이</td><td>[지비]</td><td>ㅂ</td></tr>
+      <tr><td>잎을</td><td>[이블]</td><td>ㅍ→ㅂ 대표음 후 연음</td></tr>
+      <tr><td>꽃이</td><td>[꼬치]</td><td>ㅊ (형식 형태소)</td></tr>
+      <tr><td>옷을</td><td>[오슬]</td><td>ㅅ</td></tr>
+      <tr><td>닭이</td><td>[달기]</td><td>겹받침→ㄱ 연음</td></tr>
+      <tr><td>흙이</td><td>[흘기]</td><td>겹받침→ㄱ 연음</td></tr>
+      <tr><td>닭을</td><td>[달글]</td><td>겹받침→ㄱ 연음</td></tr>
+      <tr><td>앞에</td><td>[아페]</td><td>ㅍ 연음</td></tr>
+      <tr><td>밭에</td><td>[바테]</td><td>ㅌ 연음</td></tr>
+    </tbody>
+  </table>
 
-  <div class="card-grid">
-    <div class="info-card">
-      <div class="label">실질 형태소</div>
-      <div class="value">의미 有</div>
-      <div class="text-muted" style="margin-top:4px;">실질적 의미를 가짐</div>
+  <div class="section-title" id="a-dueum"><span class="icon">📜</span>두음법칙 (한자어, 표기에도 반영)</div>
+  <div class="factor-grid">
+    <div class="factor-card blue">
+      <h4>① 단어 첫머리 'ㄹ/ㄴ' + 'ㅣ' 또는 'ㅣ'계 이중모음<br>→ 'ㄹ/ㄴ' 탈락</h4>
+      <ul style="margin-top:6px;">
+        <li>녀자(女子) → <strong>여자</strong></li>
+        <li>례의(禮儀) → <strong>예의</strong></li>
+        <li>뇨소(尿素) → <strong>요소</strong></li>
+        <li>뉴대(紐帶) → <strong>유대</strong></li>
+        <li>이성(理性) → <strong>이성</strong> (ㄹ 탈락)</li>
+        <li>녀름 → <strong>여름</strong></li>
+        <li>닢 → <strong>잎</strong></li>
+      </ul>
     </div>
-    <div class="info-card" style="background:#FFF7ED; border-color:#FCD34D;">
-      <div class="label" style="color:#92400E;">형식 형태소</div>
-      <div class="value" style="color:#451a03;">의미 無</div>
-      <div class="text-muted" style="margin-top:4px;">조사, 어미, 접사 — 문법적 기능</div>
+    <div class="factor-card rose">
+      <h4>② 단어 첫머리 'ㄹ' + 'ㅣ'를 제외한 단모음<br>→ 'ㄹ'을 'ㄴ'으로 교체</h4>
+      <ul style="margin-top:6px;">
+        <li>로인(老人) → <strong>노인</strong></li>
+        <li>락원(樂園) → <strong>낙원</strong></li>
+        <li>래일(來日) → <strong>내일</strong></li>
+        <li>룡(龍) → <strong>용</strong> (ㄹ→ㄴ→다시 탈락)</li>
+        <li>량심(良心) → <strong>양심</strong></li>
+        <li>란(亂) → <strong>난</strong></li>
+        <li>로동(勞動) → <strong>노동</strong></li>
+      </ul>
     </div>
-    <div class="info-card" style="background:var(--accent-light); border-color:#9FE1CB;">
-      <div class="label" style="color:var(--accent);">자립 형태소</div>
-      <div class="value" style="color:#064e3b;">혼자 쓰임</div>
-      <div class="text-muted" style="margin-top:4px;">체언, 수식언, 독립언 등</div>
+  </div>
+  <div class="note">📌 두음법칙은 <strong>한자어</strong>에서만, <strong>표기에도 반영</strong>. 외래어·고유어에는 적용 안 됨.</div>
+</div>
+
+<!-- ===== TAB 8: 형태소·단어 ===== -->
+<div class="tab-panel" id="panel-8">
+  <div class="unit-banner">🧩 형태소와 단어 (자투리 개념)</div>
+
+  <!-- 형태소 분류 -->
+  <div class="section-title" id="a-hyeongtaeso"><span class="icon">①</span>형태소의 분류</div>
+  <div class="def-box"><strong>형태소</strong>: 뜻을 가진 가장 작은 말의 단위</div>
+  <div class="factor-grid">
+    <div class="factor-card blue">
+      <h4>의미 유무에 따른 분류</h4>
+      <ul>
+        <li><strong>실질 형태소</strong>: 의미 有 (실질적 의미를 지님)</li>
+        <li><strong>형식 형태소</strong>: 의미 無, 문법적 기능만 → <span class="badge badge-blue">조사</span> <span class="badge badge-blue">어미</span> <span class="badge badge-blue">접사</span></li>
+      </ul>
     </div>
-    <div class="info-card" style="background:var(--danger-light); border-color:#F7C1C1;">
-      <div class="label" style="color:var(--danger);">의존 형태소</div>
-      <div class="value" style="color:#450a0a;">혼자 불가</div>
-      <div class="text-muted" style="margin-top:4px;">= 형식 형태소 + 어근</div>
+    <div class="factor-card rose">
+      <h4>자립성에 따른 분류</h4>
+      <ul>
+        <li><strong>자립 형태소</strong>: 혼자 쓰임</li>
+        <li><strong>의존 형태소</strong>: 혼자 쓰이지 않음 (= 형식 형태소 + 어근)</li>
+      </ul>
     </div>
   </div>
 
-  <div class="subsection-title">예시 분석: 철수가 밥을 먹었다</div>
+  <div class="subsection-title">예문 분석: "철수가 밥을 먹었다"</div>
+  <table class="ex-table">
+    <thead><tr><th>형태소</th><th>분류</th><th>설명</th></tr></thead>
+    <tbody>
+      <tr><td>철수</td><td>자립, 실질</td><td>명사 — 혼자 쓰이고 실질적 의미 있음</td></tr>
+      <tr><td>가</td><td>의존, 형식</td><td>주격 조사</td></tr>
+      <tr><td>밥</td><td>자립, 실질</td><td>명사</td></tr>
+      <tr><td>을</td><td>의존, 형식</td><td>목적격 조사</td></tr>
+      <tr><td>먹-</td><td>의존, 실질</td><td>어간(어근) — 실질적 의미를 가지나 혼자 쓰이지 못함</td></tr>
+      <tr><td>-었-</td><td>의존, 형식</td><td>과거 시제 선어말 어미</td></tr>
+      <tr><td>-다</td><td>의존, 형식</td><td>어말 어미 (종결형)</td></tr>
+    </tbody>
+  </table>
+  <div class="note">📌 '먹었다'에서 '먹-'은 <strong>의존+실질</strong>(어근), '-었-'·'-다'는 <strong>의존+형식</strong>(어미). 조사('가','을')도 의존+형식.</div>
 
-  <div class="morph-ex">
-    <div class="morph-row">
-      <div class="morph-unit">
-        <div class="morph-word">철수</div>
-        <div class="morph-tag">자립·실질</div>
-      </div>
-      <div class="morph-unit">
-        <div class="morph-word">가</div>
-        <div class="morph-tag">의존·형식<br>(주격조사)</div>
-      </div>
-      <div class="morph-plus">+</div>
-      <div class="morph-unit">
-        <div class="morph-word">밥</div>
-        <div class="morph-tag">자립·실질</div>
-      </div>
-      <div class="morph-unit">
-        <div class="morph-word">을</div>
-        <div class="morph-tag">의존·형식<br>(목적격조사)</div>
-      </div>
-      <div class="morph-plus">+</div>
-      <div class="morph-unit">
-        <div class="morph-word">먹</div>
-        <div class="morph-tag">의존·실질<br>(어근)</div>
-      </div>
-      <div class="morph-unit">
-        <div class="morph-word">었</div>
-        <div class="morph-tag">의존·형식<br>(과거시제 선어말어미)</div>
-      </div>
-      <div class="morph-unit">
-        <div class="morph-word">다</div>
-        <div class="morph-tag">의존·형식<br>(어말어미)</div>
-      </div>
+  <!-- 주격조사 -->
+  <div class="section-title" id="a-jugyeok"><span class="icon">②</span>주격 조사 / 선어말 어미</div>
+  <div class="factor-grid">
+    <div class="factor-card green">
+      <h4>주격 조사</h4>
+      <p><strong>이 / 가 / 께서</strong></p>
+      <p style="margin-top:5px;font-size:12.5px;">예) 학생이, 영희가, 선생님께서</p>
     </div>
-  </div>
-
-  <div class="subsection-title">주격 조사 & 선어말 어미</div>
-
-  <div class="two-col">
-    <div class="card">
-      <div style="font-weight:500; margin-bottom:8px;">주격 조사</div>
-      <div class="ex-list">
-        <div class="ex-pill">이</div>
-        <div class="ex-pill">가</div>
-        <div class="ex-pill">께서</div>
-      </div>
-    </div>
-    <div class="card">
-      <div style="font-weight:500; margin-bottom:8px;">선어말 어미</div>
-      <p style="font-size:13.5px;">높임: -시-, -으시-</p>
-      <p style="font-size:13.5px;">겸손: -옵-, -사옵-</p>
+    <div class="factor-card purple">
+      <h4>선어말 어미 — 종류</h4>
+      <ul>
+        <li><strong>높임</strong>: -시-, -으시-</li>
+        <li><strong>시제</strong>: 과거/현재/미래</li>
+        <li><strong>공손</strong>: -옵-, -사옵-</li>
+      </ul>
     </div>
   </div>
 
   <div class="subsection-title">시제 선어말 어미</div>
-  <div class="card-grid">
-    <div class="info-card" style="background:#FFF5F5; border-color:#FECACA;">
-      <div class="label" style="color:#991b1b;">과거</div>
-      <div class="value" style="color:#450a0a;">-았-, -었-, -였-</div>
+  <table class="ex-table">
+    <thead><tr><th>시제</th><th>형태</th><th>예시</th></tr></thead>
+    <tbody>
+      <tr><td>과거</td><td>-았-, -었-, -였-</td><td>잡았다, 먹었다, 하였다</td></tr>
+      <tr><td>현재</td><td>-ㄴ-</td><td>먹는다, 잡는다</td></tr>
+      <tr><td>미래</td><td>-겠-</td><td>가겠다, 먹겠다</td></tr>
+    </tbody>
+  </table>
+  <div class="factor-grid">
+    <div class="factor-card blue"><h4>높임 선어말 어미</h4><p>가시다, 읽으시다 (-시-/-으시-)</p></div>
+    <div class="factor-card teal"><h4>공손 선어말 어미</h4><p>받자옵고, 가옵니다 (-옵-/-사옵-)</p></div>
+    <div class="factor-card orange"><h4>복합 사용 예</h4><p>가셨겠다 → 가(어간)+시(높임)+었(과거)+겠(추측)+다(어미)</p></div>
+  </div>
+
+  <!-- 단어 구성 -->
+  <div class="section-title" id="a-daneo"><span class="icon">③</span>단어의 구성 — 단일어 / 합성어 / 파생어</div>
+  <div class="factor-grid">
+    <div class="factor-card blue">
+      <h4>단일어 — 어근 1개</h4>
+      <p>예) 하늘, 바다, 사람, 나무, 먹다</p>
     </div>
-    <div class="info-card" style="background:#F0FDF4; border-color:#86EFAC;">
-      <div class="label" style="color:var(--accent);">현재</div>
-      <div class="value" style="color:#064e3b;">-ㄴ-</div>
+    <div class="factor-card green">
+      <h4>복합어 — 합성어 (어근+어근)</h4>
+      <p>예) <strong>종이컵</strong> (종이+컵), 손발, 밤낮, 꽃밭, 책가방</p>
     </div>
-    <div class="info-card" style="background:#EFF6FF; border-color:var(--primary-mid);">
-      <div class="label" style="color:var(--primary);">미래</div>
-      <div class="value" style="color:#1e3a8a;">-겠-</div>
+    <div class="factor-card purple">
+      <h4>복합어 — 파생어 (접사+어근)</h4>
+      <p>예) <strong>맨발</strong> (맨-+발), 풋사과, 헛소리, 먹이, 일꾼</p>
+    </div>
+  </div>
+  <div class="note">📌 단어 구성 한눈에: <strong>단어 = 단일어(어근 1개) / 복합어{합성어(어근+어근), 파생어(접사+어근)}</strong></div>
+
+  <!-- 어간/어미/어근/접사 -->
+  <div class="section-title" id="a-eogan"><span class="icon">④</span>어간 / 어미 / 어근 / 접사</div>
+  <div class="factor-grid">
+    <div class="factor-card blue">
+      <h4>어간 (語幹)</h4>
+      <p>활용할 때 <strong>변화하지 않는</strong> 부분<br>= 어근 + 접사(접두사/접미사)</p>
+    </div>
+    <div class="factor-card rose">
+      <h4>어미 (語尾)</h4>
+      <p>활용할 때 <strong>변화하는</strong> 부분 (어말 어미·선어말 어미)</p>
+    </div>
+  </div>
+  <div class="factor-grid">
+    <div class="factor-card green">
+      <h4>어근 (語根)</h4>
+      <p>단어의 <strong>실질적 의미</strong>를 나타내는 핵심 부분</p>
+    </div>
+    <div class="factor-card purple">
+      <h4>접사 (接辭)</h4>
+      <p><strong>접두사</strong>(어근 앞) / <strong>접미사</strong>(어근 뒤) — 의미 추가 또는 품사 바꿈</p>
     </div>
   </div>
 
-  <div class="subsection-title">어간 / 어근 / 단어 구조</div>
-  <div class="card">
-    <div class="two-col">
-      <div>
-        <div class="sub-item">
-          <div class="sub-title">어간</div>
-          어근 + 접사 / 활용 때 형태 변화
-        </div>
-        <div class="sub-item">
-          <div class="sub-title">어미</div>
-          활용 때 변화 無
-        </div>
-      </div>
-      <div>
-        <div class="sub-item">
-          <div class="sub-title">단일어</div>
-          어근 1개
-        </div>
-        <div class="sub-item">
-          <div class="sub-title">합성어</div>
-          어근 + 어근 (ex. 종이컵)
-        </div>
-        <div class="sub-item">
-          <div class="sub-title">파생어</div>
-          접사 + 어근 (ex. 맨발)
-        </div>
-      </div>
-    </div>
-    <div class="warn-box">
-      ※ 용언에서 접사가 없을 때 → 어간 = 어근
+  <div class="subsection-title">예시: "치솟다"</div>
+  <table class="ex-table">
+    <thead><tr><th>구성 요소</th><th>분류</th><th>설명</th></tr></thead>
+    <tbody>
+      <tr><td>치-</td><td>접사 (접두사)</td><td>'위로'의 뜻을 더함</td></tr>
+      <tr><td>솟-</td><td>어근</td><td>실질적 의미('솟다')</td></tr>
+      <tr><td>치솟-</td><td>어간 (접사+어근)</td><td>활용 시 변화하지 않음</td></tr>
+      <tr><td>-다</td><td>어미</td><td>활용 시 변화함 (다→고→니→자 등)</td></tr>
+    </tbody>
+  </table>
+  <div class="tip">💡 용언에서 <strong>접사가 없을 때</strong>는 <strong>어간 = 어근</strong>이 된다.<br>
+  예) '먹다' → 어간 '먹-' = 어근 '먹-' (접사 없음)</div>
+
+  <div class="section-title" id="a-mogi"><span class="icon">📝</span>모의고사 기출 — '밭이랑'</div>
+  <div class="rule-card rose">
+    <div class="rule-head">"밭이랑은" — '이랑'이 접속 조사 (형식 형태소)</div>
+    <p style="font-size:13.5px;line-height:1.8;">
+      밭 + <strong>이랑(은)</strong> → '이랑'은 접속 조사(과/와/이랑과 같은 기능) → <strong>형식 형태소</strong><br>
+      형식 형태소 앞이므로 <strong>구개음화</strong> 적용<br>
+      → <strong>[바치랑]</strong>
+    </p>
+  </div>
+  <div class="rule-card teal">
+    <div class="rule-head">"밭이랑에 가다" — '이랑'이 명사 '이랑'(실질 형태소)</div>
+    <p style="font-size:13.5px;line-height:1.8;">
+      밭 + <strong>이랑</strong>(명사, 농작물을 심는 단위) → <strong>실질 형태소</strong><br>
+      실질 형태소 앞이므로 구개음화 미적용, <strong>음절끝소리 규칙</strong> 적용
+    </p>
+    <div class="flow-row" style="margin-top:8px;">
+      <div class="flow-item">밭이랑</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item">[받이랑]<br><span style="font-size:10px;">음절끝소리</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item rose">[받니랑]<br><span style="font-size:10px;">'ㄴ' 첨가</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item green">[반니랑]<br><span style="font-size:10px;">비음화</span></div>
     </div>
   </div>
+  <div class="warning">⚠️ 같은 '밭이랑'이라도 <strong>'이랑'의 품사(조사 vs 명사)</strong>에 따라 발음이 완전히 달라짐!<br>
+  조사 → [바치랑] (구개음화) &nbsp;&nbsp;|&nbsp;&nbsp; 명사 → [반니랑] (음절끝소리 → ㄴ첨가 → 비음화)</div>
+
 </div>
 
-<!-- TAB 5: 교체 -->
-<div class="tab-panel" id="tab5">
-  <div class="section-title">음운의 교체 (A → B)</div>
+<!-- ===== TAB 9: 개념 한눈에 보기 ===== -->
+<div class="tab-panel" id="panel-9">
+  <div class="unit-banner">🗺️ 개념 한눈에 보기 — 클릭하면 해당 개념으로 이동</div>
 
-  <!-- 비음화 -->
-  <div class="subsection-title">① 비음화</div>
-  <div class="card">
-    <div class="def-box">
-      파열음 <strong>ㄱ, ㄷ, ㅂ</strong>이 비음 <strong>ㄴ, ㅁ</strong> 앞에서 <strong>[ㅇ, ㄴ, ㅁ]</strong>이 됨
-    </div>
-    <div class="ex-list">
-      <div class="ex-pill">국물 <span class="arrow">→</span><span class="result">[궁물]</span></div>
-      <div class="ex-pill">닫는 <span class="arrow">→</span><span class="result">[단는]</span></div>
-      <div class="ex-pill">잡내 <span class="arrow">→</span><span class="result">[잠내]</span></div>
-      <div class="ex-pill">먹는 <span class="arrow">→</span><span class="result">[멍는]</span></div>
-      <div class="ex-pill">앞날 <span class="arrow">→</span><span class="result">[암날]</span></div>
-      <div class="ex-pill">읽는 <span class="arrow">→</span><span class="result">[잉는]</span></div>
-      <div class="ex-pill">옆문 <span class="arrow">→</span><span class="result">[염문]</span></div>
-      <div class="ex-pill">박만 <span class="arrow">→</span><span class="result">[방만]</span></div>
-      <div class="ex-pill">섭니다 <span class="arrow">→</span><span class="result">[섬니다]</span></div>
-      <div class="ex-pill">깎는 <span class="arrow">→</span><span class="result">[깡는]</span></div>
-    </div>
+  <div class="tip">💡 <strong>큰 카테고리(색깔 헤더)</strong>를 누르면 해당 탭으로 이동하고, <strong>작은 칸(세부 개념)</strong>을 누르면 그 탭의 <strong>해당 설명 위치까지 자동으로 스크롤</strong>됩니다. 헷갈리는 개념을 빠르게 찾아 복습할 때 활용하세요!</div>
 
-    <div style="margin-top:16px; font-weight:500; font-size:14px; color:var(--primary);">+ ㄹ의 비음화</div>
-    <div class="sub-item" style="margin-top:8px;">
-      <div class="sub-title">i) 유음 ㄹ이 파열음 ㄱ, ㄷ, ㅂ 뒤에서 [ㄴ]이 됨 → 이후 비음화</div>
-      <div class="ex-list">
-        <div class="ex-pill">섭리 <span class="arrow">→</span><span class="result">[섬니]</span></div>
-        <div class="ex-pill">협력 <span class="arrow">→</span><span class="result">[혐녁]</span></div>
-        <div class="ex-pill">독립 <span class="arrow">→</span><span class="result">[동닙]</span></div>
-        <div class="ex-pill">법령 <span class="arrow">→</span><span class="result">[범녕]</span></div>
-        <div class="ex-pill">압력 <span class="arrow">→</span><span class="result">[암녁]</span></div>
-      </div>
-    </div>
-    <div class="sub-item">
-      <div class="sub-title">ii) 유음 ㄹ이 ㅁ, ㅇ 뒤에서 [ㄴ]이 됨</div>
-      <div class="ex-list">
-        <div class="ex-pill">종로 <span class="arrow">→</span><span class="result">[종노]</span></div>
-        <div class="ex-pill">백로 <span class="arrow">→</span><span class="result">[뱅노]</span></div>
-        <div class="ex-pill">식량 <span class="arrow">→</span><span class="result">[싱냥]</span></div>
-        <div class="ex-pill">대통령 <span class="arrow">→</span><span class="result">[대통녕]</span></div>
-      </div>
-    </div>
-  </div>
+  <div class="map-tree">
 
-  <!-- 유음화 -->
-  <div class="subsection-title">② 유음화</div>
-  <div class="card">
-    <div class="def-box">
-      <strong>ㄴ</strong>이 <strong>ㄹ</strong>의 앞이나 뒤에서 <strong>[ㄹ]</strong>이 됨
-    </div>
-    <div class="two-col">
-      <div>
-        <p style="font-weight:500; font-size:13.5px; margin-bottom:8px; color:var(--primary);">순행 (ㄹ → ㄴ 영향)</p>
-        <div class="ex-list">
-          <div class="ex-pill">실내 <span class="arrow">→</span><span class="result">[실래]</span></div>
-          <div class="ex-pill">줄넘기 <span class="arrow">→</span><span class="result">[줄럼기]</span></div>
-          <div class="ex-pill">물난리 <span class="arrow">→</span><span class="result">[물랄리]</span></div>
-        </div>
-      </div>
-      <div>
-        <p style="font-weight:500; font-size:13.5px; margin-bottom:8px; color:var(--primary);">역행 (ㄴ ← ㄹ 영향)</p>
-        <div class="ex-list">
-          <div class="ex-pill">논란 <span class="arrow">→</span><span class="result">[놀란]</span></div>
-          <div class="ex-pill">신라 <span class="arrow">→</span><span class="result">[실라]</span></div>
-          <div class="ex-pill">천리 <span class="arrow">→</span><span class="result">[철리]</span></div>
-          <div class="ex-pill">난로 <span class="arrow">→</span><span class="result">[날로]</span></div>
-          <div class="ex-pill">분리 <span class="arrow">→</span><span class="result">[불리]</span></div>
-          <div class="ex-pill">권리 <span class="arrow">→</span><span class="result">[궐리]</span></div>
-          <div class="ex-pill">근로 <span class="arrow">→</span><span class="result">[글로]</span></div>
-        </div>
-      </div>
-    </div>
-    <div class="danger-box">
-      <strong>예외 (유음화 ✗)</strong><br>
-      의견란[의견난] / 임진란[임진난] / 생산량[생산냥] / 결단력[결단녁] / 공권력[공권녁] / 횡단로[횡단노] / 입원료[이붠뇨]
-    </div>
-  </div>
-
-  <!-- 구개음화 -->
-  <div class="subsection-title">③ (경)구개음화</div>
-  <div class="card">
-    <div class="def-box">
-      치조음 <strong>ㄷ, ㅌ</strong>이 모음 <strong>ㅣ</strong>나 반모음 <strong>[j]</strong>로 시작되는 <strong>형식 형태소</strong>를 만나 경구개음 <strong>[ㅈ, ㅊ]</strong>이 됨
-    </div>
-    <div class="warn-box">
-      ⚠ 반드시 <strong>형식 형태소</strong>(ㅑ,ㅕ,ㅛ,ㅠ,ㅒ,ㅖ,ㅣ 등) 앞에서만 일어남
-    </div>
-    <div class="ex-list">
-      <div class="ex-pill">해돋이 <span class="arrow">→</span><span class="result">[해도지]</span></div>
-      <div class="ex-pill">굳이 <span class="arrow">→</span><span class="result">[구지]</span></div>
-      <div class="ex-pill">같이 <span class="arrow">→</span><span class="result">[가치]</span></div>
-      <div class="ex-pill">끝이 <span class="arrow">→</span><span class="result">[끄치]</span></div>
-      <div class="ex-pill">맏이 <span class="arrow">→</span><span class="result">[마지]</span></div>
-      <div class="ex-pill">붙이다 <span class="arrow">→</span><span class="result">[부치다]</span></div>
-      <div class="ex-pill">밭이 <span class="arrow">→</span><span class="result">[바치]</span></div>
-      <div class="ex-pill">낱낱이 <span class="arrow">→</span><span class="result">[난나치]</span></div>
-      <div class="ex-pill">곧이 <span class="arrow">→</span><span class="result">[고지]</span></div>
-      <div class="ex-pill">벼훑이 <span class="arrow">→</span><span class="result">[벼훌치]</span></div>
-    </div>
-  </div>
-
-  <!-- 된소리되기 -->
-  <div class="subsection-title">④ 된소리되기 (경음화)</div>
-  <div class="card">
-    <div class="sub-item">
-      <div class="sub-title">i) 파열음 ㄱ, ㄷ, ㅂ 뒤에 ㄱ, ㄷ, ㅂ, ㅅ, ㅈ이 올 때</div>
-      <div class="ex-list">
-        <div class="ex-pill">국밥 <span class="arrow">→</span><span class="result">[국빱]</span></div>
-        <div class="ex-pill">닭장 <span class="arrow">→</span><span class="result">[닥짱]</span></div>
-        <div class="ex-pill">책상 <span class="arrow">→</span><span class="result">[책쌍]</span></div>
-        <div class="ex-pill">입술 <span class="arrow">→</span><span class="result">[입쑬]</span></div>
-        <div class="ex-pill">옷감 <span class="arrow">→</span><span class="result">[옫깜]</span></div>
-        <div class="ex-pill">깎다 <span class="arrow">→</span><span class="result">[깍따]</span></div>
-        <div class="ex-pill">읽지 <span class="arrow">→</span><span class="result">[익찌]</span></div>
-        <div class="ex-pill">섞다 <span class="arrow">→</span><span class="result">[석따]</span></div>
-        <div class="ex-pill">넓다 <span class="arrow">→</span><span class="result">[널따]</span></div>
-        <div class="ex-pill">넋두리 <span class="arrow">→</span><span class="result">[넉뚜리]</span></div>
-      </div>
-    </div>
-    <div class="sub-item">
-      <div class="sub-title">ii) 어간의 받침 ㄴ, ㅁ 뒤에 첫소리 ㄱ, ㄷ, ㅅ, ㅈ인 어미가 올 때</div>
-      <div class="ex-list">
-        <div class="ex-pill">감다 <span class="arrow">→</span><span class="result">[감따]</span></div>
-        <div class="ex-pill">담고 <span class="arrow">→</span><span class="result">[담꼬]</span></div>
-        <div class="ex-pill">신다 <span class="arrow">→</span><span class="result">[신따]</span></div>
-        <div class="ex-pill">안고 <span class="arrow">→</span><span class="result">[안꼬]</span></div>
-        <div class="ex-pill">참고 <span class="arrow">→</span><span class="result">[참꼬]</span></div>
-        <div class="ex-pill">검다 <span class="arrow">→</span><span class="result">[검따]</span></div>
-        <div class="ex-pill">남기다 <span class="arrow">→</span><span class="result">[남끼다]</span></div>
-        <div class="ex-pill">앉다 <span class="arrow">→</span><span class="result">[안따]</span></div>
-        <div class="ex-pill">삼다 <span class="arrow">→</span><span class="result">[삼따]</span></div>
-        <div class="ex-pill">넘다 <span class="arrow">→</span><span class="result">[넘따]</span></div>
-      </div>
-    </div>
-    <div class="sub-item">
-      <div class="sub-title">iii) 한자어에서 ㄹ 받침 뒤에 ㄷ, ㅅ, ㅈ이 올 때</div>
-      <div class="ex-list">
-        <div class="ex-pill">갈등 <span class="arrow">→</span><span class="result">[갈뜽]</span></div>
-        <div class="ex-pill">발전 <span class="arrow">→</span><span class="result">[발쩐]</span></div>
-        <div class="ex-pill">물질 <span class="arrow">→</span><span class="result">[물찔]</span></div>
-        <div class="ex-pill">솔직 <span class="arrow">→</span><span class="result">[솔찍]</span></div>
-        <div class="ex-pill">결심 <span class="arrow">→</span><span class="result">[결씸]</span></div>
-        <div class="ex-pill">말살 <span class="arrow">→</span><span class="result">[말쌀]</span></div>
-        <div class="ex-pill">열정 <span class="arrow">→</span><span class="result">[열쩡]</span></div>
-        <div class="ex-pill">절도 <span class="arrow">→</span><span class="result">[절또]</span></div>
-        <div class="ex-pill">일정 <span class="arrow">→</span><span class="result">[일쩡]</span></div>
-        <div class="ex-pill">출발 <span class="arrow">→</span><span class="result">[출빨]</span></div>
-      </div>
-    </div>
-    <div class="sub-item">
-      <div class="sub-title">iv) 관형사형 어미 -(으)ㄴ, -는, -(으)ㄹ, -을 뒤에 ㄱ, ㄷ, ㅂ, ㅅ, ㅈ이 올 때</div>
-      <div class="ex-list">
-        <div class="ex-pill">갈 것 <span class="arrow">→</span><span class="result">[갈껏]</span></div>
-        <div class="ex-pill">할 수 <span class="arrow">→</span><span class="result">[할쑤]</span></div>
-        <div class="ex-pill">갈 데 <span class="arrow">→</span><span class="result">[갈떼]</span></div>
-        <div class="ex-pill">볼 사람 <span class="arrow">→</span><span class="result">[볼싸람]</span></div>
-        <div class="ex-pill">할 바 <span class="arrow">→</span><span class="result">[할빠]</span></div>
-        <div class="ex-pill">갈 곳 <span class="arrow">→</span><span class="result">[갈꼳]</span></div>
-        <div class="ex-pill">먹을 것 <span class="arrow">→</span><span class="result">[머글껏]</span></div>
-        <div class="ex-pill">찾을 수 <span class="arrow">→</span><span class="result">[차즐쑤]</span></div>
-        <div class="ex-pill">들을 기회 <span class="arrow">→</span><span class="result">[드를끼회]</span></div>
-        <div class="ex-pill">읽을 자료 <span class="arrow">→</span><span class="result">[일글짜료]</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 모음 교체(반모음화) -->
-  <div class="subsection-title">⑤ 모음 교체 (반모음화)</div>
-  <div class="card">
-    <div class="def-box">
-      <strong>ㅣ, ㅗ, ㅜ</strong>가 <strong>ㅏ, ㅓ</strong>를 만나 반모음이 됨
-    </div>
-    <div class="ex-list">
-      <div class="ex-pill">피+어 <span class="arrow">→</span><span class="result">펴</span></div>
-      <div class="ex-pill">지+어 <span class="arrow">→</span><span class="result">져</span></div>
-      <div class="ex-pill">기+어 <span class="arrow">→</span><span class="result">겨</span></div>
-      <div class="ex-pill">오+아 <span class="arrow">→</span><span class="result">와</span></div>
-      <div class="ex-pill">두+어 <span class="arrow">→</span><span class="result">둬</span></div>
-      <div class="ex-pill">쏘+아 <span class="arrow">→</span><span class="result">쏴</span></div>
-      <div class="ex-pill">되+어 <span class="arrow">→</span><span class="result">돼</span></div>
-      <div class="ex-pill">이기+어 <span class="arrow">→</span><span class="result">이겨</span></div>
-      <div class="ex-pill">주+어 <span class="arrow">→</span><span class="result">줘</span></div>
-      <div class="ex-pill">보+아 <span class="arrow">→</span><span class="result">봐</span></div>
-    </div>
-  </div>
-</div>
-
-<!-- TAB 6: 탈락 -->
-<div class="tab-panel" id="tab6">
-  <div class="section-title">음운의 탈락 (A → ∅)</div>
-
-  <!-- 자음 탈락 -->
-  <div class="subsection-title">① 자음 탈락</div>
-  <div class="card">
-    <div class="sub-item">
-      <div class="sub-title">i) ㅎ 탈락 — ㅎ 뒤에 모음이 올 경우 발음만 탈락</div>
-      <div class="ex-list">
-        <div class="ex-pill">쌓이다 <span class="arrow">→</span><span class="result">[싸이다]</span></div>
-        <div class="ex-pill">놓아 <span class="arrow">→</span><span class="result">[노아]</span></div>
-        <div class="ex-pill">좋아 <span class="arrow">→</span><span class="result">[조아]</span></div>
-        <div class="ex-pill">많아 <span class="arrow">→</span><span class="result">[마나]</span></div>
-        <div class="ex-pill">닳아 <span class="arrow">→</span><span class="result">[다라]</span></div>
-        <div class="ex-pill">싫어 <span class="arrow">→</span><span class="result">[시러]</span></div>
-        <div class="ex-pill">넣어 <span class="arrow">→</span><span class="result">[너어]</span></div>
-        <div class="ex-pill">끊어 <span class="arrow">→</span><span class="result">[끄너]</span></div>
-        <div class="ex-pill">앓아 <span class="arrow">→</span><span class="result">[아라]</span></div>
-        <div class="ex-pill">옳아 <span class="arrow">→</span><span class="result">[오라]</span></div>
-      </div>
-    </div>
-    <div class="sub-item">
-      <div class="sub-title">ii) ㄹ 탈락 — ㄹ 뒤에 ㄴ, ㅂ, ㅅ이 올 경우 발음+표기 탈락</div>
-      <div class="ex-list">
-        <div class="ex-pill">달님 <span class="arrow">→</span><span class="result">따님</span></div>
-        <div class="ex-pill">알+니 <span class="arrow">→</span><span class="result">아니</span></div>
-        <div class="ex-pill">살+니 <span class="arrow">→</span><span class="result">사니</span></div>
-        <div class="ex-pill">울+니 <span class="arrow">→</span><span class="result">우니</span></div>
-        <div class="ex-pill">갈+세요 <span class="arrow">→</span><span class="result">가세요</span></div>
-        <div class="ex-pill">알+세요 <span class="arrow">→</span><span class="result">아세요</span></div>
-        <div class="ex-pill">팔+세요 <span class="arrow">→</span><span class="result">파세요</span></div>
-        <div class="ex-pill">놀+니 <span class="arrow">→</span><span class="result">노니</span></div>
-        <div class="ex-pill">갈+ㄴ <span class="arrow">→</span><span class="result">가는</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 겹받침 탈락 -->
-  <div class="subsection-title">② 겹받침 탈락 (자음군 단순화)</div>
-  <div class="card">
-    <div class="sub-item">
-      <div class="sub-title">i) ㅄ, ㄳ, ㄵ, ㄼ, ㄽ, ㄾ, ㄻ, ㄿ → 뒷 자음 탈락</div>
-      <div class="ex-list">
-        <div class="ex-pill">없다 <span class="arrow">→</span><span class="result">[업따]</span></div>
-        <div class="ex-pill">넋 <span class="arrow">→</span><span class="result">[넉]</span></div>
-        <div class="ex-pill">앉다 <span class="arrow">→</span><span class="result">[안따]</span></div>
-        <div class="ex-pill">젊다 <span class="arrow">→</span><span class="result">[점따]</span></div>
-        <div class="ex-pill">읊다 <span class="arrow">→</span><span class="result">[읍따]</span></div>
-      </div>
-      <div class="warn-box">
-        예외 ① 밟다 → [밟따]<br>
-        예외 ② 넓죽하다, 넓둥글다, 넓적하다 → [넙-]으로 발음
-      </div>
-    </div>
-    <div class="sub-item">
-      <div class="sub-title">ii) ㄺ, ㄻ, ㄿ → 앞 자음 탈락</div>
-      <div class="ex-list">
-        <div class="ex-pill">닭 <span class="arrow">→</span><span class="result">[닥]</span></div>
-        <div class="ex-pill">삶 <span class="arrow">→</span><span class="result">[삼]</span></div>
-        <div class="ex-pill">흙 <span class="arrow">→</span><span class="result">[흑]</span></div>
-        <div class="ex-pill">긁다 <span class="arrow">→</span><span class="result">[극따]</span></div>
-        <div class="ex-pill">훑다 <span class="arrow">→</span><span class="result">[훌따]</span></div>
-      </div>
-      <div class="warn-box">
-        예외: ㄺ+ㄱ → 앞 자음 유지 &nbsp; ex) 읽고 → [일꼬]
-      </div>
-    </div>
-  </div>
-
-  <!-- 모음 탈락 -->
-  <div class="subsection-title">③ 모음 탈락</div>
-  <div class="card">
-    <div class="sub-item">
-      <div class="sub-title">i) 'ㅡ' 탈락 : 어간 끝 'ㅡ'가 ㅏ/ㅓ로 시작하는 어미 앞에서 탈락</div>
-      <div class="ex-list">
-        <div class="ex-pill">따르+아 <span class="arrow">→</span><span class="result">따라</span></div>
-        <div class="ex-pill">쓰+이 <span class="arrow">→</span><span class="result">써</span></div>
-        <div class="ex-pill">크+어 <span class="arrow">→</span><span class="result">커</span></div>
-        <div class="ex-pill">모으+아 <span class="arrow">→</span><span class="result">모아</span></div>
-        <div class="ex-pill">잠그+아 <span class="arrow">→</span><span class="result">잠가</span></div>
-        <div class="ex-pill">바쁘+아 <span class="arrow">→</span><span class="result">바빠</span></div>
-        <div class="ex-pill">나쁘+아 <span class="arrow">→</span><span class="result">나빠</span></div>
-        <div class="ex-pill">슬프+어 <span class="arrow">→</span><span class="result">슬퍼</span></div>
-        <div class="ex-pill">고프+아 <span class="arrow">→</span><span class="result">고파</span></div>
-        <div class="ex-pill">아프+아 <span class="arrow">→</span><span class="result">아파</span></div>
-      </div>
-    </div>
-    <div class="sub-item">
-      <div class="sub-title">ii) 동음 탈락 : 어간 끝 ㅏ/ㅓ가 ㅏ/ㅓ로 시작하는 어미 앞에서 탈락 (모음 조화 필수)</div>
-      <div class="ex-list">
-        <div class="ex-pill">가+아서 <span class="arrow">→</span><span class="result">가서</span></div>
-        <div class="ex-pill">서+어서 <span class="arrow">→</span><span class="result">서서</span></div>
-        <div class="ex-pill">사+아서 <span class="arrow">→</span><span class="result">사서</span></div>
-        <div class="ex-pill">타+아 <span class="arrow">→</span><span class="result">타</span></div>
-        <div class="ex-pill">자+아 <span class="arrow">→</span><span class="result">자</span></div>
-        <div class="ex-pill">차+아 <span class="arrow">→</span><span class="result">차</span></div>
-        <div class="ex-pill">나+아서 <span class="arrow">→</span><span class="result">나서</span></div>
-        <div class="ex-pill">가+아 <span class="arrow">→</span><span class="result">가</span></div>
-        <div class="ex-pill">서+어 <span class="arrow">→</span><span class="result">서</span></div>
-        <div class="ex-pill">펴+어 <span class="arrow">→</span><span class="result">펴</span></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- TAB 7: 첨가 -->
-<div class="tab-panel" id="tab7">
-  <div class="section-title">음운의 첨가 (∅ → A)</div>
-
-  <!-- ㄴ 첨가 -->
-  <div class="subsection-title">① ㄴ 첨가 (합성어 / 파생어)</div>
-  <div class="card">
-    <div class="def-box">
-      받침 자음 + <strong>이, 야, 여, 요, 유</strong> → <strong>[니, 냐, 녀, 뇨, 뉴]</strong>
-    </div>
-    <div class="ex-list">
-      <div class="ex-pill">솜이불 <span class="arrow">→</span><span class="result">[솜니불]</span></div>
-      <div class="ex-pill">홑이불 <span class="arrow">→</span><span class="result">[혼니불]</span></div>
-      <div class="ex-pill">색연필 <span class="arrow">→</span><span class="result">[생년필]</span></div>
-      <div class="ex-pill">식용유 <span class="arrow">→</span><span class="result">[싱뇽뉴]</span></div>
-      <div class="ex-pill">꽃잎 <span class="arrow">→</span><span class="result">[꼰닙]</span></div>
-      <div class="ex-pill">막일 <span class="arrow">→</span><span class="result">[망닐]</span></div>
-      <div class="ex-pill">국요리 <span class="arrow">→</span><span class="result">[궁뇨리]</span></div>
-      <div class="ex-pill">늑막염 <span class="arrow">→</span><span class="result">[능망념]</span></div>
-      <div class="ex-pill">직행열차 <span class="arrow">→</span><span class="result">[지캥녈차]</span></div>
-      <div class="ex-pill">옷요 <span class="arrow">→</span><span class="result">[온뇨]</span></div>
-    </div>
-  </div>
-
-  <!-- 사잇소리 -->
-  <div class="subsection-title">② 사잇소리 현상 (합성어) — 예외 多</div>
-  <div class="card">
-    <div class="warn-box">앞 또는 뒤에 공명음(ㅁ, ㄴ, ㅇ, ㄹ + 모음)이 올 경우 사이시옷 표기</div>
-
-    <div class="sub-item">
-      <div class="sub-title">i) 모음 끝 + 예사소리 시작 → ㅅ 첨가 (된소리 발음)</div>
-      <div class="ex-list">
-        <div class="ex-pill">코+등 <span class="arrow">→</span><span class="result">콧등[코뜽]</span></div>
-        <div class="ex-pill">배+사공 <span class="arrow">→</span><span class="result">뱃사공[배싸공]</span></div>
-        <div class="ex-pill">나무+가지 <span class="arrow">→</span><span class="result">나뭇가지[나무까지]</span></div>
-        <div class="ex-pill">해+빛 <span class="arrow">→</span><span class="result">햇빛[해삗]</span></div>
-        <div class="ex-pill">아래+집 <span class="arrow">→</span><span class="result">아랫집[아래찝]</span></div>
-        <div class="ex-pill">초+불 <span class="arrow">→</span><span class="result">촛불[초뿔]</span></div>
-        <div class="ex-pill">나루+배 <span class="arrow">→</span><span class="result">나룻배[나루빼]</span></div>
-        <div class="ex-pill">귀+병 <span class="arrow">→</span><span class="result">귓병[귀뼝]</span></div>
+    <!-- 음운 기초 -->
+    <div class="map-root c-gray">
+      <button class="map-root-head" onclick="goTo(0)"><span class="map-icon">🔤</span>음운 기초</button>
+      <div class="map-children">
+        <button class="map-node" onclick="goTo(0,'a-eumun')">음운이란?<span class="map-sub">분절(자음·모음) / 비분절(운소)</span></button>
+        <button class="map-node" onclick="goTo(0,'a-choesodaerip')">최소 대립쌍·최소 대립</button>
+        <button class="map-node" onclick="goTo(0,'a-byeondong')">음운 변동 4유형<span class="map-sub">교체·첨가·탈락·축약</span></button>
       </div>
     </div>
 
-    <div class="sub-item">
-      <div class="sub-title">ii) 모음 끝 + ㅁ, ㄴ → ㄴ 덧남 (비음화)</div>
-      <div class="ex-list">
-        <div class="ex-pill">시내+물 <span class="arrow">→</span><span class="result">시냇물[시낸물]</span></div>
-        <div class="ex-pill">아래+마을 <span class="arrow">→</span><span class="result">아랫마을[아랜마을]</span></div>
-        <div class="ex-pill">코+날 <span class="arrow">→</span><span class="result">콧날[콘날]</span></div>
-        <div class="ex-pill">빗+물 <span class="arrow">→</span><span class="result">빗물[빈물]</span></div>
-        <div class="ex-pill">잇+몸 <span class="arrow">→</span><span class="result">잇몸[인몸]</span></div>
-        <div class="ex-pill">깻+묵 <span class="arrow">→</span><span class="result">깻묵[깬묵]</span></div>
-        <div class="ex-pill">뒷+문 <span class="arrow">→</span><span class="result">뒷문[뒨문]</span></div>
-        <div class="ex-pill">햇+무리 <span class="arrow">→</span><span class="result">햇무리[핸무리]</span></div>
+    <!-- 모음 체계 -->
+    <div class="map-root c-teal">
+      <button class="map-root-head" onclick="goTo(1)"><span class="map-icon">👄</span>모음 체계</button>
+      <div class="map-children">
+        <button class="map-node" onclick="goTo(1,'a-danmoeum')">단모음 체계도<span class="map-sub">10개 — 혀높이×입술모양</span></button>
+        <button class="map-node" onclick="goTo(1,'a-yangseong')">양성·음성 모음 / 이중모음 / 모음조화</button>
       </div>
     </div>
 
-    <div class="sub-item">
-      <div class="sub-title">iii) 모음 끝 + ㅣ 또는 [j] → ㄴㄴ 덧남</div>
-      <div class="ex-list">
-        <div class="ex-pill">나무+잎 <span class="arrow">→</span><span class="result">나뭇잎[나문닙]</span></div>
-        <div class="ex-pill">뒤+일 <span class="arrow">→</span><span class="result">뒷일[뒨닐]</span></div>
-        <div class="ex-pill">훗+일 <span class="arrow">→</span><span class="result">훗일[훈닐]</span></div>
-        <div class="ex-pill">깻+잎 <span class="arrow">→</span><span class="result">깻잎[깬닙]</span></div>
-        <div class="ex-pill">아랫+니 <span class="arrow">→</span><span class="result">아랫니[아랜니]</span></div>
-        <div class="ex-pill">윗+니 <span class="arrow">→</span><span class="result">윗니[윈니]</span></div>
-        <div class="ex-pill">예삿+일 <span class="arrow">→</span><span class="result">예삿일[예산닐]</span></div>
-        <div class="ex-pill">베갯+잇 <span class="arrow">→</span><span class="result">베갯잇[베갠닏]</span></div>
+    <!-- 자음 체계 -->
+    <div class="map-root c-blue">
+      <button class="map-root-head" onclick="goTo(2)"><span class="map-icon">🗣️</span>자음 체계</button>
+      <div class="map-children">
+        <button class="map-node" onclick="goTo(2,'a-jaeum')">자음 체계표<span class="map-sub">19개 — 발음방법×발음위치</span></button>
       </div>
     </div>
 
-    <div class="sub-item">
-      <div class="sub-title" style="color:var(--danger);">iv) 한자 합성어 6개 (예외 無)</div>
-      <div class="ex-list">
-        <div class="ex-pill" style="background:#FFF5F5; border-color:#FECACA;">곳간</div>
-        <div class="ex-pill" style="background:#FFF5F5; border-color:#FECACA;">셋방</div>
-        <div class="ex-pill" style="background:#FFF5F5; border-color:#FECACA;">숫자</div>
-        <div class="ex-pill" style="background:#FFF5F5; border-color:#FECACA;">찻간</div>
-        <div class="ex-pill" style="background:#FFF5F5; border-color:#FECACA;">툇간</div>
-        <div class="ex-pill" style="background:#FFF5F5; border-color:#FECACA;">횟수</div>
+    <!-- 교체 -->
+    <div class="map-root c-blue">
+      <button class="map-root-head" onclick="goTo(3)"><span class="map-icon">🔄</span>교체 (A→B)</button>
+      <div class="map-children">
+        <button class="map-node" onclick="goTo(3,'a-eumjeol')">① 음절 끝소리 규칙<span class="map-sub">7대표음 / 형식·실질 형태소</span></button>
+        <button class="map-node" onclick="goTo(3,'a-bieumhwa')">② 비음화<span class="map-sub">ㄹ의 비음화 포함</span></button>
+        <button class="map-node" onclick="goTo(3,'a-yueumhwa')">③ 유음화<span class="map-sub">순행·역행 / 예외</span></button>
+        <button class="map-node" onclick="goTo(3,'a-gugaeeumhwa')">④ 구개음화</button>
+        <button class="map-node" onclick="goTo(3,'a-doensori')">⑤ 된소리되기<span class="map-sub">i~iv 4가지 조건</span></button>
+        <button class="map-node" onclick="goTo(3,'a-banmoeumhwa')">⑥ 모음 교체(반모음화)</button>
       </div>
     </div>
 
-    <div class="sub-item">
-      <div class="sub-title">v) 자음 끝 + 예사소리 시작 → 된소리 발음</div>
-      <div class="ex-list">
-        <div class="ex-pill">눈사람 <span class="arrow">→</span><span class="result">[눈싸람]</span></div>
-        <div class="ex-pill">문고리 <span class="arrow">→</span><span class="result">[문꼬리]</span></div>
-        <div class="ex-pill">길가 <span class="arrow">→</span><span class="result">[길까]</span></div>
-        <div class="ex-pill">봄비 <span class="arrow">→</span><span class="result">[봄삐]</span></div>
-        <div class="ex-pill">손등 <span class="arrow">→</span><span class="result">[손뜽]</span></div>
-        <div class="ex-pill">밤새 <span class="arrow">→</span><span class="result">[밤쌔]</span></div>
-        <div class="ex-pill">불빛 <span class="arrow">→</span><span class="result">[불삣]</span></div>
-        <div class="ex-pill">강가 <span class="arrow">→</span><span class="result">[강까]</span></div>
-        <div class="ex-pill">발걸음 <span class="arrow">→</span><span class="result">[발꺼름]</span></div>
-        <div class="ex-pill">산길 <span class="arrow">→</span><span class="result">[산낄]</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 반모음 첨가 -->
-  <div class="subsection-title">③ 반모음 첨가 (∅ → A)</div>
-  <div class="card">
-    <div class="def-box">
-      모음 <strong>ㅣ</strong>로 끝나는 어간 + <strong>-어</strong><br>
-      → <strong>[어]</strong>: 원칙 &nbsp;|&nbsp; <strong>[여]</strong>: 허용 (반모음 첨가)
-    </div>
-    <div class="ex-list">
-      <div class="ex-pill">피+어 <span class="arrow">→</span><span class="result">피어 / 펴</span></div>
-      <div class="ex-pill">지+어 <span class="arrow">→</span><span class="result">지어 / 져</span></div>
-      <div class="ex-pill">기+어 <span class="arrow">→</span><span class="result">기어 / 겨</span></div>
-      <div class="ex-pill">이기+어 <span class="arrow">→</span><span class="result">이기어 / 이겨</span></div>
-      <div class="ex-pill">끼+어 <span class="arrow">→</span><span class="result">끼어 / 껴</span></div>
-      <div class="ex-pill">비비+어 <span class="arrow">→</span><span class="result">비비어 / 비벼</span></div>
-    </div>
-    <div class="warn-box">
-      <strong>-이오, -아니오</strong> → [이요, 아니요] 허용<br>
-      cf) 아니오 (감탄사+보조사) ↔ 예
-    </div>
-  </div>
-</div>
-
-<!-- TAB 8: 자투리 개념 -->
-<div class="tab-panel" id="tab8">
-  <div class="section-title">자투리 개념 모음</div>
-
-  <!-- 음절 끝소리 규칙 -->
-  <div class="subsection-title">받침의 발음 — 음절 끝소리 규칙 (7대 표음)</div>
-  <div class="card">
-    <div class="def-box">
-      받침은 음절 끝에서 반드시 <strong>ㄱ, ㄴ, ㄷ, ㄹ, ㅁ, ㅂ, ㅇ</strong> 7개 중 하나로만 발음됨
-    </div>
-    <div class="ex-list">
-      <div class="ex-pill">낫, 낮, 낚, 날 <span class="arrow">→</span><span class="result">[낟]</span></div>
-      <div class="ex-pill">부엌 <span class="arrow">→</span><span class="result">[부억]</span></div>
-      <div class="ex-pill">무릎 <span class="arrow">→</span><span class="result">[무릅]</span></div>
-      <div class="ex-pill">히읗 <span class="arrow">→</span><span class="result">[히읃]</span></div>
-      <div class="ex-pill">솥 <span class="arrow">→</span><span class="result">[솓]</span></div>
-      <div class="ex-pill">밖 <span class="arrow">→</span><span class="result">[박]</span></div>
-      <div class="ex-pill">숲 <span class="arrow">→</span><span class="result">[숩]</span></div>
-      <div class="ex-pill">꽃 <span class="arrow">→</span><span class="result">[꼳]</span></div>
-    </div>
-    <div class="warn-box" style="margin-top:12px;">
-      <strong>형식 형태소 vs 실질 형태소</strong><br>
-      낫이 → [나시] (형식 형태소, 음절 끝소리 규칙 미적용)<br>
-      낫 안 → [낟안] (실질 형태소, 음절 끝소리 규칙 적용)
-    </div>
-  </div>
-
-  <!-- 어간 어근 -->
-  <div class="subsection-title">어간 / 어근 개념 정리</div>
-  <div class="card">
-    <div class="two-col">
-      <div>
-        <div class="sub-item">
-          <div class="sub-title">어근</div>
-          단어의 실질적 의미 부분
-        </div>
-        <div class="sub-item">
-          <div class="sub-title">접사</div>
-          접두사 + 접미사
-        </div>
-        <div class="sub-item">
-          <div class="sub-title">어간</div>
-          어근 + 접사 (활용 때 변화 無)
-        </div>
-        <div class="sub-item">
-          <div class="sub-title">어미</div>
-          활용 때 변화
-        </div>
-      </div>
-      <div>
-        <div class="morph-ex">
-          <p style="font-size:13px; color:var(--text-muted); margin-bottom:8px;">예시 : 치솟다</p>
-          <div class="morph-row">
-            <div class="morph-unit">
-              <div class="morph-word" style="border-color:#FCD34D;">치</div>
-              <div class="morph-tag">접사</div>
-            </div>
-            <div class="morph-unit">
-              <div class="morph-word" style="border-color:#86EFAC;">솟</div>
-              <div class="morph-tag">어근</div>
-            </div>
-            <div class="morph-unit">
-              <div class="morph-word" style="border-color:#BFDBFE;">다</div>
-              <div class="morph-tag">어미</div>
-            </div>
+    <!-- 첨가 -->
+    <div class="map-root c-green">
+      <button class="map-root-head" onclick="goTo(4)"><span class="map-icon">➕</span>첨가 (Ø→A)</button>
+      <div class="map-children">
+        <button class="map-node" onclick="goTo(4,'a-banmoeumcheomga')">① 반모음 첨가<span class="map-sub">[어]원칙/[여]허용</span></button>
+        <button class="map-node" onclick="goTo(4,'a-ncheomga')">② 'ㄴ' 첨가<span class="map-sub">합성어 vs 파생어</span></button>
+        <div class="map-group">
+          <button class="map-node" onclick="goTo(4,'a-saiitsori')"><span class="map-group-title">③ 사잇소리 현상</span><span class="map-sub">성립조건: 공명음+모음</span></button>
+          <div class="map-subrow">
+            <button class="map-subchip" onclick="goTo(4,'a-saiitsori')">i) 모음끝+예사소리 → ㅅ첨가</button>
+            <button class="map-subchip" onclick="goTo(4,'a-saiitsori')">ii) 모음끝+ㅁ/ㄴ → ㄴ덧남</button>
+            <button class="map-subchip" onclick="goTo(4,'a-saiitsori')">iii) 모음끝+ㅣ/j → ㄴㄴ덧남</button>
+            <button class="map-subchip" onclick="goTo(4,'a-saiitsori')">iv) 한자 합성어 6개</button>
+            <button class="map-subchip" onclick="goTo(4,'a-saiitsori')">v) 자음끝+예사소리 → 된소리</button>
           </div>
-          <p style="font-size:12px; color:var(--text-hint); margin-top:8px;">어간 = 치솟 (접사+어근)</p>
-        </div>
-        <div class="warn-box">
-          용언에서 접사가 없을 때 → 어간 = 어근
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- 모의고사 기출 -->
-  <div class="subsection-title">🎯 모의고사 기출 예시 분석</div>
-  <div class="card">
-    <p style="font-weight:500; margin-bottom:12px;">① 밭이랑 논 → <span style="color:var(--primary);">[바치랑]</span></p>
-    <div class="sub-item">
-      <div class="sub-title">이랑: 접속조사 → 형식 형태소</div>
-      밭 + 이랑(형식) → 구개음화 발생: ㄷ + ㅣ → [ㅈ] → [바치랑]
-    </div>
-
-    <p style="font-weight:500; margin: 16px 0 12px;">② 밭이랑에 가다 (실질 형태소)</p>
-    <div class="sub-item">
-      <div class="sub-title">단계별 음운 변동 분석</div>
-      <div style="font-size:14px; line-height:2.2;">
-        밭이랑
-        <span style="color:var(--text-hint); margin:0 6px;">→ 음절끝소리규칙 →</span>
-        <span style="color:var(--warn);">[밭이랑]</span>
-        <span style="color:var(--text-hint); margin:0 6px;">→ ㄴ 첨가 →</span>
-        <span style="color:var(--accent);">[받니랑]</span>
-        <span style="color:var(--text-hint); margin:0 6px;">→ 비음화 →</span>
-        <span style="color:var(--primary); font-weight:500;">[반니랑]</span>
+    <!-- 탈락 -->
+    <div class="map-root c-rose">
+      <button class="map-root-head" onclick="goTo(5)"><span class="map-icon">✂️</span>탈락 (A→Ø)</button>
+      <div class="map-children">
+        <div class="map-group">
+          <button class="map-node" onclick="goTo(5,'a-jaeumtallak')"><span class="map-group-title">① 자음 탈락</span></button>
+          <div class="map-subrow">
+            <button class="map-subchip" onclick="goTo(5,'a-jaeumtallak')">ㅎ 탈락 — 발음만 탈락</button>
+            <button class="map-subchip" onclick="goTo(5,'a-jaeumtallak')">ㄹ 탈락 — 발음+표기 탈락</button>
+          </div>
+        </div>
+        <button class="map-node" onclick="goTo(5,'a-gyeopbatchim')">② 겹받침 탈락<span class="map-sub">자음군 단순화</span></button>
+        <div class="map-group">
+          <button class="map-node" onclick="goTo(5,'a-moeumtallak')"><span class="map-group-title">③ 모음 탈락</span></button>
+          <div class="map-subrow">
+            <button class="map-subchip" onclick="goTo(5,'a-moeumtallak')">ㅡ 탈락</button>
+            <button class="map-subchip" onclick="goTo(5,'a-moeumtallak')">동음 탈락 — 모음조화</button>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- 축약 -->
+    <div class="map-root c-orange">
+      <button class="map-root-head" onclick="goTo(6)"><span class="map-icon">🔥</span>축약 (A+B→C)</button>
+      <div class="map-children">
+        <button class="map-node" onclick="goTo(6,'a-geosensori')">거센소리되기<span class="map-sub">예사소리+ㅎ→거센소리</span></button>
+      </div>
+    </div>
+
+    <!-- 연음·두음법칙 -->
+    <div class="map-root c-purple">
+      <button class="map-root-head" onclick="goTo(7)"><span class="map-icon">🔗</span>연음·두음법칙</button>
+      <div class="map-children">
+        <button class="map-node" onclick="goTo(7,'a-yeoneum')">연음<span class="map-sub">음운 변동 아님</span></button>
+        <div class="map-group">
+          <button class="map-node" onclick="goTo(7,'a-dueum')"><span class="map-group-title">두음법칙</span></button>
+          <div class="map-subrow">
+            <button class="map-subchip" onclick="goTo(7,'a-dueum')">① ㄹ/ㄴ+ㅣ계 → 탈락</button>
+            <button class="map-subchip" onclick="goTo(7,'a-dueum')">② ㄹ+단모음 → ㄴ 교체</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 형태소·단어 -->
+    <div class="map-root c-purple">
+      <button class="map-root-head" onclick="goTo(8)"><span class="map-icon">🧩</span>형태소·단어</button>
+      <div class="map-children">
+        <button class="map-node" onclick="goTo(8,'a-hyeongtaeso')">① 형태소 분류<span class="map-sub">실질/형식, 자립/의존</span></button>
+        <button class="map-node" onclick="goTo(8,'a-jugyeok')">② 주격조사·선어말어미</button>
+        <button class="map-node" onclick="goTo(8,'a-daneo')">③ 단어 구성<span class="map-sub">단일어/합성어/파생어</span></button>
+        <button class="map-node" onclick="goTo(8,'a-eogan')">④ 어간/어미/어근/접사</button>
+        <button class="map-node" onclick="goTo(8,'a-mogi')">모의고사 기출<span class="map-sub">밭이랑은 vs 밭이랑에</span></button>
+      </div>
+    </div>
+
   </div>
 </div>
 
-</main>
+</div><!-- /content-wrap -->
+<button class="totop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
-  const tabs = document.querySelectorAll('.tab-btn');
-  const panels = document.querySelectorAll('.tab-panel');
+function switchTab(idx) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+  document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+  window.scrollTo({top:0, behavior:'smooth'});
+}
 
-  tabs.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = btn.dataset.tab;
-      tabs.forEach(t => t.classList.remove('active'));
-      panels.forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById(target).classList.add('active');
-      document.body.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  });
+function goTo(tabIdx, anchorId) {
+  switchTab(tabIdx);
+  if (anchorId) {
+    setTimeout(() => {
+      const el = document.getElementById(anchorId);
+      if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    }, 120);
+  }
+}
 </script>
 </body>
 </html>
