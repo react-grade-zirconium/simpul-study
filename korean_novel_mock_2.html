@@ -1,35 +1,1015 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Simpul Study — 제2회 현대소설 미니 모의고사</title>
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{width:100%;height:100%;background:#f6f8fc;color:#0f172a;font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif}
-    body{display:grid;place-items:center;padding:20px;overflow:auto}
-    .notice{width:min(640px,100%);border:1px solid #dbe3ef;border-radius:22px;background:#fff;padding:28px;box-shadow:0 12px 32px rgba(15,23,42,.08);text-align:center}
-    .back{display:inline-flex;margin-bottom:12px;color:#1d4ed8;text-decoration:none;font-weight:900}
-    .label{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;background:#eff6ff;color:#1d4ed8;padding:7px 12px;font-size:.88rem;font-weight:800}
-    h1{margin-top:14px;font-size:clamp(1.55rem,4vw,2.15rem);line-height:1.25;letter-spacing:-.04em}
-    p{margin-top:8px;color:#64748b;line-height:1.6;font-size:.96rem}
-    .actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:22px}
-    .action{display:inline-flex;align-items:center;justify-content:center;min-height:44px;border:1px solid #93c5fd;border-radius:12px;background:#eff6ff;color:#1d4ed8;padding:0 16px;text-decoration:none;font-weight:900}
-    .action.secondary{border-color:#dbe3ef;background:#f8fafc;color:#334155}
-    .action:hover,.action:focus-visible{background:#dbeafe;outline:none}
-    .action.secondary:hover,.action.secondary:focus-visible{background:#eef2ff}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simpul Study — 제2회 현대소설 미니 모의고사</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+  :root {
+    --ink: #1a1a2e;
+    --ink-light: #4a4a6a;
+    --paper: #fafaf7;
+    --paper-warm: #f5f3ee;
+    --rule: #d4d0c8;
+    --accent: #2d5a8e;
+    --accent-soft: #e8eef5;
+    --answer-bg: #1a1a2e;
+    --answer-text: #f0ede6;
+    --correct: #2d6a4f;
+    --correct-bg: #d8f3dc;
+    --wrong-bg: #ffe8e8;
+    --wrong: #9b2335;
+    --highlight: #fff3cd;
+    --serif: 'Noto Serif KR', 'Batang', serif;
+    --sans: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 15px;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: var(--ink);
+    color: var(--answer-text);
+    padding: 28px 40px 24px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .site-header .brand {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #8899bb;
+    margin-bottom: 4px;
+  }
+  .site-header h1 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: #f0ede6;
+  }
+  .site-header .meta {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: #8899bb;
+    text-align: right;
+  }
+
+  /* ── NAV TABS ── */
+  .tab-bar {
+    background: var(--paper-warm);
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    gap: 0;
+    padding: 0 40px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .tab-btn {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-light);
+    border: none;
+    background: transparent;
+    padding: 14px 22px 12px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s ease;
+    letter-spacing: 0.02em;
+  }
+  .tab-btn:hover { color: var(--accent); }
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 860px; margin: 0 auto; padding: 48px 32px 80px; }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ── PASSAGE BLOCK ── */
+  .passage-block {
+    background: white;
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--accent);
+    border-radius: 2px;
+    margin-bottom: 40px;
+    overflow: hidden;
+  }
+  .passage-header {
+    background: var(--accent-soft);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--rule);
+  }
+  .passage-range {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .passage-title {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--ink-light);
+  }
+  .synopsis {
+    background: #f8f6f0;
+    border-bottom: 1px solid var(--rule);
+    padding: 16px 24px;
+    font-size: 13.5px;
+    color: var(--ink-light);
+    line-height: 1.8;
+  }
+  .synopsis strong { color: var(--ink); font-weight: 600; }
+  .passage-body {
+    padding: 24px 28px;
+    font-size: 14.5px;
+    line-height: 2;
+  }
+  .passage-body p { margin-bottom: 10px; }
+  .passage-body .dialogue { margin-left: 12px; }
+  .passage-body .omission {
+    text-align: center;
+    color: var(--ink-light);
+    font-size: 13px;
+    padding: 14px 0;
+    border-top: 1px dashed var(--rule);
+    border-bottom: 1px dashed var(--rule);
+    margin: 16px 0;
+    background: #fbfaf7;
+  }
+  .passage-source {
+    padding: 10px 28px 18px;
+    font-size: 13px;
+    color: var(--ink-light);
+    text-align: right;
+    font-style: italic;
+  }
+  .underline-target {
+    border-bottom: 2px solid var(--ink);
+    font-weight: 600;
+  }
+
+  /* ── QUESTION BLOCK ── */
+  .question-block {
+    margin-bottom: 36px;
+    background: white;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .q-header {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 16px 24px 14px;
+    border-bottom: 1px solid var(--rule);
+    background: #fafaf8;
+  }
+  .q-number {
+    font-family: var(--sans);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--accent);
+    min-width: 28px;
+  }
+  .q-text {
+    font-size: 14.5px;
+    line-height: 1.75;
+    flex: 1;
+  }
+  .q-badge {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--ink);
+    color: white;
+    padding: 2px 7px;
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+  .bogi-box {
+    background: #f8f6f0;
+    border: 1px solid #ddd8cc;
+    border-radius: 2px;
+    padding: 14px 20px;
+    margin: 0 24px 4px;
+    font-size: 13.5px;
+    line-height: 1.85;
+  }
+  .bogi-box .bogi-label {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .choices {
+    padding: 8px 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .choice {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 14px;
+    border-radius: 2px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .choice:hover { background: var(--accent-soft); border-color: #b8cce0; }
+  .choice.selected { background: var(--accent-soft); border-color: var(--accent); }
+  .choice.correct-answer { background: var(--correct-bg); border-color: var(--correct); }
+  .choice.wrong-selected { background: var(--wrong-bg); border-color: var(--wrong); }
+  .choice-num {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--ink-light);
+    min-width: 18px;
+    padding-top: 1px;
+  }
+  .choice.correct-answer .choice-num { color: var(--correct); }
+  .choice.wrong-selected .choice-num { color: var(--wrong); }
+
+  /* ── ANSWER PANEL ── */
+  .answer-sheet {
+    background: var(--answer-bg);
+    color: var(--answer-text);
+    border-radius: 2px;
+    padding: 32px;
+    margin-bottom: 40px;
+  }
+  .answer-sheet h2 {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #8899bb;
+    margin-bottom: 20px;
+  }
+  .answer-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .answer-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 3px;
+    padding: 14px 12px 12px;
+    text-align: center;
+  }
+  .answer-card .ac-num {
+    font-family: var(--sans);
+    font-size: 11px;
+    color: #8899bb;
+    margin-bottom: 6px;
+    letter-spacing: 0.05em;
+  }
+  .answer-card .ac-answer {
+    font-family: var(--sans);
+    font-size: 22px;
+    font-weight: 700;
+    color: #e0d4b0;
+  }
+  .answer-card .ac-score {
+    font-family: var(--sans);
+    font-size: 10px;
+    color: #6677aa;
+    margin-top: 4px;
+  }
+
+  /* ── EXPLANATION ── */
+  .explanation-section { margin-bottom: 48px; }
+  .exp-title {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .exp-card {
+    background: white;
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--accent);
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .exp-card-header {
+    background: #f4f6fa;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .exp-q-num {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+  .exp-correct-badge {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--correct);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+  .exp-body { padding: 18px 20px; }
+  .exp-section-label {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--correct);
+    margin-bottom: 8px;
+    margin-top: 16px;
+  }
+  .exp-section-label.wrong-label { color: var(--wrong); }
+  .exp-section-label:first-child { margin-top: 0; }
+  .exp-body p {
+    font-size: 13.5px;
+    line-height: 1.85;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .exp-body .choice-exp {
+    display: flex;
+    gap: 10px;
+    padding: 7px 12px;
+    border-radius: 2px;
+    background: #f9f9f7;
+    margin-bottom: 5px;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .exp-body .choice-exp .cn {
+    font-weight: 700;
+    color: var(--ink-light);
+    min-width: 16px;
+  }
+  .exp-body .choice-exp.correct-exp { background: var(--correct-bg); }
+  .exp-body .choice-exp.correct-exp .cn { color: var(--correct); }
+
+  /* ── SECTION DIVIDER ── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 48px 0 32px;
+  }
+  .section-divider .sd-label {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+  .section-divider hr {
+    flex: 1;
+    border: none;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* ── SCORE BOX ── */
+  .score-display {
+    background: var(--accent-soft);
+    border: 1px solid #b8cce0;
+    border-radius: 2px;
+    padding: 20px 28px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .score-display .sd-main {
+    font-family: var(--sans);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .score-display .sd-label {
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink-light);
+  }
+  .score-display .sd-detail {
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink-light);
+    margin-left: auto;
+  }
+
+  /* ── CHECK BUTTON ── */
+  .check-btn {
+    display: block;
+    width: 100%;
+    max-width: 320px;
+    margin: 24px auto 0;
+    padding: 14px 0;
+    background: var(--accent);
+    color: white;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .check-btn:hover { background: #1e3f63; }
+
+  /* ── PRINT ── */
+  @media print {
+    .tab-bar, .check-btn { display: none; }
+    .panel { display: block !important; }
+    body { font-size: 13px; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .container { padding: 32px 16px 60px; }
+    .answer-grid { grid-template-columns: repeat(2, 1fr); }
+    .site-header { padding: 20px 20px 18px; }
+    .site-header h1 { font-size: 17px; }
+    .tab-bar { padding: 0 16px; overflow-x: auto; }
+    .passage-body { padding: 18px 16px; }
+    .choices { padding: 8px 16px 18px; }
+  }
+</style>
 </head>
 <body>
-  <main class="notice" aria-labelledby="mock2Title">
-    <a class="back" href="./korean_mock.html">← 회차 선택으로</a><br />
-    <span class="label">📝 제2회</span>
-    <h1 id="mock2Title">현대소설 미니 모의고사</h1>
-    <p>제2회 모의고사 페이지입니다. 문제 자료가 준비되면 이 화면에 바로 추가됩니다.</p>
-    <div class="actions">
-      <a class="action" href="./korean_mock.html">회차 다시 선택</a>
-      <a class="action secondary" href="./korean_novel_mock.html">1회 풀러 가기</a>
+
+<header class="site-header">
+  <div>
+    <div class="brand">Simpul Study · 제2회</div>
+    <h1>현대소설 미니 모의고사</h1>
+  </div>
+  <div class="meta">
+    2026학년도 경희고등학교 1학년<br>
+    1학기 기말고사 학업 역량 증진 프로젝트<br>
+    총 10문항 · 배점 25점
+  </div>
+</header>
+
+<nav class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('exam')">문제 풀기</button>
+  <button class="tab-btn" onclick="showTab('answer')">정답 및 해설</button>
+</nav>
+
+<div id="tab-exam" class="panel active">
+<div class="container">
+
+  <div class="passage-block">
+    <div class="passage-header">
+      <span class="passage-range">[1 – 3] 다음 글을 읽고 물음에 답하시오.</span>
+      <span class="passage-title">창작 소설 · 유리창 너머의 당신의 이름</span>
     </div>
-  </main>
+    <div class="synopsis">
+      <strong>[앞부분의 줄거리]</strong> 지방 소도시에서 자란 윤호는 대학 진학을 위해 서울로 올라온다. 그는 광고 회사 인턴으로 일하며 새로운 삶에 적응하려 하지만, 자신이 원하는 삶과 사회가 요구하는 모습 사이에서 혼란을 느낀다. 어느 날 그는 고향 친구 민석과 오랜만에 연락하게 된다.
+    </div>
+    <div class="passage-body">
+      <p>윤호는 회의실 유리창에 비친 자신의 모습을 바라보았다. 정장을 입고 노트북을 펼친 사람들이 둥근 탁자를 둘러싸고 있었다. 발표자는 유행하는 광고 사례를 설명했고, 팀장은 고개를 끄덕이며 메모를 남겼다. 윤호도 노트북 화면을 응시했지만 글자는 좀처럼 눈에 들어오지 않았다.</p>
+      <p class="dialogue">"윤호 씨 생각은 어때요?"</p>
+      <p>팀장의 목소리에 그는 고개를 들었다.</p>
+      <p class="dialogue">"아, 네. 좋은 방향인 것 같습니다."</p>
+      <p>회의실 안에 짧은 정적이 흘렀다. 팀장은 다시 발표를 이어 갔다. 윤호는 자신의 대답이 무엇을 의미하는지 알 수 없었다. 좋은 방향이라는 말은 오늘 하루에만 몇 번이나 입 밖으로 나왔을까.</p>
+      <div class="omission">[중략]</div>
+      <p>며칠 뒤, 회사는 새로운 광고 기획안을 공모했다. 우수 기획은 실제 프로젝트에 반영된다는 공지가 붙었다. 직원들은 경쟁적으로 아이디어를 준비했다. 수진도 야근을 자청하며 자료를 모았다.</p>
+      <p class="dialogue">"윤호 씨는 안 해?"</p>
+      <p class="dialogue">"잘 모르겠어."</p>
+      <p class="dialogue">"좋은 기회잖아."</p>
+      <p>윤호는 대답하지 않았다. 기회라는 말이 낯설게 들렸다. 고향에서는 성실하게 사는 것이 중요했다. 그러나 이곳에서는 끊임없이 자신을 증명해야 했다. 남보다 앞서야 하고, 남들이 원하는 모습을 보여 주어야 했다. 그는 회사 복도에 붙은 광고 포스터들을 바라보았다. 화려한 웃음과 자신감 넘치는 표정들. 모든 인물이 자신의 자리를 정확히 알고 있는 것처럼 보였다.</p>
+      <p>그 순간 윤호는 자신이 텅 빈 액자 하나를 들고 서 있는 기분이 들었다. 무엇을 넣어야 할지 모르는 채로.</p>
+      <p>며칠 후 민석이 서울에 올라왔다. 두 사람은 한강 근처에서 만났다. 민석은 작업복 차림이었다.</p>
+      <p class="dialogue">"고향은 그대로야."</p>
+      <p class="dialogue">"그래?"</p>
+      <p class="dialogue">"너만 없지."</p>
+      <p>민석은 웃으며 말했다. 윤호도 따라 웃었지만 곧 시선을 돌렸다. 강물 위로 도시의 불빛이 흔들리고 있었다. 물결에 부서진 불빛들은 제 모습을 유지하지 못한 채 길게 늘어졌다. 윤호는 그 모습을 한참 바라보았다.</p>
+      <p class="dialogue">"넌 뭐 하고 싶냐?"</p>
+      <p>민석이 물었다.</p>
+      <p class="dialogue">"글쎄."</p>
+      <p class="dialogue">"아직도 모르겠어?"</p>
+      <p>윤호는 대답하지 못했다. 강바람이 불어왔다. 주머니 속에는 아직 제출하지 못한 기획안 초안이 접혀 있었다. 회사에서 원하는 내용으로 채우면 좋은 평가를 받을 수 있었다. 하지만 종이 위에는 끝내 다른 이야기들이 적혀 있었다.</p>
+      <p>고향을 떠난 사람들. 새로운 도시에서 이름 대신 역할로 불리는 사람들. 그리고 어디에도 완전히 속하지 못한 사람들.</p>
+      <p>윤호는 종이를 꺼내 펼쳤다. 구겨진 자국이 선명했다. 그는 잠시 망설이다가 종이 아래에 자신의 이름을 적었다.</p>
+      <p>천천히.</p>
+      <p>한 글자씩.</p>
+      <p>민석은 아무 말 없이 그 모습을 바라보았다. 윤호는 다시 강물을 보았다.</p>
+      <p>흩어지던 불빛들이 물결 위에서 잠시 모였다가 다시 멀어졌다. 강물의 물결은 아릅답게 요동치는데, 윤호의 일그러진 파편들 속 땀 흘리며 지탱 중이던 기둥들이 강물의 물결과 같이, 하지만 무언가 다르게, 일렁였다. 무언가 다름이란 무엇인가. 왜 강물의 물결과 윤호의 기둥들은 다른 것일까.</p>
+      <p>그는 그것을 끝까지 지켜보았다.</p>
+      <p>강물도 그를 지켜보았다. 강물은 아무말도 하지 않았다.</p>
+      <p>이를테면, 집 안에 둔 거울은 심하게 깨진 듯했고, 그 깨진 파편 사이로 나를 볼 때면 내 모습이 뒤집어져 그때 그 강물이 나를 보는 눈빛을 지으며 윤호는 나를 지켜본다. 왜 다른 사람처럼 느껴지는 걸까. 거울을 보는데도.</p>
+    </div>
+    <div class="passage-source">— 창작소설, 「유리창 너머의 당신의 이름」</div>
+  </div>
+
+  <div class="question-block" id="q1">
+    <div class="q-header">
+      <span class="q-number">1.</span>
+      <span class="q-text">윗글의 서술상 특징으로 가장 적절한 것은?</span>
+    </div>
+    <div class="choices">
+      <div class="choice" onclick="selectChoice(this, 1, 1)"><span class="choice-num">①</span><span>공간의 대비를 통해 인물이 지향하는 이상적 가치와 현실의 괴리를 극복하려는 의지를 강조하고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 1, 2)"><span class="choice-num">②</span><span>외부의 배경과 풍경을 묘사하여 인물이 겪고 있는 내면적 방황과 불안정한 심리를 투영하고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 1, 3)"><span class="choice-num">③</span><span>서술자가 작품 밖에서 인물들의 행동을 객관적으로 관찰하여 사건의 전모를 입체적으로 전달하고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 1, 4)"><span class="choice-num">④</span><span>감각적 심상을 활용하여 인물 간의 첨예한 갈등 양상을 드러내고 극적 긴장감을 고조시키고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 1, 5)"><span class="choice-num">⑤</span><span>잦은 장면 전환과 과거 회상을 교차하여 인물의 성격이 변화하게 된 필연적 계기를 밝히고 있다.</span></div>
+    </div>
+  </div>
+
+  <div class="question-block" id="q2">
+    <div class="q-header">
+      <span class="q-number">2.</span>
+      <span class="q-text">윗글을 바탕으로 인물의 심리 및 태도를 이해한 내용으로 가장 적절하지 않은 것은?</span>
+    </div>
+    <div class="choices">
+      <div class="choice" onclick="selectChoice(this, 2, 1)"><span class="choice-num">①</span><span>회의실에서 '좋은 방향인 것 같습니다'라고 한 윤호의 대답은, 회사라는 조직에 속해 있으나 자신이 하는 일의 진정한 의미를 찾지 못한 채 기계적으로 반응하는 소외감을 보여준다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 2, 2)"><span class="choice-num">②</span><span>윤호가 스스로를 '텅 빈 액자 하나를 들고 서 있는 기분'이라고 느낀 것은, 끊임없이 자신을 증명해야 하는 도시의 삶 속에서 주체적인 자아를 상실한 내면적 공허함을 의미한다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 2, 3)"><span class="choice-num">③</span><span>기획안 공모에 대해 수진의 말에 '잘 모르겠어'라고 대답한 윤호의 태도는, 타인과의 경쟁에서 뒤처지는 것에 대한 두려움 때문에 자신의 진짜 기획안을 의도적으로 감추려는 심리에서 비롯된 것이다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 2, 4)"><span class="choice-num">④</span><span>윤호가 주머니 속 기획안 초안에 회사에서 원하는 내용 대신 '어디에도 완전히 속하지 못한 사람들'에 대한 이야기를 적은 것은, 사회적 역할이라는 가면을 벗고 자신의 진실된 정체성을 대면하려는 시도로 볼 수 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 2, 5)"><span class="choice-num">⑤</span><span>기획안 종이에 자신의 이름을 '천천히. 한 글자씩' 적어 내려가는 윤호의 행동은, 조직의 부속품이 아닌 온전한 '나'로서 존재하고자 하는 내면의 조심스러운 자각을 함축한다.</span></div>
+    </div>
+  </div>
+
+  <div class="question-block" id="q3">
+    <div class="q-header">
+      <span class="q-number">3.</span>
+      <span class="q-text">다음 &lt;보기&gt;를 바탕으로 윗글을 감상한 내용으로 가장 적절하지 않은 것은?</span>
+      <span class="q-badge">3점</span>
+    </div>
+    <div class="bogi-box">
+      <div class="bogi-label">보 기</div>
+      이 소설의 두드러진 형식적 특징은 후반부에 이르러 서술의 대상이던 3인칭 '윤호'가 1인칭 '나'로 전환된다는 점이다. 사실 이 작품의 서사는 처음부터 윤호의 시점(1인칭)에서 서술되어야 마땅했다. 그러나 인물은 치열하고 낯선 도시 생활 속에서 자신의 본질을 잃어버렸고, 스스로를 마치 타인(3인칭)처럼 관찰할 수밖에 없을 정도로 깊은 '심리적 거리감'을 느끼고 있었다.<br>결말부의 시점 전환은 이처럼 타자화되어 있던 자아를 마주하게 되는 자각의 순간을 의미한다. 이때 등장하는 '강물의 물결', '기둥들', '깨진 거울', '파편' 등의 객관적 상관물은 온전한 모습을 잃고 파괴된 자아의 불안정성과 소외 의식을 시각적으로 형상화하는 기능을 한다.
+    </div>
+    <div class="choices">
+      <div class="choice" onclick="selectChoice(this, 3, 1)"><span class="choice-num">①</span><span>작품 전반부에서 인물의 내면을 서술함에도 1인칭이 아닌 '윤호'라는 3인칭이 사용된 것은, 낯선 환경 속에서 스스로를 타인처럼 낯설게 느끼는 인물의 '심리적 거리감'이 서술 방식에 반영된 결과이겠군.</span></div>
+      <div class="choice" onclick="selectChoice(this, 3, 2)"><span class="choice-num">②</span><span>강물 위에서 '일그러진 파편들 속 땀 흘리며 지탱 중이던 기둥들'이 일렁이는 모습은, 억지로 유지해 오던 사회적 자아가 한계를 맞이하여 흔들리는 불안정한 상태를 객관적 상관물을 통해 보여주는 것이겠군.</span></div>
+      <div class="choice" onclick="selectChoice(this, 3, 3)"><span class="choice-num">③</span><span>결말부에서 '윤호'가 나를 지켜보는 주체로 묘사되면서 1인칭 '나'가 등장하는 것은, 분열되어 있던 두 개의 자아가 서로를 마주하게 되는 자각의 순간을 드러내는 서술적 장치이겠군.</span></div>
+      <div class="choice" onclick="selectChoice(this, 3, 4)"><span class="choice-num">④</span><span>'집 안에 둔 거울'이 심하게 깨져 있다는 설정은, '윤호'가 그동안 자기에 대하여 진저리를 치고 있는 걸 보여주는군.</span></div>
+      <div class="choice" onclick="selectChoice(this, 3, 5)"><span class="choice-num">⑤</span><span>'깨진 파편 사이로 나를 볼 때면 내 모습이 뒤집어져' 보인다는 묘사는, 본래 자신의 시점과 정체성을 회복하려는 순간조차도 분열된 자아로 인해 심각한 소외 의식을 경험하는 인물의 비극적 내면을 보여주는군.</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"><hr><span class="sd-label">두 번째 지문</span><hr></div>
+  <div class="passage-block">
+    <div class="passage-header">
+      <span class="passage-range">[4 – 7] 다음 글을 읽고 물음에 답하시오.</span>
+      <span class="passage-title">창작 소설 · 파묵(破墨)의 겨울</span>
+    </div>
+    <div class="passage-body">
+      <p>방 안의 공기는 얼어붙은 칼날처럼 살을 비벼 대었다. 민우는 문간방 구석에 무릎을 세우고 앉아 서가에 얹힌 가죽 표지의 책들을 멍하니 바라보았다. 동경에서 가져온, 활자가 빽빽한 법학 서적들은 제 자리를 찾지 못한 채 벽 한구석에 무덤처럼 위태롭게 쌓여 있었다. 가죽 표지의 이국적인 냄새는 방구석의 눅눅한 곰팡이 냄새와 섞여 매캐하게 감돌았다.</p>
+      <p>정숙이 등잔불 아래서 마른기침을 삼키며 바느질감을 돌려잡았다. 무명옷의 해진 솔기를 깁는 그녀의 손가락은 마디마디가 붉게 터져 있었다. 바늘귀를 꿸 때마다 거친 살결과 천이 맞부딪쳐 사각거리는 마른 소리가 났다. 민우는 그 소리가 가슴을 긁어내리는 것 같아 애써 시선을 돌려 책상 위의 만년필을 쥐었다. 그러나 손가락이 곱아 제대로 쥘 수조차 없었다. 잉크가 까맣게 말라붙은 펜촉은 종이 위에서 아무런 흔적도 남기지 못한 채 거친 긁힘 소리만 낼 뿐이었다. 유학 시절 적어 내려갔던 찬란한 정의의 이론들이, 지금 이 찰흙 벽 안에서는 한 조각의 땔감만도 못한 고철에 불과했다.</p>
+      <p class="dialogue">"오늘도 밤을 새우시렵니까."</p>
+      <p>정숙의 목소리는 낮고 편평했다. 원망도 기댓값도 섞이지 않은 마른 바람 같은 물음이었다.</p>
+      <p><strong>[A]</strong> 민우는 대답 대신 만년필 뚜껑을 닫았다. 탁, 하고 쇠붙이가 맞물리는 날카로운 금속음이 방 안의 무거운 정적을 깼다. 스스로를 지식인이라 자부했으나, 정작 이 숨 막히는 식민지의 현실 앞에서 그가 세상에 내놓을 수 있는 문장은 단 한 줄도 없었다. 문장은 아이의 주린 배를 채워줄 밥이 되지 못했고, 고결한 신념은 칼바람을 막아주지 못했다. 민우는 거뭇해진 자신의 손가락을 가만히 내려다보았다.</p>
+      <div class="omission">[중략 부분의 줄거리] 민우의 유학 동창이자 총독부 기관지에서 일하는 진석이 찾아와 현실과 타협하여 글을 쓰고 자리를 얻을 것을 권유한다. 민우는 지식인으로서의 마지막 양심을 지키기 위해 이를 거절하고, 두 사람은 격렬한 논쟁을 벌인 끝에 진석이 방을 나간다.</div>
+      <p>진석이 거칠게 문을 닫고 나간 자리에 남은 것은, 바람에 흔들리다 이내 꺼져 버린 등잔불의 잔상뿐이었다. 방 안은 순식간에 완전한 어둠에 잠겼다. 민우는 암흑 속에서 꼼짝도 하지 않고 앉아 있었다. 눈을 감으나 뜨나 매한가지인 어둠 속에서, 손가락 끝에 묻은 것만 같은 가상의 묵흔(墨痕)이 시커먼 벌레처럼 기어 다니는 환각이 일었다.</p>
+      <p class="dialogue">"지조라니, 양심이라니……."</p>
+      <p>민우는 나직하게 읊조렸다. 입 밖으로 떨어진 단어들은 온기 없는 방 안에서 하얀 입김이 되어 흩어졌다. 그것은 마치 아무런 힘도 없는 자신의 영혼이 허공으로 증발해 버리는 모습과도 같았다. 진석의 비아냥대로 그의 지조는 고결한 정신의 발로가 아니라, 혹독한 현실로 나아가기 두려워하는 무능을 감추기 위한 거적때기에 불과할지도 몰랐다. 처자식을 굶기면서도 해진 책상 앞을 떠나지 못하는 제 모습이 가련하다 못해 추악하게 느껴졌다. 지식이라는 이름의 쇠사슬이 도리어 그의 발목을 붙잡고 방구석에 가두어 둔 꼴이었다.</p>
+      <p>그는 답답함을 이기지 못하고 자리에서 일어나 미닫이문을 열었다. 마당으로 나서자 겨울 밤공기가 이마를 때렸다.</p>
+      <p>밤하늘은 시리도록 맑았고, 무수한 별들은 차가운 얼음 조각처럼 박혀 지상을 내려다보고 있었다. 마당 한구석에 놓인 장독대 위로 서리가 하얗게 내려앉아 있었다. 민우는 장독대로 다가가 그 서늘한 표면을 손바닥으로 쓸어내렸다. 손끝을 타고 파고드는 지독한 한기에 정신이 번쩍 들었지만, 가슴속의 답답함은 가라앉지 않았다. 그때 담장 너머 큰길 쪽에서 무거운 구두굽 소리가 들려왔다. 순사들의 야간 순찰 발소리였다. 규칙적이고 위압적인 그 쇠발톱 같은 소리가 가까워질 때마다 민우는 자신도 모르게 어깨를 움츠리며 어둠 속으로 몸을 숨겼다.</p>
+      <p>번듯한 대학을 졸업하고 고등 학문을 닦았노라 자부하던 사내가, 일제 순사의 발소리 하나에 가슴을 졸이며 숨을 죽이고 있는 꼴이었다. 민우는 입술을 깨물며 헛웃음을 삼켰다. 그의 시선이 마당 구석, 깨진 채 버려진 기와 조각에 머물렀다. 본래의 쓸모를 잃고 진흙바닥에서 뒹구는 그 검은 흙덩이가 꼭 자신을 닮았다고 생각했다. 방 안에서 들려오는 정숙의 간헐적인 기침 소리가 다시금 겨울 밤공기를 날카롭게 찢었다. 민우는 시린 손을 바지주머니 깊숙이 찔러 넣은 채, 멀고 먼 밤하늘의 별을 올려다보았다.</p>
+      <p>별빛은 차갑게 얼어붙어 있었고, 지상은 가혹하게 내리누르고 있었다.</p>
+    </div>
+    <div class="passage-source">— 창작 소설, 「파묵(破墨)의 겨울」</div>
+  </div>
+
+  <div class="question-block" id="q4">
+    <div class="q-header">
+      <span class="q-number">4.</span>
+      <span class="q-text">윗글의 서술상 특징으로 가장 적절한 것은?</span>
+    </div>
+    <div class="choices">
+      <div class="choice" onclick="selectChoice(this, 4, 1)"><span class="choice-num">①</span><span>인물의 시선이 닿는 외부 배경과 감각적 소재들을 활용하여, 인물이 처한 부정적 상황과 암담한 내면세계를 효과적으로 형상화하고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 4, 2)"><span class="choice-num">②</span><span>의성어와 의태어를 빈번하게 사용하여 토속적이고 서정적인 분위기를 조성함으로써 작품 전체의 비극적 색채를 완화하고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 4, 3)"><span class="choice-num">③</span><span>대화 중심의 서술을 통해 사건을 신속하게 전개하고 인물 간의 신념 대립 구도를 선명하게 부각하고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 4, 4)"><span class="choice-num">④</span><span>공간의 이동에 따라 서술자를 교체함으로써 동일한 사회적 사건을 바라보는 다양한 인물의 시각을 다각도로 조명하고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 4, 5)"><span class="choice-num">⑤</span><span>요약적 제시를 통해 인물의 유학 시절 이력을 입체적으로 분석함으로써 현재 인물이 보이는 반성적 태도의 정당성을 부여하고 있다.</span></div>
+    </div>
+  </div>
+
+  <div class="question-block" id="q5">
+    <div class="q-header">
+      <span class="q-number">5.</span>
+      <span class="q-text">윗글의 '민우'와 '정숙'에 대한 이해로 가장 적절하지 않은 것은?</span>
+    </div>
+    <div class="choices">
+      <div class="choice" onclick="selectChoice(this, 5, 1)"><span class="choice-num">①</span><span>'민우'는 정숙의 마디마디 붉게 터진 손가락을 보며, 가장으로서 처자식을 제대로 부양하지 못하는 자신의 현실에 대해 깊은 부채감을 느끼고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 5, 2)"><span class="choice-num">②</span><span>'정숙'의 "오늘도 밤을 새우시렵니까"라는 물음은 민우에 대한 적극적인 원망이나 기대보다는, 오랜 빈곤 속에서 삶을 담담히 견뎌 내는 무덤덤한 태도에서 비롯된 것이다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 5, 3)"><span class="choice-num">③</span><span>'민우'는 가죽 표지의 법학 서적들이 벽 한구석에 무덤처럼 쌓여 있는 모습을 보며, 자신이 해외에서 습득한 학문이 식민지 현실에서 아무런 효용을 발휘하지 못하는 상황에 대한 자괴감을 드러낸다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 5, 4)"><span class="choice-num">④</span><span>'민우'가 야간 순찰을 도는 순사들의 발소리에 어깨를 움츠리는 것은, 지조를 지키겠다는 자신의 결심이 실상은 가혹한 현실로 나아가기 두려워하는 무능의 발로일지도 모른다는 내적 균열을 보여준다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 5, 5)"><span class="choice-num">⑤</span><span>'정숙'이 바느질할 때 나는 사각거리는 마른 소리는 민우의 지적 태도를 자극하는 매개체가 되어, 민우가 만년필을 쥐고 시대적 모순에 저항하는 문장을 집필하도록 유도한다.</span></div>
+    </div>
+  </div>
+
+  <div class="question-block" id="q6">
+    <div class="q-header">
+      <span class="q-number">6.</span>
+      <span class="q-text">밑줄 친 [A]에 나타난 '민우'의 의도나 심리로 가장 적절한 것은?</span>
+      <span class="q-badge">3점</span>
+    </div>
+    <div class="choices">
+      <div class="choice" onclick="selectChoice(this, 6, 1)"><span class="choice-num">①</span><span>아내의 질문에 명시적인 답변을 피함으로써, 지조를 지키기 위한 자신의 학문적 집필 작업을 방해받고 싶지 않음을 완곡하게 표현한 것이다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 6, 2)"><span class="choice-num">②</span><span>잉크가 말라붙은 만년필로 글을 쓰려는 행위가 식민지의 엄혹한 현실이나 가족의 빈곤을 해결하는 데 아무런 힘이 되지 못한다는 무력감의 시인이자 단념이다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 6, 3)"><span class="choice-num">③</span><span>자신에게 현실 타협을 권유하고 떠난 진석의 주장이 옳았음을 인정하고, 총독부 기관지에 참여하기 위해 기존의 신념을 꺾으려는 심리적 결단이다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 6, 4)"><span class="choice-num">④</span><span>밤샘 작업을 염려하는 아내를 안심시키기 위해, 이제 서재에서의 고민을 끝내고 세상 밖으로 나가 적극적인 사회 운동을 전개하겠다는 의지를 과시한 것이다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 6, 5)"><span class="choice-num">⑤</span><span>날카로운 금속음을 의도적으로 유도하여 방 안의 정적을 깨뜨림으로써, 가난에 대해 은근한 불만을 표출하는 아내의 기세를 제압하고 지식인으로서의 가부장적 권위를 확인시키고자 한 것이다.</span></div>
+    </div>
+  </div>
+
+  <div class="question-block" id="q7">
+    <div class="q-header">
+      <span class="q-number">7.</span>
+      <span class="q-text">다음 &lt;보기&gt;를 바탕으로 윗글을 감상한 내용으로 가장 적절하지 않은 것은?</span>
+      <span class="q-badge">3점</span>
+    </div>
+    <div class="bogi-box">
+      <div class="bogi-label">보 기</div>
+      1930년대 일제강점기는 식민지 통제와 사상 검열의 강화로 인해 조선 지식인들의 입지가 극도로 위축되었던 시기이다. 근대적 학문과 이상을 학습한 유학파 지식인들은 이를 현실에 실천할 수 없는 식민지 체제의 장벽 앞에서 극심한 자괴감과 무기력증을 겪었다. 이들은 변절을 요구하는 외부의 유혹 속에서 양심과 지조라는 내적 가치를 고수하려 하지만, 그것이 당장 가족의 생계나 실질적인 저항으로 이어지지 못할 때 스스로를 '무능한 존재'로 타자화하며 깊은 정신적 황폐화를 경험하게 된다.<br>작품 속 다양한 자연물과 소재들은 이처럼 일제의 폭력적 압박 속에서 이상을 상실하고 소외된 식민지 지식인의 내면을 시각적·청각적으로 대변한다.
+    </div>
+    <div class="choices">
+      <div class="choice" onclick="selectChoice(this, 7, 1)"><span class="choice-num">①</span><span>'잉크가 까맣게 말라붙은 펜촉'이 종이 위에서 거친 긁힘 소리만 내는 것은, 일제의 사상 검열과 압박 속에서 지식인의 언로(言路)가 차단당하고 사상적 실천력을 상실해 버린 무기력한 현실을 반영한 것이겠군.</span></div>
+      <div class="choice" onclick="selectChoice(this, 7, 2)"><span class="choice-num">②</span><span>'순사들의 야간 순찰 발소리'를 '쇠발톱 같은 소리'로 인식하며 어둠 속으로 몸을 숨기는 민우의 모습은, 식민지 조선인들을 일상적으로 감시하던 일제 무단 통치의 폭력성과 그에 압도당한 지식인의 위축된 심리를 보여주는군.</span></div>
+      <div class="choice" onclick="selectChoice(this, 7, 3)"><span class="choice-num">③</span><span>마당 구석에 '깨진 채 버려진 기와 조각'을 보며 자신을 닮았다고 생각하는 것은, 고등 학문을 닦았음에도 식민지 현실에서 아무런 사회적 쓸모를 찾지 못하고 파편화되어 버린 지식인의 비극적 자아인식을 드러내는군.</span></div>
+      <div class="choice" onclick="selectChoice(this, 7, 4)"><span class="choice-num">④</span><span>암흑 속에서 '가상의 묵흔이 시커먼 벌레처럼 기어 다니는 환각'을 느끼는 것은, 지조를 지키려 할수록 도리어 현실적 생계를 파탄 낸다는 자책감으로 인해 스스로를 추악하게 여기게 되는 지식인의 정신적 황폐화를 시각화한 것이겠군.</span></div>
+      <div class="choice" onclick="selectChoice(this, 7, 5)"><span class="choice-num">⑤</span><span>'시리도록 맑은 밤하늘'에 '차가운 얼음 조각처럼 박혀 지상을 내려다보는 무수한 별들'은, 암담한 식민지 현실에 갇힌 민우에게 초월적 구원의 가능성을 제시하며 시대적 고통을 극복하도록 격려하는 자연의 생명력을 상징하는군.</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"><hr><span class="sd-label">세 번째 지문</span><hr></div>
+  <div class="passage-block">
+    <div class="passage-header">
+      <span class="passage-range">[8 – 10] 다음 글을 읽고 물음에 답하시오.</span>
+      <span class="passage-title">창작 소설 · 동결 건조된 방</span>
+    </div>
+    <div class="passage-body">
+      <p>냉장고가 거친 숨을 몰아쉬며 낮게 웅얼거렸다. 진수는 식탁 의자에 앉아 디지털벽시계의 빨간 숫자가 바뀌는 모양을 가만히 응시했다. 거실을 채운 미지근한 불빛은 가구들의 모서리를 무디게 깎아내고 있었다. 24시간 가동되는 보일러의 온기는 방 안을 데우기보다, 공기 중의 수분을 바싹 말려 서류 봉투처럼 퍼석하게 만들 뿐이었다. 식탁 위에는 일주일 전에 사다 둔 식빵 몇 조각이 투명한 비닐봉지 안에서 딱딱하게 굳어가고 있었다.</p>
+      <p>도어록의 전자음이 고요를 찢었다. 띠띡, 띠리릭. 기계적인 연결음 뒤에 철문이 무겁게 열렸다. 어머니가 구두 뒷굽을 질질 끌며 현관으로 들어섰다. 그녀의 어깨는 밤새 절인 배추처럼 아래로 무겁게 처져 있었다.</p>
+      <p>어머니는 무거운 발걸음을 터벅터벅 옮겼다. 그 터벅터벅 소리가 진수의 귀를 후벼파는 듯했다. 그 소리는 마치 판타지 소설책에서나 읽던 괴물이 웅웅거리는 소리를 내며 돌격하는 모습처럼 보였다. 하지만, 진수가 공포를 느끼기엔 그 괴물은 매우 홀쭉하고 야위었다.</p>
+      <p>대형마트의 형광등 아래서 온종일 영수증을 찍어내던 손가락은 마디마디가 갈라져 있었다. 어머니는 가방을 바닥에 내던지듯 내려놓고는 거실 소파에 몸을 파묻었다. 방 안에는 식은 기름 냄새와 먼지 냄새가 훅 끼쳤다.</p>
+      <p class="dialogue">"형은 아직 안 들어왔니."</p>
+      <p>어머니의 갈라진 목소리가 거실 벽에 부딪혀 흩어졌다. 진수는 고개를 끄덕였다. 대답은 필요하지 않았다. 이 집에서 언어는 영수증에 적힌 숫자만큼이나 간결하고 건조해진 지 오래였다. 세 식구가 한 공간에 머무는 시간은 하루 중 몇 시간에 불과했고, 그마저도 각자의 노동과 피로를 수선하는 데 쓰였다. 식탁 한구석에 놓인 가계부에는 빨간 볼펜으로 그어진 숫자들이 빚더미처럼 빽빽하게 적혀 있었다. 그것은 이 가족을 묶어주는 유일한 끈이자, 서로를 죌 수 있는 밧줄이기도 했다.</p>
+      <div class="omission">[중략 부분의 줄거리] 심야 배달 아르바이트를 마치고 돌아온 형 영민이 독립할 방 보증금을 마련하기 위해 어머니에게 돈을 요구하며 말다툼이 벌어진다. 어머니는 당장 감당해야 할 대출 이자와 생활비를 이유로 거절하고, 영민은 더 이상 이 집에서 소모되고 싶지 않다며 자신의 짐을 챙겨 집을 나간다.</div>
+      <p>현관문이 쾅 하고 닫히는 소리가 아파트 복도를 타고 길게 메아리쳤다. 그 파동이 거실 유리창을 미세하게 흔들었다. 어머니는 소파에서 미동도 하지 않았다. 그녀의 시선은 영민이 방금 전까지 서 있던, 신발장 앞의 얼룩진 바닥에 붙박여 있었다.</p>
+      <p>진수는 어머니의 거친 숨소리가 점차 잦아드는 것을 들었다. 그것은 흐느낌이라기보다는, 태엽이 다 풀려가는 기계가 내는 마지막 마찰음에 가까웠다. 어머니는 자리에서 일어나 식탁으로 다가왔다. 그녀는 가계부를 펼치고 다시 볼펜을 쥐었다. 손가락 끝이 가볍게 떨리고 있었지만, 볼펜 촉이 종이를 누르는 힘은 단호했다. 사각사각, 숫자가 더해지고 빼지는 소리만이 방 안을 채웠다. 아들이 떠난 자리에 남은 공백마저도 감당해야 할 지출과 수입의 역학 관계로 환산되는 순간이었다. 어머니의 눈동자에는 피로와 함께 지독한 냉소의 빛이 스쳤다.</p>
+      <p>진수는 자리에서 일어나 베란다 창문 앞으로 걸어갔다. 창밖으로 내다보이는 거대한 아파트 단지는 수천 개의 네모난 불빛을 내뿜고 있었다. 그것은 거대한 벌집 같기도 했고, 정밀하게 짜인 회로 기판 같기도 했다. 그 불빛 하나하나가 저마다의 비용을 지불하며 간신히 매달려 있는 것처럼 보였다. 혈연이라는 조밀한 감정의 연대는 거대한 자본의 톱니바퀴 아래서 아주 쉽게 으스러지고 파편화되었다.</p>
+      <p>방 안으로 돌아보았을 때, 어머니는 이미 불을 끈 채 안방으로 들어가 버린 뒤였다. 거실에는 다시 냉장고의 웅얼거림과 디지털시계의 붉은 빛만이 남았다. 진수는 식탁 위에 덩그러니 놓인, 영민이 쓰던 낡은 머그잔을 바라보았다. 잔 속에는 온기가 가신 검은 커피 찌꺼기가 바싹 말라붙어 있었다. 진수는 손을 뻗어 그 차가운 사기잔을 감싸 쥐었다. 손끝으로 전해지는 온도는 방 안의 어떤 가구와도 다름없이 차가웠다. 이 집은 더 이상 가정이 아니었다. 그것은 각자의 생존을 위해 잠시 거쳐 가는, 임대료가 비싼 대피소에 불과했다.</p>
+    </div>
+    <div class="passage-source">— 창작 소설, 「동결 건조된 방」</div>
+  </div>
+
+  <div class="question-block" id="q8">
+    <div class="q-header">
+      <span class="q-number">8.</span>
+      <span class="q-text">윗글의 서술상 특징 및 표현 효과에 대한 설명으로 가장 적절한 것은?</span>
+    </div>
+    <div class="choices">
+      <div class="choice" onclick="selectChoice(this, 8, 1)"><span class="choice-num">①</span><span>일상적 공간을 기계적이고 메마른 감각적 심상으로 묘사하여, 인물들이 처한 삭막한 현실과 정서적 고립감을 구체화하고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 8, 2)"><span class="choice-num">②</span><span>외부 사건의 전개 과정에 맞추어 서술자를 교체함으로써, 동일한 인물 간의 갈등을 바라보는 다각적인 시선을 입체적으로 드러내고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 8, 3)"><span class="choice-num">③</span><span>인물의 잦은 과거 회상을 삽입하여, 현재의 가난과 가족 간의 불화가 시작된 근원적인 배경을 인과적으로 규명하고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 8, 4)"><span class="choice-num">④</span><span>인물 간의 대화를 배제하고 서술자의 전지적 논평만을 활용하여, 자본주의 사회 구조적 모순에 대한 비판적 거리두기를 유도하고 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 8, 5)"><span class="choice-num">⑤</span><span>서정적이고 토속적인 배경 묘사를 통해 비극적인 사건의 분위기를 환기하고, 인물이 처한 부정적 상황을 역설적으로 강조하고 있다.</span></div>
+    </div>
+  </div>
+
+  <div class="question-block" id="q9">
+    <div class="q-header">
+      <span class="q-number">9.</span>
+      <span class="q-text">윗글을 바탕으로 인물의 심리 및 태도를 이해한 내용으로 가장 적절하지 않은 것은?</span>
+      <span class="q-badge">3점</span>
+    </div>
+    <div class="choices">
+      <div class="choice" onclick="selectChoice(this, 9, 1)"><span class="choice-num">①</span><span>진수가 이 집에서의 언어를 '영수증에 적힌 숫자만큼이나 간결하고 건조해진 지 오래'라고 인식하는 것에서, 생존을 위한 노동에 매몰되어 서로에게 따뜻한 감정을 건네지 못하는 가족들의 소외된 내면을 읽을 수 있다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 9, 2)"><span class="choice-num">②</span><span>영민이 떠난 직후 어머니의 숨소리를 '태엽이 다 풀려가는 기계가 내는 마지막 마찰음'에 비유한 것은, 아들과의 결별이 주는 정신적 충격과 쉼 없는 노동으로 인해 인간적 활력과 감정이 고갈된 상태를 암시한다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 9, 3)"><span class="choice-num">③</span><span>어머니가 아들이 떠난 직후 단호하게 가계부를 펼치고 숫자를 더하고 빼는 행동은, 아들의 가출이 가져올 경제적 타격을 예측하여 영민에게 독립 자금을 남몰래 보태주려는 애틋한 모성애를 함축한다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 9, 4)"><span class="choice-num">④</span><span>진수가 밤하늘의 아파트 단지 불빛들을 보며 '저마다의 비용을 지불하며 간신히 매달려 있는 것'으로 바라보는 것에서, 자본의 시스템 속에서 생존을 유지하기 위해 위태롭게 분투하는 현대인들을 향한 관찰자적 시선이 드러난다.</span></div>
+      <div class="choice" onclick="selectChoice(this, 9, 5)"><span class="choice-num">⑤</span><span>영민이 쓰던 차가운 머그잔을 감싸 쥐며 진수가 '이 집은 더 이상 가정이 아니다'라고 결론짓는 대목은, 혈연의 연대가 깨어지고 생존을 위한 최소한의 피난처로 전락한 공간에 대한 자각과 씁쓸함을 보여준다.</span></div>
+    </div>
+  </div>
+
+  <div class="question-block" id="q10">
+    <div class="q-header">
+      <span class="q-number">10.</span>
+      <span class="q-text">다음 &lt;보기&gt;를 바탕으로 윗글을 감상한 내용으로 가장 적절하지 않은 것은?</span>
+      <span class="q-badge">3점</span>
+    </div>
+    <div class="bogi-box">
+      <div class="bogi-label">보 기</div>
+      현대 자본주의 사회에서 '가정'은 더 이상 무조건적인 정서적 안식처나 끈끈한 혈연 공동체로만 기능하지 못한다. 거대한 자본의 문법과 생존 비용의 압박은 가정 내부로 깊숙이 침투하여, 가족 구성원 간의 관계마저 손익과 계산의 역학 관계로 재편한다.<br>이 소설에서 핵심적인 객관적 상관물로 기능하는 <strong>'빨간 볼펜으로 적힌 가계부'</strong>는 이러한 자본주의 논리에 따른 '가족성의 해체'를 집약적으로 보여주는 소재이다. 가계부 속 숫자는 파편화된 가족을 경제적 운명공동체라는 명목으로 간신히 묶어두는 결속의 '끈'인 동시에, 구성원 각자의 주체적 삶과 정서적 연대를 옥죄는 생존의 '밧줄'이 된다.<br>인물들은 이 밧줄에서 벗어나려 몸부림치거나(독립 요구), 혹은 그 규칙에 철저히 순응하며(냉소적 계산) 자본의 톱니바퀴 아래서 으스러져 가는 가족성의 비극을 증명한다.
+    </div>
+    <div class="choices">
+      <div class="choice" onclick="selectChoice(this, 10, 1)"><span class="choice-num">①</span><span>가계부의 숫자들이 이 가족을 묶어주는 '유일한 끈'이라고 표현된 것은, 정서적 유대감이 사라진 자리에 오직 '경제적 이해관계와 부채'만이 가족을 간신히 결속시키고 있는 자본주의적 가정이 지닌 쓸쓸한 단면을 말해주는군.</span></div>
+      <div class="choice" onclick="selectChoice(this, 10, 2)"><span class="choice-num">②</span><span>가계부가 서로를 죌 수 있는 '밧줄'이 되기도 한다는 것은, 당장 감당해야 할 대출 이자와 생활비라는 경제적 압박이 가족 구성원들로 하여금 서로의 자유나 독립적인 선택을 제한하고 억압하는 굴레로 작용함을 뜻하는군.</span></div>
+      <div class="choice" onclick="selectChoice(this, 10, 3)"><span class="choice-num">③</span><span>영민이 '더 이상 이 집에서 소모되고 싶지 않다'며 자신의 짐을 챙겨 집을 나가는 행위는, 자본의 톱니바퀴와도 같은 가정의 경제적 압박(밧줄)으로부터 벗어나 자신의 주체적인 삶을 찾으려는 인물의 몸부림으로 볼 수 있겠군.</span></div>
+      <div class="choice" onclick="selectChoice(this, 10, 4)"><span class="choice-num">④</span><span>영민이 떠난 공백을 마주한 어머니가 가계부의 숫자를 단호하게 더하고 빼는 행위는, 가족 구성원의 이탈이라는 감정적 충격마저도 자본의 문법에 순응하여 지출과 수입의 경제적 수치로 환산해 내는 냉혹한 현실을 보여주는군.</span></div>
+      <div class="choice" onclick="selectChoice(this, 10, 5)"><span class="choice-num">⑤</span><span>어머니가 가계부를 향해 '볼펜 촉이 종이를 누르는 힘은 단호했다'고 서술한 것은, 경제적 핍박으로 해체 위기에 처한 가족성을 자신의 주체적인 노력으로 원상태로 복원하고야 말겠다는 어머니의 강인한 극복 의지를 형상화한 것이겠군.</span></div>
+    </div>
+  </div>
+
+  <button class="check-btn" onclick="checkAnswers()">채점하기</button>
+  <div id="score-area" style="margin-top:24px;"></div>
+
+</div>
+</div><div id="tab-answer" class="panel">
+<div class="container">
+
+  <div class="answer-sheet">
+    <h2>정 답 표</h2>
+    <div class="answer-grid">
+      <div class="answer-card"><div class="ac-num">1번</div><div class="ac-answer">②</div><div class="ac-score">2점</div></div>
+      <div class="answer-card"><div class="ac-num">2번</div><div class="ac-answer">③</div><div class="ac-score">2점</div></div>
+      <div class="answer-card"><div class="ac-num">3번</div><div class="ac-answer">④</div><div class="ac-score">3점</div></div>
+      <div class="answer-card"><div class="ac-num">4번</div><div class="ac-answer">①</div><div class="ac-score">2점</div></div>
+      <div class="answer-card"><div class="ac-num">5번</div><div class="ac-answer">⑤</div><div class="ac-score">2점</div></div>
+      <div class="answer-card"><div class="ac-num">6번</div><div class="ac-answer">②</div><div class="ac-score">3점</div></div>
+      <div class="answer-card"><div class="ac-num">7번</div><div class="ac-answer">⑤</div><div class="ac-score">3점</div></div>
+      <div class="answer-card"><div class="ac-num">8번</div><div class="ac-answer">①</div><div class="ac-score">2점</div></div>
+      <div class="answer-card"><div class="ac-num">9번</div><div class="ac-answer">③</div><div class="ac-score">3점</div></div>
+      <div class="answer-card"><div class="ac-num">10번</div><div class="ac-answer">⑤</div><div class="ac-score">3점</div></div>
+    </div>
+  </div>
+
+  <div class="explanation-section">
+    <div class="exp-title">상세 해설 — 지문 1 「유리창 너머의 당신의 이름」</div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <span class="exp-q-num">1번</span>
+        <span class="exp-correct-badge">정답 ②</span>
+      </div>
+      <div class="exp-body">
+        <div class="exp-section-label">✔ 정답 해설</div>
+        <p>이 글은 외부의 풍경(강물, 흔들리는 불빛 등)을 통해 인물의 내면을 효과적으로 드러내고 있습니다. 윤호가 한강에서 '물결에 부서진 불빛들은 제 모습을 유지하지 못한 채 길게 늘어졌다'고 바라보는 장면은, 거대 도시(서울)에서 고유한 정체성을 잃어버리고 흔들리는 윤호 자신의 불안정한 내면 상태를 외부 풍경에 투영하여 형상화한 것입니다. 따라서 외부 풍경 묘사를 통해 내면적 방황을 보여준다는 ②가 가장 적절합니다.</p>
+        <div class="exp-section-label wrong-label">✗ 오답 해설</div>
+        <div class="choice-exp"><span class="cn">①</span><span>고향과 서울이라는 공간적 배경이 언급되기는 하나, 이를 통해 현실의 괴리를 '극복하려는 의지'를 강조하고 있다는 설명은 틀렸습니다. 윤호는 오히려 혼란과 무력감을 느끼고 있습니다.</span></div>
+        <div class="choice-exp"><span class="cn">③</span><span>이 작품의 전반부는 '윤호'라는 특정 인물의 시각에서 내면을 제한적으로 서술하며, 후반부는 1인칭으로 전환됩니다. 객관적으로 관찰한다는 설명은 틀렸습니다.</span></div>
+        <div class="choice-exp"><span class="cn">④</span><span>시각적 심상이 두드러지게 사용되었으나, 인물 간의 첨예한 갈등이나 극적 긴장감을 고조시키는 데 쓰인 것은 아닙니다.</span></div>
+        <div class="choice-exp"><span class="cn">⑤</span><span>장면 전환이 일부 있으나 잦다고 보기 어려우며, 과거 회상을 교차하여 성격 변화의 계기를 밝히는 서술 방식은 사용되지 않았습니다.</span></div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <span class="exp-q-num">2번</span>
+        <span class="exp-correct-badge">정답 ③</span>
+      </div>
+      <div class="exp-body">
+        <div class="exp-section-label">✔ 정답 해설</div>
+        <p>윤호가 수진에게 '잘 모르겠어'라고 대답한 것은 경쟁이 두려워서 기획안을 숨기려는 의도가 아닙니다. 이는 '기회라는 말이 낯설게 들렸다', '무엇을 넣어야 할지 모르는 채로' 등의 서술에서 알 수 있듯, 사회가 요구하는 경쟁적 삶에 동화되지 못하고 방황하는 근원적 혼란에서 비롯된 것입니다. 따라서 의도적 은폐로 해석한 ③은 적절하지 않습니다.</p>
+        <div class="exp-section-label wrong-label">✗ 오답 해설</div>
+        <div class="choice-exp"><span class="cn">①</span><span>'자신의 대답이 무엇을 의미하는지 알 수 없었다'는 서술을 통해 기계적인 동조 속에서 겪는 소외감을 정확히 추론할 수 있습니다.</span></div>
+        <div class="choice-exp"><span class="cn">②</span><span>확고해 보이는 포스터 속 인물들과 대비되며, 주체성 상실과 공허함을 바르게 짚었습니다.</span></div>
+        <div class="choice-exp"><span class="cn">④</span><span>회사에서 요구하는 기획이 아닌 겉도는 사람들의 이야기를 적은 것은 잃어버린 자아를 탐색하는 행위로 적절합니다.</span></div>
+        <div class="choice-exp"><span class="cn">⑤</span><span>'이름 대신 역할로 불리는 사람들'에 대한 성찰 직후 자신의 이름을 적는 것은 주체적 자아를 확인하려는 행위입니다.</span></div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <span class="exp-q-num">3번</span>
+        <span class="exp-correct-badge">정답 ④</span>
+      </div>
+      <div class="exp-body">
+        <div class="exp-section-label">✔ 정답 해설</div>
+        <p>&lt;보기&gt;에 따르면 '깨진 거울'과 '파편'은 '온전한 모습을 잃고 파괴된 자아의 불안정성과 소외 의식을 시각적으로 형상화'하는 객관적 상관물입니다. 그런데 그동안 자기에 대한 거부감을 느끼고 있다는 ④의 해석은 &lt;보기&gt;에 제시된 내용이 아닐 뿐더러, 지문에서 자기에 대한 거부감을 찾을 수 없기 때문에 적절하지 않습니다.</p>
+        <div class="exp-section-label wrong-label">✗ 오답(적절한 감상) 확인</div>
+        <div class="choice-exp correct-exp"><span class="cn">①</span><span>심리적 거리감을 3인칭 서술의 이유로 정확히 연결하여 감상했습니다.</span></div>
+        <div class="choice-exp correct-exp"><span class="cn">②</span><span>기둥의 일렁임은 파괴된 자아의 불안정성을 보여주는 객관적 상관물이라는 해석으로 적절합니다.</span></div>
+        <div class="choice-exp correct-exp"><span class="cn">③</span><span>타자화되어 있던 자아를 마주하게 되는 충격적 자각의 순간이라는 설명과 올바르게 연결했습니다.</span></div>
+        <div class="choice-exp correct-exp"><span class="cn">⑤</span><span>뒤집어진 자신의 모습을 낯설게 느끼는 것은 자아 분열과 소외 의식이 구체화된 장면으로 적절합니다.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="explanation-section">
+    <div class="exp-title">상세 해설 — 지문 2 「파묵(破墨)의 겨울」</div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <span class="exp-q-num">4번</span>
+        <span class="exp-correct-badge">정답 ①</span>
+      </div>
+      <div class="exp-body">
+        <div class="exp-section-label">✔ 정답 해설</div>
+        <p>이 글은 주인공 '민우'의 시선을 따라 전개됩니다. 무덤처럼 위태롭게 쌓인 법학 서적, 거친 소리만 내는 만년필, 얼음 조각 같은 별들, 버려진 기와 조각 등 외부 배경과 소재들은 모두 식민지 현실에서 무력감을 느끼는 지식인의 황폐하고 암담한 내면과 부정적 상황을 투영하고 있습니다. 따라서 ①이 가장 적절합니다.</p>
+        <div class="exp-section-label wrong-label">✗ 오답 해설</div>
+        <div class="choice-exp"><span class="cn">②</span><span>청각적 심상이 쓰였으나 토속적이고 서정적인 분위기와는 무관하며, 비극성을 오히려 심화하고 있습니다.</span></div>
+        <div class="choice-exp"><span class="cn">③</span><span>대화보다는 인물의 독백적 사유와 서술자의 심리 묘사가 중심이며, 대화 중심으로 사건이 전개되지 않습니다.</span></div>
+        <div class="choice-exp"><span class="cn">④</span><span>공간이 이동하지만 서술자는 작품 밖의 전지적 서술자로 일관되게 유지됩니다.</span></div>
+        <div class="choice-exp"><span class="cn">⑤</span><span>유학 시절 이력을 요약적 제시를 통해 입체적으로 분석하는 서술은 사용되지 않았습니다.</span></div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <span class="exp-q-num">5번</span>
+        <span class="exp-correct-badge">정답 ⑤</span>
+      </div>
+      <div class="exp-body">
+        <div class="exp-section-label">✔ 정답 해설</div>
+        <p>정숙의 바느질 소리에 대해 지문에서는 "그 소리가 가슴을 긁어내리는 것 같아 애써 시선을 돌려" 만년필을 쥐었다고 서술합니다. 즉, 그 소리는 아내를 마주하는 고통을 주어 시선을 회피하게 만드는 원인일 뿐, 민우에게 저항의 문장을 쓰도록 독려하는 자극제가 아닙니다. 뒤이어 단 한 줄도 쓰지 못한다는 점에서도 ⑤는 완전히 잘못된 해석입니다.</p>
+        <div class="exp-section-label wrong-label">✗ 오답 해설</div>
+        <div class="choice-exp"><span class="cn">①</span><span>터진 손가락을 보며 고통을 느끼고 '처자식을 굶기면서도'라는 구절을 통해 부채감을 명확히 확인할 수 있습니다.</span></div>
+        <div class="choice-exp"><span class="cn">②</span><span>"원망도 기댓값도 섞이지 않은 마른 바람 같은 물음"이라고 직접 서술하고 있습니다.</span></div>
+        <div class="choice-exp"><span class="cn">③</span><span>쓸모없어진 학문을 마주하는 지식인의 자괴감을 바르게 추론했습니다.</span></div>
+        <div class="choice-exp"><span class="cn">④</span><span>무능을 감추기 위한 거적때기일지도 모른다고 자책하는 대목에서 내적 균열과 결부할 수 있습니다.</span></div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <span class="exp-q-num">6번</span>
+        <span class="exp-correct-badge">정답 ②</span>
+      </div>
+      <div class="exp-body">
+        <div class="exp-section-label">✔ 정답 해설</div>
+        <p>민우의 만년필은 거친 긁힘 소리만 낼 뿐이었고, 그가 배운 정의의 이론은 땔감만도 못한 고철에 불과했습니다. 아내의 질문에 대답 대신 뚜껑을 닫은 것은, 지식인으로서 세상에 내놓을 문장이 단 한 줄도 없으며 자신의 문장이 주린 배를 채워줄 밥이 되지 못한다는 뼈아픈 무력감을 인정하고 글쓰기를 멈추는 행위입니다. 따라서 ②가 정답입니다.</p>
+        <div class="exp-section-label wrong-label">✗ 오답 해설</div>
+        <div class="choice-exp"><span class="cn">①</span><span>집필 작업을 방해받지 않으려는 것이 아니라 쓸 수 있는 문장이 없어서 절망하고 있습니다.</span></div>
+        <div class="choice-exp"><span class="cn">③</span><span>스스로를 자책할지언정 신념을 꺾고 총독부에 협조하기로 결단한 것은 아닙니다.</span></div>
+        <div class="choice-exp"><span class="cn">④</span><span>적극적인 사회 운동을 결심하는 진취적인 의도는 지문에 나타나지 않습니다.</span></div>
+        <div class="choice-exp"><span class="cn">⑤</span><span>가부장적 권위를 내세우거나 아내를 제압하기 위해 의도적으로 낸 소리가 아닙니다.</span></div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <span class="exp-q-num">7번</span>
+        <span class="exp-correct-badge">정답 ⑤</span>
+      </div>
+      <div class="exp-body">
+        <div class="exp-section-label">✔ 정답 해설</div>
+        <p>지문에서 밤하늘의 별들은 민우에게 위로나 구원을 주는 존재가 아닙니다. 얼음 조각처럼 지상을 가혹하게 내리누르고 있는 냉담하고 차가운 세계의 모습을 시각화한 것으로, 민우의 고립감을 심화하는 배경입니다. 이를 '초월적 구원의 가능성'이나 '극복을 격려하는 생명력'으로 해석한 ⑤는 완전히 상치되는 오독입니다.</p>
+        <div class="exp-section-label wrong-label">✗ 오답(적절한 감상) 확인</div>
+        <div class="choice-exp correct-exp"><span class="cn">①</span><span>사상 검열과 실천력 상실을 말라붙은 펜촉과 유기적으로 연결하여 적절히 감상했습니다.</span></div>
+        <div class="choice-exp correct-exp"><span class="cn">②</span><span>순사의 발소리에 위축되는 것은 일제의 폭력성과 지식인의 위축을 대변하는 적절한 해석입니다.</span></div>
+        <div class="choice-exp correct-exp"><span class="cn">③</span><span>버려진 기와 조각은 사회적 쓸모를 잃은 자괴감과 파편화를 보여주는 객관적 상관물입니다.</span></div>
+        <div class="choice-exp correct-exp"><span class="cn">④</span><span>벌레 같은 묵흔의 환각은 지조를 지킬수록 생계가 파탄나는 자책감에 의한 정신적 황폐화를 잘 설명합니다.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="explanation-section">
+    <div class="exp-title">상세 해설 — 지문 3 「동결 건조된 방」</div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <span class="exp-q-num">8번</span>
+        <span class="exp-correct-badge">정답 ①</span>
+      </div>
+      <div class="exp-body">
+        <div class="exp-section-label">✔ 정답 해설</div>
+        <p>이 글은 냉장고, 디지털시계, 보일러 등 가정 내 일상적 소재들을 메마르고 기계적인 이미지로 묘사하고 있습니다. 공기를 '서류 봉투처럼 퍼석하게' 만든다는 등의 표현은 따뜻해야 할 가정 공간이 자본의 건조한 문법에 물들어 황폐해진 상태를 감각적으로 구체화하며, 비극적 현실과 정서적 고립감을 효과적으로 드러냅니다.</p>
+        <div class="exp-section-label wrong-label">✗ 오답 해설</div>
+        <div class="choice-exp"><span class="cn">②</span><span>3인칭 제한적 시점(진수의 시선)을 일관되게 유지하며 서술자가 교체되지 않습니다.</span></div>
+        <div class="choice-exp"><span class="cn">③</span><span>인물의 잦은 과거 회상을 통해 인과적으로 규명하는 방식은 취하고 있지 않습니다.</span></div>
+        <div class="choice-exp"><span class="cn">④</span><span>중략 부분에 영민과 어머니의 말다툼이 명시되어 대화를 완전히 배제했다는 설명은 틀렸습니다.</span></div>
+        <div class="choice-exp"><span class="cn">⑤</span><span>도시의 삭막한 아파트와 마트 등이 배경이므로 서정적이고 토속적이라는 진술은 맞지 않습니다.</span></div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <span class="exp-q-num">9번</span>
+        <span class="exp-correct-badge">정답 ③</span>
+      </div>
+      <div class="exp-body">
+        <div class="exp-section-label">✔ 정답 해설</div>
+        <p>영민이 떠난 직후 어머니가 가계부 숫자를 계산하는 것은 아들의 이탈조차 '당장 감당해야 할 지출과 수입의 역학 관계'라는 냉혹한 생계 문제로 환산해야만 하는 자본주의적 생존 방식을 보여줍니다. 지독한 냉소의 빛이 스쳤다고 명시된 대목을 '숨겨진 모성애'로 해석하는 것은 통념에 기댄 전형적인 오독입니다.</p>
+        <div class="exp-section-label wrong-label">✗ 오답 해설</div>
+        <div class="choice-exp"><span class="cn">①</span><span>정서가 메마른 소통의 부재를 정확히 짚어냈습니다.</span></div>
+        <div class="choice-exp"><span class="cn">②</span><span>마찰음 같은 숨소리에서 인간성 상실과 감정 고갈의 비극을 적절히 추론했습니다.</span></div>
+        <div class="choice-exp"><span class="cn">④</span><span>비용을 지불하며 간신히 매달린 불빛을 통해 구조를 꿰뚫어 보는 비판적 시선이 드러납니다.</span></div>
+        <div class="choice-exp"><span class="cn">⑤</span><span>차가운 머그잔을 통해 안식처의 기능을 잃고 대피소로 전락한 공간의 의미를 바르게 자각하고 있습니다.</span></div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-card-header">
+        <span class="exp-q-num">10번</span>
+        <span class="exp-correct-badge">정답 ⑤</span>
+      </div>
+      <div class="exp-body">
+        <div class="exp-section-label">✔ 정답 해설</div>
+        <p>&lt;보기&gt;의 관점에 따르면 가계부는 자본주의 논리에 따른 '가족성의 해체'를 보여주는 소재입니다. 어머니가 단호하게 계산하는 것은 으스러져 가는 가족성을 붙잡거나 원상태로 복원하려는 강인한 극복 의지가 아니라, 정서적 자아를 지운 채 자본의 수치 체계에 완전히 종속된 냉혹한 현실 순응을 증명하는 비극적 대목입니다.</p>
+        <div class="exp-section-label wrong-label">✗ 오답(적절한 감상) 확인</div>
+        <div class="choice-exp correct-exp"><span class="cn">①</span><span>오직 경제적 이해관계만이 묶어두는 끈이라는 의미를 정확히 파악했습니다.</span></div>
+        <div class="choice-exp correct-exp"><span class="cn">②</span><span>생계 압박이 서로의 자유를 제한하는 '밧줄'이라는 개념과 올바르게 연결했습니다.</span></div>
+        <div class="choice-exp correct-exp"><span class="cn">③</span><span>집을 나가는 행위는 밧줄에서 벗어나 주체적 삶을 찾으려는 몸부림으로 적절한 해석입니다.</span></div>
+        <div class="choice-exp correct-exp"><span class="cn">④</span><span>감정적 충격마저 경제적 수치로 환산하는 행동을 자본의 문법과 정확하게 일치시켜 감상했습니다.</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div><script>
+  // ── 탭 전환 ──
+  function showTab(name) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    document.querySelector(`.tab-btn[onclick="showTab('${name}')"]`).classList.add('active');
+  }
+
+  // ── 정답 데이터 ──
+  const ANSWERS = { 1:2, 2:3, 3:4, 4:1, 5:5, 6:2, 7:5, 8:1, 9:3, 10:5 };
+  const SCORES  = { 1:2, 2:2, 3:3, 4:2, 5:2, 6:3, 7:3, 8:2, 9:3, 10:3 };
+  const userAnswers = {};
+
+  function selectChoice(el, qNum, choiceNum) {
+    const block = document.getElementById('q' + qNum);
+    block.querySelectorAll('.choice').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    userAnswers[qNum] = choiceNum;
+  }
+
+  function checkAnswers() {
+    const MAX_SCORE = 25;
+    let totalScore = 0, correct = 0;
+
+    for (let q = 1; q <= 10; q++) {
+      const block = document.getElementById('q' + q);
+      const choices = block.querySelectorAll('.choice');
+      const correctIdx = ANSWERS[q] - 1;
+      const userIdx = (userAnswers[q] != null) ? userAnswers[q] - 1 : -1;
+
+      choices.forEach(c => c.classList.remove('correct-answer', 'wrong-selected'));
+      choices[correctIdx].classList.add('correct-answer');
+
+      if (userIdx >= 0 && userIdx !== correctIdx) {
+        choices[userIdx].classList.add('wrong-selected');
+      }
+      if (userAnswers[q] === ANSWERS[q]) {
+        totalScore += SCORES[q];
+        correct++;
+      }
+    }
+
+    const area = document.getElementById('score-area');
+    const pct = Math.round(totalScore / MAX_SCORE * 100);
+    area.innerHTML = `
+      <div class="score-display">
+        <div>
+          <div class="sd-label">총점</div>
+          <div class="sd-main">${totalScore} / ${MAX_SCORE}점</div>
+        </div>
+        <div>
+          <div class="sd-label">정답률</div>
+          <div class="sd-main">${pct}%</div>
+        </div>
+        <div class="sd-detail">${correct}문제 정답 · ${10 - correct}문제 오답</div>
+      </div>`;
+    area.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>
 </body>
 </html>
