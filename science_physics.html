@@ -1,49 +1,1010 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>통합과학 물리 학습</title>
-  <style>
-    :root{color-scheme:light;font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif}
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{min-height:100vh;background:#f6f8fc;color:#0f172a;padding:24px}
-    main{max-width:860px;margin:0 auto;display:grid;gap:16px}
-    section{border:1px solid #dbe3ef;border-radius:18px;background:#fff;padding:20px;box-shadow:0 12px 28px rgba(15,23,42,.08)}
-    .badge{display:inline-flex;align-items:center;gap:6px;margin-bottom:10px;border-radius:999px;background:#ecfeff;color:#0e7490;padding:7px 12px;font-size:.84rem;font-weight:900}
-    h1{font-size:clamp(1.45rem,4vw,2.2rem);line-height:1.25;letter-spacing:-.04em}
-    h2{margin-bottom:10px;color:#0e7490;font-size:1.05rem}
-    p,li{line-height:1.7;color:#334155}
-    ul{padding-left:1.2rem}
-    .back{display:inline-flex;width:max-content;align-items:center;gap:6px;color:#2563eb;text-decoration:none;font-weight:800}
-    .back:hover,.back:focus-visible{text-decoration:underline;outline:none}
-    @media (max-width:520px){body{padding:14px}section{padding:18px}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>통합과학1 — 역학 시스템과 중력의 작용</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #2563eb;
+  --primary-light: #eff6ff;
+  --green: #16a34a;
+  --green-light: #f0fdf4;
+  --purple: #7c3aed;
+  --purple-light: #f5f3ff;
+  --orange: #ea580c;
+  --orange-light: #fff7ed;
+  --teal: #0d9488;
+  --teal-light: #f0fdfa;
+  --rose: #e11d48;
+  --rose-light: #fff1f2;
+  --bg: #f8fafc;
+  --surface: #fff;
+  --border: #e2e8f0;
+  --text: #0f172a;
+  --text-sec: #475569;
+  --shadow: 0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);font-size:14.5px;line-height:1.75;}
+
+/* HEADER */
+.page-header{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--border);padding:10px 20px 0;}
+.subject-label{font-size:11px;letter-spacing:.13em;color:var(--text-sec);text-transform:uppercase;margin-bottom:2px;}
+.page-title{font-size:19px;font-weight:700;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.badge-unit{font-size:11.5px;font-weight:600;color:#fff;padding:2px 9px;border-radius:20px;background:var(--primary);}
+.tab-bar{display:flex;overflow-x:auto;scrollbar-width:none;gap:0;}
+.tab-bar::-webkit-scrollbar{display:none;}
+.tab-btn{padding:9px 22px 7px;border:none;background:transparent;font-family:'Noto Sans KR',sans-serif;font-size:13.5px;color:var(--text-sec);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:7px;transition:color .2s;}
+.tab-btn.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:700;}
+.tab-btn:hover:not(.active){color:var(--primary);border-bottom-color:#bfdbfe;}
+.tab-num{width:20px;height:20px;border-radius:50%;background:#f1f5f9;font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+.tab-btn.active .tab-num{background:var(--primary);color:#fff;}
+
+/* CONTENT */
+.content-wrap{max-width:980px;margin:0 auto;padding:28px 20px 100px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+.unit-banner{display:inline-flex;align-items:center;gap:8px;background:var(--primary-light);border:1px solid #bfdbfe;border-radius:8px;padding:6px 14px;font-size:12.5px;font-weight:700;color:var(--primary);margin-bottom:16px;}
+.unit-banner.rose{background:var(--rose-light);border-color:#fecdd3;color:var(--rose);}
+
+/* SECTION TITLES */
+.section-title{font-size:18px;font-weight:700;border-bottom:2px solid var(--primary);padding-bottom:7px;margin:30px 0 14px;display:flex;align-items:center;gap:7px;}
+.section-title:first-of-type{margin-top:0;}
+.section-title .icon{font-size:17px;}
+.section-title.rose{border-bottom-color:var(--rose);}
+.subsection-title{font-size:14.5px;font-weight:700;color:var(--primary);padding-left:10px;border-left:3px solid var(--primary);margin:20px 0 10px;}
+.subsection-title.rose{color:var(--rose);border-left-color:var(--rose);}
+.sub2-title{font-size:13px;font-weight:700;color:var(--text-sec);background:#f8fafc;padding:4px 10px;border-radius:6px;display:inline-block;margin:14px 0 8px;}
+
+/* BOXES */
+.def-box{background:var(--primary-light);border-left:4px solid var(--primary);border-radius:0 8px 8px 0;padding:12px 15px;font-size:14px;line-height:1.8;margin-bottom:11px;}
+.def-box strong{color:var(--primary);}
+.green-box{background:var(--green-light);border-left:4px solid var(--green);border-radius:0 8px 8px 0;padding:12px 15px;font-size:14px;line-height:1.8;margin-bottom:11px;}
+.green-box strong{color:var(--green);}
+.purple-box{background:var(--purple-light);border-left:4px solid var(--purple);border-radius:0 8px 8px 0;padding:12px 15px;font-size:14px;line-height:1.8;margin-bottom:11px;}
+.purple-box strong{color:var(--purple);}
+.teal-box{background:var(--teal-light);border-left:4px solid var(--teal);border-radius:0 8px 8px 0;padding:12px 15px;font-size:14px;line-height:1.8;margin-bottom:11px;}
+.teal-box strong{color:var(--teal);}
+.orange-box{background:var(--orange-light);border-left:4px solid var(--orange);border-radius:0 8px 8px 0;padding:12px 15px;font-size:14px;line-height:1.8;margin-bottom:11px;}
+.orange-box strong{color:var(--orange);}
+.rose-box{background:var(--rose-light);border-left:4px solid var(--rose);border-radius:0 8px 8px 0;padding:12px 15px;font-size:14px;line-height:1.8;margin-bottom:11px;}
+.rose-box strong{color:var(--rose);}
+.note{background:#fefce8;border:1px solid #fde047;color:#713f12;border-radius:8px;padding:10px 14px;font-size:13px;line-height:1.65;margin-bottom:10px;}
+.tip{background:var(--green-light);border:1px solid #86efac;color:#14532d;border-radius:8px;padding:10px 14px;font-size:13px;line-height:1.65;margin-bottom:10px;}
+.warning{background:var(--rose-light);border:1px solid #fda4af;color:#9f1239;border-radius:8px;padding:10px 14px;font-size:13px;line-height:1.65;margin-bottom:10px;}
+
+/* GRID / CARDS */
+.factor-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:11px;}
+.factor-grid.three{grid-template-columns:1fr 1fr 1fr;}
+.factor-grid.four{grid-template-columns:1fr 1fr 1fr 1fr;}
+@media(max-width:680px){.factor-grid,.factor-grid.three,.factor-grid.four{grid-template-columns:1fr;}}
+.factor-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;box-shadow:var(--shadow);}
+.factor-card.blue{border-top:3px solid var(--primary);}
+.factor-card.green{border-top:3px solid var(--green);}
+.factor-card.purple{border-top:3px solid var(--purple);}
+.factor-card.orange{border-top:3px solid var(--orange);}
+.factor-card.teal{border-top:3px solid var(--teal);}
+.factor-card.rose{border-top:3px solid var(--rose);}
+.factor-card.gray{border-top:3px solid #94a3b8;}
+.factor-card h4{font-size:13.5px;font-weight:700;margin-bottom:7px;}
+.factor-card p,.factor-card li{font-size:13px;color:var(--text-sec);line-height:1.7;}
+.factor-card ul{padding-left:15px;}
+
+/* TABLE */
+.cmp-table{width:100%;border-collapse:collapse;border-radius:10px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:11px;font-size:13.5px;}
+.cmp-table thead{background:var(--primary);color:#fff;}
+.cmp-table th{padding:9px 13px;text-align:left;font-size:13px;}
+.cmp-table td{padding:9px 13px;border-bottom:1px solid var(--border);line-height:1.6;}
+.cmp-table tbody tr:nth-child(even){background:#f8fafc;}
+.cmp-table td:first-child{font-weight:600;color:var(--primary);white-space:nowrap;}
+.rose-th thead{background:var(--rose);}
+.rose-th td:first-child{color:var(--rose);}
+.green-th thead{background:var(--green);}
+.green-th td:first-child{color:var(--green);}
+.teal-th thead{background:var(--teal);}
+.teal-th td:first-child{color:var(--teal);}
+
+/* BADGE */
+.badge{padding:2px 9px;border-radius:20px;font-size:11.5px;font-weight:700;display:inline-block;margin:2px;}
+.badge-blue{background:#dbeafe;color:#1d4ed8;}
+.badge-green{background:#dcfce7;color:#15803d;}
+.badge-purple{background:#ede9fe;color:#6d28d9;}
+.badge-orange{background:#ffedd5;color:#c2410c;}
+.badge-teal{background:#ccfbf1;color:#0f766e;}
+.badge-rose{background:#ffe4e6;color:#be123c;}
+.badge-gray{background:#f1f5f9;color:#475569;}
+
+/* FLOW */
+.flow-row{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:11px;}
+.flow-item{background:var(--surface);border:1.5px solid var(--primary);border-radius:8px;padding:6px 13px;font-size:13px;font-weight:600;color:var(--primary);text-align:center;}
+.flow-item.green{border-color:var(--green);color:var(--green);}
+.flow-item.rose{border-color:var(--rose);color:var(--rose);}
+.flow-item.orange{border-color:var(--orange);color:var(--orange);}
+.flow-item.purple{border-color:var(--purple);color:var(--purple);}
+.flow-arrow{color:var(--text-sec);font-weight:700;font-size:16px;}
+
+/* RULE CARD */
+.rule-card{background:var(--surface);border:2px solid var(--primary);border-radius:12px;padding:14px 17px;margin-bottom:12px;box-shadow:var(--shadow);}
+.rule-card .rule-head{font-size:13.5px;font-weight:700;color:var(--primary);margin-bottom:8px;}
+.rule-card.rose{border-color:var(--rose);}
+.rule-card.rose .rule-head{color:var(--rose);}
+.rule-card.green{border-color:var(--green);}
+.rule-card.green .rule-head{color:var(--green);}
+.rule-card.purple{border-color:var(--purple);}
+.rule-card.purple .rule-head{color:var(--purple);}
+.rule-card.teal{border-color:var(--teal);}
+.rule-card.teal .rule-head{color:var(--teal);}
+.rule-card .rule-body{font-size:13.5px;line-height:1.8;color:var(--text);}
+
+/* FORMULA BOX */
+.formula-box{background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:16px 20px;margin:12px 0;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;}
+.formula-box.blue{border-color:var(--primary);}
+.formula-box.green{border-color:var(--green);}
+.formula-box.orange{border-color:var(--orange);}
+.formula-main{font-size:19px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px;}
+.formula-box.blue .formula-main{color:var(--primary);}
+.formula-box.green .formula-main{color:var(--green);}
+.formula-box.orange .formula-main{color:var(--orange);}
+.frac{display:inline-flex;flex-direction:column;align-items:center;font-size:15px;font-weight:700;line-height:1.3;vertical-align:middle;}
+.frac .frac-top{padding:0 6px 2px;}
+.frac .frac-bottom{padding:2px 6px 0;border-top:2px solid currentColor;}
+.formula-unit{background:#f1f5f9;color:var(--text-sec);font-size:12.5px;font-weight:700;padding:5px 13px;border-radius:8px;white-space:nowrap;}
+
+/* SVG diagram boxes */
+.diagram-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;box-shadow:var(--shadow);text-align:center;}
+.diagram-box svg{max-width:100%;height:auto;}
+.diagram-caption{font-size:12px;color:var(--text-sec);margin-top:8px;line-height:1.6;}
+.diagram-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:11px;}
+@media(max-width:680px){.diagram-grid{grid-template-columns:1fr;}}
+
+/* INFO LIST */
+.info-list{list-style:none;padding:0;margin-bottom:10px;}
+.info-list li{padding:7px 12px 7px 26px;position:relative;font-size:13.5px;line-height:1.65;border-bottom:1px solid #f1f5f9;}
+.info-list li::before{content:'▸';position:absolute;left:9px;color:var(--primary);font-weight:700;}
+.info-list.rose li::before{color:var(--rose);}
+
+.totop{position:fixed;bottom:28px;right:24px;width:42px;height:42px;border-radius:50%;background:var(--primary);color:#fff;border:none;font-size:17px;cursor:pointer;box-shadow:0 2px 8px rgba(37,99,235,.35);z-index:200;}
+
+/* QUIZ SECTION */
+.quiz-section{margin-top:34px;padding-top:22px;border-top:2px dashed var(--border);}
+.quiz-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;}
+.quiz-title{font-size:18px;font-weight:700;display:flex;align-items:center;gap:7px;}
+.quiz-title .icon{font-size:17px;}
+.scoreboard{display:flex;gap:8px;flex-wrap:wrap;}
+.score-chip{display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:12.5px;font-weight:700;background:#f1f5f9;color:var(--text-sec);}
+.score-chip .score-icon{font-size:13px;}
+.score-chip.ox{background:var(--primary-light);color:var(--primary);}
+.score-chip.mc{background:var(--green-light);color:var(--green);}
+.score-chip.hard{background:var(--purple-light);color:var(--purple);}
+
+.quiz-type-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.qtype-btn{flex:1;min-width:110px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 8px;border:2px solid var(--border);border-radius:10px;background:var(--surface);cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:.15s;}
+.qtype-btn .qtype-icon{font-size:18px;}
+.qtype-btn .qtype-label{font-size:13px;font-weight:700;color:var(--text);}
+.qtype-btn .qtype-count{font-size:11.5px;color:var(--text-sec);}
+.qtype-btn.active{border-color:var(--primary);background:var(--primary-light);}
+.qtype-btn.active .qtype-label{color:var(--primary);}
+.qtype-btn:hover:not(.active){border-color:#bfdbfe;}
+
+.q-progress-wrap{height:6px;border-radius:4px;background:#f1f5f9;margin-bottom:16px;overflow:hidden;}
+.q-progress-fill{height:100%;background:var(--primary);border-radius:4px;transition:width .3s;}
+
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:15px 17px;margin-bottom:12px;box-shadow:var(--shadow);scroll-margin-top:80px;}
+.q-card.answered-correct{border-color:#86efac;}
+.q-card.answered-wrong{border-color:#fda4af;}
+.q-meta{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.q-num{font-size:12px;font-weight:700;color:#fff;background:var(--primary);border-radius:6px;padding:2px 8px;}
+.q-difficulty{font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:20px;}
+.q-difficulty.diff-basic{background:var(--primary-light);color:var(--primary);}
+.q-difficulty.diff-mid{background:var(--green-light);color:var(--green);}
+.q-difficulty.diff-hard{background:var(--purple-light);color:var(--purple);}
+.q-text{font-size:14px;line-height:1.8;margin-bottom:12px;white-space:pre-line;font-weight:500;}
+
+.ox-row{display:flex;gap:10px;}
+.ox-btn{flex:1;padding:12px;border:2px solid var(--border);border-radius:10px;background:var(--surface);font-size:15px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;color:var(--text-sec);transition:.15s;}
+.ox-btn:hover:not(:disabled){border-color:var(--primary);color:var(--primary);}
+.ox-btn:disabled{cursor:default;}
+.ox-btn.correct-picked{border-color:var(--green);background:var(--green-light);color:var(--green);}
+.ox-btn.wrong-picked{border-color:var(--rose);background:var(--rose-light);color:var(--rose);}
+.ox-btn.correct-reveal{border-color:var(--green);background:var(--green-light);color:var(--green);}
+
+.mc-options{display:flex;flex-direction:column;gap:8px;}
+.mc-opt{display:flex;align-items:center;gap:10px;padding:10px 13px;border:2px solid var(--border);border-radius:10px;background:var(--surface);cursor:pointer;font-family:'Noto Sans KR',sans-serif;font-size:13.5px;text-align:left;color:var(--text);transition:.15s;width:100%;}
+.mc-opt:hover:not(:disabled){border-color:var(--primary);}
+.mc-opt:disabled{cursor:default;}
+.mc-opt-letter{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:#f1f5f9;color:var(--text-sec);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.mc-opt.correct{border-color:var(--green);background:var(--green-light);}
+.mc-opt.correct .mc-opt-letter{background:var(--green);color:#fff;}
+.mc-opt.wrong{border-color:var(--rose);background:var(--rose-light);}
+.mc-opt.wrong .mc-opt-letter{background:var(--rose);color:#fff;}
+
+.q-feedback{margin-top:10px;padding:10px 13px;border-radius:8px;font-size:13px;line-height:1.65;}
+.q-feedback.correct{background:var(--green-light);color:#14532d;border:1px solid #86efac;}
+.q-feedback.wrong{background:var(--rose-light);color:#9f1239;border:1px solid #fda4af;}
+
+.quiz-result{background:var(--surface);border:2px solid var(--primary);border-radius:12px;padding:20px;text-align:center;box-shadow:var(--shadow);margin-bottom:14px;}
+.result-score{font-size:28px;font-weight:700;color:var(--primary);margin-bottom:4px;}
+.result-msg{font-size:13.5px;color:var(--text-sec);margin-bottom:16px;}
+.mini-bars{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;text-align:left;}
+.mini-bar-row{display:flex;align-items:center;gap:10px;}
+.mini-bar-label{font-size:12.5px;font-weight:700;width:54px;flex-shrink:0;}
+.mini-bar-track{flex:1;height:8px;border-radius:4px;background:#f1f5f9;overflow:hidden;}
+.mini-bar-fill{height:100%;border-radius:4px;}
+.mini-bar-fill.ox{background:var(--primary);}
+.mini-bar-fill.mc{background:var(--green);}
+.mini-bar-fill.hard{background:var(--purple);}
+.mini-bar-pct{font-size:12px;color:var(--text-sec);width:42px;text-align:right;flex-shrink:0;}
+.reset-btn{padding:9px 22px;border:none;border-radius:8px;background:var(--primary);color:#fff;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;}
+.reset-btn:hover{background:#1d4ed8;}
+
+@media(max-width:560px){.ox-row{flex-direction:column;}}
+</style>
 </head>
 <body>
-  <main>
-    <a class="back" href="./science_hub.html">← 과학 파트 선택으로 돌아가기</a>
-    <section>
-      <span class="badge">⚙️ 물리 파트</span>
-      <h1>통합과학 물리 학습</h1>
-      <p>핵심 개념을 먼저 확인하고, 그래프·자료 해석과 문제 적용 순서로 복습하세요.</p>
-    </section>
-    <section>
-      <h2>핵심 학습 주제</h2>
-      <ul>
-        <li>힘과 운동의 관계를 식·그래프·일상 사례로 연결하기</li>
-        <li>에너지 전환 과정에서 보존되는 양과 손실되는 양 구분하기</li>
-        <li>파동과 전자기 현상을 자료 해석 문제에 적용하기</li>
-      </ul>
-    </section>
-    <section>
-      <h2>오늘의 학습 루틴</h2>
-      <ul>
-        <li>공식에 들어가는 물리량의 의미와 단위를 먼저 정리하기</li>
-        <li>그래프의 기울기·넓이가 뜻하는 값을 표시하기</li>
-        <li>오답 문제는 조건, 사용 공식, 계산 실수로 나누어 복기하기</li>
-      </ul>
-    </section>
-  </main>
+
+<div class="page-header">
+  <div class="subject-label">통합과학1 · Ⅲ. 시스템과 상호작용</div>
+  <div class="page-title">2. 역학 시스템과 중력의 작용 <span class="badge-unit">교과서 122~133쪽</span></div>
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab(0)"><span class="tab-num">1</span>01 중력과 다양한 운동</button>
+    <button class="tab-btn" onclick="switchTab(1)"><span class="tab-num">2</span>02 충돌과 안전장치</button>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+<!-- ===== TAB 0: 01 중력의 작용과 다양한 운동 ===== -->
+<div class="tab-panel active" id="panel-0">
+  <div class="unit-banner">📘 01 중력의 작용과 다양한 운동 (교과서 122~127쪽)</div>
+
+  <!-- 1. 중력의 작용 -->
+  <div class="section-title"><span class="icon">🌍</span>1. 중력의 작용</div>
+  <div class="def-box">
+    <strong>중력</strong>: 질량을 가진 모든 물체 사이에 <strong>당기는 방향</strong>으로 작용하는 힘
+  </div>
+
+  <div class="factor-grid">
+    <div class="factor-card blue">
+      <h4>중력의 방향</h4>
+      <p>지구 중심 방향으로 작용 — 지구 표면에서는 <strong>지면에 수직인 방향</strong>으로 작용한다.</p>
+    </div>
+    <div class="factor-card purple">
+      <h4>중력의 크기</h4>
+      <p><strong>질량이 클수록</strong>, <strong>두 물체 사이의 거리가 가까울수록</strong> 크다.</p>
+    </div>
+  </div>
+
+  <div class="note">📌 <strong>지표 부근에서의 중력 = 무게</strong>. 질량 1 kg인 물체에 작용하는 중력(무게)의 크기는 약 <strong>9.8 N</strong>이다.</div>
+
+  <!-- 2. 중력을 받는 물체의 운동 -->
+  <div class="section-title"><span class="icon">⬇️</span>2. 중력을 받는 물체의 운동</div>
+
+  <div class="subsection-title">자유 낙하</div>
+  <div class="def-box">
+    <strong>자유 낙하</strong>: 물체에 <strong>중력만</strong> 작용할 때 물체가 아래로 떨어지는 운동
+  </div>
+  <div class="factor-grid">
+    <div class="factor-card teal">
+      <h4>① 속도</h4>
+      <p>일정하게 <strong>증가</strong>한다 (가속도 운동).</p>
+    </div>
+    <div class="factor-card teal">
+      <h4>② 가속도의 방향</h4>
+      <p>물체에 작용하는 <strong>중력의 방향과 같은 연직 방향</strong>이다.</p>
+    </div>
+  </div>
+
+  <div class="subsection-title">수평으로 던진 물체의 운동</div>
+  <div class="factor-grid">
+    <div class="factor-card blue">
+      <h4>수평 방향</h4>
+      <p>속도가 <strong>일정</strong>하다 → <strong>등속 직선 운동</strong></p>
+    </div>
+    <div class="factor-card rose">
+      <h4>연직 방향</h4>
+      <p><strong>자유 낙하와 같다</strong> → 속도가 일정하게 증가하는 가속도 운동</p>
+    </div>
+  </div>
+  <div class="tip">💡 수평으로 던진 물체는 <strong>수평 방향(등속) + 연직 방향(자유 낙하)</strong>의 운동이 합쳐진 것이다. 가속도의 방향은 자유 낙하와 마찬가지로 <strong>중력의 방향(연직 방향)</strong>이다.</div>
+
+  <!-- diagrams: free fall vs projectile dot pattern -->
+  <div class="diagram-grid">
+    <div class="diagram-box">
+      <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="ffArrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#2563eb"/>
+          </marker>
+        </defs>
+        <line x1="42" y1="8" x2="42" y2="182" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2 2"/>
+        <circle cx="42" cy="10" r="6" fill="#ef4444"/>
+        <circle cx="42" cy="20" r="6" fill="#ef4444"/>
+        <circle cx="42" cy="50" r="6" fill="#ef4444"/>
+        <circle cx="42" cy="100" r="6" fill="#ef4444"/>
+        <circle cx="42" cy="170" r="6" fill="#ef4444"/>
+        <text x="18" y="14" font-size="11" fill="#64748b">0</text>
+        <text x="2" y="24" font-size="11" fill="#64748b">Δt</text>
+        <text x="2" y="54" font-size="11" fill="#64748b">2Δt</text>
+        <text x="2" y="104" font-size="11" fill="#64748b">3Δt</text>
+        <text x="2" y="174" font-size="11" fill="#64748b">4Δt</text>
+        <line x1="85" y1="13" x2="85" y2="25" stroke="#2563eb" stroke-width="2" marker-end="url(#ffArrow)"/>
+        <line x1="85" y1="35" x2="85" y2="55" stroke="#2563eb" stroke-width="2" marker-end="url(#ffArrow)"/>
+        <line x1="85" y1="65" x2="85" y2="95" stroke="#2563eb" stroke-width="2" marker-end="url(#ffArrow)"/>
+        <line x1="85" y1="105" x2="85" y2="145" stroke="#2563eb" stroke-width="2" marker-end="url(#ffArrow)"/>
+        <text x="98" y="198" font-size="12" fill="#2563eb" font-weight="600">속력이 점점 증가</text>
+      </svg>
+      <div class="diagram-caption"><strong>자유 낙하</strong> — 같은 시간 간격(Δt)마다 찍은 위치.<br>아래로 갈수록 이동 거리가 <strong>1:3:5:7</strong> 비율로 점점 커지고, <strong>속력도 함께 증가</strong>한다 (등가속도 운동).</div>
+    </div>
+    <div class="diagram-box">
+      <svg viewBox="0 0 240 210" xmlns="http://www.w3.org/2000/svg">
+        <line x1="18" y1="6" x2="18" y2="188" stroke="#94a3b8" stroke-width="1"/>
+        <line x1="18" y1="188" x2="232" y2="188" stroke="#94a3b8" stroke-width="1"/>
+        <line x1="20" y1="10" x2="20" y2="188" stroke="#fed7aa" stroke-width="1" stroke-dasharray="2 2"/>
+        <line x1="60" y1="20" x2="60" y2="188" stroke="#fed7aa" stroke-width="1" stroke-dasharray="2 2"/>
+        <line x1="100" y1="50" x2="100" y2="188" stroke="#fed7aa" stroke-width="1" stroke-dasharray="2 2"/>
+        <line x1="140" y1="100" x2="140" y2="188" stroke="#fed7aa" stroke-width="1" stroke-dasharray="2 2"/>
+        <line x1="180" y1="170" x2="180" y2="188" stroke="#fed7aa" stroke-width="1" stroke-dasharray="2 2"/>
+        <line x1="14" y1="10" x2="20" y2="10" stroke="#e11d48" stroke-width="1.5"/>
+        <line x1="14" y1="20" x2="20" y2="20" stroke="#e11d48" stroke-width="1.5"/>
+        <line x1="14" y1="50" x2="20" y2="50" stroke="#e11d48" stroke-width="1.5"/>
+        <line x1="14" y1="100" x2="20" y2="100" stroke="#e11d48" stroke-width="1.5"/>
+        <line x1="14" y1="170" x2="20" y2="170" stroke="#e11d48" stroke-width="1.5"/>
+        <polyline points="20,10 60,20 100,50 140,100 180,170" fill="none" stroke="#fdba74" stroke-width="2"/>
+        <circle cx="20" cy="10" r="6" fill="#ea580c"/>
+        <circle cx="60" cy="20" r="6" fill="#ea580c"/>
+        <circle cx="100" cy="50" r="6" fill="#ea580c"/>
+        <circle cx="140" cy="100" r="6" fill="#ea580c"/>
+        <circle cx="180" cy="170" r="6" fill="#ea580c"/>
+        <text x="11" y="13" font-size="9" fill="#e11d48" text-anchor="end">y₁</text>
+        <text x="11" y="23" font-size="9" fill="#e11d48" text-anchor="end">y₂</text>
+        <text x="11" y="53" font-size="9" fill="#e11d48" text-anchor="end">y₃</text>
+        <text x="11" y="103" font-size="9" fill="#e11d48" text-anchor="end">y₄</text>
+        <text x="11" y="173" font-size="9" fill="#e11d48" text-anchor="end">y₅</text>
+        <text x="40" y="201" font-size="11" fill="#c2410c" text-anchor="middle">Δx</text>
+        <text x="80" y="201" font-size="11" fill="#c2410c" text-anchor="middle">Δx</text>
+        <text x="120" y="201" font-size="11" fill="#c2410c" text-anchor="middle">Δx</text>
+        <text x="160" y="201" font-size="11" fill="#c2410c" text-anchor="middle">Δx</text>
+      </svg>
+      <div class="diagram-caption"><strong>수평으로 던진 물체</strong> — 같은 시간 간격마다 찍은 위치.<br>수평 간격(<strong>Δx</strong>)은 <strong>모두 같음</strong>(등속 직선 운동), 연직 위치(<strong>y₁→y₅</strong>) 간격은 자유 낙하처럼 <strong>점점 커짐</strong>.</div>
+    </div>
+  </div>
+
+  <div class="subsection-title">가속도</div>
+  <div class="formula-box blue">
+    <span class="formula-main">가속도
+      <span class="frac"><span class="frac-top">속도 변화량</span><span class="frac-bottom">시간</span></span>
+    </span>
+    <span class="formula-unit">단위: m/s²</span>
+  </div>
+  <div class="def-box">
+    물체의 속도가 변할 때, <strong>1초당 속도 변화량</strong>을 가속도라고 한다.
+  </div>
+  <div class="note">📌 지구 표면에서 가속도의 크기는 물체의 <strong>질량과 관계없이</strong> 약 <strong>9.8 m/s²</strong>로 일정하다 — 이를 <strong>중력 가속도</strong>라고 한다.</div>
+
+  <!-- 3. 지구 주위를 도는 물체의 운동 -->
+  <div class="section-title"><span class="icon">🛰️</span>3. 지구 주위를 도는 물체의 운동</div>
+
+  <div class="subsection-title">수평 방향으로 각각 다른 속도로 물체를 던질 때</div>
+  <div class="factor-grid">
+    <div class="factor-card rose">
+      <h4>연직 방향 운동</h4>
+      <p>속도와 무관하게 <strong>자유 낙하와 같다</strong>.</p>
+    </div>
+    <div class="factor-card blue">
+      <h4>수평 방향 운동</h4>
+      <p><strong>속력이 클수록</strong> 공이 <strong>더 멀리</strong> 날아간다.</p>
+    </div>
+  </div>
+  <div class="def-box">
+    지구 주위를 도는 달이나 인공위성의 운동도 <strong>중력에 의한 운동</strong>이다.<br>
+    지구 주위를 도는 물체의 <strong>가속도의 방향은 지구 중심 방향</strong>이다.
+  </div>
+
+  <div class="rule-card purple">
+    <div class="rule-head">🍎 뉴턴의 사고 실험 — 뉴턴의 대포</div>
+    <div class="rule-body">
+      높은 산꼭대기에서 대포를 쏜다고 생각해 보자. 포탄은 매 순간 지구를 향해 떨어지지만, 동시에 <strong>수평 방향으로도 움직이고 있으므로</strong> 충분한 속도를 가진다면 지구에 떨어지지 않고 계속 날아갈 수 있다.<br><br>
+      만약 포탄이 <strong>매초 지구의 곡면만큼 떨어지는 속도</strong>로 발사되면, 포탄은 땅에 닿지 않고 <strong>지구 주위를 원운동</strong>하게 된다.
+    </div>
+  </div>
+
+  <div class="flow-row">
+    <div class="flow-item">느리게 던짐<br><span style="font-size:11px;">→ 가까이 떨어짐</span></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item">빠르게 던짐<br><span style="font-size:11px;">→ 멀리 떨어짐</span></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item purple">충분히 빠르게<br><span style="font-size:11px;">→ 지구 주위를 원운동</span></div>
+  </div>
+
+  <div class="factor-card purple" style="margin-bottom:11px;">
+    <h4>🛰️ 인공위성의 운동</h4>
+    <p>지구 주위를 원운동하는 인공위성은 <strong>지구 중력에 의해 지구 중심 방향으로 떨어지는 가속도 운동</strong>을 한다. 그러나 <strong>지구가 둥글기 때문에</strong> 인공위성과 지구 중심 사이의 거리는 계속 <strong>일정하게 유지</strong>된다.</p>
+  </div>
+
+  <!-- 4. 중력과 역학 시스템 -->
+  <div class="section-title"><span class="icon">⚙️</span>4. 중력과 역학 시스템</div>
+  <div class="def-box">
+    <strong>역학 시스템</strong>: 힘이 작용하고 그에 따라 물체의 <strong>운동 상태나 모양이 변하는 체계</strong>
+  </div>
+  <div class="factor-grid">
+    <div class="factor-card blue">
+      <h4>역학 시스템 속의 힘</h4>
+      <p>역학 시스템에서는 <strong>중력, 마찰력, 탄성력</strong> 등 다양한 힘이 작용한다.</p>
+    </div>
+    <div class="factor-card purple">
+      <h4>중력의 역할</h4>
+      <p>중력은 <strong>질량이 있는 모든 물체 사이</strong>에 작용하는 힘으로, 역학 시스템에서 <strong>중요한 역할</strong>을 한다.</p>
+    </div>
+  </div>
+
+  <div class="teal-box">
+    <strong>🚀 우주과학 속의 중력 — 다누리</strong><br>
+    2022년 8월 우리나라 최초 달 탐사선 <strong>다누리</strong>가 발사되었고, 5개월여를 날아 2022년 12월 17일 달 궤도에 성공적으로 진입하였다. 다누리는 달 표면 약 100 km 상공에서 2시간에 한 바퀴씩 달 주변을 돌고 있다.<br><br>
+    다누리는 <strong>태양, 지구, 달 등 주변 천체들의 중력을 이용</strong>해 달에 도달하도록 설계되었다. 이 설계 방식은 탐사선의 <strong>연료 소모량을 최소화</strong>하여 더 오랫동안 관측 업무를 수행할 수 있게 한다. 이처럼 중력은 지구에서 일어나는 현상뿐 아니라 <strong>로켓 발사, 우주 탐사</strong> 등 미래 우주과학에서도 중요한 역할을 한다.
+  </div>
+
+  <!-- 5. 탐구활동 -->
+  <div class="section-title"><span class="icon">🔬</span>탐구활동 — 자유 낙하와 수평으로 던진 물체의 운동 비교하기</div>
+
+  <div class="factor-grid">
+    <div class="factor-card blue">
+      <h4>🎯 목표</h4>
+      <p>자유 낙하와 수평으로 던진 물체의 운동을 시각화하여 비교할 수 있다.</p>
+    </div>
+    <div class="factor-card gray">
+      <h4>🧰 준비물</h4>
+      <p>쇠구슬, 모눈종이, 우드록, 스프레이 접착제, 스마트 기기, 삼각대</p>
+    </div>
+  </div>
+
+  <div class="subsection-title">탐구 과정</div>
+  <ul class="info-list">
+    <li>우드록에 모눈종이를 붙인 뒤 수직으로 세운다.</li>
+    <li>삼각대에 스마트 기기를 고정하고, 쇠구슬이 낙하하는 과정이 모두 들어오도록 삼각대의 위치를 조정한다.</li>
+    <li>모눈종이 끝에서 쇠구슬을 가만히 놓아 <strong>자유 낙하</strong>하는 모습을 촬영한다.</li>
+    <li>쇠구슬을 책상에서 <strong>수평으로 밀어 떨어뜨렸을 때</strong>의 운동 모습을 촬영한다.</li>
+    <li>촬영한 영상을 0.1초 간격으로 캡처하여 하나의 사진으로 합성해 운동 모습을 나타낸다.</li>
+  </ul>
+
+  <div class="subsection-title">정리 — 공통점과 차이점</div>
+  <table class="cmp-table">
+    <thead><tr><th>구분</th><th>자유 낙하 하는 쇠구슬</th><th>수평으로 던진 쇠구슬</th></tr></thead>
+    <tbody>
+      <tr><td>연직 방향 속도</td><td colspan="2">일정한 시간 동안 속도가 일정하게 <strong>증가</strong>한다 (둘 다 동일)</td></tr>
+      <tr><td>수평 방향 속도</td><td>운동하지 않음</td><td><strong>일정</strong>하다 (등속 직선 운동)</td></tr>
+      <tr><td>전체 운동</td><td>연직 방향으로만 운동</td><td>수평 방향으로 운동하면서 동시에 연직 방향으로도 운동</td></tr>
+    </tbody>
+  </table>
+  <div class="tip">💡 <strong>공통점</strong>: 두 운동 모두 연직 방향으로 속도 변화가 동일한 운동(자유 낙하)을 한다.<br>
+  💡 <strong>차이점</strong>: 자유 낙하는 연직 방향으로만 운동하고, 수평으로 던진 물체는 수평 방향(등속) + 연직 방향(자유 낙하)으로 동시에 운동한다.</div>
+
+  <div class="quiz-section" id="quiz-section-0">
+    <div class="quiz-header">
+      <div class="quiz-title"><span class="icon">📝</span> 확인 문제</div>
+      <div class="scoreboard" id="scoreboard-0"></div>
+    </div>
+    <div class="quiz-type-bar" id="typebar-0"></div>
+    <div class="q-progress-wrap"><div class="q-progress-fill" id="progress-0"></div></div>
+    <div id="qlist-0"></div>
+  </div>
+
+</div><!-- /panel-0 -->
+
+<!-- ===== TAB 1: 02 일상생활에서의 충돌과 안전장치 ===== -->
+<div class="tab-panel" id="panel-1">
+  <div class="unit-banner rose">📕 02 일상생활에서의 충돌과 안전장치 (교과서 128~133쪽)</div>
+
+  <!-- 1. 상호작용과 관성 -->
+  <div class="section-title rose"><span class="icon">🔄</span>1. 상호작용과 관성</div>
+  <div class="def-box">
+    힘은 항상 <strong>두 물체 사이</strong>에서 작용한다 (상호작용). 손으로 벽을 밀면 힘을 준 손에도 힘이 느껴지고, 킥보드를 타고 발로 바닥을 밀면 바닥도 나를 밀기 때문에 킥보드가 앞으로 나아간다.
+  </div>
+  <div class="rose-box">
+    <strong>관성</strong>: 물체에 상호작용하는 힘이 없을 때 물체는 <strong>현재의 운동 상태를 유지</strong>하는 성질
+  </div>
+  <div class="factor-grid">
+    <div class="factor-card rose">
+      <h4>정지해 있는 물체</h4>
+      <p>계속 <strong>정지</strong>한다.</p>
+    </div>
+    <div class="factor-card rose">
+      <h4>운동하는 물체</h4>
+      <p>그 운동 상태를 유지하며 <strong>등속 직선 운동</strong>을 한다.</p>
+    </div>
+  </div>
+  <div class="note">📌 운동하는 물체에 힘이 작용하면 → <strong>가속도 운동</strong> / 힘이 작용하지 않으면 → 운동 상태를 유지하며 <strong>등속 직선 운동</strong> (관성)</div>
+
+  <!-- 2. 운동량과 충격량 -->
+  <div class="section-title rose"><span class="icon">🎳</span>2. 운동량과 충격량</div>
+
+  <div class="subsection-title rose">운동량</div>
+  <div class="def-box">
+    <strong>운동량</strong>: 달리는 자동차나 굴러가는 볼링공과 같이 운동하는 물체의 <strong>운동 정도</strong>를 나타내는 양
+  </div>
+  <div class="formula-box green">
+    <span class="formula-main">운동량(p) = 질량(m) × 속도(v)</span>
+    <span class="formula-unit">단위: kg·m/s</span>
+  </div>
+  <div class="factor-grid">
+    <div class="factor-card green">
+      <h4>질량의 영향</h4>
+      <p>같은 속도로 움직일 때, <strong>질량이 큰 물체</strong>(예: 트럭)가 <strong>질량이 작은 물체</strong>(예: 자동차)보다 운동량이 크다.</p>
+    </div>
+    <div class="factor-card green">
+      <h4>속도의 영향</h4>
+      <p>질량이 같은 볼링공을 던질 때, <strong>속도가 클수록</strong> 운동량이 커진다.</p>
+    </div>
+  </div>
+
+  <div class="subsection-title rose">충격량</div>
+  <div class="def-box">
+    <strong>충격량</strong>: 두 물체가 충돌할 때, 물체가 받은 <strong>충격의 정도</strong>를 나타내는 양
+  </div>
+  <div class="formula-box orange">
+    <span class="formula-main">충격량(I) = 작용한 힘(F) × 힘이 작용한 시간(Δt)</span>
+    <span class="formula-unit">단위: N·s</span>
+  </div>
+  <div class="def-box">
+    충돌할 때 작용하는 <strong>힘이 클수록, 힘이 작용하는 시간이 길수록</strong> 충격량은 커진다.
+  </div>
+
+  <div class="diagram-box" style="max-width:340px;margin:0 auto 14px;">
+    <svg viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg">
+      <line x1="30" y1="10" x2="30" y2="130" stroke="#475569" stroke-width="2"/>
+      <line x1="30" y1="130" x2="220" y2="130" stroke="#475569" stroke-width="2"/>
+      <rect x="30" y="55" width="150" height="75" fill="#fed7aa" opacity="0.55"/>
+      <line x1="30" y1="55" x2="180" y2="55" stroke="#ea580c" stroke-width="2.5"/>
+      <line x1="180" y1="55" x2="180" y2="130" stroke="#ea580c" stroke-width="2" stroke-dasharray="3 3"/>
+      <text x="12" y="20" font-size="13" fill="#475569" font-weight="700">힘 F</text>
+      <text x="225" y="135" font-size="13" fill="#475569" font-weight="700">시간 t</text>
+      <text x="75" y="98" font-size="13" fill="#c2410c" font-weight="700">넓이 = 충격량 I</text>
+    </svg>
+    <div class="diagram-caption"><strong>힘–시간 그래프</strong>: 그래프가 시간 축과 만드는 <strong>넓이</strong>가 충격량을 나타낸다. 힘의 크기가 시간에 따라 변하는 경우에도 마찬가지이다.</div>
+  </div>
+
+  <!-- 3. 운동량과 충격량의 관계 -->
+  <div class="section-title rose"><span class="icon">⚖️</span>3. 운동량과 충격량의 관계</div>
+  <div class="formula-box blue">
+    <span class="formula-main">충격량(I) = 운동량의 변화량 = 나중 운동량 − 처음 운동량</span>
+  </div>
+  <div class="factor-grid">
+    <div class="factor-card green">
+      <h4>➕ 운동 방향과 같은 방향으로 힘을 받으면</h4>
+      <p>받은 충격량만큼 운동량이 <strong>증가</strong>한다.</p>
+    </div>
+    <div class="factor-card rose">
+      <h4>➖ 운동 방향과 반대 방향으로 힘을 받으면</h4>
+      <p>받은 충격량만큼 운동량이 <strong>감소</strong>한다.</p>
+    </div>
+  </div>
+
+  <div class="rule-card rose">
+    <div class="rule-head">🚛 트럭과 승용차의 충돌</div>
+    <div class="rule-body">
+      달리던 트럭이 정지해 있는 승용차와 충돌하면, 달리던 트럭의 속도는 <strong>줄어들고</strong> 정지해 있던 승용차는 <strong>앞으로 밀려난다</strong>. 즉, 두 물체의 운동량이 변한다.<br><br>
+      이때 트럭과 승용차가 각각 받은 충격량(=운동량의 변화량)의 <strong>크기는 서로 같다</strong>. 그러나 <strong>승용차의 질량이 트럭보다 작으므로</strong>, 같은 운동량 변화에 대해 <strong>승용차의 속도 변화가 더 크다</strong>.
+    </div>
+  </div>
+
+  <!-- 4. 충돌과 안전장치 -->
+  <div class="section-title rose"><span class="icon">🛡️</span>4. 충돌로 생기는 피해를 줄이는 방법</div>
+
+  <div class="formula-box green">
+    <span class="formula-main">평균 힘
+      <span class="frac"><span class="frac-top">충격량</span><span class="frac-bottom">충돌 시간</span></span>
+    </span>
+  </div>
+  <div class="def-box">
+    <strong>충격량이 같을 때</strong>, 힘이 작용하는 시간을 <strong>길게</strong> 하면 물체가 받는 <strong>힘의 최댓값(평균 힘)이 작아져</strong> 충돌로 생기는 피해를 줄일 수 있다.
+  </div>
+
+  <div class="diagram-box" style="max-width:380px;margin:0 auto 14px;">
+    <svg viewBox="0 0 280 170" xmlns="http://www.w3.org/2000/svg">
+      <line x1="30" y1="10" x2="30" y2="145" stroke="#475569" stroke-width="2"/>
+      <line x1="30" y1="145" x2="270" y2="145" stroke="#475569" stroke-width="2"/>
+      <path d="M 35,145 C 38,145 42,28 60,28 C 78,28 82,145 88,145 Z" fill="#fecaca" opacity="0.55" stroke="#e11d48" stroke-width="2"/>
+      <path d="M 96,145 C 108,145 138,98 162,98 C 186,98 216,145 228,145 Z" fill="#bbf7d0" opacity="0.5" stroke="#16a34a" stroke-width="2"/>
+      <text x="36" y="22" font-size="11.5" fill="#e11d48" font-weight="700">충격량 S₁</text>
+      <text x="140" y="92" font-size="11.5" fill="#16a34a" font-weight="700">충격량 S₂</text>
+      <text x="10" y="18" font-size="13" fill="#475569" font-weight="700">힘</text>
+      <text x="270" y="158" font-size="13" fill="#475569" font-weight="700">시간</text>
+    </svg>
+    <div class="diagram-caption">충돌하는 <strong>시간이 짧으면</strong>(빨강, S₁) <strong>큰 힘</strong>을 받고, <strong>시간이 길면</strong>(초록, S₂) <strong>작은 힘</strong>을 받는다. 두 곡선이 시간 축과 만드는 넓이, 즉 <strong>충격량 S₁ = S₂</strong>로 같다.</div>
+  </div>
+
+  <table class="cmp-table rose-th">
+    <thead><tr><th>비교</th><th>바닥에 떨어진 물풍선</th><th>방석 위에 떨어진 물풍선</th></tr></thead>
+    <tbody>
+      <tr><td>충돌 시간</td><td>짧다</td><td>길다</td></tr>
+      <tr><td>받는 힘의 최댓값</td><td>크다 (터짐)</td><td>작다 (안 터짐)</td></tr>
+      <tr><td>받은 충격량</td><td colspan="2">서로 같다</td></tr>
+    </tbody>
+  </table>
+
+  <div class="subsection-title rose">안전장치의 원리</div>
+  <div class="factor-grid">
+    <div class="factor-card green">
+      <h4>① 충돌 시간을 길게 → 힘을 줄임</h4>
+      <p><span class="badge badge-green">에어백</span> <span class="badge badge-green">범퍼</span> <span class="badge badge-green">에어 매트</span> <span class="badge badge-green">머리·어깨·무릎 보호대</span></p>
+      <p style="margin-top:6px;">충돌 시간을 길게 하여 물체가 받는 <strong>힘의 크기를 작게</strong> 해 준다.</p>
+    </div>
+    <div class="factor-card rose">
+      <h4>② 관성에 의한 충돌 방지</h4>
+      <p><span class="badge badge-rose">안전띠</span> <span class="badge badge-rose">안전 바</span></p>
+      <p style="margin-top:6px;">자동차의 속도가 변할 때 <strong>관성에 의해 몸이 쏠려서 발생하는 충돌</strong>을 막아 준다.</p>
+    </div>
+  </div>
+
+  <div class="factor-grid">
+    <div class="factor-card blue">
+      <h4>🚌 차가 갑자기 멈출 때</h4>
+      <p>차는 멈추지만, 사람의 몸은 <strong>계속 움직이려는 관성</strong> 때문에 <strong>앞으로</strong> 쏠린다.</p>
+    </div>
+    <div class="factor-card purple">
+      <h4>🚌 차가 갑자기 출발할 때</h4>
+      <p>차는 앞으로 움직이지만, 사람의 몸은 <strong>정지 상태를 유지하려는 관성</strong> 때문에 <strong>뒤로</strong> 쏠린다.</p>
+    </div>
+  </div>
+  <div class="note">📌 빠르게 움직이는 자동차에 탄 사람은 <strong>운동량이 크기 때문에</strong>, 급정거할 때 몸이 앞으로 쏠리지 않도록 <strong>큰 힘</strong>(안전띠)이 필요하다. 놀이기구의 안전 바도 같은 원리로, 갑자기 운동 방향이 바뀔 때 관성에 의해 탑승자가 벗어나는 것을 방지한다.</div>
+
+  <!-- 5. 해보기 실험 -->
+  <div class="section-title rose"><span class="icon">🧪</span>해보기 — 운동량의 변화 알아보기</div>
+
+  <div class="factor-card gray" style="margin-bottom:11px;">
+    <h4>🧰 준비물</h4>
+    <p>빨대, 면봉, 가위, 주사기, 셀로판테이프</p>
+  </div>
+
+  <div class="subsection-title rose">탐구 과정</div>
+  <ul class="info-list rose">
+    <li>빨대를 주사기에 꽂고 셀로판테이프로 감은 뒤, 면봉을 반으로 잘라 빨대 끝에 넣는다.</li>
+    <li>공기가 든 피스톤을 <strong>천천히</strong> 끝까지 밀었을 때와 <strong>빠르게</strong> 끝까지 밀었을 때, 면봉이 날아간 거리를 비교한다.</li>
+    <li>반으로 자른 면봉을 <strong>빨대 끝</strong>과 <strong>주사기 입구</strong>에 각각 넣고, 피스톤을 끝까지 밀었을 때 면봉이 날아간 거리를 비교한다.</li>
+    <li>두 결과를 통해 면봉이 받는 힘의 크기와 힘을 받은 시간에 따라 면봉의 운동량이 어떻게 변하는지 분석한다.</li>
+  </ul>
+
+  <div class="subsection-title rose">결과 및 결론</div>
+  <table class="cmp-table green-th">
+    <thead><tr><th>비교 실험</th><th>조건 A</th><th>조건 B</th><th>결과</th></tr></thead>
+    <tbody>
+      <tr><td>피스톤 미는 속도</td><td>천천히 밀기<br>(작은 힘)</td><td>빠르게 밀기<br>(큰 힘)</td><td>B가 더 멀리 날아감</td></tr>
+      <tr><td>면봉 위치</td><td>빨대 끝<br>(짧은 시간)</td><td>주사기 입구<br>(긴 시간)</td><td>주사기 입구 쪽이 더 멀리 날아감</td></tr>
+    </tbody>
+  </table>
+
+  <div class="rule-card green">
+    <div class="rule-head">결론</div>
+    <div class="rule-body">
+      면봉에 작용한 <strong>힘의 크기가 클수록</strong>, <strong>힘을 받은 시간이 길수록</strong> 면봉이 더 멀리까지 날아간다. 즉, 면봉이 받는 <strong>충격량만큼 면봉의 운동량이 변한다.</strong>
+    </div>
+  </div>
+  <div class="formula-box orange">
+    <span class="formula-main">충격량(I) = 운동량의 변화량 = 나중 운동량 − 처음 운동량</span>
+  </div>
+
+  <div class="quiz-section" id="quiz-section-1">
+    <div class="quiz-header">
+      <div class="quiz-title"><span class="icon">📝</span> 확인 문제</div>
+      <div class="scoreboard" id="scoreboard-1"></div>
+    </div>
+    <div class="quiz-type-bar" id="typebar-1"></div>
+    <div class="q-progress-wrap"><div class="q-progress-fill" id="progress-1"></div></div>
+    <div id="qlist-1"></div>
+  </div>
+
+</div><!-- /panel-1 -->
+
+</div><!-- /content-wrap -->
+<button class="totop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+function switchTab(idx) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+  document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+const QUIZ_DATA = {
+  0: {
+    ox: [
+      {q:`중력은 모든 물체 사이에서 서로 끌어당기는 힘이다.`, a:true, exp:`중력은 질량을 가진 모든 물체 사이에 작용하는 끌어당기는 힘이다.`},
+      {q:`지구 표면 근처에서 중력의 방향은 지면과 나란하다.`, a:false, exp:`중력의 방향은 지면과 수직인 방향(지구 중심 방향)이다.`},
+      {q:`두 물체 사이의 거리가 멀어질수록 중력의 크기는 커진다.`, a:false, exp:`거리가 멀어질수록 중력은 작아지고, 가까울수록 커진다.`},
+      {q:`자유 낙하 하는 물체의 속력은 일정하게 증가한다.`, a:true, exp:`자유 낙하는 중력에 의해 일정한 가속도(g)로 속력이 증가하는 등가속도 운동이다.`},
+      {q:`수평으로 던진 물체는 수평 방향으로 등속 직선 운동을 한다.`, a:true, exp:`수평 방향으로는 작용하는 힘이 없으므로 속도가 일정한 등속 직선 운동을 한다.`},
+      {q:`물체를 더 빠르게 수평으로 던질수록 연직 방향의 가속도도 커진다.`, a:false, exp:`연직 방향의 가속도는 항상 중력가속도(약 9.8 m/s²)로 일정하며, 던지는 속력과 무관하다.`},
+      {q:`중력가속도는 물체의 질량과 관계없이 일정하다.`, a:true, exp:`중력가속도는 물체의 질량에 관계없이 지구 표면에서 약 9.8 m/s²로 일정하다.`},
+      {q:`인공위성의 운동은 가속도가 0인 등속 운동이다.`, a:false, exp:`인공위성은 지구의 중력을 구심력으로 받아 원운동하므로 가속도가 0이 아닌 가속도 운동이다.`},
+      {q:`역학 시스템에는 중력 외에도 마찰력, 탄성력 등 다양한 힘이 함께 작용할 수 있다.`, a:true, exp:`역학 시스템에서는 중력뿐만 아니라 마찰력, 탄성력, 수직항력 등 여러 힘이 함께 작용한다.`}
+    ],
+    mc: [
+      {q:`질량이 2kg인 물체에 작용하는 무게는 얼마인가? (g=9.8m/s²)`,
+       opts:[`약 19.6 N`,`약 9.8 N`,`약 2 N`,`약 2 kg`], a:0,
+       exp:`무게 = 질량 × 중력가속도 = 2 kg × 9.8 m/s² ≈ 19.6 N이다.`},
+      {q:`자유 낙하 운동에 대한 설명으로 옳은 것은?`,
+       opts:[`속도가 일정하다`,`가속도가 0이다`,`가속도의 방향이 운동 방향과 반대이다`,`속도가 일정하게 증가한다`], a:3,
+       exp:`자유 낙하는 중력에 의해 속도가 일정하게(등가속도로) 증가하는 운동이다.`},
+      {q:`수평으로 던진 물체의 연직 방향 운동에 대한 설명으로 옳은 것은?`,
+       opts:[`등속 직선 운동을 한다`,`자유 낙하와 동일한 운동을 한다`,`속력이 일정하게 감소한다`,`수평 속력이 클수록 연직 가속도가 커진다`], a:1,
+       exp:`연직 방향으로는 중력만 작용하므로 자유 낙하와 동일한 운동(등가속도 운동)을 한다.`},
+      {q:`가속도를 구하는 식으로 옳은 것은?`,
+       opts:[`속도 변화량 × 걸린 시간`,`이동 거리 ÷ 걸린 시간`,`속도 변화량 ÷ 걸린 시간`,`질량 × 속도`], a:2,
+       exp:`가속도 = (속도 변화량) ÷ (걸린 시간)이다.`},
+      {q:`뉴턴의 대포 사고 실험에서 포탄이 지구를 도는 인공위성처럼 원운동하기 위한 조건은?`,
+       opts:[`포탄이 떨어지는 동안 지구 표면이 둥글게 휘어지는 정도와 같은 거리만큼 떨어지는 속력으로 쏠 때`,`포탄을 아주 천천히 쏠 때`,`포탄에 중력이 작용하지 않을 때`,`포탄을 수직으로 쏘아 올릴 때`], a:0,
+       exp:`포탄이 일정 시간 동안 떨어지는 거리와 지구 표면이 휘어지는 정도가 같아지는 속력으로 쏘면 포탄은 지구를 계속 도는 원운동을 하게 된다.`},
+      {q:`다누리(달 궤도선)가 달까지 이동할 때 적용된 궤적 설계의 원리로 옳은 것은?`,
+       opts:[`로켓 연료만으로 일정한 속도를 유지하며 이동한다`,`중력의 영향을 받지 않도록 설계한다`,`달의 중력을 피해서 이동한다`,`태양, 지구, 달의 중력을 이용하여 연료 소모를 최소화한다`], a:3,
+       exp:`다누리는 태양, 지구, 달의 중력을 이용한 궤적(탄도형 달 전이 방식)으로 이동하여 연료 소모를 최소화했다.`}
+    ],
+    hard: [
+      {q:`자유 낙하 하는 물체와 수평으로 던진 물체의 운동에 대한 설명으로 옳은 것을 모두 고른 것은?
+ㄱ. 두 운동 모두 연직 방향의 속력이 일정하게 증가한다.
+ㄴ. 수평으로 던진 물체는 수평 방향으로 등속 직선 운동을 한다.
+ㄷ. 자유 낙하 하는 물체의 가속도 방향은 운동 방향과 수직이다.
+ㄹ. 수평으로 던진 물체의 가속도 방향은 던진 속력의 크기에 따라 달라진다.`,
+       opts:[`ㄱ, ㄴ`,`ㄱ, ㄷ`,`ㄴ, ㄹ`,`ㄷ, ㄹ`], a:0,
+       exp:`ㄱ, ㄴ이 옳다. ㄷ은 자유 낙하의 가속도 방향(연직 아래)이 운동 방향과 같으므로 틀렸고, ㄹ은 가속도 방향이 항상 연직 아래(중력 방향)로 일정하므로 틀렸다.`},
+      {q:`등속 원운동을 하는 인공위성에 대한 설명으로 옳지 않은 것은?`,
+       opts:[`인공위성에 작용하는 중력은 지구 중심 방향으로 작용한다`,`인공위성의 속력은 시간이 지남에 따라 일정하게 증가한다`,`인공위성은 가속도 운동을 하고 있다`,`지구가 둥글기 때문에 인공위성은 지구 표면으로부터 일정한 거리를 유지하며 돌 수 있다`], a:1,
+       exp:`인공위성은 등속 원운동을 하므로 속력의 크기는 일정하게 유지되고, 운동 방향(속도의 방향)만 계속 변한다. 따라서 속력이 일정하게 증가한다는 설명은 옳지 않다.`},
+      {q:`물체가 자유 낙하를 시작한 지 0.2초가 지났을 때, 물체의 속력은? (단, 중력가속도 g = 10 m/s²로 한다.)`,
+       opts:[`1 m/s`,`0.5 m/s`,`2 m/s`,`20 m/s`], a:2,
+       exp:`v = g × t = 10 m/s² × 0.2 s = 2 m/s이다.`},
+      {q:`역학 시스템과 중력에 대한 설명으로 옳은 것을 모두 고른 것은?
+ㄱ. 역학 시스템에는 중력만 작용한다.
+ㄴ. 중력은 질량을 가진 모든 물체 사이에서 작용한다.
+ㄷ. 중력은 인공위성 발사, 행성 탐사 등 우주 탐사에서도 중요하게 고려된다.
+ㄹ. 마찰력과 탄성력은 역학 시스템에서 작용하지 않는다.`,
+       opts:[`ㄱ, ㄴ`,`ㄱ, ㄹ`,`ㄴ, ㄹ`,`ㄴ, ㄷ`], a:3,
+       exp:`ㄴ, ㄷ이 옳다. 역학 시스템에는 중력 외에도 마찰력, 탄성력 등 다양한 힘이 함께 작용할 수 있으므로 ㄱ과 ㄹ은 틀렸다.`}
+    ]
+  },
+  1: {
+    ox: [
+      {q:`힘은 항상 두 물체 사이의 상호 작용으로 나타난다.`, a:true, exp:`힘은 한 물체가 다른 물체에 작용하면 동시에 그 물체로부터 반대로 힘을 받는 상호 작용이다.`},
+      {q:`정지해 있는 물체는 외부에서 힘이 작용하지 않아도 스스로 움직이기 시작한다.`, a:false, exp:`관성의 법칙에 의해 외부에서 힘이 작용하지 않으면 정지한 물체는 계속 정지 상태를 유지한다.`},
+      {q:`운동량은 물체의 질량과 속도의 곱으로 나타낸다.`, a:true, exp:`운동량(p) = 질량(m) × 속도(v)이다.`},
+      {q:`운동량의 단위는 N·s이다.`, a:false, exp:`운동량의 단위는 kg·m/s이며, N·s는 충격량의 단위이다.`},
+      {q:`충격량은 물체에 작용한 힘과 그 힘이 작용한 시간의 곱으로 나타낸다.`, a:true, exp:`충격량(I) = 힘(F) × 시간(t)이다.`},
+      {q:`힘-시간 그래프에서 그래프와 시간축이 이루는 넓이는 운동량을 나타낸다.`, a:false, exp:`힘-시간 그래프의 넓이는 충격량을 나타낸다.`},
+      {q:`충격량은 물체의 운동량의 변화량과 같다.`, a:true, exp:`충격량 = 나중 운동량 − 처음 운동량 = 운동량의 변화량이다.`},
+      {q:`충돌 시간을 길게 할수록 물체가 받는 힘의 최댓값은 커진다.`, a:false, exp:`충격량이 일정할 때 충돌 시간이 길어지면 물체가 받는 힘의 최댓값은 작아진다.`},
+      {q:`안전띠는 관성에 의한 충돌 피해를 줄이기 위한 안전장치이다.`, a:true, exp:`급정거 시 관성에 의해 몸이 앞으로 쏠리는 것을 안전띠가 막아 충돌 피해를 줄여준다.`}
+    ],
+    mc: [
+      {q:`질량 1000kg인 자동차가 20 m/s의 속력으로 달리고 있을 때, 이 자동차의 운동량의 크기는?`,
+       opts:[`1000 kg·m/s`,`20000 kg·m/s`,`20 kg·m/s`,`500 kg·m/s`], a:1,
+       exp:`운동량 = 질량 × 속도 = 1000 kg × 20 m/s = 20000 kg·m/s이다.`},
+      {q:`충격량에 대한 설명으로 옳은 것은?`,
+       opts:[`질량과 가속도의 곱이다`,`속도와 시간의 곱이다`,`힘과 시간의 곱이다`,`항상 운동량보다 크다`], a:2,
+       exp:`충격량은 물체에 작용한 힘과 힘이 작용한 시간의 곱(F×t)으로 정의된다.`},
+      {q:`운동하는 물체가 운동 방향과 반대 방향으로 힘을 받으면 운동량은 어떻게 되는가?`,
+       opts:[`감소한다`,`증가한다`,`변화가 없다`,`0이 된다`], a:0,
+       exp:`운동 방향과 반대 방향으로 힘(충격량)을 받으면 운동량의 크기는 감소한다.`},
+      {q:`같은 크기의 충격량을 받을 때, 충돌 시간을 길게 할수록 물체가 받는 힘의 최댓값은 어떻게 되는가?`,
+       opts:[`커진다`,`변화가 없다`,`0이 된다`,`작아진다`], a:3,
+       exp:`충격량(=힘×시간)이 일정할 때 시간이 길어지면 힘의 최댓값은 작아진다.`},
+      {q:`충돌 시 충격을 줄이기 위해 충돌 시간을 길게 하는 안전장치가 아닌 것은?`,
+       opts:[`에어백`,`안전띠`,`자동차 범퍼`,`에어 매트`], a:1,
+       exp:`안전띠는 관성에 의해 몸이 쏠리는 것을 막는 장치이고, 에어백·범퍼·에어 매트는 충돌 시간을 길게 하여 받는 힘을 줄이는 장치이다.`},
+      {q:`무거운 트럭과 가벼운 승용차가 정면 충돌했을 때, 트럭이 승용차에 작용한 충격량과 승용차가 트럭에 작용한 충격량의 크기 관계는?`,
+       opts:[`트럭이 작용한 충격량이 더 크다`,`승용차가 작용한 충격량이 더 크다`,`두 충격량의 크기는 서로 같다`,`질량을 알아야 비교할 수 있다`], a:2,
+       exp:`두 물체가 충돌할 때 서로 작용하는 힘은 작용·반작용 관계이고 충돌 시간도 같으므로, 두 물체가 받는 충격량의 크기는 서로 같다.`}
+    ],
+    hard: [
+      {q:`정지해 있던 질량 2kg인 물체에 8N의 힘을 0.5초 동안 작용했다. 이때 물체가 받은 충격량의 크기는?`,
+       opts:[`4 N·s`,`2 N·s`,`8 N·s`,`16 N·s`], a:0,
+       exp:`충격량 = 힘 × 시간 = 8 N × 0.5 s = 4 N·s이다.`},
+      {q:`운동량과 충격량에 대한 설명으로 옳은 것을 모두 고른 것은?
+ㄱ. 충격량은 운동량의 변화량과 같다.
+ㄴ. 정지해 있는 물체의 운동량은 0이다.
+ㄷ. 힘-시간 그래프와 시간축이 이루는 넓이는 운동량을 나타낸다.
+ㄹ. 운동량의 단위는 N·s이다.`,
+       opts:[`ㄱ, ㄷ`,`ㄱ, ㄴ`,`ㄴ, ㄹ`,`ㄷ, ㄹ`], a:1,
+       exp:`ㄱ, ㄴ이 옳다. ㄷ은 힘-시간 그래프의 넓이가 충격량을 나타내므로 틀렸고, ㄹ은 운동량의 단위가 kg·m/s이므로 틀렸다.`},
+      {q:`질량 0.5kg인 공이 10 m/s의 속력으로 벽에 수직으로 충돌한 후, 같은 속력으로 반대 방향으로 튕겨 나왔다. 이 공의 운동량 변화량의 크기는?`,
+       opts:[`0 kg·m/s`,`5 kg·m/s`,`10 kg·m/s`,`20 kg·m/s`], a:2,
+       exp:`충돌 전 운동량을 +5 kg·m/s라 하면 충돌 후 운동량은 −5 kg·m/s이다. 운동량 변화량 = (−5) − (5) = −10 kg·m/s이므로 크기는 10 kg·m/s이다.`},
+      {q:`충돌과 안전장치에 대한 설명으로 옳은 것을 모두 고른 것은?
+ㄱ. 자동차가 급정거할 때, 몸은 관성에 의해 뒤쪽으로 쏠린다.
+ㄴ. 안전바는 충돌 시간을 길게 하여 받는 힘을 줄이는 장치이다.
+ㄷ. 자동차가 급출발할 때, 몸은 관성에 의해 뒤쪽으로 쏠린다.
+ㄹ. 충격량의 크기가 일정할 때, 충돌 시간이 길수록 받는 힘의 최댓값은 작아진다.`,
+       opts:[`ㄱ, ㄴ`,`ㄴ, ㄷ`,`ㄱ, ㄷ`,`ㄷ, ㄹ`], a:3,
+       exp:`ㄷ, ㄹ이 옳다. ㄱ은 급정거 시 몸이 앞쪽으로 쏠리므로 틀렸고, ㄴ은 안전바가 충돌 시간을 늘리는 장치가 아니라 관성에 의한 충돌을 막는 장치이므로 틀렸다.`}
+    ]
+  }
+};
+
+const TYPE_CONFIG = [
+  {key:'ox', label:'OX 퀴즈', icon:'⭕', diff:'기초', diffCls:'diff-basic'},
+  {key:'mc', label:'객관식', icon:'📋', diff:'중급', diffCls:'diff-mid'},
+  {key:'hard', label:'고난도', icon:'🔥', diff:'고난도', diffCls:'diff-hard'}
+];
+
+const quizState = {};
+[0,1].forEach(tabIdx => {
+  quizState[tabIdx] = {activeType:0, answered:{}};
+  TYPE_CONFIG.forEach(t => {
+    quizState[tabIdx].answered[t.key] = QUIZ_DATA[tabIdx][t.key].map(()=>null);
+  });
+});
+
+function buildScoreboard(tabIdx) {
+  const state = quizState[tabIdx];
+  return TYPE_CONFIG.map(t => {
+    const arr = state.answered[t.key];
+    const correct = arr.filter(x => x && x.correct).length;
+    return `<div class="score-chip ${t.key}"><span class="score-icon">${t.icon}</span>${correct}/${arr.length}</div>`;
+  }).join('');
+}
+
+function buildTypeBar(tabIdx) {
+  const state = quizState[tabIdx];
+  return TYPE_CONFIG.map((t, i) => {
+    const arr = state.answered[t.key];
+    const answeredCount = arr.filter(x => x !== null).length;
+    return `<button class="qtype-btn ${i===state.activeType?'active':''}" onclick="switchQType(${tabIdx},${i})">
+      <span class="qtype-icon">${t.icon}</span>
+      <span class="qtype-label">${t.label}</span>
+      <span class="qtype-count">${answeredCount}/${arr.length} · ${t.diff}</span>
+    </button>`;
+  }).join('');
+}
+
+function buildProgressPct(tabIdx) {
+  const state = quizState[tabIdx];
+  const key = TYPE_CONFIG[state.activeType].key;
+  const arr = state.answered[key];
+  const answeredCount = arr.filter(x => x !== null).length;
+  return Math.round(answeredCount / arr.length * 100);
+}
+
+function oxBtnClass(rec, btnVal, answer) {
+  if (!rec) return '';
+  if (rec.picked === btnVal) {
+    return rec.correct ? 'correct-picked' : 'wrong-picked';
+  }
+  if (!rec.correct && btnVal === answer) {
+    return 'correct-reveal';
+  }
+  return '';
+}
+
+function buildQCard(tabIdx, typeKey, qi, qdata) {
+  const state = quizState[tabIdx];
+  const rec = state.answered[typeKey][qi];
+  const tcfg = TYPE_CONFIG.find(t=>t.key===typeKey);
+  let cardClass = 'q-card';
+  if (rec) cardClass += rec.correct ? ' answered-correct' : ' answered-wrong';
+
+  let body = '';
+  if (typeKey === 'ox') {
+    body = `<div class="ox-row">
+      <button class="ox-btn ${oxBtnClass(rec, true, qdata.a)}" ${rec?'disabled':''} onclick="submitOX(${tabIdx},${qi},true)">O</button>
+      <button class="ox-btn ${oxBtnClass(rec, false, qdata.a)}" ${rec?'disabled':''} onclick="submitOX(${tabIdx},${qi},false)">X</button>
+    </div>`;
+  } else {
+    const letters = ['①','②','③','④'];
+    body = `<div class="mc-options">` + qdata.opts.map((opt,oi) => {
+      let cls = 'mc-opt';
+      if (rec) {
+        if (oi === qdata.a) cls += ' correct';
+        else if (oi === rec.picked) cls += ' wrong';
+      }
+      return `<button class="${cls}" ${rec?'disabled':''} onclick="submitMC(${tabIdx},'${typeKey}',${qi},${oi})"><span class="mc-opt-letter">${letters[oi]}</span><span>${opt}</span></button>`;
+    }).join('') + `</div>`;
+  }
+
+  let feedback = '';
+  if (rec) {
+    feedback = `<div class="q-feedback ${rec.correct?'correct':'wrong'}">${rec.correct?'✅ 정답입니다! ':'❌ 오답입니다. '}${qdata.exp}</div>`;
+  }
+
+  return `<div class="${cardClass}" id="qcard-${tabIdx}-${typeKey}-${qi}">
+    <div class="q-meta">
+      <span class="q-num">Q${qi+1}</span>
+      <span class="q-difficulty ${tcfg.diffCls}">${tcfg.diff}</span>
+    </div>
+    <div class="q-text">${qdata.q}</div>
+    ${body}
+    ${feedback}
+  </div>`;
+}
+
+function buildResult(tabIdx) {
+  const state = quizState[tabIdx];
+  const key = TYPE_CONFIG[state.activeType].key;
+  const arr = state.answered[key];
+  const correct = arr.filter(x=>x.correct).length;
+  const total = arr.length;
+  const pct = Math.round(correct/total*100);
+  let msg;
+  if (pct === 100) msg = '완벽해요! 모든 문제를 맞혔습니다 🎉';
+  else if (pct >= 70) msg = '잘했어요! 틀린 문제의 설명을 한 번 더 확인해 보세요.';
+  else msg = '아래 문제별 설명을 다시 읽고 복습해 보세요.';
+
+  const bars = TYPE_CONFIG.map(t => {
+    const a = state.answered[t.key];
+    const c = a.filter(x=>x && x.correct).length;
+    const p = Math.round(c/a.length*100);
+    return `<div class="mini-bar-row">
+      <div class="mini-bar-label">${t.label}</div>
+      <div class="mini-bar-track"><div class="mini-bar-fill ${t.key}" style="width:${p}%"></div></div>
+      <div class="mini-bar-pct">${c}/${a.length}</div>
+    </div>`;
+  }).join('');
+
+  return `<div class="quiz-result">
+    <div class="result-score">${correct} / ${total}</div>
+    <div class="result-msg">${msg}</div>
+    <div class="mini-bars">${bars}</div>
+    <button class="reset-btn" onclick="resetType(${tabIdx},'${key}')">다시 풀기</button>
+  </div>`;
+}
+
+function renderQuiz(tabIdx) {
+  const state = quizState[tabIdx];
+  document.getElementById(`scoreboard-${tabIdx}`).innerHTML = buildScoreboard(tabIdx);
+  document.getElementById(`typebar-${tabIdx}`).innerHTML = buildTypeBar(tabIdx);
+  document.getElementById(`progress-${tabIdx}`).style.width = buildProgressPct(tabIdx) + '%';
+
+  const key = TYPE_CONFIG[state.activeType].key;
+  const arr = state.answered[key];
+  const data = QUIZ_DATA[tabIdx][key];
+  const allAnswered = arr.every(x => x !== null);
+
+  let html = '';
+  if (allAnswered) html += buildResult(tabIdx);
+  html += data.map((qdata, qi) => buildQCard(tabIdx, key, qi, qdata)).join('');
+
+  document.getElementById(`qlist-${tabIdx}`).innerHTML = html;
+}
+
+function afterSubmit(tabIdx) {
+  const state = quizState[tabIdx];
+  const key = TYPE_CONFIG[state.activeType].key;
+  const arr = state.answered[key];
+  const nextIdx = arr.findIndex(x => x === null);
+  renderQuiz(tabIdx);
+  if (nextIdx !== -1) {
+    setTimeout(() => {
+      const el = document.getElementById(`qcard-${tabIdx}-${key}-${nextIdx}`);
+      if (el) el.scrollIntoView({behavior:'smooth', block:'center'});
+    }, 150);
+  }
+}
+
+function submitOX(tabIdx, qi, picked) {
+  const qdata = QUIZ_DATA[tabIdx].ox[qi];
+  const correct = picked === qdata.a;
+  quizState[tabIdx].answered.ox[qi] = {picked, correct};
+  afterSubmit(tabIdx);
+}
+
+function submitMC(tabIdx, typeKey, qi, picked) {
+  const qdata = QUIZ_DATA[tabIdx][typeKey][qi];
+  const correct = picked === qdata.a;
+  quizState[tabIdx].answered[typeKey][qi] = {picked, correct};
+  afterSubmit(tabIdx);
+}
+
+function switchQType(tabIdx, typeIdx) {
+  quizState[tabIdx].activeType = typeIdx;
+  renderQuiz(tabIdx);
+}
+
+function resetType(tabIdx, typeKey) {
+  quizState[tabIdx].answered[typeKey] = quizState[tabIdx].answered[typeKey].map(()=>null);
+  renderQuiz(tabIdx);
+}
+
+renderQuiz(0);
+renderQuiz(1);
+</script>
 </body>
 </html>
