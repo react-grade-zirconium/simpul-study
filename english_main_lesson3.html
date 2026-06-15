@@ -1,37 +1,846 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>영어 본문 — 3과</title>
-  <style>
-    :root{color-scheme:light;font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif}
-    *{box-sizing:border-box}
-    body{margin:0;padding:24px;background:#f6f8fc;color:#0f172a}
-    main{max-width:860px;margin:0 auto;display:grid;gap:16px}
-    section{border:1px solid #dbe3ef;border-radius:18px;background:#fff;padding:22px;box-shadow:0 12px 28px rgba(15,23,42,.08)}
-    a.back{display:inline-flex;margin-bottom:10px;color:#4338ca;text-decoration:none;font-weight:800}
-    h1{margin:0;font-size:clamp(1.5rem,4vw,2.2rem);letter-spacing:-.04em}
-    h2{margin:0 0 10px;color:#4338ca;font-size:1.05rem}
-    p,li{line-height:1.7}
-    ul{margin:0;padding-left:1.2rem}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Octopus Teacher - 3과 학습 자료</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --deep:#0b3d4c;
+    --mid:#0e7c8c;
+    --light:#5fb8c9;
+    --sand:#faf3e3;
+    --card:#ffffff;
+    --text:#243b3e;
+    --catA:#1d7874; /* 관계사·도치 */
+    --catB:#6a4c93; /* 시제·조동사·가정법 */
+    --catC:#3d7ea6; /* 분사구문·준동사 */
+    --catD:#e0703e; /* 동사구·숙어 */
+    --catE:#c98a1f; /* 문장구조·접속사·병렬 */
+    --catF:#b5546a; /* 심화 표현·관점 */
+    --syn:#3d7ea6;
+    --ant:#e0703e;
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    font-family:'Noto Sans KR', sans-serif;
+    background:var(--sand);
+    color:var(--text);
+    padding-bottom:40px;
+  }
+  header{
+    background:linear-gradient(135deg, var(--deep), var(--mid));
+    color:#fff;
+    padding:22px 18px 28px;
+    text-align:center;
+    border-radius:0 0 22px 22px;
+    box-shadow:0 4px 14px rgba(11,61,76,0.25);
+  }
+  header h1{
+    font-family:'Gowun Batang', serif;
+    font-size:24px;
+    margin:0 0 6px;
+    letter-spacing:0.5px;
+  }
+  header p{
+    margin:0;
+    font-size:13px;
+    opacity:0.9;
+  }
+  .guide{
+    max-width:680px;
+    margin:14px auto 0;
+    padding:14px 16px;
+    background:#fff;
+    border-radius:14px;
+    box-shadow:0 2px 8px rgba(11,61,76,0.08);
+    font-size:13.5px;
+    line-height:1.6;
+  }
+  .guide b{ color:var(--mid); }
+  .guide ol{ margin:6px 0 0; padding-left:20px; }
+  .guide li{ margin-bottom:2px; }
+
+  .tabs{
+    max-width:680px;
+    margin:14px auto 0;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    padding:0 4px;
+  }
+  .tab-btn{
+    flex:1 1 45%;
+    padding:11px 4px;
+    border:none;
+    border-radius:12px;
+    background:#fff;
+    color:var(--deep);
+    font-weight:700;
+    font-size:13.5px;
+    cursor:pointer;
+    box-shadow:0 2px 6px rgba(11,61,76,0.08);
+    transition:all .15s;
+  }
+  .tab-btn.active{
+    background:var(--mid);
+    color:#fff;
+  }
+
+  main{
+    max-width:680px;
+    margin:14px auto 0;
+    padding:0 8px;
+  }
+  .tab-content{ display:none; }
+  .tab-content.active{ display:block; }
+
+  .section-intro{
+    background:#fff;
+    border-radius:14px;
+    padding:12px 14px;
+    font-size:13px;
+    line-height:1.6;
+    margin-bottom:10px;
+    box-shadow:0 2px 6px rgba(11,61,76,0.06);
+  }
+
+  /* 원문 */
+  .passage-section{ margin-bottom:14px; }
+  .section-title{
+    display:inline-block;
+    background:var(--deep);
+    color:#fff;
+    font-family:'Gowun Batang', serif;
+    font-size:14px;
+    font-weight:700;
+    padding:6px 16px;
+    border-radius:14px 14px 0 0;
+  }
+  .passage-card{
+    background:var(--card);
+    border-radius:14px;
+    padding:14px 15px;
+    box-shadow:0 2px 8px rgba(11,61,76,0.07);
+  }
+  .passage-card.attached{
+    border-radius:0 14px 14px 14px;
+  }
+  .passage-para-block{
+    margin-bottom:18px;
+  }
+  .passage-para-block:last-child{ margin-bottom:0; }
+  .passage-para{
+    display:flex;
+    gap:8px;
+    align-items:flex-start;
+    margin-bottom:8px;
+    font-size:15px;
+    line-height:2.5;
+  }
+  .passage-num{
+    flex-shrink:0;
+    font-weight:700;
+    color:var(--mid);
+    font-size:14px;
+    line-height:2.5;
+  }
+  .passage-trans{
+    display:flex;
+    gap:8px;
+    align-items:flex-start;
+    background:#f4f9fa;
+    border-radius:10px;
+    padding:8px 10px;
+    font-size:13px;
+    line-height:1.7;
+    color:#5b6d70;
+  }
+  .trans-label{
+    flex-shrink:0;
+    font-size:11px;
+    font-weight:700;
+    color:var(--mid);
+    background:#fff;
+    border-radius:8px;
+    padding:1px 7px;
+    margin-top:1px;
+  }
+
+  /* 필터 칩 */
+  .chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-bottom:10px;
+  }
+  .chip{
+    padding:6px 12px;
+    border-radius:18px;
+    border:1.5px solid #ccc;
+    background:#fff;
+    font-size:12.5px;
+    font-weight:500;
+    cursor:pointer;
+    color:#555;
+    transition:all .15s;
+    white-space:nowrap;
+  }
+  .chip.active{
+    color:#fff;
+    border-color:transparent;
+  }
+  .count-info{
+    font-size:12px;
+    color:#888;
+    margin:0 2px 10px;
+    text-align:right;
+  }
+
+  /* 문법 카드 */
+  .card{
+    background:var(--card);
+    border-radius:14px;
+    padding:14px 15px;
+    margin-bottom:10px;
+    box-shadow:0 2px 8px rgba(11,61,76,0.07);
+    border-left:5px solid #ccc;
+  }
+  .card-top{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:8px;
+  }
+  .para-badge{
+    font-size:13px;
+    font-weight:700;
+    color:var(--deep);
+    background:#eaf4f5;
+    border-radius:8px;
+    padding:2px 8px;
+  }
+  .cat-tag{
+    font-size:11.5px;
+    font-weight:700;
+    padding:2px 9px;
+    border-radius:18px;
+  }
+  .en-sentence{
+    font-size:15px;
+    line-height:1.55;
+    margin:0 0 8px;
+    font-weight:500;
+  }
+  .en-sentence mark{
+    background:#ffe9a8;
+    padding:0 2px;
+    border-radius:3px;
+    font-weight:700;
+  }
+  .point-title{
+    font-size:14px;
+    font-weight:700;
+    margin:0 0 4px;
+    color:var(--deep);
+  }
+  .desc{
+    font-size:13.5px;
+    line-height:1.65;
+    margin:0;
+    color:#3f4f52;
+  }
+
+  /* 동의어/반의어 카드 */
+  .syn-card{
+    background:var(--card);
+    border-radius:14px;
+    padding:14px 15px;
+    margin-bottom:10px;
+    box-shadow:0 2px 8px rgba(11,61,76,0.07);
+  }
+  .syn-head{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:6px;
+  }
+  .syn-word{
+    font-size:16px;
+    font-weight:700;
+    font-family:'Gowun Batang', serif;
+  }
+  .syn-icon{
+    font-size:15px;
+    font-weight:900;
+    padding:1px 8px;
+    border-radius:18px;
+    color:#fff;
+  }
+  .syn-icon.syn{ background:var(--syn); }
+  .syn-icon.ant{ background:var(--ant); }
+  .syn-meaning{
+    font-size:13.5px;
+    color:#555;
+    margin:0 0 8px;
+  }
+  .syn-example{
+    font-size:13.5px;
+    line-height:1.6;
+    background:#f4f9fa;
+    border-radius:10px;
+    padding:8px 10px;
+    margin:0 0 6px;
+  }
+  .syn-example mark{
+    background:#ffe9a8;
+    padding:0 2px;
+    border-radius:3px;
+    font-weight:700;
+  }
+  .syn-note{
+    font-size:12.5px;
+    color:#777;
+    margin:0;
+  }
+
+  /* 패러프레이징 카드 */
+  .para-card{
+    background:var(--card);
+    border-radius:14px;
+    padding:14px 15px;
+    margin-bottom:10px;
+    box-shadow:0 2px 8px rgba(11,61,76,0.07);
+  }
+  .para-orig{
+    font-size:15px;
+    line-height:1.55;
+    margin:0 0 4px;
+    font-weight:500;
+  }
+  .para-num{
+    font-size:11.5px;
+    color:#999;
+    margin:0 0 4px;
+    font-weight:700;
+  }
+  .reveal-btn{
+    margin-top:8px;
+    border:1.5px solid var(--mid);
+    color:var(--mid);
+    background:#fff;
+    font-size:12.5px;
+    font-weight:700;
+    padding:6px 12px;
+    border-radius:18px;
+    cursor:pointer;
+  }
+  .reveal-btn.open{
+    background:var(--mid);
+    color:#fff;
+  }
+  .para-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+  }
+  .para-answer.show{
+    max-height:300px;
+  }
+  .para-answer-inner{
+    margin-top:10px;
+    padding:10px 12px;
+    background:#eef7f6;
+    border-radius:10px;
+    font-size:14px;
+    line-height:1.6;
+  }
+  .para-tip{
+    font-size:12.5px;
+    color:#777;
+    margin:6px 0 0;
+  }
+  .toggle-all{
+    display:block;
+    margin:0 0 10px auto;
+    border:1.5px solid var(--deep);
+    color:var(--deep);
+    background:#fff;
+    font-size:12.5px;
+    font-weight:700;
+    padding:6px 12px;
+    border-radius:18px;
+    cursor:pointer;
+  }
+
+  footer{
+    text-align:center;
+    font-size:11.5px;
+    color:#999;
+    margin-top:18px;
+    padding:0 12px;
+    line-height:1.6;
+  }
+</style>
 </head>
 <body>
-  <main>
-    <section>
-      <a class="back" href="./english_main_hub.html">← 영어 본문 선택으로</a>
-      <h1>📙 영어 본문 3과</h1>
-      <p>3과 교과서 지문을 중심으로 핵심 내용, 문장 구조, 근거 문장을 정리하는 공간입니다.</p>
-    </section>
-    <section>
-      <h2>학습 루틴</h2>
-      <ul>
-        <li>지문별 중심 내용과 주제를 한 문장으로 요약하기</li>
-        <li>관계사, 분사구문, 접속사 등 문장 구조 표시하기</li>
-        <li>문제 근거가 되는 문장을 본문에서 찾아 표시하기</li>
-      </ul>
-    </section>
-  </main>
+
+<header>
+  <h1>🐙 My Octopus Teacher</h1>
+  <p>고등학교 영어 3과 · 원문 · 문법 포인트 · 동의어·반의어 · 패러프레이징</p>
+</header>
+
+<div class="guide">
+  <b>📖 학습 가이드</b>
+  <ol>
+    <li><b>문법 포인트 · 동의어·반의어 · 패러프레이징</b>을 먼저 익힌 뒤, 각 탭의 내용을 떠올리며 <b>원문 읽기</b> 화면에 직접 표시하거나 필기해 보세요. (문법 요소에 표시하기, 동의어·반의어 떠올려 적기, 패러프레이징한 문장 적어보기 등)</li>
+    <li><b>문법 포인트</b>: 단락 순서대로 핵심 구문을 확인하고, 카테고리 칩으로 원하는 유형만 모아서 복습하세요.</li>
+    <li><b>동의어·반의어</b>: 본문 속 핵심 표현을 같은 의미(≈) / 반대 의미(↔)로 정리했어요.</li>
+    <li><b>패러프레이징</b>: 원문을 보고 스스로 바꿔 말해본 뒤, 버튼을 눌러 정답과 비교해 보세요.</li>
+  </ol>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" data-tab="passage">원문 읽기</button>
+  <button class="tab-btn" data-tab="grammar">문법 포인트</button>
+  <button class="tab-btn" data-tab="synonyms">동의어·반의어</button>
+  <button class="tab-btn" data-tab="paraphrase">패러프레이징</button>
+</div>
+
+<main>
+  <!-- 원문 -->
+  <section id="passage" class="tab-content active">
+    <div class="section-intro">
+      전체 본문과 단락별 해석입니다. 문법·동의어·반의어·패러프레이징 탭에서 익힌 내용을 떠올리며 아래 본문에 직접 표시하거나 필기해 보세요.
+    </div>
+    <div id="passageList"></div>
+  </section>
+
+  <!-- 문법 포인트 -->
+  <section id="grammar" class="tab-content">
+    <div class="section-intro">
+      단락(①~⑩) 순서대로 정리된 핵심 문법 포인트입니다. <mark style="background:#ffe9a8;padding:0 2px;border-radius:3px;">노란색 표시</mark> 부분이 해당 문법이 쓰인 핵심 어구예요.
+    </div>
+    <div class="chips" id="grammarChips"></div>
+    <div class="count-info" id="grammarCount"></div>
+    <div id="grammarList"></div>
+  </section>
+
+  <!-- 동의어/반의어 -->
+  <section id="synonyms" class="tab-content">
+    <div class="section-intro">
+      <span class="syn-icon syn" style="font-size:12px;">≈</span> 비슷한 의미(동의어) ·
+      <span class="syn-icon ant" style="font-size:12px;">↔</span> 반대 의미(반의어)로 표시했어요. 예문에서 표현이 어떻게 쓰였는지 함께 확인하세요.
+    </div>
+    <div id="synList"></div>
+  </section>
+
+  <!-- 패러프레이징 -->
+  <section id="paraphrase" class="tab-content">
+    <div class="section-intro">
+      원문을 먼저 읽고 스스로 다른 표현으로 바꿔 말해본 뒤, <b>[패러프레이징 보기]</b>를 눌러 확인하세요.
+    </div>
+    <button class="toggle-all" id="toggleAllBtn">전체 펼치기</button>
+    <div id="paraList"></div>
+  </section>
+</main>
+
+<footer>
+  본 자료는 노트 필기 및 본문 내용을 바탕으로 제작된 학습 자료입니다.
+</footer>
+
+<script>
+/* ================= 데이터 ================= */
+const circled = {1:'①',2:'②',3:'③',4:'④',5:'⑤',6:'⑥',7:'⑦',8:'⑧',9:'⑨',10:'⑩'};
+
+/* ---------- 원문 ---------- */
+const passageData = [
+{ title:null, paragraphs:[
+  {num:1, text:`I returned to the Cape of Good Hope, South Africa, where I had spent my childhood, after over 20 years of movie-making. I went diving in the cold sea off the coast of the Cape, and it was among the dense seaweed forests where I met an octopus.`,
+   tr:`나는 영화 제작 일을 20년 넘게 한 뒤, 어린 시절을 보냈던 남아프리카공화국의 케이프 오브 굿 호프로 돌아왔다. 나는 케이프 해안의 차가운 바다에서 다이빙을 했는데, 빽빽한 해초 숲 사이에서 한 문어를 만났다.`}
+]},
+{ title:'First Encounter', paragraphs:[
+  {num:2, text:`I saw a fish peacefully swimming near a heap of shells. Suddenly, an octopus sprang from the heap and grabbed the fish. Amazed at the cleverness of the octopus, I swam a little closer, but it disappeared. In fact, it had lifted a piece of seaweed, wrapped it around itself, and was staring at me out of a little gap. What an extraordinary creature! I wondered what would happen if I kept watching it. To see the world from the octopus's perspective, I left a camera near the den and started visiting regularly. I even mapped the environment around the den. Expecting some drama to come, I waited.`,
+   tr:`나는 조개껍데기 더미 근처에서 물고기 한 마리가 평화롭게 헤엄치고 있는 것을 보았다. 그때 갑자기 한 문어가 더미에서 튀어나와 그 물고기를 잡았다. 그 문어의 영리함에 놀라서 나는 조금 더 가까이 다가갔지만, 문어는 사라져 버렸다. 사실 그 문어는 해초 한 조각을 들어 올려 자기 몸에 두르고는 작은 틈 사이로 나를 빤히 쳐다보고 있었다. 정말 놀라운 생물이었다! 나는 계속 지켜본다면 어떤 일이 벌어질지 궁금했다. 문어의 시각에서 세상을 보기 위해, 나는 굴 근처에 카메라를 두고 정기적으로 그곳을 찾아가기 시작했다. 나는 굴 주변 환경의 지도를 그리기도 했다. 어떤 드라마 같은 일이 일어나기를 기대하며 나는 기다렸다.`}
+]},
+{ title:'Making Friends', paragraphs:[
+  {num:3, text:`The octopus became less scared as I visited more often. After about a month, it came near me. I put my hand out, and it reached out to me. After another week, it started to wave like a human friend saying, "Hi, I'm excited to see you." I kept still, and it covered my whole hand. Since I had to take a breath, I swam toward the surface. To my surprise, it rode on my hand all the way to the top. There I was, just staring into the eyes of this incredible creature. It sparked my curiosity in a way that I had not experienced before. Had I gained its trust? I started reading books about octopuses, but I wanted to learn more about this marvelous creature. The first thing I learned was that "it" was a "she."`,
+   tr:`내가 더 자주 찾아갈수록 문어는 점점 덜 무서워했다. 한 달쯤 지나자 문어가 내게 가까이 다가왔다. 내가 손을 내밀자, 문어도 나에게 손을 뻗었다. 일주일이 더 지난 뒤, 문어는 마치 인간 친구처럼 "안녕, 만나서 반가워"라고 말하는 듯 손을 흔들기 시작했다. 나는 가만히 있었고, 문어는 내 손 전체를 감쌌다. 숨을 쉬어야 했기 때문에 나는 수면 쪽으로 헤엄쳐 올라갔다. 놀랍게도, 문어는 내 손을 타고 맨 위까지 함께 올라왔다. 그 순간 나는 그저 이 놀라운 생물의 눈을 바라보며 서 있었다. 그것은 내가 이전에 경험해 보지 못한 방식으로 나의 호기심을 자극했다. 내가 문어의 신뢰를 얻은 것일까? 나는 문어에 관한 책을 읽기 시작했지만, 이 신비로운 생물에 대해 더 알고 싶었다. 내가 처음 알게 된 사실은 그 문어가 '그것(it)'이 아니라 '그녀(she)'였다는 것이었다.`}
+]},
+{ title:'Getting Closer', paragraphs:[
+  {num:4, text:`Danger in the form of pyjama sharks, the area's biggest predators, came with little warning in the sea. The octopus was moving around near the edge of the seaweed forest, and I saw a shark tracking her. In an instant, she swam into a crack to escape, but the shark was faster.`,
+   tr:`이 지역에서 가장 큰 포식자인 파자마 상어의 모습으로, 위험이 거의 아무런 경고도 없이 바다에 찾아왔다. 문어는 해초 숲 가장자리 근처를 돌아다니고 있었는데, 나는 상어 한 마리가 그녀를 쫓고 있는 것을 보았다. 순식간에 그녀는 도망치기 위해 틈 속으로 헤엄쳐 들어갔지만, 상어가 더 빨랐다.`},
+  {num:5, text:`The shark had taken a bite of one of her arms and was waiting for her. I wanted to save my friend, but in this environment, I could only observe. She managed to get deeper into the crack, but she was bleeding. After a while, the shark lost interest, and the octopus used the opportunity to get back to her den, without one of her arms. She was in serious danger because her arms function like the hands, legs, nose, and eyes of humans.`,
+   tr:`상어는 그녀의 다리 중 하나를 물어뜯고는 그녀를 기다리고 있었다. 나는 내 친구를 구하고 싶었지만, 이 환경에서는 그저 지켜볼 수밖에 없었다. 그녀는 겨우 틈 속 더 깊은 곳으로 들어갔지만 피를 흘리고 있었다. 잠시 후 상어는 흥미를 잃었고, 문어는 그 틈을 타 다리 하나를 잃은 채로 자신의 굴로 돌아갔다. 문어의 다리는 인간의 손, 다리, 코, 눈과 같은 역할을 하기 때문에 그녀는 심각한 위험에 빠진 상태였다.`},
+  {num:6, text:`The next day, I was relieved to see that she had survived. She was weak, and her colors were not as bright. I checked on her every day, wondering if that day would be the last. It was emotionally painful to witness these things happening to her.`,
+   tr:`다음 날, 나는 그녀가 살아남은 것을 보고 안심했다. 그녀는 약해져 있었고, 몸의 색깔도 예전만큼 밝지 않았다. 나는 혹시 오늘이 그녀의 마지막 날은 아닐지 생각하며 매일 그녀의 상태를 확인했다. 그녀에게 이런 일들이 일어나는 것을 지켜보는 것은 정서적으로 매우 고통스러운 일이었다.`}
+]},
+{ title:'Recovery, Growth, and Sacrifice', paragraphs:[
+  {num:7, text:`A short while later, I saw that the wound had healed. To my amazement, a little arm started to grow back, and she started to become active again. I started to compare my life to life in the unforgiving sea. I thought of what was valuable in life. I began to spend more time with my family and friends, and I even started to dive with my young son. He became just as interested in her as I was. As the octopus's arm became more functional, I felt things in my life were improving too.`,
+   tr:`얼마 지나지 않아, 나는 그녀의 상처가 다 나은 것을 보았다. 놀랍게도, 작은 다리 하나가 다시 자라기 시작했고, 그녀는 다시 활발해지기 시작했다. 나는 내 삶을 가혹한 바다 속의 삶에 비교해 보기 시작했다. 나는 인생에서 무엇이 가치 있는 것인지 생각했다. 나는 가족, 친구들과 더 많은 시간을 보내기 시작했고, 심지어 어린 아들과 함께 다이빙을 시작하기도 했다. 아들도 나만큼이나 그녀에게 관심을 갖게 되었다. 문어의 다리가 점점 제 기능을 회복함에 따라, 내 삶 속의 여러 일들도 나아지고 있다는 느낌이 들었다.`},
+  {num:8, text:`An octopus's average life is about a year, which ends after reproducing. One day, eight months after meeting her, I found her with another octopus. It was bittersweet knowing her final days were approaching even though she would bear young.`,
+   tr:`문어의 평균 수명은 약 1년이며, 이는 번식 이후에 끝난다. 어느 날, 그녀를 만난 지 여덟 달 만에, 나는 그녀가 다른 문어와 함께 있는 것을 발견했다. 그녀가 새끼를 낳게 되겠지만, 동시에 그녀의 마지막 날들이 다가오고 있음을 안다는 것은 달콤하면서도 씁쓸한 일이었다.`},
+  {num:9, text:`After mating, she didn't come out of her den. There would be no feeding or hunting. She was timing her final moments for the hatching of her eggs. After the eggs hatched, she died. A few months later, my son found a little octopus. We believe her story continues on.`,
+   tr:`짝짓기 후, 그녀는 굴 밖으로 나오지 않았다. 더 이상 먹이를 먹거나 사냥하는 일은 없을 것이었다. 그녀는 알이 부화할 순간에 맞춰 자신의 마지막 시간을 보내고 있었다. 알이 부화한 후, 그녀는 죽었다. 몇 달 후, 내 아들은 작은 문어 한 마리를 발견했다. 우리는 그녀의 이야기가 계속 이어지고 있다고 믿는다.`},
+  {num:10, text:`I fell in love with an octopus and the amazing wildness she represented. I built a relationship with her and witnessed her life up to the final moments. I saw her from a perspective that I could not have had without this experience. She was smart, sensitive, and strong, often going through rough and tough days just like humans do. Eventually, she committed herself to protecting the birth of her young before she died. As a human being, I found something noble in that sacrifice. She was not simply an octopus; she was a part of this world just as I am a part of it now, and in that sense, we all have our own stories to tell.`,
+   tr:`나는 한 문어와, 그녀가 보여 준 놀라운 야생성에 사랑에 빠졌다. 나는 그녀와 관계를 맺었고, 마지막 순간까지 그녀의 삶을 지켜보았다. 나는 이 경험이 없었다면 가질 수 없었을 시각으로 그녀를 바라보게 되었다. 그녀는 똑똑하고 섬세하며 강인했고, 인간들이 그러하듯 종종 힘들고 어려운 날들을 겪어 나갔다. 결국 그녀는 죽기 전에 새끼의 탄생을 지키는 데 자신을 헌신했다. 한 인간으로서, 나는 그 희생 속에서 고귀한 무언가를 발견했다. 그녀는 단순한 문어가 아니었다. 그녀는 지금의 내가 그러하듯 이 세상의 일부였고, 그런 의미에서 우리 모두는 각자의 이야기를 가지고 있다.`}
+]}
+];
+
+const catNames = {
+  A:'관계사·도치',
+  B:'시제·조동사·가정법',
+  C:'분사구문·준동사',
+  D:'동사구·숙어',
+  E:'문장구조·접속사·병렬',
+  F:'심화 표현·관점'
+};
+const catColors = {
+  A:'var(--catA)', B:'var(--catB)', C:'var(--catC)',
+  D:'var(--catD)', E:'var(--catE)', F:'var(--catF)'
+};
+
+const grammarData = [
+{para:1, cat:'A', title:'관계부사의 계속적 용법 (where = and there)',
+ en:`I returned to the Cape of Good Hope, South Africa, <mark>where I had spent my childhood</mark>, after over 20 years of movie-making.`,
+ desc:`콤마(,) 뒤에 이어지는 where는 South Africa를 보충 설명하는 관계부사의 <b>계속적 용법</b>으로, '그리고 그곳에서(and there)'라는 의미를 덧붙입니다.`},
+
+{para:1, cat:'B', title:'과거완료 (had spent)',
+ en:`I returned to the Cape of Good Hope, South Africa, where I <mark>had spent</mark> my childhood, after over 20 years of movie-making.`,
+ desc:`주절의 동사 returned(과거)보다 <b>더 이전 시점</b>에 있었던 일을 나타내는 과거완료입니다. (어린 시절을 보낸 것 → 돌아온 것보다 먼저)`},
+
+{para:1, cat:'D', title:`go + V-ing (~하러 가다)`,
+ en:`I <mark>went diving</mark> in the cold sea off the coast of the Cape, and it was among the dense seaweed forests where I met an octopus.`,
+ desc:`'go + 동명사'는 '~하러 가다'라는 의미의 관용 표현입니다. (go shopping, go swimming과 같은 패턴)`},
+
+{para:1, cat:'A', title:`it ~ where 구문 (장소 강조)`,
+ en:`I went diving in the cold sea off the coast of the Cape, and <mark>it was among the dense seaweed forests where I met an octopus</mark>.`,
+ desc:`'it was + 장소 + where ~' 구조로, 문어를 만난 장소가 '빽빽한 해초 숲 사이'였음을 부각합니다. 강조구문(It was ... that ~)과 비슷하게 핵심 정보를 강조하는 역할을 합니다.`},
+
+{para:2, cat:'C', title:'지각동사 + 목적어 + 현재분사(V-ing)',
+ en:`I <mark>saw a fish peacefully swimming</mark> near a heap of shells.`,
+ desc:`지각동사(see, watch, hear 등) + 목적어 + 현재분사는 '목적어가 ~하고 있는 것을 보다/듣다'라는 의미이며, 목적어와 분사는 <b>능동 관계</b>입니다.`},
+
+{para:2, cat:'E', title:'병렬구조 (V1 and V2)',
+ en:`Suddenly, an octopus <mark>sprang</mark> from the heap <mark>and</mark> <mark>grabbed</mark> the fish.`,
+ desc:`sprang과 grabbed가 and로 연결된 병렬구조로, 둘 다 주어 an octopus에 대한 동사입니다.`},
+
+{para:2, cat:'C', title:'분사구문 (Amazed at ~)',
+ en:`<mark>Amazed at the cleverness of the octopus</mark>, I swam a little closer, but it disappeared.`,
+ desc:`= "As I was amazed at the cleverness of the octopus,". 부사절의 주어(I)가 주절의 주어와 같아서 'As I was'가 생략되고 과거분사(Amazed)로 시작하는 분사구문이 되었습니다.`},
+
+{para:2, cat:'B', title:'과거완료 (had lifted)',
+ en:`In fact, it <mark>had lifted</mark> a piece of seaweed, wrapped it around itself, and was staring at me out of a little gap.`,
+ desc:`문어가 사라진 것(disappeared, 과거)보다 <b>더 이전</b>에 해초를 들어 올린 행동이 있었음을 나타내는 과거완료입니다.`},
+
+{para:2, cat:'E', title:'병렬구조 + 과거진행(동작의 지속 강조)',
+ en:`In fact, it had lifted a piece of seaweed, <mark>wrapped</mark> it around itself, <mark>and was staring</mark> at me out of a little gap.`,
+ desc:`had lifted, wrapped, was staring가 모두 it(문어)을 주어로 하는 병렬구조입니다. 마지막 was staring는 과거진행형으로 '계속 응시하고 있던' 동작의 지속을 강조합니다.`},
+
+{para:2, cat:'B', title:'조동사 would (간접의문문 속 미래 추측, 가정법 아님)',
+ en:`I wondered <mark>what would happen</mark> if I kept watching it.`,
+ desc:`wondered의 목적어인 명사절(간접의문문) "what would happen if ~"에서 would는 가정법이 아니라, '~할지'라는 미래에 대한 추측을 나타내는 조동사의 과거형(시제 일치)입니다.`},
+
+{para:2, cat:'C', title:'to부정사의 부사적 용법 (목적: ~하기 위해서)',
+ en:`<mark>To see the world from the octopus's perspective</mark>, I left a camera near the den and started visiting regularly.`,
+ desc:`문장 맨 앞에 온 to부정사는 '~하기 위해서'라는 목적을 나타내는 부사적 용법입니다. (= In order to see ~)`},
+
+{para:2, cat:'C', title:'분사구문 (Expecting ~)',
+ en:`<mark>Expecting some drama to come</mark>, I waited.`,
+ desc:`= "As I expected some drama to come,". 주어(I)가 주절과 같아 능동 분사구문(Expecting ~)으로 표현되었습니다.`},
+
+{para:3, cat:'E', title:`접속사 as (~함에 따라, ~할수록)`,
+ en:`The octopus became less scared <mark>as</mark> I visited more often.`,
+ desc:`여기서 as는 '~함에 따라, ~할수록'이라는 의미의 접속사로, 두 가지 일(문어가 덜 무서워하는 것 / 작가가 더 자주 방문하는 것)이 함께 점진적으로 진행됨을 나타냅니다.`},
+
+{para:3, cat:'E', title:`keep + 형용사 (2형식, 주격보어)`,
+ en:`I <mark>kept still</mark>, and it covered my whole hand.`,
+ desc:`keep이 2형식 동사로 쓰일 때 'keep + 형용사(주격보어)' 형태로 '계속 ~한 상태를 유지하다'라는 의미입니다. still은 부사가 아니라 '가만히 있는, 정지한'이라는 뜻의 형용사입니다.`},
+
+{para:3, cat:'F', title:`To + 소유격 + 감정명사 (~하게도)`,
+ en:`<mark>To my surprise</mark>, it rode on my hand all the way to the top.`,
+ desc:`'To + 소유격 + 감정명사'는 '~가 …하게도'라는 의미의 부사구입니다. = "I was surprised that it rode on my hand all the way to the top."로 바꿔 쓸 수 있습니다.`},
+
+{para:3, cat:'A', title:'도치구문 (There + 주어 + 동사)',
+ en:`<mark>There I was</mark>, just staring into the eyes of this incredible creature.`,
+ desc:`'There + 주어 + 동사'의 도치구문으로 장면을 생동감 있게 묘사합니다. 이어지는 "just staring ~"은 분사구문(= as I was just staring ~)입니다.`},
+
+{para:3, cat:'A', title:'의문문 도치 (Had + 주어 + p.p.)',
+ en:`<mark>Had I gained</mark> its trust?`,
+ desc:`과거완료 의문문에서 had가 주어 앞으로 나온 도치 형태입니다. (had + 주어 + 과거분사 ~?)`},
+
+{para:4, cat:'E', title:'동격 (Apposition)',
+ en:`Danger in the form of pyjama sharks, <mark>the area's biggest predators</mark>, came with little warning in the sea.`,
+ desc:`콤마 사이의 "the area's biggest predators"는 앞의 pyjama sharks와 <b>동격</b> 관계로, pyjama sharks에 대한 추가 설명을 제공합니다.`},
+
+{para:4, cat:'C', title:'지각동사 + 목적어 + 현재분사 (재등장)',
+ en:`The octopus was moving around near the edge of the seaweed forest, and I <mark>saw a shark tracking her</mark>.`,
+ desc:`'지각동사 + 목적어 + 현재분사' 구조로, '상어가 그녀를 추적하고 있는 것을 보았다'는 의미입니다.`},
+
+{para:4, cat:'C', title:'to부정사의 부사적 용법 (목적)',
+ en:`In an instant, she swam into a crack <mark>to escape</mark>, but the shark was faster.`,
+ desc:`to escape는 '도망치기 위해서'라는 목적을 나타내는 부사적 용법의 to부정사입니다.`},
+
+{para:5, cat:'D', title:'manage to + V (겨우/성공적으로 ~해내다)',
+ en:`She <mark>managed to get</mark> deeper into the crack, but she was bleeding.`,
+ desc:`'manage to + 동사원형'은 '(어렵게) ~해내다, 겨우 ~하다'라는 의미의 동사구입니다.`},
+
+{para:5, cat:'C', title:'가주어 it + to부정사 (+ 지각동사 구조)',
+ en:`<mark>It</mark> was emotionally painful <mark>to witness these things happening to her</mark>.`,
+ desc:`It은 가주어, to witness 이하가 진주어입니다. 그 안에는 'witness(지각동사) + these things(목적어) + happening(현재분사)' 구조도 들어 있습니다.`},
+
+{para:6, cat:'C', title:'분사구문 (wondering ~, 동시동작)',
+ en:`I checked on her every day, <mark>wondering if that day would be the last</mark>.`,
+ desc:`= "while I wondered if that day would be the last." 주절의 동작과 동시에 일어나는 일을 나타내는 분사구문입니다.`},
+
+{para:7, cat:'B', title:'과거완료 (had healed)',
+ en:`A short while later, I saw that the wound <mark>had healed</mark>.`,
+ desc:`saw(과거)보다 <b>더 이전</b>에 상처가 이미 다 나아 있었던 상태를 나타내는 과거완료입니다.`},
+
+{para:7, cat:'F', title:`To + 소유격 + 감정명사 (재등장)`,
+ en:`<mark>To my amazement</mark>, a little arm started to grow back, and she started to become active again.`,
+ desc:`= "I was amazed that a little arm started to grow back, and she started to become active again." 14번과 같은 'To + 소유격 + 감정명사' 구문입니다.`},
+
+{para:8, cat:'A', title:'관계대명사의 계속적 용법 (which)',
+ en:`An octopus's average life is about a year, <mark>which ends after reproducing</mark>.`,
+ desc:`콤마 + which는 앞 내용(약 1년이라는 평균 수명)을 받는 관계대명사의 <b>계속적 용법</b>으로, '그런데 그것은 번식 후에 끝난다'는 추가 설명을 덧붙입니다.`},
+
+{para:9, cat:'B', title:'조동사 would (미래의 과거, 시제 일치)',
+ en:`After mating, she didn't come out of her den. <mark>There would be no feeding or hunting.</mark>`,
+ desc:`주절의 시점이 과거이므로, 그 시점을 기준으로 한 미래의 일은 will 대신 would로 표현됩니다. '더 이상 먹이를 먹거나 사냥하는 일이 없을 것이었다'는 의미입니다.`},
+
+{para:10, cat:'B', title:'가정법 과거완료 (조동사의 과거형 + have + p.p.)',
+ en:`I saw her from a perspective that I <mark>could not have had</mark> without this experience.`,
+ desc:`'could not have had'는 '(과거에) ~할 수 없었을 것이다'라는 의미로, 가정법 과거완료의 주절과 같은 형태입니다. = "If I had not had this experience, I could not have had this perspective." (이 경험이 없었다면 이런 시각을 가질 수 없었을 것이다)`},
+
+{para:10, cat:'D', title:'go through + 명사 / 대동사 do',
+ en:`She was smart, sensitive, and strong, often <mark>going through</mark> rough and tough days just like humans <mark>do</mark>.`,
+ desc:`going through는 '겪다, 거쳐 가다'라는 뜻의 동사구입니다. 문장 끝의 do는 앞의 "go through rough and tough days"를 대신하는 <b>대동사</b>입니다.`},
+
+{para:10, cat:'F', title:'주제 표현: ecocentrism ↔ anthropocentrism',
+ en:`She was not simply an octopus; she was a part of this world just as I am a part of it now, and in that sense, we all have our own stories to tell.`,
+ desc:`이 문장은 인간을 중심에 두는 <b>인간중심주의(anthropocentrism)</b>와 대비되는 <b>생태중심주의(ecocentrism)</b>적 관점을 보여줍니다. 글쓴이가 문어를 '하나의 동물'이 아니라 '세상을 함께 이루는 존재'로 인식하게 된 태도 변화를 나타냅니다.`},
+];
+
+const synData = [
+{type:'ant', words:'dense ↔ sparse', meaning:'빽빽한 ↔ 희박한, 드문드문한',
+ example:`...it was among the <mark>dense</mark> seaweed forests where I met an octopus.`,
+ note:`해초 숲이 '빽빽하다(dense)'는 표현. 반대말은 '드문드문한(sparse)'.`},
+
+{type:'syn', words:'unforgiving ≈ harsh, severe', meaning:'가혹한, 무자비한 (↔ gentle, calm, merciful)',
+ example:`I started to compare my life to life in the <mark>unforgiving</mark> sea.`,
+ note:`unforgiving은 harsh, severe와 의미가 통하며, 반대로는 gentle, calm, merciful 등을 떠올릴 수 있습니다.`},
+
+{type:'syn', words:'manage to + V ≈ succeed in + V-ing', meaning:'(어렵게) ~해내다, 겨우 ~하다',
+ example:`She <mark>managed to get</mark> deeper into the crack, but she was bleeding.`,
+ note:`힘든 상황 속에서 '결국 ~해내다'라는 뉘앙스를 가진 표현입니다.`},
+
+{type:'syn', words:'go through ≈ experience, undergo', meaning:'겪다, 거쳐 가다',
+ example:`...often <mark>going through</mark> rough and tough days just like humans do.`,
+ note:`힘든 시간을 '겪다, 통과하다'라는 의미로 experience, undergo와 바꿔 쓸 수 있습니다.`},
+
+{type:'syn', words:'commit oneself to + V-ing ≈ devote/dedicate oneself to + V-ing', meaning:'~하는 데 헌신하다',
+ example:`Eventually, she <mark>committed herself to</mark> protecting the birth of her young before she died.`,
+ note:`자신을 어떤 일에 바치는 것을 의미하며, devote oneself to, dedicate oneself to와 같은 의미입니다.`},
+
+{type:'syn', words:'bear young ≈ give birth (to)', meaning:'새끼를 낳다',
+ example:`It was bittersweet knowing her final days were approaching even though she <mark>would bear young</mark>.`,
+ note:`bear의 불규칙 변화에 주의: bear - bore - born(e). give birth to와 같은 의미입니다.`},
+
+{type:'ant', words:'ecocentrism ↔ anthropocentrism', meaning:'생태중심주의 ↔ 인간중심주의',
+ example:`She was not simply an octopus; she was a part of this world just as I am a part of it now...`,
+ note:`글쓴이가 문어와의 경험을 통해 인간중심주의에서 생태중심주의적 시각으로 변화해 가는 모습을 보여주는 핵심 개념 쌍입니다.`},
+];
+
+const paraData = [
+{en:`Amazed at the cleverness of the octopus, I swam a little closer.`,
+ re:`As I was amazed at the cleverness of the octopus, I swam a little closer.`,
+ tip:`분사구문 → 「As + 주어 + be동사 + p.p.」 부사절로 풀어 쓰기`},
+
+{en:`Expecting some drama to come, I waited.`,
+ re:`As I expected some drama to come, I waited.`,
+ tip:`분사구문 → 「As + 주어 + 동사」 부사절로 풀어 쓰기`},
+
+{en:`To my surprise, it rode on my hand all the way to the top.`,
+ re:`I was surprised that it rode on my hand all the way to the top.`,
+ tip:`「To + 소유격 + 감정명사」 → 「I was + 감정형용사 + that ~」`},
+
+{en:`To my amazement, a little arm started to grow back, and she started to become active again.`,
+ re:`I was amazed that a little arm started to grow back, and she started to become active again.`,
+ tip:`「To my amazement」 → 「I was amazed that ~」`},
+
+{en:`I checked on her every day, wondering if that day would be the last.`,
+ re:`I checked on her every day while I wondered if that day would be the last.`,
+ tip:`분사구문(wondering ~) → 「while + 주어 + 동사」 부사절`},
+
+{en:`I saw her from a perspective that I could not have had without this experience.`,
+ re:`If I had not had this experience, I could not have had this perspective on her.`,
+ tip:`「could not have had」 → 가정법 과거완료 「If + 주어 + had not + p.p., 주어 + could not have + p.p.」`},
+
+{en:`She was smart, sensitive, and strong, often going through rough and tough days just like humans do.`,
+ re:`She was smart, sensitive, and strong, often experiencing rough and tough days just as humans experience rough and tough days.`,
+ tip:`go through → experience / 대동사 do → 앞에 나온 동사구 그대로 풀어쓰기`},
+
+{en:`Eventually, she committed herself to protecting the birth of her young before she died.`,
+ re:`Eventually, she devoted herself to protecting the birth of her young before she died.`,
+ tip:`commit oneself to ≈ devote oneself to`},
+
+{en:`She swam into a crack to escape, but the shark was faster.`,
+ re:`She swam into a crack in order to escape, but the shark was faster.`,
+ tip:`to부정사(목적) → in order to + V`},
+];
+
+/* ================= 렌더링: 원문 ================= */
+function renderPassage(){
+  const wrap = document.getElementById('passageList');
+  wrap.innerHTML = passageData.map(sec=>{
+    const paras = sec.paragraphs.map(p=>`
+      <div class="passage-para-block">
+        <div class="passage-para">
+          <span class="passage-num">${circled[p.num]}</span>
+          <span>${p.text}</span>
+        </div>
+        <div class="passage-trans">
+          <span class="trans-label">해석</span>
+          <span>${p.tr}</span>
+        </div>
+      </div>
+    `).join('');
+    if(sec.title){
+      return `
+        <div class="passage-section">
+          <div class="section-title">${sec.title}</div>
+          <div class="passage-card attached">${paras}</div>
+        </div>`;
+    }
+    return `
+      <div class="passage-section">
+        <div class="passage-card">${paras}</div>
+      </div>`;
+  }).join('');
+}
+
+/* ================= 렌더링: 문법 ================= */
+function renderGrammarChips(){
+  const wrap = document.getElementById('grammarChips');
+  const cats = ['all', ...Object.keys(catNames)];
+  wrap.innerHTML = cats.map(c=>{
+    const label = c==='all' ? '전체' : catNames[c];
+    const color = c==='all' ? 'var(--deep)' : catColors[c];
+    return `<button class="chip" data-cat="${c}" style="--c:${color}">${label}</button>`;
+  }).join('');
+  wrap.querySelectorAll('.chip').forEach((chip,i)=>{
+    if(i===0) chip.classList.add('active');
+    chip.style.borderColor = i===0 ? 'var(--deep)' : '#ccc';
+    if(i===0){ chip.style.background='var(--deep)'; }
+    chip.addEventListener('click', ()=>{
+      wrap.querySelectorAll('.chip').forEach(c2=>{
+        c2.classList.remove('active');
+        c2.style.background='#fff';
+        c2.style.color='#555';
+        c2.style.borderColor='#ccc';
+      });
+      chip.classList.add('active');
+      const col = chip.style.getPropertyValue('--c');
+      chip.style.background = col;
+      chip.style.color = '#fff';
+      chip.style.borderColor = col;
+      renderGrammarList(chip.dataset.cat);
+    });
+  });
+}
+
+function renderGrammarList(filter){
+  const list = document.getElementById('grammarList');
+  const items = filter==='all' ? grammarData : grammarData.filter(g=>g.cat===filter);
+  document.getElementById('grammarCount').textContent = `총 ${items.length}개 항목`;
+  list.innerHTML = items.map(g=>`
+    <div class="card" style="border-left-color:${catColors[g.cat]}">
+      <div class="card-top">
+        <span class="para-badge">${circled[g.para]} 단락</span>
+        <span class="cat-tag" style="color:${catColors[g.cat]};background:${catColors[g.cat]}1a">${catNames[g.cat]}</span>
+      </div>
+      <p class="en-sentence">${g.en}</p>
+      <p class="point-title">📌 ${g.title}</p>
+      <p class="desc">${g.desc}</p>
+    </div>
+  `).join('');
+}
+
+/* ================= 렌더링: 동의어/반의어 ================= */
+function renderSyn(){
+  const list = document.getElementById('synList');
+  list.innerHTML = synData.map(s=>`
+    <div class="syn-card">
+      <div class="syn-head">
+        <span class="syn-icon ${s.type}">${s.type==='syn'?'≈':'↔'}</span>
+        <span class="syn-word">${s.words}</span>
+      </div>
+      <p class="syn-meaning">${s.meaning}</p>
+      <p class="syn-example">${s.example}</p>
+      <p class="syn-note">${s.note}</p>
+    </div>
+  `).join('');
+}
+
+/* ================= 렌더링: 패러프레이징 ================= */
+function renderPara(){
+  const list = document.getElementById('paraList');
+  list.innerHTML = paraData.map((p,i)=>`
+    <div class="para-card">
+      <p class="para-num">원문 ${i+1}</p>
+      <p class="para-orig">${p.en}</p>
+      <button class="reveal-btn" data-i="${i}">패러프레이징 보기</button>
+      <div class="para-answer" id="ans-${i}">
+        <div class="para-answer-inner">
+          <p style="margin:0;">${p.re}</p>
+          <p class="para-tip">💡 ${p.tip}</p>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  list.querySelectorAll('.reveal-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const i = btn.dataset.i;
+      const ans = document.getElementById('ans-'+i);
+      const open = ans.classList.toggle('show');
+      btn.classList.toggle('open', open);
+      btn.textContent = open ? '패러프레이징 숨기기' : '패러프레이징 보기';
+    });
+  });
+}
+
+document.getElementById('toggleAllBtn').addEventListener('click', function(){
+  const expand = this.textContent === '전체 펼치기';
+  document.querySelectorAll('.para-answer').forEach(a=>a.classList.toggle('show', expand));
+  document.querySelectorAll('.reveal-btn').forEach(b=>{
+    b.classList.toggle('open', expand);
+    b.textContent = expand ? '패러프레이징 숨기기' : '패러프레이징 보기';
+  });
+  this.textContent = expand ? '전체 접기' : '전체 펼치기';
+});
+
+/* ================= 탭 전환 ================= */
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+/* ================= 초기화 ================= */
+renderPassage();
+renderGrammarChips();
+renderGrammarList('all');
+renderSyn();
+renderPara();
+</script>
 </body>
 </html>
