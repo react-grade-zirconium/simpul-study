@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-label="1977년에서 2022년까지 국토 용도별 이용 면적 변화 표">
+<style>
+  .viz-title{font:700 15px 'Noto Sans KR',Arial,sans-serif;fill:#202124}
+  .viz-label{font:700 13px 'Noto Sans KR',Arial,sans-serif;fill:#3c4043}
+  .viz-small{font:500 11px 'Noto Sans KR',Arial,sans-serif;fill:#5f6368}
+  .viz-axis{stroke:#9aa0a6;stroke-width:1.5}
+  .viz-grid{stroke:#e8eaed;stroke-width:1}
+  .viz-blue{fill:#1a73e8}.viz-green{fill:#34a853}.viz-yellow{fill:#f9ab00}.viz-red{fill:#ea4335}.viz-purple{fill:#8430ce}.viz-orange{fill:#e37400}
+  .viz-line-blue{fill:none;stroke:#1a73e8;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-green{fill:none;stroke:#34a853;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-red{fill:none;stroke:#ea4335;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-yellow{fill:none;stroke:#f9ab00;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-purple{fill:none;stroke:#8430ce;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+  .viz-note{font:700 12px 'Noto Sans KR',Arial,sans-serif;fill:#1a73e8}
+</style>
+<rect width="100%" height="100%" rx="10" fill="#ffffff"/>
+<rect x="20" y="12" width="720" height="230" rx="12" fill="#fff5f3" stroke="#efc9c5"/><text x="240" y="44" class="viz-title">1977년</text><text x="460" y="44" class="viz-title">2022년</text><line x1="190" y1="58" x2="190" y2="220" stroke="#efb7b2" stroke-width="3"/><g stroke="#efc9c5" stroke-dasharray="12 10"><line x1="20" y1="58" x2="740" y2="58"/><line x1="20" y1="100" x2="740" y2="100"/><line x1="20" y1="143" x2="740" y2="143"/><line x1="20" y1="186" x2="740" y2="186"/></g><g class="viz-label"><text x="92" y="88">임야</text><text x="92" y="132">논밭</text><text x="92" y="175">대지</text><text x="92" y="218">도로</text></g><g class="viz-label"><text x="215" y="88">65,660km²</text><text x="430" y="88">63,427km²</text><text x="215" y="132">22,144km²</text><text x="430" y="132">18,487km²</text><text x="215" y="175">1,760km²</text><text x="430" y="175">3,342km²</text><text x="215" y="218">1,612km²</text><text x="430" y="218">3,453km²</text></g><g font-size="28"><text x="40" y="90">🌲</text><text x="40" y="134">🌾</text><text x="40" y="177">🏢</text><text x="40" y="220">🛣️</text></g><g fill="#2d6f9f" class="viz-label"><text x="640" y="82">3.4%</text><text x="640" y="100">감소↓</text><text x="640" y="126">16.5%</text><text x="640" y="144">감소↓</text></g><g fill="#9b111e" class="viz-label"><text x="640" y="170">89.9%</text><text x="640" y="188">증가↑</text><text x="640" y="213">114%</text><text x="640" y="231">증가↑</text></g><text x="360" y="90" fill="#d88f96" font-size="34">→</text><text x="360" y="134" fill="#d88f96" font-size="34">→</text><text x="360" y="177" fill="#d88f96" font-size="34">→</text><text x="360" y="220" fill="#d88f96" font-size="34">→</text>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-label="초기, 가속화, 종착 단계가 표시된 S자형 도시화 곡선">
+<style>
+  .viz-title{font:700 15px 'Noto Sans KR',Arial,sans-serif;fill:#202124}
+  .viz-label{font:700 13px 'Noto Sans KR',Arial,sans-serif;fill:#3c4043}
+  .viz-small{font:500 11px 'Noto Sans KR',Arial,sans-serif;fill:#5f6368}
+  .viz-axis{stroke:#9aa0a6;stroke-width:1.5}
+  .viz-grid{stroke:#e8eaed;stroke-width:1}
+  .viz-blue{fill:#1a73e8}.viz-green{fill:#34a853}.viz-yellow{fill:#f9ab00}.viz-red{fill:#ea4335}.viz-purple{fill:#8430ce}.viz-orange{fill:#e37400}
+  .viz-line-blue{fill:none;stroke:#1a73e8;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-green{fill:none;stroke:#34a853;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-red{fill:none;stroke:#ea4335;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-yellow{fill:none;stroke:#f9ab00;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-purple{fill:none;stroke:#8430ce;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+  .viz-note{font:700 12px 'Noto Sans KR',Arial,sans-serif;fill:#1a73e8}
+</style>
+<rect width="100%" height="100%" rx="10" fill="#ffffff"/>
+<text x="18" y="24" class="viz-title">도시화 곡선</text><rect x="145" y="35" width="420" height="190" fill="#fff" stroke="#3c4043"/><line x1="145" y1="225" x2="565" y2="225" class="viz-axis"/><line x1="145" y1="225" x2="145" y2="35" class="viz-axis"/><text x="112" y="52" class="viz-small">100(%)</text><text x="115" y="220" class="viz-small">0</text><text x="575" y="232" class="viz-label">시간 →</text><text x="93" y="125" class="viz-label" transform="rotate(-90 93 125)">도시화율</text><path d="M160 195 C250 195 290 174 330 115 S405 48 550 48" fill="none" stroke="#80868b" stroke-width="5" stroke-linecap="round"/><text x="175" y="205" class="viz-label">초기 단계</text><text x="330" y="120" class="viz-label" transform="rotate(-55 330 120)">가속화 단계</text><text x="465" y="72" class="viz-label">종착 단계</text>
+</svg>

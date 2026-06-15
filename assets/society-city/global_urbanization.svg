@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-label="대륙별 도시화율 변화 다중 꺾은선그래프">
+<style>
+  .viz-title{font:700 15px 'Noto Sans KR',Arial,sans-serif;fill:#202124}
+  .viz-label{font:700 13px 'Noto Sans KR',Arial,sans-serif;fill:#3c4043}
+  .viz-small{font:500 11px 'Noto Sans KR',Arial,sans-serif;fill:#5f6368}
+  .viz-axis{stroke:#9aa0a6;stroke-width:1.5}
+  .viz-grid{stroke:#e8eaed;stroke-width:1}
+  .viz-blue{fill:#1a73e8}.viz-green{fill:#34a853}.viz-yellow{fill:#f9ab00}.viz-red{fill:#ea4335}.viz-purple{fill:#8430ce}.viz-orange{fill:#e37400}
+  .viz-line-blue{fill:none;stroke:#1a73e8;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-green{fill:none;stroke:#34a853;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-red{fill:none;stroke:#ea4335;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-yellow{fill:none;stroke:#f9ab00;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-purple{fill:none;stroke:#8430ce;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+  .viz-note{font:700 12px 'Noto Sans KR',Arial,sans-serif;fill:#1a73e8}
+</style>
+<rect width="100%" height="100%" rx="10" fill="#ffffff"/>
+<text x="18" y="24" class="viz-title">지역(대륙)별 도시화율 변화</text><line x1="70" y1="210" x2="720" y2="210" class="viz-axis"/><line x1="70" y1="45" x2="70" y2="210" class="viz-axis"/><g opacity=".6"><line x1="70" y1="177" x2="720" y2="177" class="viz-grid"/><line x1="70" y1="144" x2="720" y2="144" class="viz-grid"/><line x1="70" y1="111" x2="720" y2="111" class="viz-grid"/><line x1="70" y1="78" x2="720" y2="78" class="viz-grid"/></g><polyline points="95,106 200,84 305,72 410,72 515,64 620,53 705,47" fill="none" stroke="#202124" stroke-width="4"/><polyline points="95,139 200,128 305,112 410,96 515,82 620,73 705,66" fill="none" stroke="#9aa0a6" stroke-width="4" stroke-dasharray="5 5"/><polyline points="95,105 200,90 305,82 410,79 515,80 620,84 705,83" fill="none" stroke="#5f6368" stroke-width="4" stroke-dasharray="12 5 3 5"/><polyline points="95,176 200,164 305,158 410,143 515,125 620,101 705,83" fill="none" stroke="#80868b" stroke-width="4"/><polyline points="95,190 200,180 305,160 410,145 515,129 620,112 705,96" fill="none" stroke="#202124" stroke-width="4" stroke-dasharray="8 4 2 4"/><text x="560" y="51" class="viz-label">앵글로아메리카</text><text x="520" y="73" class="viz-label">라틴 아메리카</text><text x="95" y="132" class="viz-label">유럽</text><text x="535" y="116" class="viz-label">아시아</text><text x="615" y="130" class="viz-label">아프리카</text><g class="viz-small"><text x="85" y="232">1950</text><text x="190" y="232">1960</text><text x="295" y="232">1970</text><text x="400" y="232">1980</text><text x="505" y="232">1990</text><text x="610" y="232">2000</text><text x="690" y="232">2020</text></g>
+</svg>

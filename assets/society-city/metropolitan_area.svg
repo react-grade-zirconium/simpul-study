@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-label="중심 도시와 교외 지역, 위성 도시가 연결되는 대도시권 형성 모식도">
+<style>
+  .viz-title{font:700 15px 'Noto Sans KR',Arial,sans-serif;fill:#202124}
+  .viz-label{font:700 13px 'Noto Sans KR',Arial,sans-serif;fill:#3c4043}
+  .viz-small{font:500 11px 'Noto Sans KR',Arial,sans-serif;fill:#5f6368}
+  .viz-axis{stroke:#9aa0a6;stroke-width:1.5}
+  .viz-grid{stroke:#e8eaed;stroke-width:1}
+  .viz-blue{fill:#1a73e8}.viz-green{fill:#34a853}.viz-yellow{fill:#f9ab00}.viz-red{fill:#ea4335}.viz-purple{fill:#8430ce}.viz-orange{fill:#e37400}
+  .viz-line-blue{fill:none;stroke:#1a73e8;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-green{fill:none;stroke:#34a853;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-red{fill:none;stroke:#ea4335;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-yellow{fill:none;stroke:#f9ab00;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-purple{fill:none;stroke:#8430ce;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+  .viz-note{font:700 12px 'Noto Sans KR',Arial,sans-serif;fill:#1a73e8}
+</style>
+<rect width="100%" height="100%" rx="10" fill="#ffffff"/>
+<text x="18" y="24" class="viz-title">교외화와 대도시권 형성</text><rect x="40" y="50" width="680" height="155" fill="#f9fbff" stroke="#202124" stroke-dasharray="8 6"/><ellipse cx="380" cy="150" rx="325" ry="55" fill="#d9eaff" stroke="#2962ff" stroke-width="3"/><ellipse cx="380" cy="150" rx="70" ry="34" fill="#ff4949" stroke="#2962ff" stroke-width="2"/><text x="350" y="154" fill="#fff" font-size="14" font-weight="700">중심도시</text><line x1="295" y1="55" x2="295" y2="190" stroke="#202124" stroke-dasharray="8 6"/><line x1="465" y1="55" x2="465" y2="190" stroke="#202124" stroke-dasharray="8 6"/><text x="300" y="42" class="viz-label">대도시권 (=중심도시+대도시 영향권)</text><text x="320" y="72" class="viz-label">중심도시</text><text x="520" y="72" class="viz-label">교외 지역</text><g fill="#e0d2c0"><ellipse cx="90" cy="145" rx="38" ry="16"/><ellipse cx="245" cy="105" rx="38" ry="16"/><ellipse cx="520" cy="180" rx="38" ry="16"/><ellipse cx="655" cy="135" rx="38" ry="16"/></g><g fill="#bff5ff" stroke="#2962ff" stroke-width="2"><ellipse cx="190" cy="120" rx="24" ry="16"/><ellipse cx="525" cy="105" rx="24" ry="16"/><ellipse cx="590" cy="160" rx="24" ry="16"/></g><path d="M190 120 C260 135 305 145 380 150 C470 158 525 160 590 160" fill="none" stroke="#2962ff" stroke-width="2"/><text x="170" y="148" class="viz-small">주변 도시(위성도시·신도시 등)</text><text x="610" y="188" class="viz-small">근교농촌지역</text>
+</svg>

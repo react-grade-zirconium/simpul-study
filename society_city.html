@@ -99,6 +99,13 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .chart-placeholder .ch{font-size:11px;opacity:.7;}
 .chart-caption{font-size:13px;font-weight:700;color:var(--text-sec);margin-bottom:10px;}
 
+
+
+/* ── ASSET FIGURES ── */
+.asset-figure{background:linear-gradient(180deg,#fff,#f8fbff);border:1px solid #d7e3f8;border-radius:10px;padding:12px;min-height:200px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.asset-img{display:block;width:100%;height:auto;max-height:360px;object-fit:contain;}
+.chart-grid .asset-figure{min-height:180px;}
+
 /* ── STEP LIST ── */
 .step-list{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
 .step-item{display:flex;align-items:flex-start;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
@@ -270,11 +277,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 내용: 농림어업·광공업·서비스업 비율 변화 / 출처: 통계청, 2023 (산업별 취업자 수 기준) -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 우리나라의 산업 구조 변화 (1970~2022)</p>
-<div class="chart-placeholder">
-<span class="ci">📊</span>
-<span class="cl">우리나라 산업구조 변화 그래프</span>
-<span class="ch">graph_industry_structure.png</span>
-</div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/industry_structure.svg" alt="1970년부터 2022년까지 우리나라 산업 구조 변화 누적 막대그래프" loading="lazy"></figure>
 </div>
 
 <ul class="info-list">
@@ -320,11 +323,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 내용: 초기·가속화·종착 단계, 도시화율(%) vs 시간 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 도시화 곡선 (S자형)</p>
-<div class="chart-placeholder">
-<span class="ci">📈</span>
-<span class="cl">도시화 곡선 그래프</span>
-<span class="ch">graph_urbanization_curve.png</span>
-</div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/urbanization_curve.svg" alt="초기, 가속화, 종착 단계가 표시된 S자형 도시화 곡선" loading="lazy"></figure>
 </div>
 
 <div class="divider"></div>
@@ -363,11 +362,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 출처: 국토교통부·한국 국토 정보 공사, 2023 / 용도 지역별 도시 인구 기준 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 우리나라의 도시화율 (1960~2022)</p>
-<div class="chart-placeholder">
-<span class="ci">📉</span>
-<span class="cl">우리나라 도시화율 변화 그래프</span>
-<span class="ch">graph_korea_urbanization.png</span>
-</div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/korea_urbanization.svg" alt="1960년 39.1퍼센트에서 2022년 91.9퍼센트로 상승한 우리나라 도시화율 꺾은선그래프" loading="lazy"></figure>
 </div>
 
 <div class="divider"></div>
@@ -379,11 +374,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 내용: 앵글로아메리카·유럽·라틴아메리카·오세아니아·아시아·아프리카 6개 지역 / 출처: 국제 연합 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 지역(대륙)별 도시화율 변화 (1950~2020)</p>
-<div class="chart-placeholder">
-<span class="ci">🌏</span>
-<span class="cl">대륙별 도시화율 변화 그래프</span>
-<span class="ch">graph_global_urbanization.png</span>
-</div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/global_urbanization.svg" alt="대륙별 도시화율 변화 다중 꺾은선그래프" loading="lazy"></figure>
 </div>
 
 <div class="note">📝 도시화율 순위(높은 순): <strong>앵글로아메리카 &gt; 라틴아메리카 &gt; 유럽 &gt; 오세아니아 &gt; 아시아 &gt; 아프리카</strong>. 도시 인구 <em>절대수</em>는 아시아가 가장 많음. 라틴아메리카는 개발도상국이 대부분이지만 과거 식민지 시절부터 도시가 발달 → 경제수준 대비 도시화율 높음.</div>
@@ -410,16 +401,17 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 
 <div class="note">📝 흐름 요약: 집중 → 과밀 → 분산(신도시·교외화) → 재분산(역도시화) ↔ 재집중(재도시화) <em>동시에 나타남</em></div>
 
+<div class="chart-wrap">
+<p class="chart-caption">▲ 대도시로의 인구 집중</p>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/metro_population_concentration.svg" alt="전국 각지에서 서울과 부산 등 대도시로 인구가 집중되는 이동 흐름 지도" loading="lazy"></figure>
+</div>
+
 <!-- [지도] 3기 신도시 조성계획 + 수도권 인구밀도 지도
 파일명: map_3rd_newtown.png
 내용: 1·2·3기 신도시 위치 및 수도권 인구밀도 분포 / 출처: 국토교통부·행정안전부, 2023 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 3기 신도시 조성계획 및 수도권 인구밀도</p>
-<div class="chart-placeholder">
-<span class="ci">🗺️</span>
-<span class="cl">3기 신도시 조성계획 지도</span>
-<span class="ch">map_3rd_newtown.png</span>
-</div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/third_newtown_plan.svg" alt="수도권 1기, 2기, 3기 신도시 위치 모식 지도" loading="lazy"></figure>
 </div>
 
 <div class="quiz-section" id="quiz-1"></div>
@@ -460,11 +452,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 내용: 상업·업무 / 공업 / 주거 지가 곡선, 도심·공업지구·주거지구 동심원 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 도시 내부의 지역 분화 모식도</p>
-<div class="chart-placeholder">
-<span class="ci">🏙️</span>
-<span class="cl">도시 내부 지역 분화 모식도</span>
-<span class="ch">diagram_urban_zone.png</span>
-</div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/urban_zone_model.svg" alt="도심, 공업지역, 주거지역으로 분화된 도시 내부 모식도" loading="lazy"></figure>
 </div>
 
 <div class="subsection-title">서울의 지역 분화</div>
@@ -502,11 +490,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 내용: 인구밀도(명/㎢) 단계 구분 / 출처: 서울 통계 연보, 2016 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 서울 내부의 지역 분화 (인구밀도, 2016)</p>
-<div class="chart-placeholder">
-<span class="ci">🗺️</span>
-<span class="cl">서울 인구밀도 지도</span>
-<span class="ch">map_seoul_density.png</span>
-</div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/seoul_density.svg" alt="서울 구별 인구밀도 단계 구분 모식 지도" loading="lazy"></figure>
 </div>
 
 <div class="divider"></div>
@@ -524,11 +508,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 내용: 주간·야간 인구 곡선(도심↔주변), 집심·이심 현상 동심원 모식도 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 인구 공동화 현상 그래프 및 집심·이심 모식도</p>
-<div class="chart-placeholder">
-<span class="ci">📊</span>
-<span class="cl">인구 공동화 + 집심·이심 모식도</span>
-<span class="ch">diagram_population_hollow.png</span>
-</div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/population_hollowing.svg" alt="도심의 주간과 야간 인구 차이를 보여주는 인구 공동화 그래프" loading="lazy"></figure>
 </div>
 
 <div class="divider"></div>
@@ -552,6 +532,11 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <li>주거 기능이 외곽으로 이동 → 대도시권 확대</li>
 </ul>
 </div>
+</div>
+
+<div class="chart-wrap">
+<p class="chart-caption">▲ 집심 현상과 이심 현상</p>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/centripetal_centrifugal.svg" alt="도심을 중심으로 집심 현상과 이심 현상이 나타나는 동심원 모식도" loading="lazy"></figure>
 </div>
 
 <div class="divider"></div>
@@ -587,11 +572,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 내용: 중심도시-교외지역-대도시 영향권-배후농촌-위성도시, 통근가능권·대도시 일일생활권 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 교외화 현상과 대도시권 형성 모식도</p>
-<div class="chart-placeholder">
-<span class="ci">🔵</span>
-<span class="cl">대도시권 형성 모식도</span>
-<span class="ch">diagram_suburbanization.png</span>
-</div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/metropolitan_area.svg" alt="중심 도시와 교외 지역, 위성 도시가 연결되는 대도시권 형성 모식도" loading="lazy"></figure>
 </div>
 
 <div class="divider"></div>
@@ -604,11 +585,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 출처: 국토 교통부, 각 연도 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 우리나라 국토 용도별 이용 면적 변화 (1977→2022)</p>
-<div class="chart-placeholder">
-<span class="ci">🏗️</span>
-<span class="cl">국토 용도별 이용 면적 변화</span>
-<span class="ch">graph_land_use.png</span>
-</div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/land_use_change.svg" alt="1977년에서 2022년까지 국토 용도별 이용 면적 변화 표" loading="lazy"></figure>
 </div>
 
 <div class="quiz-section" id="quiz-2"></div>
@@ -641,19 +618,11 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <div class="chart-grid">
 <div class="chart-wrap" style="margin-bottom:0;">
 <p class="chart-caption">▲ 우리나라 1인 가구 비율 변화</p>
-<div class="chart-placeholder" style="min-height:180px;">
-<span class="ci">👤</span>
-<span class="cl">1인 가구 비율 그래프</span>
-<span class="ch">graph_single_household.png</span>
-</div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/single_household.svg" alt="1인 가구 비율이 1980년 4.8퍼센트에서 2015년 27.2퍼센트로 증가한 막대그래프" loading="lazy"></figure>
 </div>
 <div class="chart-wrap" style="margin-bottom:0;">
 <p class="chart-caption">▲ 편의점 수의 증가</p>
-<div class="chart-placeholder" style="min-height:180px;">
-<span class="ci">🏪</span>
-<span class="cl">편의점 수 증가 그래프</span>
-<span class="ch">graph_convenience_store.png</span>
-</div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/convenience_store.svg" alt="편의점 수가 2006년 9847개에서 2014년 26874개로 증가한 막대그래프" loading="lazy"></figure>
 </div>
 </div>
 

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-label="1960년 39.1퍼센트에서 2022년 91.9퍼센트로 상승한 우리나라 도시화율 꺾은선그래프">
+<style>
+  .viz-title{font:700 15px 'Noto Sans KR',Arial,sans-serif;fill:#202124}
+  .viz-label{font:700 13px 'Noto Sans KR',Arial,sans-serif;fill:#3c4043}
+  .viz-small{font:500 11px 'Noto Sans KR',Arial,sans-serif;fill:#5f6368}
+  .viz-axis{stroke:#9aa0a6;stroke-width:1.5}
+  .viz-grid{stroke:#e8eaed;stroke-width:1}
+  .viz-blue{fill:#1a73e8}.viz-green{fill:#34a853}.viz-yellow{fill:#f9ab00}.viz-red{fill:#ea4335}.viz-purple{fill:#8430ce}.viz-orange{fill:#e37400}
+  .viz-line-blue{fill:none;stroke:#1a73e8;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-green{fill:none;stroke:#34a853;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-red{fill:none;stroke:#ea4335;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-yellow{fill:none;stroke:#f9ab00;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-purple{fill:none;stroke:#8430ce;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+  .viz-note{font:700 12px 'Noto Sans KR',Arial,sans-serif;fill:#1a73e8}
+</style>
+<rect width="100%" height="100%" rx="10" fill="#ffffff"/>
+<text x="18" y="24" class="viz-title">우리나라 도시화율 변화</text><line x1="70" y1="210" x2="700" y2="210" class="viz-axis"/><line x1="70" y1="45" x2="70" y2="210" class="viz-axis"/><g opacity=".7"><line x1="70" y1="177" x2="700" y2="177" class="viz-grid"/><line x1="70" y1="144" x2="700" y2="144" class="viz-grid"/><line x1="70" y1="111" x2="700" y2="111" class="viz-grid"/><line x1="70" y1="78" x2="700" y2="78" class="viz-grid"/></g><polyline points="100,145 200,126 300,84 400,62 500,51 600,48 690,46" fill="none" stroke="#9b8ac7" stroke-width="4"/><g fill="#fff" stroke="#9b8ac7" stroke-width="3"><circle cx="100" cy="145" r="6"/><circle cx="200" cy="126" r="6"/><circle cx="300" cy="84" r="6"/><circle cx="400" cy="62" r="6"/><circle cx="500" cy="51" r="6"/><circle cx="600" cy="48" r="6"/><circle cx="690" cy="46" r="6"/></g><g class="viz-label"><text x="83" y="133">39.1</text><text x="180" y="114">50.1</text><text x="278" y="72">68.7</text><text x="379" y="50">81.9</text><text x="478" y="39">88.3</text><text x="575" y="73">90.9</text><text x="666" y="70">91.9</text></g><g class="viz-small"><text x="82" y="232">1960</text><text x="182" y="232">1970</text><text x="282" y="232">1980</text><text x="382" y="232">1990</text><text x="482" y="232">2000</text><text x="582" y="232">2010</text><text x="672" y="232">2022</text></g>
+</svg>
