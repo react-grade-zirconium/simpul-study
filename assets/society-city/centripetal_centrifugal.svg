@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-label="도심을 중심으로 집심 현상과 이심 현상이 나타나는 동심원 모식도">
+<style>
+  .viz-title{font:700 15px 'Noto Sans KR',Arial,sans-serif;fill:#202124}
+  .viz-label{font:700 13px 'Noto Sans KR',Arial,sans-serif;fill:#3c4043}
+  .viz-small{font:500 11px 'Noto Sans KR',Arial,sans-serif;fill:#5f6368}
+  .viz-axis{stroke:#9aa0a6;stroke-width:1.5}
+  .viz-grid{stroke:#e8eaed;stroke-width:1}
+  .viz-blue{fill:#1a73e8}.viz-green{fill:#34a853}.viz-yellow{fill:#f9ab00}.viz-red{fill:#ea4335}.viz-purple{fill:#8430ce}.viz-orange{fill:#e37400}
+  .viz-line-blue{fill:none;stroke:#1a73e8;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-green{fill:none;stroke:#34a853;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-red{fill:none;stroke:#ea4335;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-yellow{fill:none;stroke:#f9ab00;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-purple{fill:none;stroke:#8430ce;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+  .viz-note{font:700 12px 'Noto Sans KR',Arial,sans-serif;fill:#1a73e8}
+</style>
+<rect width="100%" height="100%" rx="10" fill="#ffffff"/>
+<text x="18" y="24" class="viz-title">집심·이심 현상</text><path d="M145 38 C210 28 230 50 270 36 C345 14 360 65 420 54 C520 35 625 78 632 143 C640 222 520 232 430 220 C310 242 210 235 150 198 C80 160 70 74 145 38Z" fill="#d8efb0"/><circle cx="380" cy="142" r="92" fill="#f4bed5"/><circle cx="380" cy="142" r="58" fill="#ffe88f"/><circle cx="380" cy="142" r="34" fill="#a9d5ec"/><text x="357" y="137" class="viz-label">도심</text><text x="350" y="156" class="viz-small">(CBD)</text><text x="335" y="103" class="viz-label">중간 지역</text><text x="250" y="78" class="viz-label">주변 지역</text><text x="240" y="35" class="viz-label">개발 제한 구역</text><circle cx="230" cy="180" r="11" fill="#d88c92"/><circle cx="535" cy="185" r="11" fill="#d88c92"/><circle cx="115" cy="225" r="11" fill="#d88c92"/><text x="205" y="208" class="viz-label">부도심</text><text x="610" y="228" class="viz-label">위성 도시</text><defs><marker id="arrow-red" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#d71920"/></marker></defs><path d="M238 70 L345 130" stroke="#d71920" stroke-width="4" marker-end="url(#arrow-red)"/><text x="170" y="64" class="viz-label">집심 현상</text><path d="M410 132 L510 72" stroke="#d71920" stroke-width="4" marker-end="url(#arrow-red)"/><text x="540" y="72" class="viz-label">이심 현상</text><g stroke="#6f6f6f" stroke-width="3"><line x1="0" y1="160" x2="230" y2="180"/><line x1="535" y1="185" x2="760" y2="145"/><line x1="535" y1="185" x2="500" y2="260"/><line x1="535" y1="185" x2="680" y2="260"/></g>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-label="수도권 1기, 2기, 3기 신도시 위치 모식 지도">
+<style>
+  .viz-title{font:700 15px 'Noto Sans KR',Arial,sans-serif;fill:#202124}
+  .viz-label{font:700 13px 'Noto Sans KR',Arial,sans-serif;fill:#3c4043}
+  .viz-small{font:500 11px 'Noto Sans KR',Arial,sans-serif;fill:#5f6368}
+  .viz-axis{stroke:#9aa0a6;stroke-width:1.5}
+  .viz-grid{stroke:#e8eaed;stroke-width:1}
+  .viz-blue{fill:#1a73e8}.viz-green{fill:#34a853}.viz-yellow{fill:#f9ab00}.viz-red{fill:#ea4335}.viz-purple{fill:#8430ce}.viz-orange{fill:#e37400}
+  .viz-line-blue{fill:none;stroke:#1a73e8;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-green{fill:none;stroke:#34a853;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-red{fill:none;stroke:#ea4335;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-yellow{fill:none;stroke:#f9ab00;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-purple{fill:none;stroke:#8430ce;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+  .viz-note{font:700 12px 'Noto Sans KR',Arial,sans-serif;fill:#1a73e8}
+</style>
+<rect width="100%" height="100%" rx="10" fill="#ffffff"/>
+<text x="18" y="24" class="viz-title">3기 신도시 조성 계획</text><path d="M120 60 C210 30 350 38 460 68 C575 100 630 178 540 218 C420 260 210 228 120 170 C70 136 70 88 120 60Z" fill="#eef3f7" stroke="#cfd8dc"/><g stroke="#2b7bb9" stroke-width="3" fill="none"><path d="M115 170 C210 150 300 150 430 170 C520 185 575 170 625 142"/><path d="M150 95 C250 125 400 115 585 80"/></g><g stroke="#2e7d32" stroke-width="3" fill="none"><path d="M260 50 C270 120 305 165 365 218"/><path d="M390 52 C380 118 380 170 410 230"/></g><g fill="#b07d4f"><path d="M300 87 l38 -12 l10 34 l-42 16z"/><path d="M475 142 l35 -15 l12 30 l-38 18z"/><path d="M360 184 l30 -10 l9 26 l-32 14z"/></g><g fill="#8bd047"><path d="M145 122 l45 -8 l10 26 l-52 11z"/><path d="M250 44 l35 -12 l7 28 l-38 13z"/><path d="M560 170 l38 -18 l12 24 l-42 22z"/><path d="M445 205 l42 -8 l8 24 l-45 10z"/></g><g fill="#f28b2e"><path d="M505 75 l32 -13 l10 28 l-34 13z"/><path d="M410 98 l30 -10 l10 25 l-33 14z"/><path d="M545 110 l32 -13 l10 27 l-36 14z"/></g><g fill="#7b1b1b"><path d="M315 130 l70 -18 l18 30 l-65 30z"/><path d="M245 152 l52 -12 l12 28 l-54 22z"/></g><circle cx="360" cy="140" r="9" fill="#202124"/><text x="338" y="137" class="viz-small">서울</text><g class="viz-small"><text x="128" y="210">1기 신도시(5곳)</text><text x="260" y="210">2기 신도시(9곳)</text><text x="392" y="210">3기 신도시(3곳)</text><text x="525" y="210">3차 지정(2곳)</text></g>
+</svg>

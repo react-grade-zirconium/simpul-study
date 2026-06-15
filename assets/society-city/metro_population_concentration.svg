@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-label="전국 각지에서 서울과 부산 등 대도시로 인구가 집중되는 이동 흐름 지도">
+<style>
+  .viz-title{font:700 15px 'Noto Sans KR',Arial,sans-serif;fill:#202124}
+  .viz-label{font:700 13px 'Noto Sans KR',Arial,sans-serif;fill:#3c4043}
+  .viz-small{font:500 11px 'Noto Sans KR',Arial,sans-serif;fill:#5f6368}
+  .viz-axis{stroke:#9aa0a6;stroke-width:1.5}
+  .viz-grid{stroke:#e8eaed;stroke-width:1}
+  .viz-blue{fill:#1a73e8}.viz-green{fill:#34a853}.viz-yellow{fill:#f9ab00}.viz-red{fill:#ea4335}.viz-purple{fill:#8430ce}.viz-orange{fill:#e37400}
+  .viz-line-blue{fill:none;stroke:#1a73e8;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-green{fill:none;stroke:#34a853;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-red{fill:none;stroke:#ea4335;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-yellow{fill:none;stroke:#f9ab00;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-purple{fill:none;stroke:#8430ce;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+  .viz-note{font:700 12px 'Noto Sans KR',Arial,sans-serif;fill:#1a73e8}
+</style>
+<rect width="100%" height="100%" rx="10" fill="#ffffff"/>
+<text x="18" y="24" class="viz-title">대도시로의 인구 집중</text><path d="M300 35 C390 28 475 65 505 135 C535 205 430 240 335 225 C250 210 205 150 220 92 C228 60 255 42 300 35Z" fill="#fff3d6" stroke="#00a6d6"/><text x="355" y="86" class="viz-label">서울</text><text x="500" y="190" class="viz-label">부산</text><text x="418" y="178" class="viz-label">대구</text><text x="282" y="200" class="viz-label">광주</text><defs><marker id="mig" markerWidth="12" markerHeight="12" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#9b0014"/></marker></defs><g fill="none" stroke="#9b0014" stroke-width="8" stroke-linecap="round" marker-end="url(#mig)"><path d="M120 75 C210 60 260 60 345 92"/><path d="M120 185 C210 145 250 115 345 92"/><path d="M300 225 C315 175 330 132 352 98"/><path d="M555 60 C505 75 450 88 370 94"/><path d="M560 214 C515 205 505 198 500 190"/><path d="M210 238 C305 220 390 210 500 190"/></g><g class="viz-small"><text x="110" y="58">수도권 집중</text><text x="535" y="230">남동 임해 공업 도시 성장</text><text x="565" y="245">화살표 굵기: 이동 규모</text></g>
+</svg>
