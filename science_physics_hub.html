@@ -3,35 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>통합과학 학습 선택</title>
+  <title>물리 학습 선택</title>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{width:100%;height:100%;background:#f6f8fc;color:#0f172a;font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif}
     body{display:grid;place-items:center;padding:20px;overflow:auto}
-    .science-select{width:min(620px,100%);border:1px solid #dbe3ef;border-radius:22px;background:#fff;padding:28px;box-shadow:0 12px 32px rgba(15,23,42,.08);text-align:center}
+    .physics-select{width:min(560px,100%);border:1px solid #dbe3ef;border-radius:22px;background:#fff;padding:28px;box-shadow:0 12px 32px rgba(15,23,42,.08);text-align:center}
+    .back{display:inline-flex;margin-bottom:12px;color:#0e7490;text-decoration:none;font-weight:900}
     .label{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;background:#ecfeff;color:#0e7490;padding:7px 12px;font-size:.88rem;font-weight:800}
     h1{margin-top:14px;font-size:clamp(1.55rem,4vw,2.15rem);line-height:1.25;letter-spacing:-.04em}
     p{margin-top:8px;color:#64748b;line-height:1.55;font-size:.96rem}
     .choices{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
     .choice{display:flex;align-items:center;justify-content:center;gap:8px;min-height:74px;border:1px solid #dbe3ef;border-radius:16px;background:#f8fafc;color:#0f172a;text-decoration:none;font-size:1.18rem;font-weight:900;transition:background .15s ease,border-color .15s ease,transform .15s ease}
     .choice:hover,.choice:focus-visible{background:#ecfeff;border-color:#67e8f9;transform:translateY(-2px);outline:none}
-    .choice.chemistry:hover,.choice.chemistry:focus-visible{background:#fefce8;border-color:#fde047}
-    .choice.life:hover,.choice.life:focus-visible{background:#f0fdf4;border-color:#86efac}
-    .choice.earth:hover,.choice.earth:focus-visible{background:#eff6ff;border-color:#93c5fd}
-    @media (max-width:520px){body{padding:14px}.science-select{padding:22px 16px}.choices{grid-template-columns:1fr}.choice{min-height:62px}}
+    .choice.simulation:hover,.choice.simulation:focus-visible{background:#f5f3ff;border-color:#c4b5fd}
+    @media (max-width:520px){body{padding:14px}.physics-select{padding:22px 16px}.choices{grid-template-columns:1fr}.choice{min-height:62px}}
   </style>
 </head>
 <body>
-  <main class="science-select" aria-labelledby="scienceTitle">
-    <span class="label">🧪 통합과학</span>
-    <h1 id="scienceTitle">파트를 선택하세요</h1>
-    <p>사회 탭처럼 원하는 과학 파트를 골라 학습 페이지로 이동할 수 있습니다.</p>
+  <main class="physics-select" aria-labelledby="physicsTitle">
+    <a class="back" href="./science_hub.html">← 통합과학 선택으로</a><br />
+    <span class="label">⚙️ 물리</span>
+    <h1 id="physicsTitle">파트를 선택하세요</h1>
+    <p>사회 탭처럼 물리 개념 정리와 물리 시뮬레이션을 카드로 나누었습니다.</p>
 
-    <nav class="choices" aria-label="통합과학 파트 선택">
-      <a class="choice physics" href="./science_physics_hub.html">⚙️ 물리</a>
-      <a class="choice chemistry" href="./science_chemistry.html">⚗️ 화학</a>
-      <a class="choice life" href="./science_life.html">🧬 생명</a>
-      <a class="choice earth" href="./science_earth.html">🌎 지구</a>
+    <nav class="choices" aria-label="물리 파트 선택">
+      <a class="choice concept" href="./science_physics.html">📘 물리 개념 정리</a>
+      <a class="choice simulation" href="./science_physics_simulation.html">🧪 물리 시뮬레이션</a>
     </nav>
   </main>
 </body>
