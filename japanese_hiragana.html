@@ -5,713 +5,753 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>히라가나 퀴즈</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&family=Noto+Serif+JP:wght@400;700&family=Noto+Serif+KR:wght@400;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&family=Noto+Serif+JP:wght@400;700&family=Noto+Serif+KR:wght@400;700&display=swap');
 
-:root {
---indigo: #1a1f3c;
---indigo-mid:#252b50;
---indigo-lit:#2f3765;
---coral: #ff6b4a;
---coral-dim: #cc4e31;
---gold: #f0c040;
---cream: #f5f0e8;
---muted: #8891b8;
---correct: #4cde90;
---wrong: #ff4f6b;
-}
+  :root {
+    --indigo:    #1a1f3c;
+    --indigo-mid:#252b50;
+    --indigo-lit:#2f3765;
+    --coral:     #ff6b4a;
+    --coral-dim: #cc4e31;
+    --gold:      #f0c040;
+    --cream:     #f5f0e8;
+    --muted:     #8891b8;
+    --correct:   #4cde90;
+    --wrong:     #ff4f6b;
+  }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-body {
-font-family: 'Noto Sans KR', sans-serif;
-background: var(--indigo);
-color: var(--cream);
-min-height: 100vh;
-display: flex;
-flex-direction: column;
-align-items: center;
-}
+  html, body { height: 100%; overflow: hidden; }
 
-/* ── 헤더 ── */
-header {
-width: 100%;
-padding: 18px 32px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-border-bottom: 1px solid var(--indigo-lit);
-}
-header h1 {
-font-family: 'Noto Serif JP', serif;
-font-size: 1.35rem;
-letter-spacing: 0.08em;
-color: var(--cream);
-}
-header h1 span {
-color: var(--coral);
-}
-.mode-badge {
-font-size: 0.72rem;
-font-weight: 700;
-letter-spacing: 0.12em;
-text-transform: uppercase;
-padding: 4px 12px;
-border-radius: 20px;
-background: var(--indigo-lit);
-color: var(--muted);
-border: 1px solid var(--indigo-lit);
-transition: background 0.3s, color 0.3s;
-}
-.mode-badge.active {
-background: var(--coral);
-color: #fff;
-border-color: var(--coral);
-}
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--indigo);
+    color: var(--cream);
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-/* ── 통계바 ── */
-.stats {
-display: flex;
-gap: 28px;
-padding: 14px 32px;
-width: 100%;
-border-bottom: 1px solid var(--indigo-lit);
-font-size: 0.8rem;
-color: var(--muted);
-}
-.stat-item strong {
-color: var(--cream);
-font-size: 1.1rem;
-font-weight: 700;
-display: block;
-}
-.stat-item.correct strong { color: var(--correct); }
-.stat-item.wrong strong { color: var(--wrong); }
+  /* ── 헤더 ── */
+  header {
+    width: 100%;
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--indigo-lit);
+    flex-shrink: 0;
+  }
+  header h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.08em;
+    color: var(--cream);
+  }
+  header h1 span {
+    color: var(--coral);
+  }
+  .mode-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: var(--indigo-lit);
+    color: var(--muted);
+    border: 1px solid var(--indigo-lit);
+    transition: background 0.3s, color 0.3s;
+  }
+  .mode-badge.active {
+    background: var(--coral);
+    color: #fff;
+    border-color: var(--coral);
+  }
 
-/* ── 메인 ── */
-main {
-flex: 1;
-width: 100%;
-max-width: 540px;
-padding: 40px 24px 60px;
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 32px;
-}
+  /* ── 통계바 ── */
+  .stats {
+    display: flex;
+    gap: 24px;
+    padding: 8px 24px;
+    width: 100%;
+    border-bottom: 1px solid var(--indigo-lit);
+    font-size: 0.72rem;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+  .stat-item strong {
+    color: var(--cream);
+    font-size: 1rem;
+    font-weight: 700;
+    display: block;
+  }
+  .stat-item.correct strong { color: var(--correct); }
+  .stat-item.wrong strong   { color: var(--wrong); }
 
-/* ── 모드 전환 ── */
-.mode-toggle {
-display: flex;
-gap: 0;
-background: var(--indigo-mid);
-border: 1px solid var(--indigo-lit);
-border-radius: 10px;
-overflow: hidden;
-width: 100%;
-}
-.mode-btn {
-flex: 1;
-padding: 11px 0;
-border: none;
-cursor: pointer;
-font-family: 'Noto Sans KR', sans-serif;
-font-size: 0.82rem;
-font-weight: 600;
-color: var(--muted);
-background: transparent;
-transition: background 0.25s, color 0.25s;
-}
-.mode-btn.selected {
-background: var(--coral);
-color: #fff;
-}
-.mode-btn:first-child { border-radius: 9px 0 0 9px; }
-.mode-btn:last-child { border-radius: 0 9px 9px 0; }
+  /* ── 메인 ── */
+  main {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    max-width: 540px;
+    padding: 12px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    overflow: hidden;
+  }
 
-/* ── 문제 카드 ── */
-.card {
-width: 100%;
-background: var(--indigo-mid);
-border: 1px solid var(--indigo-lit);
-border-radius: 20px;
-padding: 48px 32px 36px;
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 12px;
-position: relative;
-overflow: hidden;
-}
-.card::before {
-content: '';
-position: absolute;
-top: 0; left: 0;
-width: 100%; height: 4px;
-background: linear-gradient(90deg, var(--coral), var(--gold));
-border-radius: 20px 20px 0 0;
-}
+  /* ── 모드 전환 ── */
+  .mode-toggle {
+    display: flex;
+    gap: 0;
+    background: var(--indigo-mid);
+    border: 1px solid var(--indigo-lit);
+    border-radius: 10px;
+    overflow: hidden;
+    width: 100%;
+    flex-shrink: 0;
+  }
+  .mode-btn {
+    flex: 1;
+    padding: 8px 0;
+    border: none;
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--muted);
+    background: transparent;
+    transition: background 0.25s, color 0.25s;
+  }
+  .mode-btn.selected {
+    background: var(--coral);
+    color: #fff;
+  }
+  .mode-btn:first-child { border-radius: 9px 0 0 9px; }
+  .mode-btn:last-child  { border-radius: 0 9px 9px 0; }
 
-.question-label {
-font-size: 0.72rem;
-font-weight: 700;
-letter-spacing: 0.18em;
-color: var(--muted);
-text-transform: uppercase;
-}
-.question-char {
-font-family: 'Noto Serif JP', serif;
-font-size: 6.5rem;
-line-height: 1;
-color: var(--cream);
-user-select: none;
-transition: transform 0.15s ease;
-}
-.question-char.kana { font-family: 'Noto Serif JP', serif; }
-.question-char.hangul { font-family: 'Noto Serif KR', serif; font-size: 5rem; }
+  /* ── 문제 카드 ── */
+  .card {
+    width: 100%;
+    background: var(--indigo-mid);
+    border: 1px solid var(--indigo-lit);
+    border-radius: 20px;
+    padding: clamp(14px, 4vh, 32px) 24px clamp(10px, 2.5vh, 24px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 4px;
+    background: linear-gradient(90deg, var(--coral), var(--gold));
+    border-radius: 20px 20px 0 0;
+  }
 
-.question-char.pop {
-animation: pop 0.35s cubic-bezier(0.36,0.07,0.19,0.97);
-}
-@keyframes pop {
-0% { transform: scale(1); }
-40% { transform: scale(1.22) rotate(-3deg); }
-70% { transform: scale(0.92) rotate(2deg); }
-100% { transform: scale(1) rotate(0deg); }
-}
+  .question-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .question-char {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(2.8rem, 9vh, 6.5rem);
+    line-height: 1;
+    color: var(--cream);
+    user-select: none;
+    transition: transform 0.15s ease;
+  }
+  .question-char.kana   { font-family: 'Noto Serif JP', serif; }
+  .question-char.hangul { font-family: 'Noto Serif KR', serif; font-size: clamp(2.2rem, 7vh, 5rem); }
 
-.question-count {
-font-size: 0.75rem;
-color: var(--muted);
-}
+  .question-char.pop {
+    animation: pop 0.35s cubic-bezier(0.36,0.07,0.19,0.97);
+  }
+  @keyframes pop {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.22) rotate(-3deg); }
+    70%  { transform: scale(0.92) rotate(2deg); }
+    100% { transform: scale(1) rotate(0deg); }
+  }
 
-/* ── 보기 그리드 ── */
-.choices {
-width: 100%;
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 12px;
-}
+  .question-count {
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
 
-.choice-btn {
-background: var(--indigo-mid);
-border: 1.5px solid var(--indigo-lit);
-border-radius: 14px;
-padding: 18px 10px;
-font-family: inherit;
-font-size: 1.05rem;
-font-weight: 600;
-color: var(--cream);
-cursor: pointer;
-transition: border-color 0.18s, background 0.18s, transform 0.12s;
-position: relative;
-overflow: hidden;
-}
-.choice-btn {
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-}
-.choice-btn .choice-kana {
-font-family: 'Noto Serif JP', serif;
-font-size: 1.9rem;
-display: block;
-line-height: 1;
-}
-.choice-btn:hover:not(:disabled) {
-border-color: var(--coral);
-transform: translateY(-2px);
-}
-.choice-btn:disabled { cursor: default; }
+  /* ── 보기 그리드 ── */
+  .choices {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    flex-shrink: 0;
+  }
 
-.choice-btn.correct-ans {
-border-color: var(--correct);
-background: rgba(76, 222, 144, 0.12);
-color: var(--correct);
-}
-.choice-btn.wrong-ans {
-border-color: var(--wrong);
-background: rgba(255, 79, 107, 0.12);
-color: var(--wrong);
-}
-.choice-btn.correct-ans::after,
-.choice-btn.wrong-ans::after {
-position: absolute;
-top: 6px; right: 10px;
-font-size: 0.9rem;
-}
-.choice-btn.correct-ans::after { content: '✓'; color: var(--correct); }
-.choice-btn.wrong-ans::after { content: '✗'; color: var(--wrong); }
+  .choice-btn {
+    background: var(--indigo-mid);
+    border: 1.5px solid var(--indigo-lit);
+    border-radius: 14px;
+    padding: clamp(10px, 2.2vh, 18px) 10px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--cream);
+    cursor: pointer;
+    transition: border-color 0.18s, background 0.18s, transform 0.12s;
+    position: relative;
+    overflow: hidden;
+  }
+  .choice-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .choice-btn .choice-kana {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(1.4rem, 4.5vh, 1.9rem);
+    display: block;
+    line-height: 1;
+  }
+  .choice-btn:hover:not(:disabled) {
+    border-color: var(--coral);
+    transform: translateY(-2px);
+  }
+  .choice-btn:disabled { cursor: default; }
 
-/* ── 피드백 ── */
-.feedback {
-min-height: 32px;
-font-size: 0.9rem;
-font-weight: 600;
-text-align: center;
-opacity: 0;
-transition: opacity 0.2s;
-}
-.feedback.show { opacity: 1; }
-.feedback.ok { color: var(--correct); }
-.feedback.no { color: var(--wrong); }
+  .choice-btn.correct-ans {
+    border-color: var(--correct);
+    background: rgba(76, 222, 144, 0.12);
+    color: var(--correct);
+  }
+  .choice-btn.wrong-ans {
+    border-color: var(--wrong);
+    background: rgba(255, 79, 107, 0.12);
+    color: var(--wrong);
+  }
+  .choice-btn.correct-ans::after,
+  .choice-btn.wrong-ans::after {
+    position: absolute;
+    top: 6px; right: 10px;
+    font-size: 0.9rem;
+  }
+  .choice-btn.correct-ans::after { content: '✓'; color: var(--correct); }
+  .choice-btn.wrong-ans::after   { content: '✗'; color: var(--wrong); }
 
-/* ── 다음 버튼 ── */
-.next-btn {
-width: 100%;
-padding: 16px;
-background: var(--coral);
-border: none;
-border-radius: 14px;
-font-family: 'Noto Sans KR', sans-serif;
-font-size: 1rem;
-font-weight: 700;
-color: #fff;
-cursor: pointer;
-opacity: 0;
-pointer-events: none;
-transition: opacity 0.25s, background 0.18s, transform 0.12s;
-letter-spacing: 0.04em;
-}
-.next-btn.show {
-opacity: 1;
-pointer-events: all;
-}
-.next-btn:hover { background: var(--coral-dim); transform: translateY(-1px); }
+  /* ── 피드백 ── */
+  .feedback {
+    min-height: 22px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+  }
+  .feedback.show { opacity: 1; }
+  .feedback.ok   { color: var(--correct); }
+  .feedback.no   { color: var(--wrong); }
 
-/* ── 결과 화면 ── */
-.result-screen {
-display: none;
-flex-direction: column;
-align-items: center;
-gap: 20px;
-text-align: center;
-padding: 40px 24px 60px;
-width: 100%;
-max-width: 540px;
-}
-.result-screen.show { display: flex; }
-main.hidden { display: none; }
+  /* ── 다음 버튼 ── */
+  .next-btn {
+    width: 100%;
+    padding: 13px;
+    background: var(--coral);
+    border: none;
+    border-radius: 14px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s, background 0.18s, transform 0.12s;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+  }
+  .next-btn.show {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .next-btn:hover { background: var(--coral-dim); transform: translateY(-1px); }
 
-.result-kana {
-font-family: 'Noto Serif JP', serif;
-font-size: 4rem;
-letter-spacing: 0.3em;
-color: var(--coral);
-}
-.result-title {
-font-size: 1.5rem;
-font-weight: 700;
-}
-.result-score {
-font-size: 3.5rem;
-font-weight: 700;
-color: var(--gold);
-}
-.result-sub {
-font-size: 0.9rem;
-color: var(--muted);
-}
-.result-grid {
-width: 100%;
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 14px;
-margin-top: 10px;
-}
-.result-box {
-background: var(--indigo-mid);
-border: 1px solid var(--indigo-lit);
-border-radius: 14px;
-padding: 20px;
-}
-.result-box .val {
-font-size: 2rem;
-font-weight: 700;
-}
-.result-box .lbl {
-font-size: 0.78rem;
-color: var(--muted);
-margin-top: 4px;
-}
-.result-box.c .val { color: var(--correct); }
-.result-box.w .val { color: var(--wrong); }
+  /* ── 결과 화면 ── */
+  .result-screen {
+    display: none;
+    flex: 1;
+    min-height: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-align: center;
+    padding: 12px 24px;
+    width: 100%;
+    max-width: 540px;
+    overflow: hidden;
+  }
+  .result-screen.show { display: flex; }
+  main.hidden { display: none; }
 
-.restart-btn {
-padding: 16px 48px;
-background: var(--coral);
-border: none;
-border-radius: 14px;
-font-family: 'Noto Sans KR', sans-serif;
-font-size: 1rem;
-font-weight: 700;
-color: #fff;
-cursor: pointer;
-margin-top: 8px;
-transition: background 0.18s, transform 0.12s;
-}
-.restart-btn:hover { background: var(--coral-dim); transform: translateY(-1px); }
+  .result-kana {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(2rem, 7vh, 4rem);
+    letter-spacing: 0.3em;
+    color: var(--coral);
+  }
+  .result-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+  .result-score {
+    font-size: clamp(2.2rem, 8vh, 3.5rem);
+    font-weight: 700;
+    color: var(--gold);
+  }
+  .result-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .result-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 4px;
+  }
+  .result-box {
+    background: var(--indigo-mid);
+    border: 1px solid var(--indigo-lit);
+    border-radius: 14px;
+    padding: clamp(10px, 2.5vh, 20px);
+  }
+  .result-box .val {
+    font-size: 1.7rem;
+    font-weight: 700;
+  }
+  .result-box .lbl {
+    font-size: 0.74rem;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .result-box.c .val { color: var(--correct); }
+  .result-box.w .val { color: var(--wrong); }
 
-/* ── 진행 바 ── */
-.progress-wrap {
-width: 100%;
-height: 4px;
-background: var(--indigo-lit);
-border-radius: 99px;
-overflow: hidden;
-}
-.progress-bar {
-height: 100%;
-background: linear-gradient(90deg, var(--coral), var(--gold));
-border-radius: 99px;
-transition: width 0.4s ease;
-}
+  .restart-btn {
+    padding: 13px 44px;
+    background: var(--coral);
+    border: none;
+    border-radius: 14px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: background 0.18s, transform 0.12s;
+  }
+  .restart-btn:hover { background: var(--coral-dim); transform: translateY(-1px); }
 
-@media (max-width: 400px) {
-.question-char { font-size: 5rem; }
-.choice-btn .choice-kana { font-size: 1.4rem; }
-}
+  /* ── 진행 바 ── */
+  .progress-wrap {
+    width: 100%;
+    height: 4px;
+    background: var(--indigo-lit);
+    border-radius: 99px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--coral), var(--gold));
+    border-radius: 99px;
+    transition: width 0.4s ease;
+  }
+
+  @media (max-width: 400px) {
+    header h1 { font-size: 0.95rem; }
+    .stats { gap: 14px; font-size: 0.65rem; }
+    .choice-btn { font-size: 0.88rem; }
+  }
 </style>
 </head>
 <body>
 
 <header>
-<h1>ひらがな<span>クイズ</span></h1>
-<span class="mode-badge" id="headerBadge">히라가나 → 한글</span>
+  <h1>ひらがな<span>クイズ</span></h1>
+  <span class="mode-badge" id="headerBadge">히라가나 → 한글</span>
 </header>
 
 <div class="stats">
-<div class="stat-item">
-<strong id="statTotal">0</strong>
-총 문제
-</div>
-<div class="stat-item correct">
-<strong id="statCorrect">0</strong>
-정답
-</div>
-<div class="stat-item wrong">
-<strong id="statWrong">0</strong>
-오답
-</div>
-<div class="stat-item">
-<strong id="statAcc">—</strong>
-정확도
-</div>
+  <div class="stat-item">
+    <strong id="statTotal">0</strong>
+    총 문제
+  </div>
+  <div class="stat-item correct">
+    <strong id="statCorrect">0</strong>
+    정답
+  </div>
+  <div class="stat-item wrong">
+    <strong id="statWrong">0</strong>
+    오답
+  </div>
+  <div class="stat-item">
+    <strong id="statAcc">—</strong>
+    정확도
+  </div>
 </div>
 
 <main id="mainArea">
-<!-- 모드 전환 -->
-<div class="mode-toggle">
-<button class="mode-btn selected" id="modeA" onclick="switchMode('hira2han')">
-ひらがな → 한글 읽기
-</button>
-<button class="mode-btn" id="modeB" onclick="switchMode('han2hira')">
-한글 읽기 → ひらがな
-</button>
-</div>
+  <!-- 모드 전환 -->
+  <div class="mode-toggle">
+    <button class="mode-btn selected" id="modeA" onclick="switchMode('hira2han')">
+      ひらがな → 한글 읽기
+    </button>
+    <button class="mode-btn" id="modeB" onclick="switchMode('han2hira')">
+      한글 읽기 → ひらがな
+    </button>
+  </div>
 
-<!-- 진행 바 -->
-<div class="progress-wrap">
-<div class="progress-bar" id="progressBar" style="width:0%"></div>
-</div>
+  <!-- 진행 바 -->
+  <div class="progress-wrap">
+    <div class="progress-bar" id="progressBar" style="width:0%"></div>
+  </div>
 
-<!-- 문제 카드 -->
-<div class="card">
-<span class="question-label" id="questionLabel">히라가나를 읽으세요</span>
-<div class="question-char" id="questionChar">あ</div>
-<span class="question-count" id="questionCount">1 / 46</span>
-</div>
+  <!-- 문제 카드 -->
+  <div class="card">
+    <span class="question-label" id="questionLabel">히라가나를 읽으세요</span>
+    <div class="question-char" id="questionChar">あ</div>
+    <span class="question-count" id="questionCount">1 / 46</span>
+  </div>
 
-<!-- 보기 -->
-<div class="choices" id="choicesGrid"></div>
+  <!-- 보기 -->
+  <div class="choices" id="choicesGrid"></div>
 
-<!-- 피드백 -->
-<div class="feedback" id="feedback"></div>
+  <!-- 피드백 -->
+  <div class="feedback" id="feedback"></div>
 
-<!-- 다음 -->
-<button class="next-btn" id="nextBtn" onclick="nextQuestion()">다음 문제 →</button>
+  <!-- 다음 -->
+  <button class="next-btn" id="nextBtn" onclick="nextQuestion()">다음 문제 →</button>
 </main>
 
 <!-- 결과 화면 -->
 <div class="result-screen" id="resultScreen">
-<div class="result-kana">あいうえお</div>
-<div class="result-title">퀴즈 완료!</div>
-<div class="result-score" id="resultScore">0%</div>
-<div class="result-sub" id="resultSub"></div>
-<div class="result-grid">
-<div class="result-box c">
-<div class="val" id="resCorrect">0</div>
-<div class="lbl">정답</div>
-</div>
-<div class="result-box w">
-<div class="val" id="resWrong">0</div>
-<div class="lbl">오답</div>
-</div>
-</div>
-<button class="restart-btn" onclick="restart()">다시 도전하기</button>
+  <div class="result-kana">あいうえお</div>
+  <div class="result-title">퀴즈 완료!</div>
+  <div class="result-score" id="resultScore">0%</div>
+  <div class="result-sub" id="resultSub"></div>
+  <div class="result-grid">
+    <div class="result-box c">
+      <div class="val" id="resCorrect">0</div>
+      <div class="lbl">정답</div>
+    </div>
+    <div class="result-box w">
+      <div class="val" id="resWrong">0</div>
+      <div class="lbl">오답</div>
+    </div>
+  </div>
+  <button class="restart-btn" onclick="restart()">다시 도전하기</button>
 </div>
 
 <script>
 // ────────────────────────────────────────────
-// 히라가나 데이터 (글자 : 한글 발음)
+//  히라가나 데이터 (글자 : 한글 발음)
 // ────────────────────────────────────────────
 const HIRA = [
-// 청음 — 모음
-{ k: 'あ', r: '아' }, { k: 'い', r: '이' }, { k: 'う', r: '우' },
-{ k: 'え', r: '에' }, { k: 'お', r: '오' },
-// か행
-{ k: 'か', r: '카' }, { k: 'き', r: '키' }, { k: 'く', r: '쿠' },
-{ k: 'け', r: '케' }, { k: 'こ', r: '코' },
-// さ행
-{ k: 'さ', r: '사' }, { k: 'し', r: '시' }, { k: 'す', r: '스' },
-{ k: 'せ', r: '세' }, { k: 'そ', r: '소' },
-// た행
-{ k: 'た', r: '타' }, { k: 'ち', r: '치' }, { k: 'つ', r: '츠' },
-{ k: 'て', r: '테' }, { k: 'と', r: '토' },
-// な행
-{ k: 'な', r: '나' }, { k: 'に', r: '니' }, { k: 'ぬ', r: '누' },
-{ k: 'ね', r: '네' }, { k: 'の', r: '노' },
-// は행
-{ k: 'は', r: '하' }, { k: 'ひ', r: '히' }, { k: 'ふ', r: '후' },
-{ k: 'へ', r: '헤' }, { k: 'ほ', r: '호' },
-// ま행
-{ k: 'ま', r: '마' }, { k: 'み', r: '미' }, { k: 'む', r: '무' },
-{ k: 'め', r: '메' }, { k: 'も', r: '모' },
-// や행
-{ k: 'や', r: '야' }, { k: 'ゆ', r: '유' }, { k: 'よ', r: '요' },
-// ら행
-{ k: 'ら', r: '라' }, { k: 'り', r: '리' }, { k: 'る', r: '루' },
-{ k: 'れ', r: '레' }, { k: 'ろ', r: '로' },
-// わ행
-{ k: 'わ', r: '와' }, { k: 'を', r: '오(를)' },
-// ん
-{ k: 'ん', r: '응/ㄴ' },
+  // 청음 — 모음
+  { k: 'あ', r: '아' }, { k: 'い', r: '이' }, { k: 'う', r: '우' },
+  { k: 'え', r: '에' }, { k: 'お', r: '오' },
+  // か행
+  { k: 'か', r: '카' }, { k: 'き', r: '키' }, { k: 'く', r: '쿠' },
+  { k: 'け', r: '케' }, { k: 'こ', r: '코' },
+  // さ행
+  { k: 'さ', r: '사' }, { k: 'し', r: '시' }, { k: 'す', r: '스' },
+  { k: 'せ', r: '세' }, { k: 'そ', r: '소' },
+  // た행
+  { k: 'た', r: '타' }, { k: 'ち', r: '치' }, { k: 'つ', r: '츠' },
+  { k: 'て', r: '테' }, { k: 'と', r: '토' },
+  // な행
+  { k: 'な', r: '나' }, { k: 'に', r: '니' }, { k: 'ぬ', r: '누' },
+  { k: 'ね', r: '네' }, { k: 'の', r: '노' },
+  // は행
+  { k: 'は', r: '하' }, { k: 'ひ', r: '히' }, { k: 'ふ', r: '후' },
+  { k: 'へ', r: '헤' }, { k: 'ほ', r: '호' },
+  // ま행
+  { k: 'ま', r: '마' }, { k: 'み', r: '미' }, { k: 'む', r: '무' },
+  { k: 'め', r: '메' }, { k: 'も', r: '모' },
+  // や행
+  { k: 'や', r: '야' }, { k: 'ゆ', r: '유' }, { k: 'よ', r: '요' },
+  // ら행
+  { k: 'ら', r: '라' }, { k: 'り', r: '리' }, { k: 'る', r: '루' },
+  { k: 'れ', r: '레' }, { k: 'ろ', r: '로' },
+  // わ행
+  { k: 'わ', r: '와' }, { k: 'を', r: '오(를)' },
+  // ん
+  { k: 'ん', r: '응/ㄴ' },
 ];
 
 // ────────────────────────────────────────────
-// 상태
+//  상태
 // ────────────────────────────────────────────
-let mode = 'hira2han'; // 'hira2han' | 'han2hira'
-let queue = []; // 셔플된 인덱스 배열
-let qIdx = 0; // 현재 위치
-let answered = false;
+let mode        = 'hira2han'; // 'hira2han' | 'han2hira'
+let queue       = [];         // 셔플된 인덱스 배열
+let qIdx        = 0;          // 현재 위치
+let answered    = false;
 let totalCorrect = 0;
-let totalWrong = 0;
+let totalWrong   = 0;
 
 // ────────────────────────────────────────────
-// 유틸
+//  유틸
 // ────────────────────────────────────────────
+// 0 이상 maxExclusive 미만의 정수를 반환 (crypto 우선, 미지원 시 Math.random 대체)
+function getRandomInt(maxExclusive) {
+  if (window.crypto && window.crypto.getRandomValues) {
+    const buf = new Uint32Array(1);
+    window.crypto.getRandomValues(buf);
+    return buf[0] % maxExclusive;
+  }
+  return Math.floor(Math.random() * maxExclusive);
+}
+
+// Fisher–Yates shuffle
 function shuffle(arr) {
-const a = [...arr];
-for (let i = a.length - 1; i > 0; i--) {
-const j = Math.floor(Math.random() * (i + 1));
-[a[i], a[j]] = [a[j], a[i]];
-}
-return a;
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = getRandomInt(i + 1);
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
 }
 
+// correctIdx를 제외한 인덱스 중 count개를 중복 없이 무작위 추출
 function pickDistractors(correctIdx, count) {
-const pool = HIRA.map((_, i) => i).filter(i => i !== correctIdx);
-return shuffle(pool).slice(0, count);
+  const pool = [];
+  for (let i = 0; i < HIRA.length; i++) {
+    if (i !== correctIdx) pool.push(i);
+  }
+  const picked = [];
+  for (let n = 0; n < count && pool.length > 0; n++) {
+    const j = getRandomInt(pool.length);
+    picked.push(pool[j]);
+    pool.splice(j, 1);
+  }
+  return picked;
 }
 
 // ────────────────────────────────────────────
-// 초기화 / 재시작
+//  초기화 / 재시작
 // ────────────────────────────────────────────
 function init() {
-queue = shuffle(HIRA.map((_, i) => i));
-qIdx = 0;
-answered = false;
-totalCorrect = 0;
-totalWrong = 0;
-updateStats();
-renderQuestion();
+  queue  = shuffle(HIRA.map((_, i) => i));
+  qIdx   = 0;
+  answered = false;
+  totalCorrect = 0;
+  totalWrong   = 0;
+  updateStats();
+  renderQuestion();
 
-document.getElementById('mainArea').classList.remove('hidden');
-document.getElementById('resultScreen').classList.remove('show');
+  document.getElementById('mainArea').classList.remove('hidden');
+  document.getElementById('resultScreen').classList.remove('show');
 }
 
 function restart() {
-init();
+  init();
 }
 
 // ────────────────────────────────────────────
-// 모드 전환
+//  모드 전환
 // ────────────────────────────────────────────
 function switchMode(m) {
-mode = m;
-document.getElementById('modeA').classList.toggle('selected', m === 'hira2han');
-document.getElementById('modeB').classList.toggle('selected', m === 'han2hira');
-document.getElementById('headerBadge').textContent =
-m === 'hira2han' ? '히라가나 → 한글' : '한글 → 히라가나';
-document.getElementById('headerBadge').classList.toggle('active', true);
+  mode = m;
+  document.getElementById('modeA').classList.toggle('selected', m === 'hira2han');
+  document.getElementById('modeB').classList.toggle('selected', m === 'han2hira');
+  document.getElementById('headerBadge').textContent =
+    m === 'hira2han' ? '히라가나 → 한글' : '한글 → 히라가나';
+  document.getElementById('headerBadge').classList.toggle('active', true);
 
-// 모드 바꾸면 큐 리셋하고 통계 유지
-queue = shuffle(HIRA.map((_, i) => i));
-qIdx = 0;
-answered = false;
-renderQuestion();
+  // 모드 바꾸면 큐 리셋하고 통계 유지
+  queue = shuffle(HIRA.map((_, i) => i));
+  qIdx  = 0;
+  answered = false;
+  renderQuestion();
 }
 
 // ────────────────────────────────────────────
-// 문제 렌더링
+//  문제 렌더링
 // ────────────────────────────────────────────
 function renderQuestion() {
-if (qIdx >= queue.length) { showResult(); return; }
+  if (qIdx >= queue.length) { showResult(); return; }
 
-answered = false;
-const correctIdx = queue[qIdx];
-const item = HIRA[correctIdx];
+  answered = false;
+  const correctIdx = queue[qIdx];
+  const item = HIRA[correctIdx];
 
-// 진행 바
-document.getElementById('progressBar').style.width =
-(qIdx / queue.length * 100) + '%';
+  // 진행 바
+  document.getElementById('progressBar').style.width =
+    (qIdx / queue.length * 100) + '%';
 
-// 문제 글자
-const qChar = document.getElementById('questionChar');
-const qLabel = document.getElementById('questionLabel');
-const qCount = document.getElementById('questionCount');
+  // 문제 글자
+  const qChar = document.getElementById('questionChar');
+  const qLabel = document.getElementById('questionLabel');
+  const qCount = document.getElementById('questionCount');
 
-if (mode === 'hira2han') {
-qLabel.textContent = '히라가나를 읽으세요';
-qChar.textContent = item.k;
-qChar.className = 'question-char kana';
-} else {
-qLabel.textContent = '발음에 해당하는 히라가나를 고르세요';
-qChar.textContent = item.r;
-qChar.className = 'question-char hangul';
-}
-qCount.textContent = `${qIdx + 1} / ${queue.length}`;
+  if (mode === 'hira2han') {
+    qLabel.textContent   = '히라가나를 읽으세요';
+    qChar.textContent    = item.k;
+    qChar.className      = 'question-char kana';
+  } else {
+    qLabel.textContent   = '발음에 해당하는 히라가나를 고르세요';
+    qChar.textContent    = item.r;
+    qChar.className      = 'question-char hangul';
+  }
+  qCount.textContent = `${qIdx + 1} / ${queue.length}`;
 
-// 보기 생성 (정답 1 + 오답 3)
-const distractors = pickDistractors(correctIdx, 3);
-const choices = shuffle([correctIdx, ...distractors]);
+  // 보기 생성 (정답 1 + 오답 3)
+  const distractors = pickDistractors(correctIdx, 3);
+  const choices = shuffle([correctIdx, ...distractors]);
 
-const grid = document.getElementById('choicesGrid');
-grid.innerHTML = '';
-choices.forEach(idx => {
-const btn = document.createElement('button');
-btn.className = 'choice-btn';
-btn.dataset.idx = idx;
+  const grid = document.getElementById('choicesGrid');
+  grid.innerHTML = '';
+  choices.forEach(idx => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.dataset.idx = idx;
 
-if (mode === 'hira2han') {
-btn.textContent = HIRA[idx].r;
-} else {
-btn.innerHTML = `<span class="choice-kana">${HIRA[idx].k}</span>`;
-}
+    if (mode === 'hira2han') {
+      btn.textContent = HIRA[idx].r;
+    } else {
+      btn.innerHTML = `<span class="choice-kana">${HIRA[idx].k}</span>`;
+    }
 
-btn.addEventListener('click', () => checkAnswer(idx, correctIdx));
-grid.appendChild(btn);
-});
+    btn.addEventListener('click', () => checkAnswer(idx, correctIdx));
+    grid.appendChild(btn);
+  });
 
-// 피드백 숨기기
-const fb = document.getElementById('feedback');
-fb.className = 'feedback';
-fb.textContent = '';
+  // 피드백 숨기기
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback';
+  fb.textContent = '';
 
-// 다음 버튼 숨기기
-document.getElementById('nextBtn').classList.remove('show');
+  // 다음 버튼 숨기기
+  document.getElementById('nextBtn').classList.remove('show');
 
-// 글자 팝 애니메이션
-qChar.classList.remove('pop');
-void qChar.offsetWidth; // reflow
-qChar.classList.add('pop');
+  // 글자 팝 애니메이션
+  qChar.classList.remove('pop');
+  void qChar.offsetWidth; // reflow
+  qChar.classList.add('pop');
 }
 
 // ────────────────────────────────────────────
-// 정답 확인
+//  정답 확인
 // ────────────────────────────────────────────
 function checkAnswer(selectedIdx, correctIdx) {
-if (answered) return;
-answered = true;
+  if (answered) return;
+  answered = true;
 
-const isCorrect = (selectedIdx === correctIdx);
-const btns = document.querySelectorAll('.choice-btn');
-btns.forEach(btn => {
-btn.disabled = true;
-const i = parseInt(btn.dataset.idx);
-if (i === correctIdx) btn.classList.add('correct-ans');
-else if (i === selectedIdx) btn.classList.add('wrong-ans');
-});
+  const isCorrect = (selectedIdx === correctIdx);
+  const btns = document.querySelectorAll('.choice-btn');
+  btns.forEach(btn => {
+    btn.disabled = true;
+    const i = parseInt(btn.dataset.idx);
+    if (i === correctIdx)          btn.classList.add('correct-ans');
+    else if (i === selectedIdx)    btn.classList.add('wrong-ans');
+  });
 
-const fb = document.getElementById('feedback');
-if (isCorrect) {
-totalCorrect++;
-fb.textContent = '정답! 🎉';
-fb.className = 'feedback show ok';
-} else {
-totalWrong++;
-const correctItem = HIRA[correctIdx];
-fb.textContent = `오답 😢 정답: ${correctItem.k} = ${correctItem.r}`;
-fb.className = 'feedback show no';
-}
+  const fb = document.getElementById('feedback');
+  if (isCorrect) {
+    totalCorrect++;
+    fb.textContent = '정답! 🎉';
+    fb.className   = 'feedback show ok';
+  } else {
+    totalWrong++;
+    const correctItem = HIRA[correctIdx];
+    fb.textContent = `오답 😢  정답: ${correctItem.k} = ${correctItem.r}`;
+    fb.className   = 'feedback show no';
+  }
 
-updateStats();
-document.getElementById('nextBtn').classList.add('show');
+  updateStats();
+  document.getElementById('nextBtn').classList.add('show');
 }
 
 // ────────────────────────────────────────────
-// 다음 문제
+//  다음 문제
 // ────────────────────────────────────────────
 function nextQuestion() {
-qIdx++;
-renderQuestion();
+  qIdx++;
+  renderQuestion();
 }
 
 // ────────────────────────────────────────────
-// 통계 업데이트
+//  통계 업데이트
 // ────────────────────────────────────────────
 function updateStats() {
-const total = totalCorrect + totalWrong;
-document.getElementById('statTotal').textContent = total;
-document.getElementById('statCorrect').textContent = totalCorrect;
-document.getElementById('statWrong').textContent = totalWrong;
-document.getElementById('statAcc').textContent =
-total > 0 ? Math.round(totalCorrect / total * 100) + '%' : '—';
+  const total = totalCorrect + totalWrong;
+  document.getElementById('statTotal').textContent   = total;
+  document.getElementById('statCorrect').textContent = totalCorrect;
+  document.getElementById('statWrong').textContent   = totalWrong;
+  document.getElementById('statAcc').textContent     =
+    total > 0 ? Math.round(totalCorrect / total * 100) + '%' : '—';
 }
 
 // ────────────────────────────────────────────
-// 결과 화면
+//  결과 화면
 // ────────────────────────────────────────────
 function showResult() {
-document.getElementById('progressBar').style.width = '100%';
-document.getElementById('mainArea').classList.add('hidden');
+  document.getElementById('progressBar').style.width = '100%';
+  document.getElementById('mainArea').classList.add('hidden');
 
-const total = totalCorrect + totalWrong;
-const pct = total > 0 ? Math.round(totalCorrect / total * 100) : 0;
+  const total = totalCorrect + totalWrong;
+  const pct   = total > 0 ? Math.round(totalCorrect / total * 100) : 0;
 
-document.getElementById('resultScore').textContent = pct + '%';
-document.getElementById('resCorrect').textContent = totalCorrect;
-document.getElementById('resWrong').textContent = totalWrong;
+  document.getElementById('resultScore').textContent   = pct + '%';
+  document.getElementById('resCorrect').textContent    = totalCorrect;
+  document.getElementById('resWrong').textContent      = totalWrong;
 
-let msg = '';
-if (pct === 100) msg = '완벽해요! 히라가나 마스터! 🏆';
-else if (pct >= 80) msg = '훌륭해요! 조금만 더 연습하면 완벽해질 거예요 ✨';
-else if (pct >= 60) msg = '잘 했어요! 틀린 글자 위주로 다시 연습해 보세요 💪';
-else msg = '히라가나 다시 한번 도전해 봐요! 반복이 힘입니다 🔥';
-document.getElementById('resultSub').textContent = msg;
+  let msg = '';
+  if (pct === 100) msg = '완벽해요! 히라가나 마스터! 🏆';
+  else if (pct >= 80) msg = '훌륭해요! 조금만 더 연습하면 완벽해질 거예요 ✨';
+  else if (pct >= 60) msg = '잘 했어요! 틀린 글자 위주로 다시 연습해 보세요 💪';
+  else msg = '히라가나 다시 한번 도전해 봐요! 반복이 힘입니다 🔥';
+  document.getElementById('resultSub').textContent = msg;
 
-document.getElementById('resultScreen').classList.add('show');
+  document.getElementById('resultScreen').classList.add('show');
 }
 
 // ────────────────────────────────────────────
-// 키보드 단축키 (1~4 숫자, Enter / Space)
+//  키보드 단축키 (1~4 숫자, Enter / Space)
 // ────────────────────────────────────────────
 document.addEventListener('keydown', e => {
-if (['1','2','3','4'].includes(e.key)) {
-const btns = [...document.querySelectorAll('.choice-btn')];
-const i = parseInt(e.key) - 1;
-if (btns[i] && !answered) btns[i].click();
-}
-if ((e.key === 'Enter' || e.key === ' ') && answered) {
-e.preventDefault();
-const nb = document.getElementById('nextBtn');
-if (nb.classList.contains('show')) nb.click();
-}
+  if (['1','2','3','4'].includes(e.key)) {
+    const btns = [...document.querySelectorAll('.choice-btn')];
+    const i = parseInt(e.key) - 1;
+    if (btns[i] && !answered) btns[i].click();
+  }
+  if ((e.key === 'Enter' || e.key === ' ') && answered) {
+    e.preventDefault();
+    const nb = document.getElementById('nextBtn');
+    if (nb.classList.contains('show')) nb.click();
+  }
 });
 
 // ────────────────────────────────────────────
-// 시작
+//  시작
 // ────────────────────────────────────────────
 init();
 </script>
