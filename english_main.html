@@ -1,37 +1,798 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>영어 본문 — 2과</title>
-  <style>
-    :root{color-scheme:light;font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif}
-    *{box-sizing:border-box}
-    body{margin:0;padding:24px;background:#f6f8fc;color:#0f172a}
-    main{max-width:860px;margin:0 auto;display:grid;gap:16px}
-    section{border:1px solid #dbe3ef;border-radius:18px;background:#fff;padding:22px;box-shadow:0 12px 28px rgba(15,23,42,.08)}
-    a.back{display:inline-flex;margin-bottom:10px;color:#4338ca;text-decoration:none;font-weight:800}
-    h1{margin:0;font-size:clamp(1.5rem,4vw,2.2rem);letter-spacing:-.04em}
-    h2{margin:0 0 10px;color:#4338ca;font-size:1.05rem}
-    p,li{line-height:1.7}
-    ul{margin:0;padding-left:1.2rem}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 2 - Odd Pairings That Work</title>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f0ebe0;
+    --card: #ffffff;
+    --border: #ddd5c5;
+    --teal: #1a6b6b;
+    --teal-dark: #0d4a4a;
+    --teal-light: #e8f4f4;
+    --teal-mid: #5ba3a3;
+    --accent: #1a6b6b;
+    --accent-light: #e8f4f4;
+    --text-main: #1a1a1a;
+    --text-sub: #4a4a4a;
+    --text-light: #888;
+    --mark-bg: #c8e8e8;
+    --mark-text: #0d4a4a;
+    --shadow: 0 1px 8px rgba(0,0,0,0.08);
+    --radius: 12px;
+
+    --cat-rel: #1e6bb5;
+    --cat-rel-light: #dbeafe;
+    --cat-inversion: #7c3aed;
+    --cat-inversion-light: #ede9fe;
+    --cat-conj: #0e7490;
+    --cat-conj-light: #cffafe;
+    --cat-phrase: #15803d;
+    --cat-phrase-light: #dcfce7;
+    --cat-neg: #b45309;
+    --cat-neg-light: #fef3c7;
+    --cat-vocab: #be185d;
+    --cat-vocab-light: #fce7f3;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text-main);
+    min-height: 100vh;
+    padding-bottom: 60px;
+  }
+
+  /* ── HEADER ── */
+  .page-header {
+    background: linear-gradient(160deg, var(--teal-dark) 0%, var(--teal) 100%);
+    color: #fff;
+    padding: 28px 20px 24px;
+    text-align: center;
+  }
+  .header-icon { font-size: 32px; display: block; margin-bottom: 8px; }
+  .page-header h1 {
+    font-family: 'Gowun Batang', serif;
+    font-size: clamp(20px, 5vw, 28px);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .page-header .subtitle {
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── WRAPPER ── */
+  .content-wrap { max-width: 720px; margin: 0 auto; padding: 0 14px; }
+
+  /* ── STUDY GUIDE ── */
+  .study-guide {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin: 16px 0 0;
+    box-shadow: var(--shadow);
+  }
+  .study-guide-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--teal);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .guide-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .guide-list li {
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--text-sub);
+    padding-left: 2px;
+  }
+  .guide-list li strong { color: var(--text-main); font-weight: 700; }
+  .guide-list li a { color: var(--teal); font-weight: 700; text-decoration: none; }
+
+  /* ── TAB NAV ── */
+  .tab-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 14px 0 0;
+  }
+  .tab-btn {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 8px;
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-sub);
+    transition: all 0.18s;
+    text-align: center;
+    line-height: 1;
+    box-shadow: var(--shadow);
+  }
+  .tab-btn.active {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: #fff;
+    box-shadow: 0 3px 12px rgba(26,107,107,0.28);
+  }
+  .tab-btn:not(.active):hover {
+    border-color: var(--teal-mid);
+    color: var(--teal);
+    background: var(--teal-light);
+  }
+
+  /* ── TAB CONTENT ── */
+  .tab-content { display: none; padding-top: 14px; }
+  .tab-content.active { display: block; }
+
+  /* ── TAB 1: READING ── */
+  .reading-intro {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 13px 16px;
+    font-size: 13px;
+    color: var(--text-sub);
+    line-height: 1.65;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+  }
+  .para-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+  .section-label {
+    display: inline-block;
+    background: var(--teal-dark);
+    color: #fff;
+    font-family: 'Gowun Batang', serif;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 6px 16px;
+    border-radius: 6px;
+    margin: 14px 0 0 16px;
+  }
+  .para-inner { padding: 14px 16px 16px; }
+  .para-num-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px; height: 24px;
+    border: 2px solid var(--teal);
+    border-radius: 50%;
+    color: var(--teal);
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .para-en {
+    font-family: 'Gowun Batang', serif;
+    font-size: 15px;
+    line-height: 2.6;
+    color: var(--text-main);
+  }
+  .para-kr-box {
+    background: #f5f0e8;
+    border-radius: 8px;
+    padding: 11px 14px;
+    margin-top: 12px;
+  }
+  .para-kr-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--teal);
+    letter-spacing: 1.5px;
+    margin-bottom: 5px;
+  }
+  .para-kr {
+    font-size: 13px;
+    line-height: 1.85;
+    color: var(--text-sub);
+  }
+
+  /* ── TAB 2: GRAMMAR ── */
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .chip {
+    border: 1.5px solid currentColor;
+    border-radius: 20px;
+    padding: 4px 11px;
+    font-size: 11.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: transparent;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  .chip.all { color: var(--teal); }
+  .chip.all.active, .chip.all:hover { background: var(--teal); color: #fff; border-color: var(--teal); }
+  .chip.cat-rel { color: var(--cat-rel); }
+  .chip.cat-rel.active, .chip.cat-rel:hover { background: var(--cat-rel); color: #fff; border-color: var(--cat-rel); }
+  .chip.cat-inversion { color: var(--cat-inversion); }
+  .chip.cat-inversion.active, .chip.cat-inversion:hover { background: var(--cat-inversion); color: #fff; border-color: var(--cat-inversion); }
+  .chip.cat-conj { color: var(--cat-conj); }
+  .chip.cat-conj.active, .chip.cat-conj:hover { background: var(--cat-conj); color: #fff; border-color: var(--cat-conj); }
+  .chip.cat-phrase { color: var(--cat-phrase); }
+  .chip.cat-phrase.active, .chip.cat-phrase:hover { background: var(--cat-phrase); color: #fff; border-color: var(--cat-phrase); }
+  .chip.cat-neg { color: var(--cat-neg); }
+  .chip.cat-neg.active, .chip.cat-neg:hover { background: var(--cat-neg); color: #fff; border-color: var(--cat-neg); }
+  .chip.cat-vocab { color: var(--cat-vocab); }
+  .chip.cat-vocab.active, .chip.cat-vocab:hover { background: var(--cat-vocab); color: #fff; border-color: var(--cat-vocab); }
+
+  .filter-count { font-size: 12px; color: var(--text-light); margin-bottom: 10px; }
+
+  .grammar-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border-left: 4px solid transparent;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .grammar-card.cat-rel    { border-left-color: var(--cat-rel); }
+  .grammar-card.cat-inversion { border-left-color: var(--cat-inversion); }
+  .grammar-card.cat-conj   { border-left-color: var(--cat-conj); }
+  .grammar-card.cat-phrase { border-left-color: var(--cat-phrase); }
+  .grammar-card.cat-neg    { border-left-color: var(--cat-neg); }
+  .grammar-card.cat-vocab  { border-left-color: var(--cat-vocab); }
+  .grammar-card-inner { padding: 13px 15px; }
+  .grammar-meta { display: flex; gap: 7px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
+  .para-badge {
+    background: #ede8e0;
+    color: var(--text-sub);
+    font-size: 10.5px;
+    font-weight: 700;
+    border-radius: 5px;
+    padding: 2px 7px;
+  }
+  .cat-tag {
+    font-size: 10.5px;
+    font-weight: 700;
+    border-radius: 5px;
+    padding: 2px 7px;
+  }
+  .cat-tag.cat-rel        { background: var(--cat-rel-light);       color: var(--cat-rel); }
+  .cat-tag.cat-inversion  { background: var(--cat-inversion-light); color: var(--cat-inversion); }
+  .cat-tag.cat-conj       { background: var(--cat-conj-light);      color: var(--cat-conj); }
+  .cat-tag.cat-phrase     { background: var(--cat-phrase-light);    color: var(--cat-phrase); }
+  .cat-tag.cat-neg        { background: var(--cat-neg-light);       color: var(--cat-neg); }
+  .cat-tag.cat-vocab      { background: var(--cat-vocab-light);     color: var(--cat-vocab); }
+  .grammar-sentence {
+    font-family: 'Gowun Batang', serif;
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--text-main);
+    margin-bottom: 7px;
+  }
+  .grammar-title { font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 4px; }
+  .grammar-exp {
+    font-size: 12.5px;
+    color: var(--text-sub);
+    line-height: 1.75;
+    background: #f5f0e8;
+    border-radius: 7px;
+    padding: 9px 11px;
+  }
+  .grammar-exp .alt {
+    display: block;
+    color: var(--cat-rel);
+    font-style: italic;
+    margin-top: 5px;
+    font-size: 12px;
+  }
+
+  mark {
+    background: var(--mark-bg);
+    color: var(--mark-text);
+    border-radius: 3px;
+    padding: 0 2px;
+    font-weight: 600;
+  }
+
+  /* ── TAB 3: SYNONYMS ── */
+  .syn-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 13px 15px;
+    margin-bottom: 10px;
+  }
+  .syn-pair {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 9px;
+    flex-wrap: wrap;
+  }
+  .syn-word { font-family: 'Gowun Batang', serif; font-size: 15px; font-weight: 700; color: var(--text-main); }
+  .syn-icon { font-size: 15px; font-weight: 800; }
+  .syn-icon.syn { color: #15803d; }
+  .syn-icon.ant { color: #c0392b; }
+  .syn-kr { font-size: 11.5px; color: var(--text-light); background: #ede8e0; border-radius: 5px; padding: 2px 8px; }
+  .syn-example {
+    font-family: 'Gowun Batang', serif;
+    font-size: 13.5px;
+    line-height: 1.85;
+    color: var(--text-sub);
+    padding: 9px 12px;
+    background: #f5f0e8;
+    border-radius: 7px;
+    margin-bottom: 8px;
+  }
+  .syn-note { font-size: 12px; color: var(--text-light); line-height: 1.6; }
+  .syn-note .note-icon { color: var(--cat-phrase); font-style: normal; font-weight: 600; }
+
+  /* ── TAB 4: PARAPHRASE ── */
+  .toggle-all-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-sub);
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: all 0.18s;
+    box-shadow: var(--shadow);
+  }
+  .toggle-all-btn:hover { background: var(--teal-light); color: var(--teal); border-color: var(--teal-mid); }
+
+  .pphr-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .pphr-header { padding: 13px 15px 0; }
+  .pphr-num { font-size: 10.5px; font-weight: 700; color: var(--text-light); letter-spacing: 1px; margin-bottom: 5px; }
+  .pphr-orig {
+    font-family: 'Gowun Batang', serif;
+    font-size: 14px;
+    line-height: 1.85;
+    color: var(--text-main);
+    padding-bottom: 12px;
+  }
+  .pphr-show-btn {
+    display: block;
+    width: calc(100% - 30px);
+    margin: 0 15px 12px;
+    padding: 8px;
+    background: transparent;
+    border: 1.5px solid var(--teal-mid);
+    border-radius: 7px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--teal);
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+  }
+  .pphr-show-btn:hover { background: var(--teal-light); }
+  .pphr-answer { display: none; padding: 0 15px 13px; }
+  .pphr-answer.open { display: block; }
+  .pphr-result {
+    font-family: 'Gowun Batang', serif;
+    font-size: 14px;
+    line-height: 1.85;
+    color: var(--cat-rel);
+    background: #eff6ff;
+    border-radius: 7px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+  }
+  .pphr-tip {
+    font-size: 12.5px;
+    color: var(--text-sub);
+    line-height: 1.7;
+    background: #fffbf0;
+    border-radius: 7px;
+    padding: 9px 12px;
+    border-left: 3px solid #f59e0b;
+  }
+</style>
 </head>
 <body>
-  <main>
-    <section>
-      <a class="back" href="./english_main_hub.html">← 영어 본문 선택으로</a>
-      <h1>📘 영어 본문 2과</h1>
-      <p>교과서 지문을 중심으로 핵심 내용, 문장 구조, 근거 문장을 정리하는 공간입니다.</p>
-    </section>
-    <section>
-      <h2>학습 루틴</h2>
-      <ul>
-        <li>지문별 중심 내용과 주제를 한 문장으로 요약하기</li>
-        <li>관계사, 분사구문, 접속사 등 문장 구조 표시하기</li>
-        <li>문제 근거가 되는 문장을 본문에서 찾아 표시하기</li>
-      </ul>
-    </section>
-  </main>
+
+<!-- HEADER -->
+<header class="page-header">
+  <span class="header-icon">🍕</span>
+  <h1>Odd Pairings That Work</h1>
+  <p class="subtitle">고등학교 영어 2과 · 원문 · 문법 포인트 · 동의어·반의어 · 패러프레이징</p>
+</header>
+
+<div class="content-wrap">
+
+  <!-- STUDY GUIDE -->
+  <div class="study-guide">
+    <div class="study-guide-title">📋 학습 가이드</div>
+    <ul class="guide-list">
+      <li><a href="#">문법 포인트</a> · <a href="#">동의어·반의어</a> · <a href="#">패러프레이징</a>을 먼저 익힌 뒤, 각 탭의 내용을 떠올리며 <strong>원문 읽기</strong> 화면에 직접 표시하거나 필기해 보세요. (문법 요소에 표시하기, 동의어·반의어 떠올려 적기, 패러프레이징한 문장 적어보기 등)</li>
+      <li><strong>문법 포인트</strong>: 단락 순서대로 핵심 구문을 확인하고, 카테고리 칩으로 원하는 유형만 모아서 복습하세요.</li>
+      <li><strong>동의어·반의어</strong>: 본문 속 핵심 표현을 같은 의미(≈) / 반대 의미(↔)로 정리했어요.</li>
+      <li><strong>패러프레이징</strong>: 원문을 보고 스스로 바꿔 말해본 뒤, 버튼을 눌러 정답과 비교해 보세요.</li>
+    </ul>
+  </div>
+
+  <!-- TABS -->
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('reading', this)">원문 읽기</button>
+    <button class="tab-btn" onclick="switchTab('grammar', this)">문법 포인트</button>
+    <button class="tab-btn" onclick="switchTab('synonyms', this)">동의어·반의어</button>
+    <button class="tab-btn" onclick="switchTab('paraphrase', this)">패러프레이징</button>
+  </nav>
+
+  <!-- ========= TAB 1: READING ========= -->
+  <div id="tab-reading" class="tab-content active">
+
+    <div class="reading-intro">
+      전체 본문과 단락별 해석입니다. 문법·동의어·반의어·패러프레이징 탭에서 익힌 내용을 떠올리며 아래 본문에 직접 표시하거나 필기해 보세요.
+    </div>
+
+    <!-- Para 1 -->
+    <div class="para-card">
+      <div class="para-inner">
+        <div class="para-num-circle">①</div>
+        <div class="para-en">
+          You order a nice, juicy hamburger with some fries. What's next? Of course you have to have ketchup with your fries, right? Well, not for some people. In fact, some people prefer eating fries with mayonnaise, chili sauce, or even steak sauce. While ketchup with fries may seem quite ordinary, other combinations may seem rather odd. Read on to learn about some popular dishes that have flavor combinations that you may not have thought of.
+        </div>
+        <div class="para-kr-box">
+          <div class="para-kr-label">해석</div>
+          <div class="para-kr">당신은 멋지고 육즙이 풍부한 햄버거와 감자튀김을 주문한다. 다음은 무엇일까? 당연히 감자튀김에는 케첩을 먹어야 하지 않을까? 그런데, 그렇지 않은 사람들도 있다. 사실, 어떤 사람들은 감자튀김을 마요네즈, 칠리 소스, 심지어 스테이크 소스와 함께 먹는 것을 더 좋아한다. 감자튀김에 케첩은 꽤 평범해 보일 수 있지만, 다른 조합들은 꽤 독특해 보일 수 있다. 당신이 생각하지 못했을 수도 있는 맛의 조합을 가진 몇 가지 인기 있는 음식들에 대해 계속 읽어 보자.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: The Divisive Classic -->
+    <div class="para-card">
+      <span class="section-label">🍍 The Divisive Classic</span>
+
+      <div class="para-inner">
+        <div class="para-num-circle">②</div>
+        <div class="para-en">
+          Some people love this combination, while others can't seem to stand it. It can even cause quite heated arguments. If you haven't guessed already, it's the tasty or nasty — depending on your taste — ham and pineapple pizza. The man who created this pizza was neither Italian nor Hawaiian. A Greek immigrant from Canada, Sam Panopoulos did not want to stick to the usual ingredients on pizzas, like pepperoni and mushrooms. He spread canned pineapple and sliced ham onto a pizza and called it "the Hawaiian" because that's what was written on the pineapple can. Little did he know that he had created a classic combination. Even now, in the U.S. and U.K., no pizza menu seems complete without it. In Italy, however, most people find pineapple on pizza distasteful.
+        </div>
+        <div class="para-kr-box">
+          <div class="para-kr-label">해석</div>
+          <div class="para-kr">어떤 사람들은 이 조합을 매우 좋아하지만, 다른 사람들은 도저히 참을 수 없어 한다. 심지어 꽤 격렬한 논쟁을 일으키기도 한다. 아직 눈치채지 못했다면, 그것은 취향에 따라 맛있거나 끔찍한 — 햄 파인애플 피자이다. 이 피자를 만든 사람은 이탈리아인도, 하와이인도 아니었다. 캐나다 출신의 그리스 이민자인 Sam Panopoulos는 페퍼로니와 버섯 같은 일반적인 피자 재료에 얽매이고 싶지 않았다. 그는 피자에 통조림 파인애플과 얇게 썬 햄을 올리고, 파인애플 캔에 적혀 있던 이름을 따서 "하와이안"이라고 불렀다. 그는 자신이 하나의 클래식한 조합을 만들어 냈다는 것을 거의 알지 못했다. 지금도 미국과 영국에서는 이것 없이는 피자 메뉴가 완성되지 않는 것처럼 보인다. 그러나 이탈리아에서는 대부분의 사람들이 피자 위의 파인애플을 불쾌하게 여긴다.</div>
+        </div>
+      </div>
+
+      <div class="para-inner" style="border-top:1px solid var(--border);">
+        <div class="para-num-circle">③</div>
+        <div class="para-en">
+          Why is the Hawaiian pizza so divisive? The combination is not that odd. Pineapple and ham is not the only fruit and meat pairing in kitchens around the world. In France, duck is paired with a sweet orange sauce, and American Thanksgiving turkey dinner would not be complete without cranberry sauce. Many people enjoy salty and sweet flavor combinations, whereas some others prefer to keep those tastes as far from each other as possible.
+        </div>
+        <div class="para-kr-box">
+          <div class="para-kr-label">해석</div>
+          <div class="para-kr">왜 하와이안 피자는 이렇게 의견을 갈라놓을까? 그 조합이 그렇게 이상한 것은 아니다. 파인애플과 햄이 세계 각지의 주방에서 유일한 과일과 고기의 조합인 것은 아니다. 프랑스에서는 오리를 달콤한 오렌지 소스와 함께 먹고, 미국의 추수감사절 칠면조 저녁 식사에는 크랜베리 소스가 빠져서는 안 된다. 많은 사람들이 짭짤하고 달콤한 맛의 조합을 즐기는 반면, 일부 다른 사람들은 그 두 가지 맛을 가능한 한 서로 멀리하려 한다.</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /tab-reading -->
+
+  <!-- ========= TAB 2: GRAMMAR ========= -->
+  <div id="tab-grammar" class="tab-content">
+    <div class="filter-bar" id="filterBar"></div>
+    <div class="filter-count" id="filterCount"></div>
+    <div id="grammarList"></div>
+  </div>
+
+  <!-- ========= TAB 3: SYNONYMS ========= -->
+  <div id="tab-synonyms" class="tab-content">
+    <div id="synList"></div>
+  </div>
+
+  <!-- ========= TAB 4: PARAPHRASE ========= -->
+  <div id="tab-paraphrase" class="tab-content">
+    <button class="toggle-all-btn" id="toggleAllBtn" onclick="toggleAll()">📂 전체 펼치기</button>
+    <div id="paraList"></div>
+  </div>
+
+</div><!-- /content-wrap -->
+
+<script>
+// ─── DATA ────────────────────────────────────────────────────
+const grammarData = [
+  { para:"①", cat:"cat-phrase", catLabel:"구동사·관용표현",
+    sentence:'Of course you <mark>have to have</mark> ketchup with your fries, right?',
+    title:"have to have = must eat / need to eat",
+    exp:'여기서 두 번째 have는 "먹다(eat)"의 의미로 쓰인 일반동사입니다. have to는 조동사(must), 두 번째 have는 본동사.\n• have to have ketchup = need to eat ketchup',
+    alt:'= Of course you have to eat ketchup with your fries.' },
+  { para:"①", cat:"cat-conj", catLabel:"접속사·문장구조",
+    sentence:'<mark>While</mark> ketchup with fries may seem quite ordinary, other combinations may seem rather odd.',
+    title:"While (대조): = Whereas / Although",
+    exp:'문장 앞에 오는 while은 시간이 아닌 "대조(contrast)"의 의미로 쓰였습니다. whereas와 교체 가능합니다.\n교사 주석: = Whereas',
+    alt:'= Whereas ketchup with fries may seem quite ordinary, other combinations may seem rather odd.' },
+  { para:"①", cat:"cat-vocab", catLabel:"어휘·어구",
+    sentence:'other combinations may seem <mark>rather odd</mark>.',
+    title:"rather: 부사 강조 (quite와 비교)",
+    exp:'"rather"는 예상보다 "꽤, 상당히"의 뜻으로 주로 부정적 뉘앙스를 강조할 때 씁니다. quite은 중립/긍정에도 쓰이지만 rather는 놀라움이나 불편함을 내포합니다.',
+    alt:null },
+  { para:"①", cat:"cat-rel", catLabel:"관계절",
+    sentence:'some popular dishes <mark>that</mark> have flavor combinations <mark>that</mark> you may not have thought of.',
+    title:"관계대명사 that (두 개 중첩)",
+    exp:'첫 번째 that: dishes를 수식하는 주격 관계대명사.\n두 번째 that: combinations를 수식하는 목적격 관계대명사 (= which you may not have thought of).',
+    alt:null },
+  { para:"②", cat:"cat-conj", catLabel:"접속사·문장구조",
+    sentence:'Some people love this combination, <mark>while</mark> others can\'t seem to stand it.',
+    title:"while: 대조 접속사",
+    exp:'"반면에(whereas)"의 의미. 동시동작이 아닌 두 집단의 대조를 표현합니다.',
+    alt:'= Some people love this combination, whereas others can\'t seem to stand it.' },
+  { para:"②", cat:"cat-rel", catLabel:"관계절",
+    sentence:'The man <mark>who created this pizza</mark> was neither Italian nor Hawaiian.',
+    title:"주격 관계대명사 who",
+    exp:'who created this pizza가 선행사 the man을 수식합니다. → "이 피자를 만든 사람"',
+    alt:'= The man, a Greek immigrant from Canada, was neither Italian nor Hawaiian. (동격 표현으로 변환)' },
+  { para:"②", cat:"cat-phrase", catLabel:"구동사·관용표현",
+    sentence:'Sam Panopoulos did not want to <mark>stick to</mark> the usual ingredients on pizzas.',
+    title:"stick to: 고수하다, 따르다",
+    exp:'stick to = follow / adhere to (교사 주석 참고)\n• 반의어: abandon / break away / stray from\n예) stick to the plan = 계획을 고수하다',
+    alt:'= Sam Panopoulos did not want to follow the usual ingredients on pizzas.' },
+  { para:"②", cat:"cat-inversion", catLabel:"도치",
+    sentence:'<mark>Little did he know</mark> that he had created a classic combination.',
+    title:"부정어 도치: Little did + 주어 + 동사",
+    exp:'"Little"이라는 부정 부사가 문두로 나오면서 주어와 조동사가 도치됩니다.\n일반 어순: He little knew that he had created a classic combination.\n부정어 목록: little, not, never, not only, rarely, hardly, barely, seldom, scarcely',
+    alt:'= He little knew (= He hardly knew) that he had created a classic combination.' },
+  { para:"②", cat:"cat-neg", catLabel:"부정 표현",
+    sentence:'The man who created this pizza was <mark>neither</mark> Italian <mark>nor</mark> Hawaiian.',
+    title:"neither A nor B: A도 B도 아니다",
+    exp:'"neither A nor B"는 둘 다 부정하는 상관 접속사입니다.\n예) neither true nor false = 사실도 아니고 거짓도 아니다.',
+    alt:'= The man who created this pizza was not Italian or Hawaiian.' },
+  { para:"②", cat:"cat-neg", catLabel:"부정 표현",
+    sentence:'no pizza menu seems complete <mark>without it</mark>.',
+    title:"without: 없이는 (부정 함의)",
+    exp:'"seem complete without it" = "그것 없이는 완성되지 않는 것처럼 보이다"\n• no + 명사 + seem + adj + without: 이중 부정 강조 패턴.',
+    alt:'= every pizza menu seems incomplete without it.' },
+  { para:"③", cat:"cat-conj", catLabel:"접속사·문장구조",
+    sentence:'Many people enjoy salty and sweet flavor combinations, <mark>whereas</mark> some others prefer to keep those tastes as far from each other as possible.',
+    title:"whereas: 대조 접속사 (= while)",
+    exp:'"whereas"는 while과 유사하게 대조를 나타내지만 더 격식적입니다.\n교사 주석 예시: = some others prefer separating those flavors / = some others don\'t want to mix those flavors / = some others avoid such combinations.',
+    alt:'= Many people enjoy salty and sweet flavor combinations, while some others prefer to keep those tastes as far apart as possible.' },
+  { para:"③", cat:"cat-phrase", catLabel:"구동사·관용표현",
+    sentence:'duck <mark>is paired with</mark> a sweet orange sauce.',
+    title:"be paired with A: A와 짝지어지다, A와 함께 곁들여지다",
+    exp:'"pair A with B" = "A를 B와 짝지어지다"\n수동태: be paired with = be served with / be combined with',
+    alt:'= In France, duck is served with a sweet orange sauce.' },
+  { para:"③", cat:"cat-phrase", catLabel:"구동사·관용표현",
+    sentence:'turkey dinner would <mark>not be complete</mark> without cranberry sauce.',
+    title:"would not be complete without: ~없이는 완성되지 않을 것이다",
+    exp:'교사 주석: = be incomplete\n이 패턴은 어떤 요소가 필수적임을 강조합니다.\n비교: "A is essential to B" 패턴과 유사.',
+    alt:'= turkey dinner would be incomplete without cranberry sauce.' }
+];
+
+const synData = [
+  { w1:"have (ketchup)", w2:"eat", type:"syn", kr:"먹다 (일반동사 have)",
+    example:'Of course you have to <mark>have</mark> ketchup with your fries.',
+    note:'여기서 have는 동사로 "먹다, 마시다"의 의미입니다. eat의 유의어로 사용됩니다.' },
+  { w1:"ordinary", w2:"common / usual / typical", type:"syn", kr:"평범한, 일반적인",
+    example:'ketchup with fries may seem quite <mark>ordinary</mark>.',
+    note:'반의어: unusual / odd / extraordinary / remarkable' },
+  { w1:"ordinary", w2:"odd / unusual / strange", type:"ant", kr:"평범한 ↔ 이상한",
+    example:'While ketchup with fries may seem quite <mark>ordinary</mark>, other combinations may seem rather odd.',
+    note:'본문에서 ordinary와 odd는 직접 대조를 이루며 등장합니다.' },
+  { w1:"stick to", w2:"follow / adhere to", type:"syn", kr:"고수하다, 따르다",
+    example:'did not want to <mark>stick to</mark> the usual ingredients on pizzas.',
+    note:'반의어: abandon / break away from / stray from / deviate from (교사 주석 참고)' },
+  { w1:"distasteful", w2:"unpleasant / offensive / disagreeable", type:"syn", kr:"불쾌한, 역겨운",
+    example:'most people find pineapple on pizza <mark>distasteful</mark>.',
+    note:'dis- 접두사 = 부정 (distasteful / disagree / disadvantage). 반의어: tasteful / pleasant / agreeable' },
+  { w1:"divisive", w2:"controversial / polarizing", type:"syn", kr:"의견을 가르는, 논란이 되는",
+    example:'Why is the Hawaiian pizza so <mark>divisive</mark>?',
+    note:'"divide(나누다)" + "-ive(형용사 접미사)" → 의견을 두 갈래로 나누는' },
+  { w1:"whereas", w2:"while / on the other hand", type:"syn", kr:"반면에, 그에 비해",
+    example:'Many people enjoy salty and sweet flavor combinations, <mark>whereas</mark> some others prefer to keep those tastes as far from each other as possible.',
+    note:'둘 다 대조 접속사. whereas는 while보다 더 격식적인 표현입니다.' },
+  { w1:"be paired with", w2:"be served with / be combined with", type:"syn", kr:"~와 함께 곁들여지다, ~와 짝지어지다",
+    example:'In France, duck <mark>is paired with</mark> a sweet orange sauce.',
+    note:'"pair A with B"의 수동태. pair–paired–paired (규칙 동사)' },
+  { w1:"complete (adj)", w2:"incomplete", type:"ant", kr:"완전한 ↔ 불완전한",
+    example:'no pizza menu seems <mark>complete</mark> without it.',
+    note:'complete (완전한) / incomplete (불완전한) — 교사 주석: = be incomplete' },
+  { w1:"nasty", w2:"tasty", type:"ant", kr:"끔찍한/역겨운 ↔ 맛있는",
+    example:'it\'s the tasty or <mark>nasty</mark> — depending on your taste — ham and pineapple pizza.',
+    note:'본문에서 tasty와 nasty가 대조를 이루며 등장합니다. nasty ≈ unpleasant / disgusting / revolting' }
+];
+
+const paraData = [
+  { label:"문장 1", orig:'While ketchup with fries may seem quite ordinary, other combinations may seem rather odd.',
+    result:'Although ketchup with fries may seem quite ordinary, other combinations may seem rather odd.',
+    tip:'💡 대조 접속사 while → although로 교체. while이 "대조"의 의미일 때는 although / even though / whereas로 패러프레이징할 수 있습니다.' },
+  { label:"문장 2", orig:'Read on to learn about some popular dishes that have flavor combinations that you may not have thought of.',
+    result:'Continue reading in order to discover some popular dishes whose flavor combinations may be unfamiliar to you.',
+    tip:'💡 "Read on to" → "Continue reading in order to" / "that you may not have thought of" → "whose flavor combinations may be unfamiliar to you" (관계대명사 whose로 전환)' },
+  { label:"문장 3", orig:'The man who created this pizza was neither Italian nor Hawaiian.',
+    result:'The creator of this pizza was not Italian or Hawaiian.',
+    tip:'💡 관계절 "who created this pizza" → 명사구 "the creator of this pizza" / "neither A nor B" → "not A or B"로 변환' },
+  { label:"문장 4", orig:'Sam Panopoulos did not want to stick to the usual ingredients on pizzas.',
+    result:'Sam Panopoulos wanted to deviate from the typical ingredients used on pizzas.',
+    tip:'💡 "not want to stick to" (고수하지 않으려 하다) → "want to deviate from" (벗어나려 하다). 부정문을 반의어를 활용한 긍정문으로 변환하는 패턴입니다.' },
+  { label:"문장 5", orig:'Little did he know that he had created a classic combination.',
+    result:'He hardly knew that he had created a classic combination.',
+    tip:'💡 부정어 도치 "Little did + 주어 + 동사" → 일반 어순 "주어 + hardly/little + 동사"로 변환. 도치 구문은 원래 어순으로 되돌리는 연습이 중요합니다.' },
+  { label:"문장 6", orig:'In Italy, however, most people find pineapple on pizza distasteful.',
+    result:'In Italy, however, most people consider pineapple on pizza to be unpleasant.',
+    tip:'💡 "find + O + adj" → "consider + O + to be + adj" 패턴 변환. distasteful → unpleasant / disagreeable' },
+  { label:"문장 7", orig:'American Thanksgiving turkey dinner would not be complete without cranberry sauce.',
+    result:'American Thanksgiving turkey dinner would be incomplete without cranberry sauce.',
+    tip:'💡 "not be complete" → "be incomplete". 부정 표현을 반의어 형용사로 바꾸는 패턴 (not + 형용사 → 반의어 접두사 형용사).' },
+  { label:"문장 8", orig:'Many people enjoy salty and sweet flavor combinations, whereas some others prefer to keep those tastes as far from each other as possible.',
+    result:'Many people enjoy salty and sweet flavor combinations, while some others prefer separating those flavors as much as possible.',
+    tip:'💡 whereas → while (대조 접속사 교체) / "keep those tastes as far from each other as possible" → "separating those flavors as much as possible" (교사 주석 패러프레이징 활용)' },
+  { label:"문장 9", orig:'It can even cause quite heated arguments.',
+    result:'It is even capable of sparking very intense debates.',
+    tip:'💡 "cause" → "be capable of sparking" / "quite heated arguments" → "very intense debates". 동사를 "be capable of + 동명사" 구조로 바꾸는 패턴.' },
+  { label:"문장 10", orig:'In France, duck is paired with a sweet orange sauce.',
+    result:'In France, duck is served alongside a sweet orange sauce.',
+    tip:'💡 "be paired with" → "be served alongside / be combined with". 수동태 동사구 교체 패턴.' }
+];
+
+// ─── TAB SWITCH ──────────────────────────────────────────────
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ─── GRAMMAR ─────────────────────────────────────────────────
+const catMeta = {
+  'cat-rel':       '관계절',
+  'cat-inversion': '도치',
+  'cat-conj':      '접속사',
+  'cat-phrase':    '구동사·관용표현',
+  'cat-neg':       '부정 표현',
+  'cat-vocab':     '어휘·어구',
+};
+let activeFilter = 'all';
+
+function buildGrammar() {
+  const bar = document.getElementById('filterBar');
+  const allChip = document.createElement('button');
+  allChip.className = 'chip all active';
+  allChip.textContent = '전체';
+  allChip.onclick = () => setFilter('all');
+  bar.appendChild(allChip);
+  Object.keys(catMeta).forEach(k => {
+    const c = document.createElement('button');
+    c.className = 'chip ' + k;
+    c.textContent = catMeta[k];
+    c.dataset.cat = k;
+    c.onclick = () => setFilter(k);
+    bar.appendChild(c);
+  });
+  renderGrammar();
+}
+
+function setFilter(f) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-bar .chip').forEach(c => c.classList.remove('active'));
+  if (f === 'all') document.querySelector('.chip.all').classList.add('active');
+  else document.querySelector(`.chip[data-cat="${f}"]`).classList.add('active');
+  renderGrammar();
+}
+
+function renderGrammar() {
+  const list = document.getElementById('grammarList');
+  list.innerHTML = '';
+  const filtered = activeFilter === 'all' ? grammarData : grammarData.filter(g => g.cat === activeFilter);
+  document.getElementById('filterCount').textContent = `총 ${filtered.length}개 항목`;
+  filtered.forEach(g => {
+    const card = document.createElement('div');
+    card.className = 'grammar-card ' + g.cat;
+    const altHtml = g.alt ? `<span class="alt">= ${g.alt}</span>` : '';
+    card.innerHTML = `<div class="grammar-card-inner">
+      <div class="grammar-meta">
+        <span class="para-badge">¶ ${g.para}</span>
+        <span class="cat-tag ${g.cat}">${g.catLabel}</span>
+      </div>
+      <div class="grammar-sentence">${g.sentence}</div>
+      <div class="grammar-title">${g.title}</div>
+      <div class="grammar-exp">${g.exp.replace(/\n/g,'<br>')}${altHtml}</div>
+    </div>`;
+    list.appendChild(card);
+  });
+}
+
+// ─── SYNONYMS ────────────────────────────────────────────────
+function buildSynonyms() {
+  const list = document.getElementById('synList');
+  synData.forEach(s => {
+    const card = document.createElement('div');
+    card.className = 'syn-card';
+    const icon = s.type === 'syn'
+      ? '<span class="syn-icon syn">≈</span>'
+      : '<span class="syn-icon ant">↔</span>';
+    const label = s.type === 'syn' ? '유의어' : '반의어';
+    card.innerHTML = `
+      <div class="syn-pair">
+        <span class="syn-word">${s.w1}</span>${icon}<span class="syn-word">${s.w2}</span>
+        <span class="syn-kr">${label} · ${s.kr}</span>
+      </div>
+      <div class="syn-example">${s.example}</div>
+      <div class="syn-note"><span class="note-icon">📝</span> ${s.note}</div>`;
+    list.appendChild(card);
+  });
+}
+
+// ─── PARAPHRASE ──────────────────────────────────────────────
+let allOpen = false;
+function buildParaphrase() {
+  const list = document.getElementById('paraList');
+  paraData.forEach((p, i) => {
+    const card = document.createElement('div');
+    card.className = 'pphr-card';
+    card.innerHTML = `
+      <div class="pphr-header">
+        <div class="pphr-num">${p.label}</div>
+        <div class="pphr-orig">${p.orig}</div>
+      </div>
+      <button class="pphr-show-btn" onclick="togglePara(${i},this)">패러프레이징 보기 ▾</button>
+      <div class="pphr-answer" id="pphr-ans-${i}">
+        <div class="pphr-result">${p.result}</div>
+        <div class="pphr-tip">${p.tip}</div>
+      </div>`;
+    list.appendChild(card);
+  });
+}
+
+function togglePara(i, btn) {
+  const ans = document.getElementById('pphr-ans-' + i);
+  const open = ans.classList.toggle('open');
+  btn.textContent = open ? '패러프레이징 접기 ▴' : '패러프레이징 보기 ▾';
+}
+
+function toggleAll() {
+  allOpen = !allOpen;
+  document.getElementById('toggleAllBtn').textContent = allOpen ? '📁 전체 접기' : '📂 전체 펼치기';
+  paraData.forEach((_, i) => {
+    const ans = document.getElementById('pphr-ans-' + i);
+    const btn = ans.previousElementSibling;
+    if (allOpen) { ans.classList.add('open'); btn.textContent = '패러프레이징 접기 ▴'; }
+    else { ans.classList.remove('open'); btn.textContent = '패러프레이징 보기 ▾'; }
+  });
+}
+
+buildGrammar();
+buildSynonyms();
+buildParaphrase();
+</script>
 </body>
 </html>
