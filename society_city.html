@@ -100,17 +100,11 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .chart-caption{font-size:13px;font-weight:700;color:var(--text-sec);margin-bottom:10px;}
 
 
-/* ── INLINE MAPS / GRAPHS ── */
-.viz-card{background:linear-gradient(180deg,#fff,#f8fbff);border:1px solid #d7e3f8;border-radius:10px;padding:12px;min-height:200px;}
-.viz-svg{width:100%;height:auto;display:block;font-family:'Noto Sans KR',sans-serif;}
-.viz-title{font-size:15px;font-weight:700;fill:#202124;}
-.viz-label{font-size:11px;fill:#5f6368;}
-.viz-small{font-size:10px;fill:#5f6368;}
-.viz-axis{stroke:#9aa0a6;stroke-width:1;}
-.viz-grid{stroke:#e8eaed;stroke-width:1;}
-.viz-blue{fill:#1a73e8}.viz-green{fill:#34a853}.viz-yellow{fill:#f9ab00}.viz-red{fill:#ea4335}.viz-purple{fill:#8430ce}.viz-orange{fill:#e37400}
-.viz-line-blue{fill:none;stroke:#1a73e8;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-green{fill:none;stroke:#34a853;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-red{fill:none;stroke:#ea4335;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-yellow{fill:none;stroke:#f9ab00;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.viz-line-purple{fill:none;stroke:#8430ce;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.viz-note{font-size:11px;fill:#1a73e8;font-weight:700;}
+
+/* ── ASSET FIGURES ── */
+.asset-figure{background:linear-gradient(180deg,#fff,#f8fbff);border:1px solid #d7e3f8;border-radius:10px;padding:12px;min-height:200px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.asset-img{display:block;width:100%;height:auto;max-height:360px;object-fit:contain;}
+.chart-grid .asset-figure{min-height:180px;}
 
 /* ── STEP LIST ── */
 .step-list{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
@@ -283,7 +277,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 내용: 농림어업·광공업·서비스업 비율 변화 / 출처: 통계청, 2023 (산업별 취업자 수 기준) -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 우리나라의 산업 구조 변화 (1970~2022)</p>
-<div class="viz-card"><svg class="viz-svg" viewBox="0 0 760 260" role="img" aria-label="1970년부터 2022년까지 우리나라 산업 구조 변화 누적 막대그래프"><text x="18" y="24" class="viz-title">산업별 취업자 수 비중</text><line x1="65" y1="210" x2="720" y2="210" class="viz-axis"/><line x1="65" y1="45" x2="65" y2="210" class="viz-axis"/><g opacity=".55"><line x1="65" y1="177" x2="720" y2="177" class="viz-grid"/><line x1="65" y1="144" x2="720" y2="144" class="viz-grid"/><line x1="65" y1="111" x2="720" y2="111" class="viz-grid"/><line x1="65" y1="78" x2="720" y2="78" class="viz-grid"/></g><text x="25" y="50" class="viz-small">100(%)</text><g><rect x="105" y="128" width="56" height="82" fill="#7cc5bf"/><rect x="105" y="105" width="56" height="23" fill="#bfe2a6"/><rect x="105" y="45" width="56" height="60" fill="#8bb7e0"/><text x="100" y="229" class="viz-small">1970</text><text x="92" y="132" class="viz-label">35.3</text><text x="95" y="108" class="viz-label">14.3</text><text x="92" y="84" class="viz-label">50.4</text><rect x="210" y="138" width="56" height="72" fill="#7cc5bf"/><rect x="210" y="101" width="56" height="37" fill="#bfe2a6"/><rect x="210" y="45" width="56" height="56" fill="#8bb7e0"/><text x="205" y="229" class="viz-small">1980</text><text x="212" y="140" class="viz-label">43.5</text><text x="212" y="104" class="viz-label">22.5</text><text x="212" y="78" class="viz-label">34.0</text><rect x="315" y="120" width="56" height="90" fill="#7cc5bf"/><rect x="315" y="75" width="56" height="45" fill="#bfe2a6"/><rect x="315" y="45" width="56" height="30" fill="#8bb7e0"/><text x="310" y="229" class="viz-small">1990</text><text x="317" y="128" class="viz-label">54.5</text><text x="317" y="91" class="viz-label">27.6</text><text x="317" y="62" class="viz-label">17.9</text><rect x="420" y="96" width="56" height="114" fill="#7cc5bf"/><rect x="420" y="62" width="56" height="34" fill="#bfe2a6"/><rect x="420" y="45" width="56" height="17" fill="#8bb7e0"/><text x="415" y="229" class="viz-small">2000</text><text x="422" y="126" class="viz-label">68.9</text><text x="422" y="79" class="viz-label">20.4</text><text x="422" y="58" class="viz-label">10.7</text><rect x="525" y="84" width="56" height="126" fill="#7cc5bf"/><rect x="525" y="56" width="56" height="28" fill="#bfe2a6"/><rect x="525" y="45" width="56" height="11" fill="#8bb7e0"/><text x="520" y="229" class="viz-small">2010</text><text x="527" y="121" class="viz-label">76.3</text><text x="527" y="75" class="viz-label">17.1</text><text x="527" y="55" class="viz-label">6.6</text><rect x="630" y="80" width="56" height="130" fill="#7cc5bf"/><rect x="630" y="54" width="56" height="26" fill="#bfe2a6"/><rect x="630" y="45" width="56" height="9" fill="#8bb7e0"/><text x="625" y="229" class="viz-small">2022</text><text x="632" y="120" class="viz-label">78.5</text><text x="632" y="72" class="viz-label">16.1</text><text x="632" y="54" class="viz-label">5.4</text></g><g><rect x="455" y="175" width="16" height="10" fill="#8bb7e0"/><text x="478" y="184" class="viz-small">농림어업</text><rect x="455" y="192" width="16" height="10" fill="#bfe2a6"/><text x="478" y="201" class="viz-small">광공업</text><rect x="555" y="175" width="16" height="10" fill="#7cc5bf"/><text x="578" y="184" class="viz-small">사회 간접 자본 및 서비스업</text></g></svg></div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/industry_structure.svg" alt="1970년부터 2022년까지 우리나라 산업 구조 변화 누적 막대그래프" loading="lazy"></figure>
 </div>
 
 <ul class="info-list">
@@ -329,7 +323,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 내용: 초기·가속화·종착 단계, 도시화율(%) vs 시간 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 도시화 곡선 (S자형)</p>
-<div class="viz-card"><svg class="viz-svg" viewBox="0 0 760 260" role="img" aria-label="초기, 가속화, 종착 단계가 표시된 S자형 도시화 곡선"><text x="18" y="24" class="viz-title">도시화 곡선</text><rect x="145" y="35" width="420" height="190" fill="#fff" stroke="#3c4043"/><line x1="145" y1="225" x2="565" y2="225" class="viz-axis"/><line x1="145" y1="225" x2="145" y2="35" class="viz-axis"/><text x="112" y="52" class="viz-small">100(%)</text><text x="115" y="220" class="viz-small">0</text><text x="575" y="232" class="viz-label">시간 →</text><text x="93" y="125" class="viz-label" transform="rotate(-90 93 125)">도시화율</text><path d="M160 195 C250 195 290 174 330 115 S405 48 550 48" fill="none" stroke="#80868b" stroke-width="5" stroke-linecap="round"/><text x="175" y="205" class="viz-label">초기 단계</text><text x="330" y="120" class="viz-label" transform="rotate(-55 330 120)">가속화 단계</text><text x="465" y="72" class="viz-label">종착 단계</text></svg></div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/urbanization_curve.svg" alt="초기, 가속화, 종착 단계가 표시된 S자형 도시화 곡선" loading="lazy"></figure>
 </div>
 
 <div class="divider"></div>
@@ -368,7 +362,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 출처: 국토교통부·한국 국토 정보 공사, 2023 / 용도 지역별 도시 인구 기준 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 우리나라의 도시화율 (1960~2022)</p>
-<div class="viz-card"><svg class="viz-svg" viewBox="0 0 760 260" role="img" aria-label="1960년 39.1퍼센트에서 2022년 91.9퍼센트로 상승한 우리나라 도시화율 꺾은선그래프"><text x="18" y="24" class="viz-title">우리나라 도시화율 변화</text><line x1="70" y1="210" x2="700" y2="210" class="viz-axis"/><line x1="70" y1="45" x2="70" y2="210" class="viz-axis"/><g opacity=".7"><line x1="70" y1="177" x2="700" y2="177" class="viz-grid"/><line x1="70" y1="144" x2="700" y2="144" class="viz-grid"/><line x1="70" y1="111" x2="700" y2="111" class="viz-grid"/><line x1="70" y1="78" x2="700" y2="78" class="viz-grid"/></g><polyline points="100,145 200,126 300,84 400,62 500,51 600,48 690,46" fill="none" stroke="#9b8ac7" stroke-width="4"/><g fill="#fff" stroke="#9b8ac7" stroke-width="3"><circle cx="100" cy="145" r="6"/><circle cx="200" cy="126" r="6"/><circle cx="300" cy="84" r="6"/><circle cx="400" cy="62" r="6"/><circle cx="500" cy="51" r="6"/><circle cx="600" cy="48" r="6"/><circle cx="690" cy="46" r="6"/></g><g class="viz-label"><text x="83" y="133">39.1</text><text x="180" y="114">50.1</text><text x="278" y="72">68.7</text><text x="379" y="50">81.9</text><text x="478" y="39">88.3</text><text x="575" y="73">90.9</text><text x="666" y="70">91.9</text></g><g class="viz-small"><text x="82" y="232">1960</text><text x="182" y="232">1970</text><text x="282" y="232">1980</text><text x="382" y="232">1990</text><text x="482" y="232">2000</text><text x="582" y="232">2010</text><text x="672" y="232">2022</text></g></svg></div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/korea_urbanization.svg" alt="1960년 39.1퍼센트에서 2022년 91.9퍼센트로 상승한 우리나라 도시화율 꺾은선그래프" loading="lazy"></figure>
 </div>
 
 <div class="divider"></div>
@@ -380,7 +374,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 내용: 앵글로아메리카·유럽·라틴아메리카·오세아니아·아시아·아프리카 6개 지역 / 출처: 국제 연합 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 지역(대륙)별 도시화율 변화 (1950~2020)</p>
-<div class="viz-card"><svg class="viz-svg" viewBox="0 0 760 260" role="img" aria-label="대륙별 도시화율 변화 다중 꺾은선그래프"><text x="18" y="24" class="viz-title">지역(대륙)별 도시화율 변화</text><line x1="70" y1="210" x2="720" y2="210" class="viz-axis"/><line x1="70" y1="45" x2="70" y2="210" class="viz-axis"/><g opacity=".6"><line x1="70" y1="177" x2="720" y2="177" class="viz-grid"/><line x1="70" y1="144" x2="720" y2="144" class="viz-grid"/><line x1="70" y1="111" x2="720" y2="111" class="viz-grid"/><line x1="70" y1="78" x2="720" y2="78" class="viz-grid"/></g><polyline points="95,106 200,84 305,72 410,72 515,64 620,53 705,47" fill="none" stroke="#202124" stroke-width="4"/><polyline points="95,139 200,128 305,112 410,96 515,82 620,73 705,66" fill="none" stroke="#9aa0a6" stroke-width="4" stroke-dasharray="5 5"/><polyline points="95,105 200,90 305,82 410,79 515,80 620,84 705,83" fill="none" stroke="#5f6368" stroke-width="4" stroke-dasharray="12 5 3 5"/><polyline points="95,176 200,164 305,158 410,143 515,125 620,101 705,83" fill="none" stroke="#80868b" stroke-width="4"/><polyline points="95,190 200,180 305,160 410,145 515,129 620,112 705,96" fill="none" stroke="#202124" stroke-width="4" stroke-dasharray="8 4 2 4"/><text x="560" y="51" class="viz-label">앵글로아메리카</text><text x="520" y="73" class="viz-label">라틴 아메리카</text><text x="95" y="132" class="viz-label">유럽</text><text x="535" y="116" class="viz-label">아시아</text><text x="615" y="130" class="viz-label">아프리카</text><g class="viz-small"><text x="85" y="232">1950</text><text x="190" y="232">1960</text><text x="295" y="232">1970</text><text x="400" y="232">1980</text><text x="505" y="232">1990</text><text x="610" y="232">2000</text><text x="690" y="232">2020</text></g></svg></div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/global_urbanization.svg" alt="대륙별 도시화율 변화 다중 꺾은선그래프" loading="lazy"></figure>
 </div>
 
 <div class="note">📝 도시화율 순위(높은 순): <strong>앵글로아메리카 &gt; 라틴아메리카 &gt; 유럽 &gt; 오세아니아 &gt; 아시아 &gt; 아프리카</strong>. 도시 인구 <em>절대수</em>는 아시아가 가장 많음. 라틴아메리카는 개발도상국이 대부분이지만 과거 식민지 시절부터 도시가 발달 → 경제수준 대비 도시화율 높음.</div>
@@ -409,7 +403,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 
 <div class="chart-wrap">
 <p class="chart-caption">▲ 대도시로의 인구 집중</p>
-<div class="viz-card"><svg class="viz-svg" viewBox="0 0 760 260" role="img" aria-label="전국 각지에서 서울과 부산 등 대도시로 인구가 집중되는 이동 흐름 지도"><text x="18" y="24" class="viz-title">대도시로의 인구 집중</text><path d="M300 35 C390 28 475 65 505 135 C535 205 430 240 335 225 C250 210 205 150 220 92 C228 60 255 42 300 35Z" fill="#fff3d6" stroke="#00a6d6"/><text x="355" y="86" class="viz-label">서울</text><text x="500" y="190" class="viz-label">부산</text><text x="418" y="178" class="viz-label">대구</text><text x="282" y="200" class="viz-label">광주</text><defs><marker id="mig" markerWidth="12" markerHeight="12" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#9b0014"/></marker></defs><g fill="none" stroke="#9b0014" stroke-width="8" stroke-linecap="round" marker-end="url(#mig)"><path d="M120 75 C210 60 260 60 345 92"/><path d="M120 185 C210 145 250 115 345 92"/><path d="M300 225 C315 175 330 132 352 98"/><path d="M555 60 C505 75 450 88 370 94"/><path d="M560 214 C515 205 505 198 500 190"/><path d="M210 238 C305 220 390 210 500 190"/></g><g class="viz-small"><text x="110" y="58">수도권 집중</text><text x="535" y="230">남동 임해 공업 도시 성장</text><text x="565" y="245">화살표 굵기: 이동 규모</text></g></svg></div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/metro_population_concentration.svg" alt="전국 각지에서 서울과 부산 등 대도시로 인구가 집중되는 이동 흐름 지도" loading="lazy"></figure>
 </div>
 
 <!-- [지도] 3기 신도시 조성계획 + 수도권 인구밀도 지도
@@ -417,7 +411,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 내용: 1·2·3기 신도시 위치 및 수도권 인구밀도 분포 / 출처: 국토교통부·행정안전부, 2023 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 3기 신도시 조성계획 및 수도권 인구밀도</p>
-<div class="viz-card"><svg class="viz-svg" viewBox="0 0 760 260" role="img" aria-label="수도권 1기, 2기, 3기 신도시 위치 모식 지도"><text x="18" y="24" class="viz-title">3기 신도시 조성 계획</text><path d="M120 60 C210 30 350 38 460 68 C575 100 630 178 540 218 C420 260 210 228 120 170 C70 136 70 88 120 60Z" fill="#eef3f7" stroke="#cfd8dc"/><g stroke="#2b7bb9" stroke-width="3" fill="none"><path d="M115 170 C210 150 300 150 430 170 C520 185 575 170 625 142"/><path d="M150 95 C250 125 400 115 585 80"/></g><g stroke="#2e7d32" stroke-width="3" fill="none"><path d="M260 50 C270 120 305 165 365 218"/><path d="M390 52 C380 118 380 170 410 230"/></g><g fill="#b07d4f"><path d="M300 87 l38 -12 l10 34 l-42 16z"/><path d="M475 142 l35 -15 l12 30 l-38 18z"/><path d="M360 184 l30 -10 l9 26 l-32 14z"/></g><g fill="#8bd047"><path d="M145 122 l45 -8 l10 26 l-52 11z"/><path d="M250 44 l35 -12 l7 28 l-38 13z"/><path d="M560 170 l38 -18 l12 24 l-42 22z"/><path d="M445 205 l42 -8 l8 24 l-45 10z"/></g><g fill="#f28b2e"><path d="M505 75 l32 -13 l10 28 l-34 13z"/><path d="M410 98 l30 -10 l10 25 l-33 14z"/><path d="M545 110 l32 -13 l10 27 l-36 14z"/></g><g fill="#7b1b1b"><path d="M315 130 l70 -18 l18 30 l-65 30z"/><path d="M245 152 l52 -12 l12 28 l-54 22z"/></g><circle cx="360" cy="140" r="9" fill="#202124"/><text x="338" y="137" class="viz-small">서울</text><g class="viz-small"><text x="128" y="210">1기 신도시(5곳)</text><text x="260" y="210">2기 신도시(9곳)</text><text x="392" y="210">3기 신도시(3곳)</text><text x="525" y="210">3차 지정(2곳)</text></g></svg></div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/third_newtown_plan.svg" alt="수도권 1기, 2기, 3기 신도시 위치 모식 지도" loading="lazy"></figure>
 </div>
 
 <div class="quiz-section" id="quiz-1"></div>
@@ -458,7 +452,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 내용: 상업·업무 / 공업 / 주거 지가 곡선, 도심·공업지구·주거지구 동심원 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 도시 내부의 지역 분화 모식도</p>
-<div class="viz-card"><svg class="viz-svg" viewBox="0 0 760 260" role="img" aria-label="도심, 공업지역, 주거지역으로 분화된 도시 내부 모식도"><text x="18" y="24" class="viz-title">도시 내부 지역 분화와 지대</text><ellipse cx="330" cy="170" rx="300" ry="58" fill="#fff7b3" stroke="#45a6c6" stroke-width="2"/><ellipse cx="330" cy="165" rx="170" ry="43" fill="#cfe5fb" stroke="#3c8dbc" stroke-width="2"/><ellipse cx="330" cy="160" rx="48" ry="14" fill="#f6b08e" stroke="#e87d4a" stroke-width="2"/><line x1="330" y1="170" x2="330" y2="35" stroke="#3c4043" stroke-width="3"/><line x1="330" y1="170" x2="690" y2="170" stroke="#3c4043" stroke-width="3"/><path d="M330 55 L460 170" stroke="#ff1493" stroke-width="4" fill="none"/><path d="M330 88 L560 170" stroke="#ff1493" stroke-width="4" fill="none"/><path d="M330 126 L620 170" stroke="#ff1493" stroke-width="4" fill="none"/><line x1="380" y1="90" x2="455" y2="90" stroke="#80868b"/><line x1="470" y1="116" x2="555" y2="116" stroke="#80868b"/><line x1="548" y1="143" x2="620" y2="143" stroke="#80868b"/><text x="280" y="55" class="viz-label">지대</text><text x="405" y="92" class="viz-label">상업·업무</text><text x="535" y="118" class="viz-label">공업</text><text x="620" y="145" class="viz-label">주거</text><text x="110" y="176" class="viz-label">주거 지구</text><text x="185" y="142" class="viz-label">공업 지구</text><text x="228" y="104" class="viz-label">상업·업무 지구</text><text x="610" y="190" class="viz-label">거리 →</text></svg></div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/urban_zone_model.svg" alt="도심, 공업지역, 주거지역으로 분화된 도시 내부 모식도" loading="lazy"></figure>
 </div>
 
 <div class="subsection-title">서울의 지역 분화</div>
@@ -496,7 +490,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 내용: 인구밀도(명/㎢) 단계 구분 / 출처: 서울 통계 연보, 2016 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 서울 내부의 지역 분화 (인구밀도, 2016)</p>
-<div class="viz-card"><svg class="viz-svg" viewBox="0 0 760 260" role="img" aria-label="서울 구별 인구밀도 단계 구분 모식 지도"><text x="18" y="24" class="viz-title">서울 내부의 지역 분화: 인구 밀도</text><g transform="translate(120 40)" stroke="#fff" stroke-width="3"><path d="M40 70 L145 30 L245 50 L320 30 L440 85 L420 175 L305 205 L210 190 L130 220 L45 170 Z" fill="#c8def2"/><path d="M145 30 L245 50 L225 105 L130 108 Z" fill="#dce9f6"/><path d="M245 50 L320 30 L340 98 L225 105 Z" fill="#bcd7ef"/><path d="M40 70 L130 108 L120 165 L45 170 Z" fill="#dce9f6"/><path d="M130 108 L225 105 L220 165 L120 165 Z" fill="#2b9ed0"/><path d="M225 105 L340 98 L325 165 L220 165 Z" fill="#5db9df"/><path d="M340 98 L440 85 L420 175 L325 165 Z" fill="#dce9f6"/><path d="M120 165 L220 165 L210 190 L130 220 L45 170 Z" fill="#5db9df"/><path d="M220 165 L325 165 L305 205 L210 190 Z" fill="#2b9ed0"/></g><g transform="translate(530 72)"><text x="0" y="0" class="viz-label">인구 밀도(명/km²)</text><rect x="0" y="18" width="20" height="12" fill="#2b9ed0"/><text x="28" y="29" class="viz-small">25,000 이상</text><rect x="0" y="38" width="20" height="12" fill="#5db9df"/><text x="28" y="49" class="viz-small">20,000~25,000</text><rect x="0" y="58" width="20" height="12" fill="#bcd7ef"/><text x="28" y="69" class="viz-small">15,000~20,000</text><rect x="0" y="78" width="20" height="12" fill="#c8def2"/><text x="28" y="89" class="viz-small">10,000~15,000</text><rect x="0" y="98" width="20" height="12" fill="#fff" stroke="#9aa0a6"/><text x="28" y="109" class="viz-small">10,000 미만</text></g></svg></div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/seoul_density.svg" alt="서울 구별 인구밀도 단계 구분 모식 지도" loading="lazy"></figure>
 </div>
 
 <div class="divider"></div>
@@ -514,7 +508,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 내용: 주간·야간 인구 곡선(도심↔주변), 집심·이심 현상 동심원 모식도 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 인구 공동화 현상 그래프 및 집심·이심 모식도</p>
-<div class="viz-card"><svg class="viz-svg" viewBox="0 0 760 260" role="img" aria-label="도심의 주간과 야간 인구 차이를 보여주는 인구 공동화 그래프"><text x="18" y="24" class="viz-title">인구 공동화</text><line x1="95" y1="210" x2="700" y2="210" class="viz-axis"/><line x1="95" y1="45" x2="95" y2="210" class="viz-axis"/><g opacity=".7"><line x1="95" y1="78" x2="700" y2="78" class="viz-grid"/><line x1="95" y1="122" x2="700" y2="122" class="viz-grid"/><line x1="95" y1="166" x2="700" y2="166" class="viz-grid"/></g><path d="M100 170 C190 140 250 70 330 142 C380 190 430 190 480 142 C560 70 620 140 700 170" fill="none" stroke="#00897b" stroke-width="5"/><path d="M100 190 C210 178 300 130 360 72 C420 18 500 80 560 130 C620 178 670 188 700 190" fill="none" stroke="#fb8c00" stroke-width="5"/><path d="M310 82 C355 135 405 173 457 82" fill="url(#hatch)" opacity=".45" stroke="#8e24aa"/><defs><pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#8e24aa" stroke-width="2"/></pattern></defs><text x="220" y="74" class="viz-label">야간 인구</text><text x="355" y="54" class="viz-label">주간 인구</text><text x="268" y="92" class="viz-note">인구 공동화</text><text x="110" y="232" class="viz-label">주변 지역</text><text x="360" y="232" class="viz-label">도심</text><text x="595" y="232" class="viz-label">주변 지역</text></svg></div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/population_hollowing.svg" alt="도심의 주간과 야간 인구 차이를 보여주는 인구 공동화 그래프" loading="lazy"></figure>
 </div>
 
 <div class="divider"></div>
@@ -542,7 +536,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 
 <div class="chart-wrap">
 <p class="chart-caption">▲ 집심 현상과 이심 현상</p>
-<div class="viz-card"><svg class="viz-svg" viewBox="0 0 760 260" role="img" aria-label="도심을 중심으로 집심 현상과 이심 현상이 나타나는 동심원 모식도"><text x="18" y="24" class="viz-title">집심·이심 현상</text><path d="M145 38 C210 28 230 50 270 36 C345 14 360 65 420 54 C520 35 625 78 632 143 C640 222 520 232 430 220 C310 242 210 235 150 198 C80 160 70 74 145 38Z" fill="#d8efb0"/><circle cx="380" cy="142" r="92" fill="#f4bed5"/><circle cx="380" cy="142" r="58" fill="#ffe88f"/><circle cx="380" cy="142" r="34" fill="#a9d5ec"/><text x="357" y="137" class="viz-label">도심</text><text x="350" y="156" class="viz-small">(CBD)</text><text x="335" y="103" class="viz-label">중간 지역</text><text x="250" y="78" class="viz-label">주변 지역</text><text x="240" y="35" class="viz-label">개발 제한 구역</text><circle cx="230" cy="180" r="11" fill="#d88c92"/><circle cx="535" cy="185" r="11" fill="#d88c92"/><circle cx="115" cy="225" r="11" fill="#d88c92"/><text x="205" y="208" class="viz-label">부도심</text><text x="610" y="228" class="viz-label">위성 도시</text><defs><marker id="arrow-red" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#d71920"/></marker></defs><path d="M238 70 L345 130" stroke="#d71920" stroke-width="4" marker-end="url(#arrow-red)"/><text x="170" y="64" class="viz-label">집심 현상</text><path d="M410 132 L510 72" stroke="#d71920" stroke-width="4" marker-end="url(#arrow-red)"/><text x="540" y="72" class="viz-label">이심 현상</text><g stroke="#6f6f6f" stroke-width="3"><line x1="0" y1="160" x2="230" y2="180"/><line x1="535" y1="185" x2="760" y2="145"/><line x1="535" y1="185" x2="500" y2="260"/><line x1="535" y1="185" x2="680" y2="260"/></g></svg></div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/centripetal_centrifugal.svg" alt="도심을 중심으로 집심 현상과 이심 현상이 나타나는 동심원 모식도" loading="lazy"></figure>
 </div>
 
 <div class="divider"></div>
@@ -578,7 +572,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 내용: 중심도시-교외지역-대도시 영향권-배후농촌-위성도시, 통근가능권·대도시 일일생활권 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 교외화 현상과 대도시권 형성 모식도</p>
-<div class="viz-card"><svg class="viz-svg" viewBox="0 0 760 260" role="img" aria-label="중심 도시와 교외 지역, 위성 도시가 연결되는 대도시권 형성 모식도"><text x="18" y="24" class="viz-title">교외화와 대도시권 형성</text><rect x="40" y="50" width="680" height="155" fill="#f9fbff" stroke="#202124" stroke-dasharray="8 6"/><ellipse cx="380" cy="150" rx="325" ry="55" fill="#d9eaff" stroke="#2962ff" stroke-width="3"/><ellipse cx="380" cy="150" rx="70" ry="34" fill="#ff4949" stroke="#2962ff" stroke-width="2"/><text x="350" y="154" fill="#fff" font-size="14" font-weight="700">중심도시</text><line x1="295" y1="55" x2="295" y2="190" stroke="#202124" stroke-dasharray="8 6"/><line x1="465" y1="55" x2="465" y2="190" stroke="#202124" stroke-dasharray="8 6"/><text x="300" y="42" class="viz-label">대도시권 (=중심도시+대도시 영향권)</text><text x="320" y="72" class="viz-label">중심도시</text><text x="520" y="72" class="viz-label">교외 지역</text><g fill="#e0d2c0"><ellipse cx="90" cy="145" rx="38" ry="16"/><ellipse cx="245" cy="105" rx="38" ry="16"/><ellipse cx="520" cy="180" rx="38" ry="16"/><ellipse cx="655" cy="135" rx="38" ry="16"/></g><g fill="#bff5ff" stroke="#2962ff" stroke-width="2"><ellipse cx="190" cy="120" rx="24" ry="16"/><ellipse cx="525" cy="105" rx="24" ry="16"/><ellipse cx="590" cy="160" rx="24" ry="16"/></g><path d="M190 120 C260 135 305 145 380 150 C470 158 525 160 590 160" fill="none" stroke="#2962ff" stroke-width="2"/><text x="170" y="148" class="viz-small">주변 도시(위성도시·신도시 등)</text><text x="610" y="188" class="viz-small">근교농촌지역</text></svg></div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/metropolitan_area.svg" alt="중심 도시와 교외 지역, 위성 도시가 연결되는 대도시권 형성 모식도" loading="lazy"></figure>
 </div>
 
 <div class="divider"></div>
@@ -591,7 +585,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 출처: 국토 교통부, 각 연도 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 우리나라 국토 용도별 이용 면적 변화 (1977→2022)</p>
-<div class="viz-card"><svg class="viz-svg" viewBox="0 0 760 260" role="img" aria-label="1977년에서 2022년까지 국토 용도별 이용 면적 변화 표"><rect x="20" y="12" width="720" height="230" rx="12" fill="#fff5f3" stroke="#efc9c5"/><text x="240" y="44" class="viz-title">1977년</text><text x="460" y="44" class="viz-title">2022년</text><line x1="190" y1="58" x2="190" y2="220" stroke="#efb7b2" stroke-width="3"/><g stroke="#efc9c5" stroke-dasharray="12 10"><line x1="20" y1="58" x2="740" y2="58"/><line x1="20" y1="100" x2="740" y2="100"/><line x1="20" y1="143" x2="740" y2="143"/><line x1="20" y1="186" x2="740" y2="186"/></g><g class="viz-label"><text x="92" y="88">임야</text><text x="92" y="132">논밭</text><text x="92" y="175">대지</text><text x="92" y="218">도로</text></g><g class="viz-label"><text x="215" y="88">65,660km²</text><text x="430" y="88">63,427km²</text><text x="215" y="132">22,144km²</text><text x="430" y="132">18,487km²</text><text x="215" y="175">1,760km²</text><text x="430" y="175">3,342km²</text><text x="215" y="218">1,612km²</text><text x="430" y="218">3,453km²</text></g><g font-size="28"><text x="40" y="90">🌲</text><text x="40" y="134">🌾</text><text x="40" y="177">🏢</text><text x="40" y="220">🛣️</text></g><g fill="#2d6f9f" class="viz-label"><text x="640" y="82">3.4%</text><text x="640" y="100">감소↓</text><text x="640" y="126">16.5%</text><text x="640" y="144">감소↓</text></g><g fill="#9b111e" class="viz-label"><text x="640" y="170">89.9%</text><text x="640" y="188">증가↑</text><text x="640" y="213">114%</text><text x="640" y="231">증가↑</text></g><text x="360" y="90" fill="#d88f96" font-size="34">→</text><text x="360" y="134" fill="#d88f96" font-size="34">→</text><text x="360" y="177" fill="#d88f96" font-size="34">→</text><text x="360" y="220" fill="#d88f96" font-size="34">→</text></svg></div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/land_use_change.svg" alt="1977년에서 2022년까지 국토 용도별 이용 면적 변화 표" loading="lazy"></figure>
 </div>
 
 <div class="quiz-section" id="quiz-2"></div>
@@ -624,11 +618,11 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <div class="chart-grid">
 <div class="chart-wrap" style="margin-bottom:0;">
 <p class="chart-caption">▲ 우리나라 1인 가구 비율 변화</p>
-<div class="viz-card" style="min-height:180px;"><svg class="viz-svg" viewBox="0 0 360 210" role="img" aria-label="1인 가구 비율이 1980년 4.8퍼센트에서 2015년 27.2퍼센트로 증가한 막대그래프"><text x="14" y="22" class="viz-title">1인 가구 비율</text><line x1="35" y1="178" x2="340" y2="178" class="viz-axis"/><g fill="#f7e4b6" stroke="#edc98f"><rect x="45" y="150" width="35" height="28"/><rect x="110" y="130" width="35" height="48"/><rect x="175" y="98" width="35" height="80"/><rect x="240" y="58" width="35" height="120"/><rect x="305" y="42" width="35" height="136"/></g><g fill="#f4a582"><path d="M37 150 l25 -20 l25 20z"/><path d="M102 130 l25 -20 l25 20z"/><path d="M167 98 l25 -20 l25 20z"/><path d="M232 58 l25 -20 l25 20z"/><path d="M297 42 l25 -20 l25 20z"/></g><g class="viz-label"><text x="45" y="124">4.8</text><text x="111" y="104">9.0</text><text x="174" y="72">15.5</text><text x="238" y="32">23.9</text><text x="303" y="18">27.2</text></g><g class="viz-small"><text x="42" y="197">1980</text><text x="107" y="197">1990</text><text x="172" y="197">2000</text><text x="237" y="197">2010</text><text x="302" y="197">2015</text></g></svg></div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/single_household.svg" alt="1인 가구 비율이 1980년 4.8퍼센트에서 2015년 27.2퍼센트로 증가한 막대그래프" loading="lazy"></figure>
 </div>
 <div class="chart-wrap" style="margin-bottom:0;">
 <p class="chart-caption">▲ 편의점 수의 증가</p>
-<div class="viz-card" style="min-height:180px;"><svg class="viz-svg" viewBox="0 0 360 210" role="img" aria-label="편의점 수가 2006년 9847개에서 2014년 26874개로 증가한 막대그래프"><text x="14" y="22" class="viz-title">편의점 수의 증가</text><line x1="35" y1="178" x2="340" y2="178" class="viz-axis"/><g fill="#f4f38a" stroke="#d4d057"><rect x="45" y="130" width="35" height="48"/><rect x="110" y="105" width="35" height="73"/><rect x="175" y="78" width="35" height="100"/><rect x="240" y="42" width="35" height="136"/><rect x="305" y="30" width="35" height="148"/></g><g fill="#1f77b4"><path d="M38 130 h49 l-5 -14 h-39z"/><path d="M103 105 h49 l-5 -14 h-39z"/><path d="M168 78 h49 l-5 -14 h-39z"/><path d="M233 42 h49 l-5 -14 h-39z"/><path d="M298 30 h49 l-5 -14 h-39z"/></g><g class="viz-label"><text x="39" y="122">9,847</text><text x="98" y="97">13,609</text><text x="163" y="70">17,919</text><text x="228" y="34">24,822</text><text x="293" y="22">26,874</text></g><g class="viz-small"><text x="43" y="197">2006</text><text x="108" y="197">2008</text><text x="173" y="197">2010</text><text x="238" y="197">2012</text><text x="303" y="197">2014</text></g></svg></div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/convenience_store.svg" alt="편의점 수가 2006년 9847개에서 2014년 26874개로 증가한 막대그래프" loading="lazy"></figure>
 </div>
 </div>
 
@@ -682,7 +676,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 내용: 서울 최저기온 등온선 지도 + 시가지화 전후 물 수지 비교 모식도 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 열섬 현상 (서울 최저 기온 분포)</p>
-<div class="viz-card"><svg class="viz-svg" viewBox="0 0 760 260" role="img" aria-label="도심으로 갈수록 기온이 높아지는 열섬 현상 등온선 모식도"><text x="18" y="24" class="viz-title">열섬 현상: 도심 고온 분포</text><ellipse cx="380" cy="135" rx="270" ry="96" fill="#e3f2fd"/><ellipse cx="380" cy="135" rx="205" ry="73" fill="#bbdefb"/><ellipse cx="380" cy="135" rx="135" ry="50" fill="#ffccbc"/><ellipse cx="380" cy="135" rx="65" ry="25" fill="#ef5350"/><text x="360" y="140" fill="#fff" font-size="14" font-weight="700">도심</text><text x="505" y="125" class="viz-label">기온 높음</text><text x="115" y="126" class="viz-label">주변 지역</text><text x="330" y="224" class="viz-small">동심원상의 기온 분포</text></svg></div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/heat_island.svg" alt="도심으로 갈수록 기온이 높아지는 열섬 현상 등온선 모식도" loading="lazy"></figure>
 </div>
 
 <!-- [그래프] 도시화 전후 하천 수위 변화 그래프
@@ -691,7 +685,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 출처: Introducing Physical Geography, 2013 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 도시화에 따른 지표 환경의 변화 (하천 수위 변화)</p>
-<div class="viz-card"><svg class="viz-svg" viewBox="0 0 760 260" role="img" aria-label="도시화 이후 하천 수위가 빠르게 높아지고 최고 수위가 높아지는 비교 그래프"><text x="18" y="24" class="viz-title">도시화 전후 하천 수위 변화</text><line x1="70" y1="210" x2="720" y2="210" class="viz-axis"/><line x1="70" y1="50" x2="70" y2="210" class="viz-axis"/><text x="20" y="58" class="viz-small">하천 수위</text><text x="635" y="232" class="viz-small">강우 후 시간</text><path d="M90 195 C190 190 270 165 340 140 C430 112 540 150 690 190" class="viz-line-blue"/><path d="M90 198 C180 192 240 95 300 68 C375 40 445 115 610 190" class="viz-line-red"/><line x1="300" y1="68" x2="300" y2="210" stroke="#ea4335" stroke-dasharray="5 5"/><text x="315" y="65" class="viz-label">도시화 이후</text><text x="455" y="145" class="viz-label">도시화 이전</text><text x="210" y="92" class="viz-small">빠른 유출 → 최고 수위 상승</text></svg></div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/flood_risk.svg" alt="도시화 이후 하천 수위가 빠르게 높아지고 최고 수위가 높아지는 비교 그래프" loading="lazy"></figure>
 </div>
 
 <div class="divider"></div>
@@ -718,7 +712,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 출처: 국토 교통부, 2023 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 우리나라 혁신 도시의 위치와 특화 분야</p>
-<div class="viz-card"><svg class="viz-svg" viewBox="0 0 760 260" role="img" aria-label="우리나라 혁신 도시의 위치와 특화 분야를 요약한 지도"><text x="18" y="24" class="viz-title">혁신 도시 위치와 특화 분야</text><path d="M365 45 C430 65 455 118 430 165 C410 205 362 235 318 210 C280 188 282 140 300 102 C315 70 332 48 365 45Z" fill="#e8f0fe" stroke="#1a73e8"/><g fill="#34a853"><circle cx="350" cy="72" r="7"/><circle cx="330" cy="105" r="7"/><circle cx="372" cy="112" r="7"/><circle cx="350" cy="145" r="7"/><circle cx="390" cy="160" r="7"/><circle cx="330" cy="178" r="7"/><circle cx="370" cy="202" r="7"/></g><text x="500" y="74" class="viz-small">강원·충북·전북</text><text x="500" y="102" class="viz-small">대구·경북·경남·울산·부산</text><text x="500" y="130" class="viz-small">광주전남·제주 등</text><text x="500" y="165" class="viz-label">공공기관 이전 + 지역 특화 산업</text></svg></div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/innovation_city.svg" alt="우리나라 혁신 도시의 위치와 특화 분야를 요약한 지도" loading="lazy"></figure>
 </div>
 
 <div class="quiz-section" id="quiz-3"></div>
@@ -760,7 +754,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 내용: 1~4차 산업혁명 흐름, AI+빅데이터+IoT+클라우드 융합 / 출처: 과학기술정보통신부 블로그, 2023 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 제4차 산업 혁명 개념도</p>
-<div class="viz-card"><svg class="viz-svg" viewBox="0 0 760 260" role="img" aria-label="4차 산업혁명 개념도"><text x="18" y="24" class="viz-title">4차 산업혁명 개념도</text><circle cx="150" cy="130" r="62" fill="#e8f0fe" stroke="#1a73e8"/><text x="126" y="144" font-size="42">🤖</text><g stroke="#5f6368" stroke-width="2" fill="none"><path d="M260 78 H680"/><path d="M260 130 H680"/><path d="M260 182 H680"/></g><g><circle cx="320" cy="78" r="18" class="viz-blue"/><circle cx="470" cy="130" r="18" class="viz-green"/><circle cx="620" cy="182" r="18" class="viz-yellow"/></g><g class="viz-label"><text x="350" y="83">핵심 개념</text><text x="500" y="135">자료 해석</text><text x="650" y="187">문제 적용</text></g></svg></div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/fourth_industrial_revolution.svg" alt="4차 산업혁명 개념도" loading="lazy"></figure>
 </div>
 
 <!-- [그래프] 교통 발달에 따른 지구의 상대적 크기 변화 + 수도권 통근 네트워크 변화
@@ -770,7 +764,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 출처: The Geography of Transportation Systems, 2020 / 서울 연구원, 2022 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 교통 발달에 따른 지구의 상대적 크기 변화 및 수도권 통근 네트워크 변화</p>
-<div class="viz-card"><svg class="viz-svg" viewBox="0 0 760 260" role="img" aria-label="교통 발달 + 수도권 통근 변화"><text x="18" y="24" class="viz-title">교통 발달과 통근 네트워크</text><circle cx="150" cy="130" r="62" fill="#e8f0fe" stroke="#1a73e8"/><text x="126" y="144" font-size="42">🚄</text><g stroke="#5f6368" stroke-width="2" fill="none"><path d="M260 78 H680"/><path d="M260 130 H680"/><path d="M260 182 H680"/></g><g><circle cx="320" cy="78" r="18" class="viz-blue"/><circle cx="470" cy="130" r="18" class="viz-green"/><circle cx="620" cy="182" r="18" class="viz-yellow"/></g><g class="viz-label"><text x="350" y="83">핵심 개념</text><text x="500" y="135">자료 해석</text><text x="650" y="187">문제 적용</text></g></svg></div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/transport_development.svg" alt="교통 발달 + 수도권 통근 변화" loading="lazy"></figure>
 </div>
 
 <div class="divider"></div>
@@ -869,7 +863,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 출처: 과학기술정보통신부·한국지능정보사회진흥원, 2023 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 지역 격차 관련 자료 (강릉선 KTX + 정보화 지수)</p>
-<div class="viz-card"><svg class="viz-svg" viewBox="0 0 760 260" role="img" aria-label="강릉선 KTX 지도 + 정보화 지수 그래프"><text x="18" y="24" class="viz-title">강릉선 KTX와 정보화 지수</text><circle cx="150" cy="130" r="62" fill="#e8f0fe" stroke="#1a73e8"/><text x="126" y="144" font-size="42">🚄</text><g stroke="#5f6368" stroke-width="2" fill="none"><path d="M260 78 H680"/><path d="M260 130 H680"/><path d="M260 182 H680"/></g><g><circle cx="320" cy="78" r="18" class="viz-blue"/><circle cx="470" cy="130" r="18" class="viz-green"/><circle cx="620" cy="182" r="18" class="viz-yellow"/></g><g class="viz-label"><text x="350" y="83">핵심 개념</text><text x="500" y="135">자료 해석</text><text x="650" y="187">문제 적용</text></g></svg></div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/regional_gap.svg" alt="강릉선 KTX 지도 + 정보화 지수 그래프" loading="lazy"></figure>
 </div>
 
 <!-- [지도] 혁신도시와 이전 공공기관 지도
@@ -878,7 +872,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 출처: 국토교통부 -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 혁신도시와 이전 공공기관</p>
-<div class="viz-card"><svg class="viz-svg" viewBox="0 0 760 260" role="img" aria-label="혁신도시 이전 공공기관 지도"><text x="18" y="24" class="viz-title">혁신도시와 이전 공공기관</text><circle cx="150" cy="130" r="62" fill="#e8f0fe" stroke="#1a73e8"/><text x="126" y="144" font-size="42">🏛️</text><g stroke="#5f6368" stroke-width="2" fill="none"><path d="M260 78 H680"/><path d="M260 130 H680"/><path d="M260 182 H680"/></g><g><circle cx="320" cy="78" r="18" class="viz-blue"/><circle cx="470" cy="130" r="18" class="viz-green"/><circle cx="620" cy="182" r="18" class="viz-yellow"/></g><g class="viz-label"><text x="350" y="83">핵심 개념</text><text x="500" y="135">자료 해석</text><text x="650" y="187">문제 적용</text></g></svg></div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/public_institution_map.svg" alt="혁신도시 이전 공공기관 지도" loading="lazy"></figure>
 </div>
 
 <div class="note">📝 <strong>파급·역류·빨대 효과</strong><br>
@@ -928,7 +922,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 내용: (좌) 경기도 주택유형 비율(등질지역) / (우) 서울로의 통근·통학률(기능지역) -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 등질지역과 기능지역 비교</p>
-<div class="viz-card"><svg class="viz-svg" viewBox="0 0 760 260" role="img" aria-label="등질지역·기능지역 지도"><text x="18" y="24" class="viz-title">등질 지역과 기능 지역</text><circle cx="150" cy="130" r="62" fill="#e8f0fe" stroke="#1a73e8"/><text x="126" y="144" font-size="42">🗺️</text><g stroke="#5f6368" stroke-width="2" fill="none"><path d="M260 78 H680"/><path d="M260 130 H680"/><path d="M260 182 H680"/></g><g><circle cx="320" cy="78" r="18" class="viz-blue"/><circle cx="470" cy="130" r="18" class="viz-green"/><circle cx="620" cy="182" r="18" class="viz-yellow"/></g><g class="viz-label"><text x="350" y="83">핵심 개념</text><text x="500" y="135">자료 해석</text><text x="650" y="187">문제 적용</text></g></svg></div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/region_types.svg" alt="등질지역·기능지역 지도" loading="lazy"></figure>
 </div>
 
 <div class="subsection-title">(2) 지역성</div>
@@ -1039,7 +1033,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 내용: 전국 지리적 표시 특산물 위치 지도 (이천 쌀, 보성 녹차, 횡성 한우 등) -->
 <div class="chart-wrap">
 <p class="chart-caption">▲ 우리나라의 지리적 표시제</p>
-<div class="viz-card"><svg class="viz-svg" viewBox="0 0 760 260" role="img" aria-label="지리적 표시제 지도"><text x="18" y="24" class="viz-title">지리적 표시제 주요 사례</text><circle cx="150" cy="130" r="62" fill="#e8f0fe" stroke="#1a73e8"/><text x="126" y="144" font-size="42">🗺️</text><g stroke="#5f6368" stroke-width="2" fill="none"><path d="M260 78 H680"/><path d="M260 130 H680"/><path d="M260 182 H680"/></g><g><circle cx="320" cy="78" r="18" class="viz-blue"/><circle cx="470" cy="130" r="18" class="viz-green"/><circle cx="620" cy="182" r="18" class="viz-yellow"/></g><g class="viz-label"><text x="350" y="83">핵심 개념</text><text x="500" y="135">자료 해석</text><text x="650" y="187">문제 적용</text></g></svg></div>
+<figure class="asset-figure"><img class="asset-img" src="assets/society-city/geographical_indication.svg" alt="지리적 표시제 지도" loading="lazy"></figure>
 </div>
 
 <div class="quiz-section" id="quiz-5"></div>
