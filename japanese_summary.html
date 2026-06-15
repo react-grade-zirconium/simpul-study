@@ -1,58 +1,1256 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>일본어 내용 정리</title>
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{width:100%;min-height:100%;background:#f6f8fc;color:#0f172a;font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif}
-    body{padding:24px;overflow:auto}
-    .japanese-page{width:min(860px,100%);margin:0 auto;display:grid;gap:16px}
-    .hero,.summary-card{border:1px solid #dbe3ef;border-radius:22px;background:#fff;padding:24px;box-shadow:0 12px 32px rgba(15,23,42,.08)}
-    .label{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;background:#fef2f2;color:#b91c1c;padding:7px 12px;font-size:.88rem;font-weight:800}
-    h1{margin-top:14px;font-size:clamp(1.55rem,4vw,2.25rem);line-height:1.25;letter-spacing:-.04em}
-    h2{font-size:1.22rem;color:#b91c1c;margin-bottom:10px}
-    p{margin-top:8px;color:#64748b;line-height:1.65;font-size:.96rem}
-    .back-link{display:inline-flex;align-items:center;justify-content:center;width:max-content;border:1px solid #fecaca;border-radius:999px;background:#fff7f7;color:#7f1d1d;text-decoration:none;padding:9px 14px;font-weight:900;transition:background .15s ease,border-color .15s ease,transform .15s ease}
-    .back-link:hover,.back-link:focus-visible{background:#fef2f2;border-color:#fca5a5;transform:translateY(-1px);outline:none}
-    .study-list{display:grid;gap:10px;margin-top:14px;list-style:none}
-    .study-list li{border:1px solid #e2e8f0;border-radius:14px;background:#f8fafc;padding:14px;line-height:1.6;color:#334155}
-    .jump-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
-    .jump-card{display:grid;gap:8px;border:1px solid #fecaca;border-radius:18px;background:#fff7f7;color:#7f1d1d;text-decoration:none;padding:18px;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease}
-    .jump-card:hover,.jump-card:focus-visible{border-color:#f87171;box-shadow:0 10px 24px rgba(248,113,113,.18);transform:translateY(-2px);outline:none}
-    .jump-card strong{font-size:1.08rem}.jump-card span{color:#64748b;line-height:1.5}
-    @media (max-width:620px){body{padding:14px}.hero,.summary-card{padding:20px 16px}.jump-list{grid-template-columns:1fr}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>일본어Ⅰ — 가타카나·일본 문화·길찾기와 가족 방문 회화</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #2563eb;       --primary-light: #eff6ff;
+  --green:   #16a34a;       --green-light:   #f0fdf4;
+  --purple:  #7c3aed;       --purple-light:  #f5f3ff;
+  --orange:  #ea580c;       --orange-light:  #fff7ed;
+  --teal:    #0d9488;       --teal-light:    #f0fdfa;
+  --rose:    #e11d48;       --rose-light:    #fff1f2;
+  --bg:      #f8fafc;       --surface:       #fff;
+  --border:  #e2e8f0;       --text: #0f172a;  --text-sec: #475569;
+  --shadow:  0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);font-size:14.5px;line-height:1.78;}
+
+/* HEADER */
+.page-header{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--border);padding:10px 20px 0;}
+.subject-label{font-size:11px;letter-spacing:.13em;color:var(--text-sec);text-transform:uppercase;margin-bottom:2px;}
+.page-title{font-size:19px;font-weight:700;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.badge-unit{font-size:11.5px;font-weight:600;color:#fff;padding:2px 9px;border-radius:20px;background:var(--primary);}
+.tab-bar{display:flex;overflow-x:auto;scrollbar-width:none;align-items:center;}
+.tab-bar::-webkit-scrollbar{display:none;}
+.tab-group-label{font-size:10.5px;color:#94a3b8;padding:9px 6px 7px 14px;white-space:nowrap;text-transform:uppercase;letter-spacing:.08em;font-weight:700;}
+.tab-group-label:first-child{padding-left:2px;}
+.tab-btn{display:flex;align-items:center;gap:6px;padding:9px 14px 8px;border:none;background:transparent;font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:500;color:var(--text-sec);cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;}
+.tab-btn.active{color:var(--primary);font-weight:700;border-bottom-color:var(--primary);}
+.tab-num{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;border:1.5px solid #cbd5e1;font-size:10.5px;font-weight:700;color:#94a3b8;flex-shrink:0;}
+.tab-btn.active .tab-num{background:var(--primary);border-color:var(--primary);color:#fff;}
+
+/* LAYOUT */
+.content-wrap{max-width:980px;margin:0 auto;padding:28px 20px 100px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+.unit-banner{display:inline-block;background:var(--primary-light);color:var(--primary);font-size:12.5px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:16px;}
+.unit-banner.purple{background:var(--purple-light);color:var(--purple);}
+.unit-banner.teal{background:var(--teal-light);color:var(--teal);}
+.unit-banner.orange{background:var(--orange-light);color:var(--orange);}
+.unit-banner.green{background:var(--green-light);color:var(--green);}
+
+/* TITLES */
+.section-title{font-size:17px;font-weight:700;border-bottom:2px solid var(--primary);padding-bottom:7px;margin:22px 0 12px;display:flex;align-items:center;gap:7px;}
+.section-title:first-of-type{margin-top:0;}
+.section-title.purple{border-bottom-color:var(--purple);}
+.section-title.teal{border-bottom-color:var(--teal);}
+.section-title.orange{border-bottom-color:var(--orange);}
+.section-title.green{border-bottom-color:var(--green);}
+.section-title.rose{border-bottom-color:var(--rose);}
+.section-title .icon{font-size:17px;}
+.subsection-title{font-size:14.5px;font-weight:700;border-left:3px solid var(--primary);padding-left:9px;margin:16px 0 10px;}
+.subsection-title.purple{border-left-color:var(--purple);}
+.subsection-title.teal{border-left-color:var(--teal);}
+.subsection-title.orange{border-left-color:var(--orange);}
+.subsection-title.green{border-left-color:var(--green);}
+.subsection-title.rose{border-left-color:var(--rose);}
+.sub2-title{display:inline-block;font-size:13px;font-weight:700;background:#f1f5f9;color:var(--text-sec);padding:3px 11px;border-radius:20px;margin:4px 0 8px;}
+
+/* CALLOUT BOXES */
+.def-box{background:var(--primary-light);border-left:4px solid var(--primary);border-radius:0 8px 8px 0;padding:12px 15px;font-size:14px;line-height:1.8;margin-bottom:11px;}
+.def-box strong{color:var(--primary);}
+.green-box{background:var(--green-light);border-left:4px solid var(--green);border-radius:0 8px 8px 0;padding:12px 15px;font-size:14px;line-height:1.8;margin-bottom:11px;}
+.green-box strong{color:var(--green);}
+.purple-box{background:var(--purple-light);border-left:4px solid var(--purple);border-radius:0 8px 8px 0;padding:12px 15px;font-size:14px;line-height:1.8;margin-bottom:11px;}
+.purple-box strong{color:var(--purple);}
+.teal-box{background:var(--teal-light);border-left:4px solid var(--teal);border-radius:0 8px 8px 0;padding:12px 15px;font-size:14px;line-height:1.8;margin-bottom:11px;}
+.teal-box strong{color:var(--teal);}
+.orange-box{background:var(--orange-light);border-left:4px solid var(--orange);border-radius:0 8px 8px 0;padding:12px 15px;font-size:14px;line-height:1.8;margin-bottom:11px;}
+.orange-box strong{color:var(--orange);}
+.rose-box{background:var(--rose-light);border-left:4px solid var(--rose);border-radius:0 8px 8px 0;padding:12px 15px;font-size:14px;line-height:1.8;margin-bottom:11px;}
+.rose-box strong{color:var(--rose);}
+.note{background:#fefce8;border:1px solid #fde047;color:#713f12;border-radius:8px;padding:10px 14px;font-size:13px;line-height:1.65;margin-bottom:10px;}
+.note strong{color:#854d0e;}
+.tip{background:var(--green-light);border:1px solid #86efac;color:#14532d;border-radius:8px;padding:10px 14px;font-size:13px;line-height:1.65;margin-bottom:10px;}
+.tip strong{color:#166534;}
+.warning{background:var(--rose-light);border:1px solid #fda4af;color:#9f1239;border-radius:8px;padding:10px 14px;font-size:13px;line-height:1.65;margin-bottom:10px;}
+.warning strong{color:#9f1239;}
+
+/* GRID / CARDS */
+.factor-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:11px;}
+.factor-grid.three{grid-template-columns:1fr 1fr 1fr;}
+.factor-grid.four{grid-template-columns:1fr 1fr 1fr 1fr;}
+@media(max-width:680px){.factor-grid,.factor-grid.three,.factor-grid.four{grid-template-columns:1fr;}}
+.factor-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;box-shadow:var(--shadow);}
+.factor-card.blue{border-top:3px solid var(--primary);}
+.factor-card.green{border-top:3px solid var(--green);}
+.factor-card.purple{border-top:3px solid var(--purple);}
+.factor-card.orange{border-top:3px solid var(--orange);}
+.factor-card.teal{border-top:3px solid var(--teal);}
+.factor-card.rose{border-top:3px solid var(--rose);}
+.factor-card.gray{border-top:3px solid #94a3b8;}
+.factor-card h4{font-size:13.5px;font-weight:700;margin-bottom:7px;}
+.factor-card p,.factor-card li{font-size:13px;color:var(--text-sec);line-height:1.7;}
+.factor-card ul{padding-left:15px;}
+
+/* kana derivation cards */
+.kana-card{text-align:center;padding:16px 8px;}
+.kana-card .kana-from{font-size:19px;font-weight:700;color:var(--text-sec);}
+.kana-card .kana-arrow{color:var(--purple);font-size:13px;margin:3px 0;}
+.kana-card .kana-to{font-size:27px;font-weight:700;color:var(--purple);}
+
+/* TABLE */
+.cmp-table{width:100%;border-collapse:collapse;border-radius:10px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:11px;font-size:13.5px;}
+.cmp-table thead{background:var(--primary);color:#fff;}
+.cmp-table th{padding:9px 13px;text-align:left;font-size:13px;}
+.cmp-table td{padding:9px 13px;border-bottom:1px solid var(--border);line-height:1.6;}
+.cmp-table tbody tr:nth-child(even){background:#f8fafc;}
+.cmp-table td:first-child{font-weight:600;color:var(--primary);white-space:nowrap;}
+.rose-th thead{background:var(--rose);}
+.rose-th td:first-child{color:var(--rose);}
+.green-th thead{background:var(--green);}
+.green-th td:first-child{color:var(--green);}
+.teal-th thead{background:var(--teal);}
+.teal-th td:first-child{color:var(--teal);}
+.purple-th thead{background:var(--purple);}
+.purple-th td:first-child{color:var(--purple);}
+
+/* EXAMPLE / DIALOGUE TABLE */
+.ex-table{width:100%;border-collapse:collapse;border-radius:10px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:14px;font-size:13px;}
+.ex-table thead{background:#334155;color:#fff;}
+.ex-table th{padding:9px 13px;text-align:left;font-size:12.5px;font-weight:700;}
+.ex-table td{padding:9px 13px;border-bottom:1px solid var(--border);line-height:1.7;background:var(--surface);}
+.ex-table tbody tr:last-child td{border-bottom:none;}
+.ex-table tbody tr:nth-child(even) td{background:#f8fafc;}
+.ex-table td:first-child{font-weight:700;color:#334155;white-space:nowrap;}
+
+/* BADGE */
+.badge{padding:2px 9px;border-radius:20px;font-size:11.5px;font-weight:700;display:inline-block;margin:2px;}
+.badge-blue{background:#dbeafe;color:#1d4ed8;}
+.badge-green{background:#dcfce7;color:#15803d;}
+.badge-purple{background:#ede9fe;color:#6d28d9;}
+.badge-orange{background:#ffedd5;color:#c2410c;}
+.badge-teal{background:#ccfbf1;color:#0f766e;}
+.badge-rose{background:#ffe4e6;color:#be123c;}
+.badge-gray{background:#f1f5f9;color:#475569;}
+
+/* RULE CARD */
+.rule-card{background:var(--surface);border:2px solid var(--primary);border-radius:12px;padding:14px 17px;margin-bottom:12px;box-shadow:var(--shadow);}
+.rule-card .rule-head{font-size:13.5px;font-weight:700;color:var(--primary);margin-bottom:8px;}
+.rule-card .rule-body{font-size:13.5px;line-height:1.85;color:var(--text);}
+.rule-card .rule-body .ja{font-weight:700;}
+.rule-card.green{border-color:var(--green);}
+.rule-card.green .rule-head{color:var(--green);}
+.rule-card.purple{border-color:var(--purple);}
+.rule-card.purple .rule-head{color:var(--purple);}
+.rule-card.teal{border-color:var(--teal);}
+.rule-card.teal .rule-head{color:var(--teal);}
+.rule-card.orange{border-color:var(--orange);}
+.rule-card.orange .rule-head{color:var(--orange);}
+
+/* INFO LIST */
+.info-list{list-style:none;padding:0;margin-bottom:10px;}
+.info-list li{padding:7px 12px 7px 26px;position:relative;font-size:13.5px;line-height:1.65;border-bottom:1px solid #f1f5f9;}
+.info-list li::before{content:'▸';position:absolute;left:9px;color:var(--primary);font-weight:700;}
+.info-list.green li::before{color:var(--green);}
+.info-list.rose li::before{color:var(--rose);}
+
+.totop{position:fixed;bottom:28px;right:24px;width:42px;height:42px;border-radius:50%;background:var(--primary);color:#fff;border:none;font-size:17px;cursor:pointer;box-shadow:0 2px 8px rgba(37,99,235,.35);z-index:200;}
+
+/* ============ QUIZ SECTION ============ */
+.quiz-section{margin-top:34px;padding-top:22px;border-top:2px dashed var(--border);}
+.quiz-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;}
+.quiz-title{font-size:18px;font-weight:700;display:flex;align-items:center;gap:7px;}
+.quiz-title .icon{font-size:17px;}
+.scoreboard{display:flex;gap:8px;flex-wrap:wrap;}
+.score-chip{display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:12.5px;font-weight:700;background:#f1f5f9;color:var(--text-sec);}
+.score-chip .score-icon{font-size:13px;}
+.score-chip.ox{background:var(--primary-light);color:var(--primary);}
+.score-chip.mc{background:var(--green-light);color:var(--green);}
+.score-chip.hard{background:var(--purple-light);color:var(--purple);}
+
+.quiz-type-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.qtype-btn{flex:1;min-width:100px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 8px;border:2px solid var(--border);border-radius:10px;background:var(--surface);cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:.15s;}
+.qtype-btn .qtype-icon{font-size:18px;}
+.qtype-btn .qtype-label{font-size:13px;font-weight:700;color:var(--text);}
+.qtype-btn .qtype-count{font-size:11.5px;color:var(--text-sec);}
+.qtype-btn.active{border-color:var(--primary);background:var(--primary-light);}
+.qtype-btn.active .qtype-label{color:var(--primary);}
+.qtype-btn:hover:not(.active){border-color:#bfdbfe;}
+
+.q-progress-wrap{height:6px;border-radius:4px;background:#e2e8f0;overflow:hidden;margin-bottom:18px;}
+.q-progress-fill{height:100%;width:0;background:var(--primary);border-radius:4px;transition:width .25s;}
+
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:12px;box-shadow:var(--shadow);}
+.q-card.answered-correct{border-color:var(--green);background:var(--green-light);}
+.q-card.answered-wrong{border-color:var(--rose);background:var(--rose-light);}
+.q-meta{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.q-num{font-size:12px;font-weight:700;color:var(--text-sec);}
+.q-difficulty{font-size:11px;font-weight:700;padding:2px 9px;border-radius:20px;}
+.diff-basic{background:var(--primary-light);color:var(--primary);}
+.diff-mid{background:var(--green-light);color:var(--green);}
+.diff-hard{background:var(--purple-light);color:var(--purple);}
+.q-text{font-size:14px;font-weight:600;line-height:1.75;margin-bottom:11px;}
+
+/* OX */
+.ox-row{display:flex;gap:10px;margin-bottom:8px;}
+.ox-btn{flex:1;padding:10px;border:2px solid var(--border);border-radius:10px;background:var(--surface);font-size:18px;font-weight:700;cursor:pointer;color:var(--text-sec);transition:.15s;font-family:'Noto Sans KR',sans-serif;}
+.ox-btn:hover:not(:disabled){border-color:var(--primary);}
+.ox-btn:disabled{cursor:default;}
+.ox-btn.picked-correct{border-color:var(--green);background:var(--green-light);color:var(--green);}
+.ox-btn.picked-wrong{border-color:var(--rose);background:var(--rose-light);color:var(--rose);}
+.ox-btn.reveal-correct{border-color:var(--green);background:var(--green-light);color:var(--green);}
+
+/* MC / HARD */
+.mc-options{display:flex;flex-direction:column;gap:8px;margin-bottom:8px;}
+.mc-opt{display:flex;align-items:center;gap:10px;padding:10px 12px;border:2px solid var(--border);border-radius:10px;background:var(--surface);font-size:13.5px;line-height:1.5;cursor:pointer;text-align:left;transition:.15s;font-family:'Noto Sans KR',sans-serif;color:var(--text);}
+.mc-opt:hover:not(:disabled){border-color:var(--primary);}
+.mc-opt:disabled{cursor:default;}
+.mc-opt-letter{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#f1f5f9;color:var(--text-sec);font-size:12px;font-weight:700;flex-shrink:0;}
+.mc-opt.correct{border-color:var(--green);background:var(--green-light);}
+.mc-opt.correct .mc-opt-letter{background:var(--green);color:#fff;}
+.mc-opt.wrong{border-color:var(--rose);background:var(--rose-light);}
+.mc-opt.wrong .mc-opt-letter{background:var(--rose);color:#fff;}
+
+/* FEEDBACK */
+.q-feedback{margin-top:10px;padding:10px 13px;border-radius:8px;font-size:13px;line-height:1.65;}
+.q-feedback.correct{background:var(--green-light);color:#14532d;border:1px solid #86efac;}
+.q-feedback.wrong{background:var(--rose-light);color:#9f1239;border:1px solid #fda4af;}
+.q-feedback .fb-head{font-weight:700;margin-bottom:3px;}
+
+/* RESULT */
+.quiz-result{background:var(--surface);border:2px solid var(--primary);border-radius:12px;padding:20px;margin-bottom:16px;text-align:center;box-shadow:var(--shadow);}
+.result-score{font-size:28px;font-weight:700;color:var(--primary);margin-bottom:6px;}
+.result-msg{font-size:13.5px;color:var(--text-sec);margin-bottom:14px;}
+.mini-bars{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.mini-bar-row{display:flex;align-items:center;gap:8px;}
+.mini-bar-label{font-size:12px;font-weight:700;width:64px;text-align:left;color:var(--text-sec);}
+.mini-bar-track{flex:1;height:8px;border-radius:4px;background:#e2e8f0;overflow:hidden;}
+.mini-bar-fill{height:100%;border-radius:4px;}
+.mini-bar-fill.ox{background:var(--primary);}
+.mini-bar-fill.mc{background:var(--green);}
+.mini-bar-fill.hard{background:var(--purple);}
+.mini-bar-pct{font-size:12px;font-weight:700;color:var(--text-sec);width:42px;text-align:right;}
+.reset-btn{padding:9px 22px;border:none;border-radius:20px;background:var(--primary);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;}
+.reset-btn:hover{background:#1d4ed8;}
+
+@media(max-width:640px){
+  .quiz-type-bar{flex-wrap:nowrap;overflow-x:auto;}
+  .qtype-btn{min-width:90px;}
+  .mini-bar-label{width:52px;font-size:11px;}
+}
+</style>
 </head>
 <body>
-  <main class="japanese-page">
-    <a class="back-link" href="./japanese_hub.html">← 일본어 파트 선택</a>
 
-    <section class="hero" aria-labelledby="japaneseSummaryTitle">
-      <span class="label">🇯🇵 일본어</span>
-      <h1 id="japaneseSummaryTitle">내용 정리</h1>
-      <p>수업에서 배운 일본어 핵심 개념을 한눈에 확인하며 복습하세요.</p>
-    </section>
+<div class="page-header">
+  <div class="subject-label">고등학교 일본어Ⅰ · 문화와 생활 일본어</div>
+  <div class="page-title">단원 정리 — 가타카나 · 일본 문화 · 길찾기와 가족 방문 회화 <span class="badge-unit">노트 정리</span></div>
+  <div class="tab-bar">
+    <span class="tab-group-label">기초</span>
+    <button class="tab-btn active" onclick="switchTab(0)"><span class="tab-num">1</span>가타카나</button>
+    <button class="tab-btn" onclick="switchTab(1)"><span class="tab-num">2</span>장소·위치·가족 어휘</button>
+    <span class="tab-group-label">음식 문화</span>
+    <button class="tab-btn" onclick="switchTab(2)"><span class="tab-num">3</span>면류·생선·고기</button>
+    <button class="tab-btn" onclick="switchTab(3)"><span class="tab-num">4</span>야키·외래음식·식사예절</button>
+    <span class="tab-group-label">회화·문법</span>
+    <button class="tab-btn" onclick="switchTab(4)"><span class="tab-num">5</span>회화① 길찾기</button>
+    <button class="tab-btn" onclick="switchTab(5)"><span class="tab-num">6</span>회화② 가족 방문</button>
+  </div>
+</div>
 
-    <section class="summary-card" aria-labelledby="summaryHeading">
-      <h2 id="summaryHeading">핵심 개념</h2>
-      <ul class="study-list">
-        <li><strong>발음:</strong> 모음 5개와 청음·탁음·반탁음의 차이를 확인합니다.</li>
-        <li><strong>인사 표현:</strong> 상황별 기본 인사와 감사·사과 표현을 반복합니다.</li>
-        <li><strong>문장 구조:</strong> 주제 표시 조사와 기본 어순을 예문으로 정리합니다.</li>
+<div class="content-wrap">
+
+<!-- ===== TAB 0: 가타카나 ===== -->
+<div class="tab-panel active" id="panel-0">
+  <div class="unit-banner purple">📌 기초 › 가타카나(カタカナ)</div>
+
+  <div class="section-title purple"><span class="icon">🔤</span>가타카나란?</div>
+  <div class="purple-box">
+    <strong>가타카나(カタカナ)</strong>는 한자의 일부분을 떼어 만든 문자로, 주로 <strong>외래어, 의성어·의태어, 강조하고 싶은 말</strong> 등을 표기할 때 사용한다.
+  </div>
+
+  <div class="subsection-title purple">한자에서 만들어진 가타카나</div>
+  <div class="factor-grid three">
+    <div class="factor-card purple kana-card">
+      <div class="kana-from">加</div>
+      <div class="kana-arrow">▼</div>
+      <div class="kana-to">カ</div>
+    </div>
+    <div class="factor-card purple kana-card">
+      <div class="kana-from">江</div>
+      <div class="kana-arrow">▼</div>
+      <div class="kana-to">エ</div>
+    </div>
+    <div class="factor-card purple kana-card">
+      <div class="kana-from">仁</div>
+      <div class="kana-arrow">▼</div>
+      <div class="kana-to">ニ</div>
+    </div>
+    <div class="factor-card purple kana-card">
+      <div class="kana-from">呂</div>
+      <div class="kana-arrow">▼</div>
+      <div class="kana-to">ロ</div>
+    </div>
+    <div class="factor-card purple kana-card">
+      <div class="kana-from">利</div>
+      <div class="kana-arrow">▼</div>
+      <div class="kana-to">リ</div>
+    </div>
+    <div class="factor-card purple kana-card">
+      <div class="kana-from">多</div>
+      <div class="kana-arrow">▼</div>
+      <div class="kana-to">タ</div>
+    </div>
+  </div>
+  <div class="note">📌 위처럼 가타카나는 <strong>한자 글자의 한 부분(획의 일부)을 떼어내어</strong> 만들어졌다. 히라가나가 한자를 흘려 쓴 모양에서 나왔다면, 가타카나는 한자의 일부를 따서 만든 문자라는 점을 기억하자.</div>
+
+  <div class="subsection-title purple">가타카나의 주요 용도</div>
+  <div class="factor-grid">
+    <div class="factor-card blue">
+      <h4>① 외래어</h4>
+      <p><span class="badge badge-blue">カステラ</span> 카스테라(카스텔라) — 포르투갈에서 전해진 일본식 스펀지케이크처럼, <strong>외국에서 들어온 말</strong>을 표기할 때 가타카나를 쓴다.</p>
+    </div>
+    <div class="factor-card green">
+      <h4>② 의성어</h4>
+      <p><span class="badge badge-green">ピーポーピーポー</span> 삐뽀삐뽀 — 사이렌 소리처럼 <strong>소리를 그대로 흉내 낸 말(의성어)</strong>을 나타낼 때 쓴다.</p>
+    </div>
+    <div class="factor-card purple">
+      <h4>③ 의태어</h4>
+      <p><span class="badge badge-purple">ドキドキ</span> 두근두근 — 심장이 뛰는 모습이나 느낌처럼 <strong>모습·느낌을 흉내 낸 말(의태어)</strong>을 나타낼 때 쓴다.</p>
+    </div>
+    <div class="factor-card orange">
+      <h4>④ 강조하는 말</h4>
+      <p><span class="badge badge-orange">オアシス</span> 오아시스 — 원래는 안전 운전을 위한 배려의 인사말 네 가지를 정리한 표현의 앞글자를 딴 말이었지만, 가타카나로 표기되어 <strong>어떤 말을 강조</strong>하는 느낌을 줄 때도 쓰인다.</p>
+    </div>
+  </div>
+  <div class="tip">💡 같은 발음이라도 <strong>가타카나로 쓰면 '외래어 · 의성어 · 의태어 · 강조'의 느낌이 더해진다.</strong> 히라가나·한자로 쓰는 일반 단어와 구별해서 기억해 두자.</div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <div class="quiz-title"><span class="icon">📝</span>확인 문제</div>
+      <div class="scoreboard" id="scoreboard-0"></div>
+    </div>
+    <div class="quiz-type-bar" id="typebar-0"></div>
+    <div class="q-progress-wrap"><div class="q-progress-fill" id="progress-0"></div></div>
+    <div id="qlist-0"></div>
+  </div>
+
+</div><!-- /panel-0 -->
+
+<!-- ===== TAB 1: 장소·위치·가족 어휘 ===== -->
+<div class="tab-panel" id="panel-1">
+  <div class="unit-banner">📌 기초 › 장소·위치·가족을 나타내는 말</div>
+
+  <div class="section-title"><span class="icon">🏙️</span>장소를 나타내는 어휘</div>
+  <div class="def-box">
+    일상생활에서 자주 쓰이는 <strong>장소 명사</strong>를 정리해 두면, 길을 묻고 답하는 회화에서 바로 활용할 수 있다.
+  </div>
+  <table class="ex-table">
+    <thead><tr><th>일본어</th><th>읽기</th><th>뜻</th></tr></thead>
+    <tbody>
+      <tr><td>地下鉄</td><td>ちかてつ</td><td>지하철</td></tr>
+      <tr><td>飛行機</td><td>ひこうき</td><td>비행기</td></tr>
+      <tr><td>病院</td><td>びょういん</td><td>병원</td></tr>
+      <tr><td>コンビニ</td><td>コンビニ</td><td>편의점</td></tr>
+      <tr><td>郵便局</td><td>ゆうびんきょく</td><td>우체국</td></tr>
+      <tr><td>映画館</td><td>えいがかん</td><td>영화관</td></tr>
+      <tr><td>公園</td><td>こうえん</td><td>공원</td></tr>
+      <tr><td>トイレ</td><td>トイレ</td><td>화장실</td></tr>
+      <tr><td>学校</td><td>がっこう</td><td>학교</td></tr>
+      <tr><td>レストラン</td><td>レストラン</td><td>레스토랑</td></tr>
+      <tr><td>カフェ</td><td>カフェ</td><td>카페</td></tr>
+      <tr><td>図書館</td><td>としょかん</td><td>도서관</td></tr>
+      <tr><td>パン屋</td><td>パンや</td><td>빵집</td></tr>
+      <tr><td>家</td><td>うち</td><td>집</td></tr>
+      <tr><td>交番</td><td>こうばん</td><td>파출소</td></tr>
+    </tbody>
+  </table>
+  <div class="note">📌 <strong>명사 + や(屋)</strong> → '~가게'라는 뜻이 된다. 예) パン(빵) + や → <strong>パンや</strong>(빵집), 本(책) + や → <strong>本や</strong>(책방)처럼, 어떤 물건을 파는 가게를 나타낼 때 쓰는 표현이다.</div>
+
+  <div class="section-title"><span class="icon">📍</span>위치를 나타내는 표현</div>
+  <div class="def-box">물건이 어디에 있는지 위치를 설명할 때 쓰는 기본 표현이다.</div>
+  <div class="factor-grid three">
+    <div class="factor-card blue"><h4>うえ (上)</h4><p>위</p></div>
+    <div class="factor-card blue"><h4>した (下)</h4><p>아래</p></div>
+    <div class="factor-card blue"><h4>なか (中)</h4><p>안 · 속</p></div>
+    <div class="factor-card blue"><h4>ひだり (左)</h4><p>왼쪽</p></div>
+    <div class="factor-card blue"><h4>みぎ (右)</h4><p>오른쪽</p></div>
+    <div class="factor-card blue"><h4>まえ (前)</h4><p>앞</p></div>
+    <div class="factor-card blue"><h4>うしろ (後ろ)</h4><p>뒤</p></div>
+    <div class="factor-card blue"><h4>となり (隣)</h4><p>옆 (바로 옆, 같은 종류)</p></div>
+    <div class="factor-card blue"><h4>そば</h4><p>옆 · 주변 (가까운 곳)</p></div>
+  </div>
+  <div class="tip">💡 <strong>となり</strong>는 같은 종류의 것이 바로 옆에 줄지어 있을 때(예: 옆집, 옆 건물) 주로 쓰고, <strong>そば</strong>는 종류와 관계없이 '가까운 곳·주변'을 나타낼 때 쓴다.</div>
+
+  <div class="section-title"><span class="icon">👨‍👩‍👧‍👦</span>가족을 부르는 말</div>
+  <div class="def-box">일본어는 <strong>'내 가족을 남에게 말할 때'</strong>와 <strong>'남의 가족을 말하거나 직접 부를 때'</strong> 쓰는 말이 다르다.</div>
+  <table class="cmp-table">
+    <thead><tr><th>의미</th><th>내 가족을 말할 때 (낮춤)</th><th>남의 가족 · 직접 부를 때 (높임)</th></tr></thead>
+    <tbody>
+      <tr><td>나</td><td>わたし</td><td>(이름) さん</td></tr>
+      <tr><td>아빠</td><td>ちち</td><td>おとうさん</td></tr>
+      <tr><td>엄마</td><td>はは</td><td>おかあさん</td></tr>
+      <tr><td>오빠 · 형</td><td>あに</td><td>おにいさん</td></tr>
+      <tr><td>언니 · 누나</td><td>あね</td><td>おねえさん</td></tr>
+      <tr><td>남동생</td><td>おとうと</td><td>おとうとさん</td></tr>
+      <tr><td>여동생</td><td>いもうと</td><td>いもうとさん</td></tr>
+    </tbody>
+  </table>
+  <div class="tip">💡 남에게 '우리 가족'을 가리킬 때는 <strong>낮추는 말</strong>(왼쪽 칸)을 쓰고, 남의 가족을 가리키거나 그 사람을 직접 부를 때는 <strong>높이는 말</strong>(오른쪽 칸, ~さん)을 쓴다. 단, 동생(おとうと · いもうと)을 직접 부를 때는 보통 <strong>이름</strong>으로 부른다.</div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <div class="quiz-title"><span class="icon">📝</span>확인 문제</div>
+      <div class="scoreboard" id="scoreboard-1"></div>
+    </div>
+    <div class="quiz-type-bar" id="typebar-1"></div>
+    <div class="q-progress-wrap"><div class="q-progress-fill" id="progress-1"></div></div>
+    <div id="qlist-1"></div>
+  </div>
+
+</div><!-- /panel-1 -->
+
+<!-- ===== TAB 2: 면류·생선·고기 ===== -->
+<div class="tab-panel" id="panel-2">
+  <div class="unit-banner teal">📌 음식 문화 › 면류 · 생선 · 고기 요리</div>
+
+  <div class="section-title teal"><span class="icon">🍱</span>일본의 음식 문화 — 와쇼쿠(和食)</div>
+  <div class="teal-box">
+    일본인의 식생활에서 <strong>면류는 주식</strong>으로 자리 잡았고, 신선한 생선을 활용한 요리도 크게 발달했다. 일본 요리는 미각뿐 아니라 <strong>시각까지 고려해 음식과 그릇의 조화</strong>를 중요하게 여기며, 이러한 일본 고유의 요리를 <strong>와쇼쿠(和食, 화식)</strong>라고 부른다.
+  </div>
+
+  <div class="section-title teal"><span class="icon">🍜</span>면류 (麺類)</div>
+  <div class="factor-grid">
+    <div class="factor-card teal">
+      <h4>① そば (소바)</h4>
+      <p>메밀로 만든 국수. 이사할 때 먹는 <strong>引っ越しそば(히키소바)</strong>, 한 해를 마무리하며 먹는 <strong>年越しそば(토시코시소바)</strong> 같은 풍습 음식도 있다.</p>
+    </div>
+    <div class="factor-card teal">
+      <h4>② そうめん (소멘)</h4>
+      <p>우리나라의 소면과 비슷한 가는 면. 여름에 대나무 홈통으로 면을 흘려보내 건져 먹는 <strong>流しそうめん(나가시소멘)</strong>이 유명하다.</p>
+    </div>
+    <div class="factor-card teal">
+      <h4>③ きつねうどん (기쓰네우동)</h4>
+      <p>유부를 얹은 우동. 이름의 <strong>きつね(여우)</strong>는 여우가 유부를 좋아한다는 속설에서 유래했다.</p>
+    </div>
+    <div class="factor-card teal">
+      <h4>④ たぬきうどん (다누키우동)</h4>
+      <p>튀김 부스러기(튀김 가루)를 얹은 우동. 이름에 <strong>たぬき(너구리)</strong>가 들어가지만 실제 너구리와는 관련이 없다.</p>
+    </div>
+  </div>
+
+  <div class="section-title teal"><span class="icon">🐟</span>생선 · 고기 요리</div>
+  <div class="factor-grid">
+    <div class="factor-card rose">
+      <h4>① どんぶり (돈부리)</h4>
+      <p>밥 위에 고기 · 채소 · 달걀 등의 재료를 얹은 일본식 덮밥. 올라가는 재료에 따라 <span class="badge badge-rose">규동(소고기)</span> <span class="badge badge-rose">가츠동(돈가스)</span> <span class="badge badge-rose">텐동(튀김)</span> 등으로 이름이 달라진다.</p>
+    </div>
+    <div class="factor-card rose">
+      <h4>② しゃぶしゃぶ (샤브샤브)</h4>
+      <p>끓는 국물에 얇게 썬 고기와 채소, 해물, 두부 등을 살짝 데쳐 양념장에 찍어 먹는 일본의 전골 요리.</p>
+    </div>
+    <div class="factor-card rose">
+      <h4>③ さしみ (사시미)</h4>
+      <p>신선한 어패류를 날것 그대로, 간장과 와사비(고추냉이) 양념을 곁들여 먹는 <strong>생식</strong> 요리.</p>
+    </div>
+    <div class="factor-card rose">
+      <h4>④ すし (스시)</h4>
+      <p><strong>식초로 양념한 밥</strong>(스시밥) 위에 제철 어패류 등을 얹어 만든 요리.</p>
+    </div>
+  </div>
+  <div class="note">📌 사시미와 스시는 모두 '생식(날것)' 문화에서 발달한 요리지만, <strong>사시미는 밥 없이 어패류만</strong> 먹고, <strong>스시는 식초로 간을 한 밥과 함께</strong> 먹는다는 차이가 있다.</div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <div class="quiz-title"><span class="icon">📝</span>확인 문제</div>
+      <div class="scoreboard" id="scoreboard-2"></div>
+    </div>
+    <div class="quiz-type-bar" id="typebar-2"></div>
+    <div class="q-progress-wrap"><div class="q-progress-fill" id="progress-2"></div></div>
+    <div id="qlist-2"></div>
+  </div>
+
+</div><!-- /panel-2 -->
+
+<!-- ===== TAB 3: 야키·외래음식·식사예절 ===== -->
+<div class="tab-panel" id="panel-3">
+  <div class="unit-banner orange">📌 음식 문화 › 야키류 · 외래 음식 · 식사 예절</div>
+
+  <div class="section-title orange"><span class="icon">🔥</span>야키(焼き)류 — 굽는 요리</div>
+  <div class="factor-grid three">
+    <div class="factor-card orange">
+      <h4>① お好み焼き (오코노미야키)</h4>
+      <p>양배추 · 면 · 밀가루 등을 반죽해 부쳐 먹는 음식으로, 관서(오사카) 지방의 부침개와 비슷하다. 가쓰오부시 · 소스 · 마요네즈 등을 얹어 먹는다.</p>
+    </div>
+    <div class="factor-card orange">
+      <h4>② たこ焼き (다코야키)</h4>
+      <p>밀가루 반죽에 잘게 썬 문어와 양배추 등을 넣고 동그랗게 구운 뒤, 가쓰오부시와 소스를 뿌려 먹는다.</p>
+    </div>
+    <div class="factor-card orange">
+      <h4>③ すき焼き (스키야키)</h4>
+      <p>전용 냄비에 얇게 썬 소고기와 채소, 실곤약, 두부 등을 함께 끓인 뒤 날달걀에 찍어 먹는다.</p>
+    </div>
+    <div class="factor-card orange">
+      <h4>④ たい焼き (다이야키)</h4>
+      <p>붕어빵과 비슷한 모양의 빵으로, 안에 팥소 등이 들어 있다.</p>
+    </div>
+    <div class="factor-card orange">
+      <h4>⑤ やきそば (야키소바)</h4>
+      <p>고기와 양배추 등을 넣어 볶은 일본식 볶음면.</p>
+    </div>
+  </div>
+
+  <div class="section-title green"><span class="icon">🌍</span>일본에서 토착화된 외래 음식</div>
+  <div class="factor-grid three">
+    <div class="factor-card green">
+      <h4>① ラーメン (라멘)</h4>
+      <p>일본식 중화 요리로, 일본의 대표적인 국민 음식 중 하나로 여겨진다.</p>
+    </div>
+    <div class="factor-card green">
+      <h4>② とんかつ (돈카츠)</h4>
+      <p>서양 음식 '포크커틀릿'이 일본화된 음식. 돼지를 뜻하는 <strong>豚(돈)</strong>과 <strong>カツ(커틀릿)</strong>이 합쳐진 이름이다.</p>
+    </div>
+    <div class="factor-card green">
+      <h4>③ カステラ (카스텔라)</h4>
+      <p>포르투갈에서 전해진 일본식 스펀지케이크.</p>
+    </div>
+    <div class="factor-card green">
+      <h4>④ オムライス (오므라이스)</h4>
+      <p>프랑스어 <strong>オムレツ(오믈렛)</strong>과 영어 <strong>ライス(라이스)</strong>가 합쳐진 말.</p>
+    </div>
+    <div class="factor-card green">
+      <h4>⑤ カレー (카레)</h4>
+      <p>인도의 '커리'를 일본식으로 만든 음식.</p>
+    </div>
+    <div class="factor-card green">
+      <h4>⑥ コロッケ (크로켓)</h4>
+      <p>프랑스어 <strong>croquette(크로켓)</strong>에서 유래한 음식.</p>
+    </div>
+  </div>
+
+  <div class="section-title rose"><span class="icon">🍚</span>일본의 식사 예절</div>
+  <div class="factor-grid">
+    <div class="factor-card green">
+      <h4>✅ 해야 할 것</h4>
+      <ul class="info-list green" style="margin-bottom:0;">
+        <li>밥그릇은 손에 들고 먹는다.</li>
+        <li>국그릇도 들어서 입에 대고 마신다.</li>
+        <li>면류는 젓가락으로 건져서 먹는다.</li>
+        <li>젓가락은 상 앞에 가로로 놓는다.</li>
       </ul>
-      <div class="jump-list" aria-label="일본어 문자 학습 바로가기">
-        <a class="jump-card" href="./japanese_hiragana.html">
-          <strong>ひらがな 히라가나 외우기</strong>
-          <span>새 화면으로 이동해서 히라가나 카드를 크게 봅니다.</span>
-        </a>
-        <a class="jump-card" href="./japanese_katakana.html">
-          <strong>カタカナ 가타카나 외우기</strong>
-          <span>새 화면으로 이동해서 가타카나 카드를 크게 봅니다.</span>
-        </a>
-      </div>
-    </section>
-  </main>
+    </div>
+    <div class="factor-card rose">
+      <h4>🚫 하지 말아야 할 것</h4>
+      <ul class="info-list rose" style="margin-bottom:0;">
+        <li>젓가락으로 음식을 멀리서부터 끌어와 먹지 않는다.</li>
+        <li>식기 위에 젓가락을 걸쳐 놓지 않는다.</li>
+        <li>젓가락으로 음식을 다른 사람의 젓가락에 건네지 않는다.</li>
+        <li>젓가락으로 그릇을 끌어당기지 않는다.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="warning">⚠️ 일본에는 장례식에서 <strong>젓가락으로 화장한 유골을 옮기는 풍습</strong>이 있다. 음식을 젓가락에서 젓가락으로 건네거나 찔러서 옮기는 행동은 이 모습을 떠올리게 하여, 식사 자리에서는 꺼리는 행동이다.</div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <div class="quiz-title"><span class="icon">📝</span>확인 문제</div>
+      <div class="scoreboard" id="scoreboard-3"></div>
+    </div>
+    <div class="quiz-type-bar" id="typebar-3"></div>
+    <div class="q-progress-wrap"><div class="q-progress-fill" id="progress-3"></div></div>
+    <div id="qlist-3"></div>
+  </div>
+
+</div><!-- /panel-3 -->
+
+<!-- ===== TAB 4: 회화① 길찾기 ===== -->
+<div class="tab-panel" id="panel-4">
+  <div class="unit-banner">📌 회화 · 문법 › 회화① — 빵집은 어디예요?</div>
+
+  <div class="section-title"><span class="icon">🗺️</span>본문 — 빵집을 찾아서</div>
+  <table class="ex-table">
+    <thead><tr><th>화자</th><th>일본어</th><th>한국어 해석</th></tr></thead>
+    <tbody>
+      <tr><td>ハナ</td><td>ひなたくんの うちは、ほんやの となり？</td><td>히나타 군의 집은 서점 옆이야?</td></tr>
+      <tr><td>なみ</td><td>うん、ほんやの となりじゃないよ。パンやの ちかくだよ。</td><td>아니, 서점 옆이 아니야. 빵집 근처야.</td></tr>
+      <tr><td>ハナ</td><td>パンやは どこかな？</td><td>빵집은 어디지?</td></tr>
+      <tr><td>なみ</td><td>あのう、すみません。パンやは どこですか。</td><td>저, 실례합니다. 빵집은 어디예요?</td></tr>
+      <tr><td>おまわりさん</td><td>あそこに コンビニが ありますね。</td><td>저기에 편의점이 있네요.</td></tr>
+      <tr><td>なみ</td><td>はい。</td><td>네.</td></tr>
+      <tr><td>おまわりさん</td><td>パンやは あの コンビニの となりに ありますよ。</td><td>빵집은 저 편의점 옆에 있어요.</td></tr>
+      <tr><td>なみ</td><td>あ、はい。</td><td>아, 네.</td></tr>
+      <tr><td>ハナ</td><td>ありがとうございます。</td><td>감사합니다.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-title"><span class="icon">📑</span>문법 정리 — 조사</div>
+  <div class="rule-card">
+    <div class="rule-head">① 명사 + の</div>
+    <div class="rule-body">
+      명사와 명사를 연결해 <strong>소유 · 소속 관계</strong>를 나타내며, '~의'로 해석된다.<br>
+      예) <span class="ja">ほんやの となり</span> — 서점<u>의</u> 옆
+    </div>
+  </div>
+  <div class="rule-card green">
+    <div class="rule-head">② 명사 + に</div>
+    <div class="rule-body">
+      <strong>장소</strong>를 나타내는 조사로, '~에'로 해석된다.<br>
+      예) <span class="ja">コンビニの となりに あります</span> — 편의점 옆<u>에</u> 있습니다
+    </div>
+  </div>
+  <div class="rule-card purple">
+    <div class="rule-head">③ 명사 + は</div>
+    <div class="rule-body">
+      <strong>주제</strong>를 나타내는 조사로, '~은/는'으로 해석된다. 표기는 <strong>は</strong>이지만 발음은 <strong>[wa]</strong>가 된다.<br>
+      예) <span class="ja">パンやは どこですか</span> — 빵집<u>은</u> 어디입니까
+    </div>
+  </div>
+
+  <div class="section-title"><span class="icon">✅</span>대답 표현 — 정중체 vs 보통체</div>
+  <table class="cmp-table">
+    <thead><tr><th>구분</th><th>긍정 (네)</th><th>부정 (아니요)</th></tr></thead>
+    <tbody>
+      <tr><td>정중체</td><td>はい</td><td>いいえ</td></tr>
+      <tr><td>보통체 (반말)</td><td>うん</td><td>ううん</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-title"><span class="icon">💬</span>문장을 자연스럽게 만들어 주는 표현</div>
+  <div class="factor-grid">
+    <div class="factor-card blue">
+      <h4>お + 명사</h4>
+      <p>명사 앞에 붙어 말을 <strong>정중하고 부드럽게</strong> 만들어 주는 접두어이다.<br>예) <span class="ja">おちゃ</span>(차), <span class="ja">おかし</span>(과자)</p>
+    </div>
+    <div class="factor-card purple">
+      <h4>문장 + よ</h4>
+      <p>문장 끝에 붙어, 듣는 사람에게 정보를 <strong>알려 주거나 강조</strong>하는 느낌을 더해 주는 종조사이다.<br>예) <span class="ja">ちかくだよ</span>(근처야)</p>
+    </div>
+  </div>
+
+  <div class="subsection-title">명사문의 긍정 · 부정</div>
+  <table class="cmp-table purple-th">
+    <thead><tr><th>구분</th><th>긍정형</th><th>부정형</th></tr></thead>
+    <tbody>
+      <tr><td>정중체</td><td>~です</td><td>~じゃないです<br>~じゃありません</td></tr>
+      <tr><td>보통체</td><td>~だ</td><td>~じゃない</td></tr>
+    </tbody>
+  </table>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <div class="quiz-title"><span class="icon">📝</span>확인 문제</div>
+      <div class="scoreboard" id="scoreboard-4"></div>
+    </div>
+    <div class="quiz-type-bar" id="typebar-4"></div>
+    <div class="q-progress-wrap"><div class="q-progress-fill" id="progress-4"></div></div>
+    <div id="qlist-4"></div>
+  </div>
+
+</div><!-- /panel-4 -->
+
+<!-- ===== TAB 5: 회화② 가족 방문 ===== -->
+<div class="tab-panel" id="panel-5">
+  <div class="unit-banner">📌 회화 · 문법 › 회화② — 친구네 집에 놀러 가기</div>
+
+  <div class="section-title"><span class="icon">💬</span>すみません의 여러 의미</div>
+  <div class="def-box">
+    <strong>すみません</strong>은 상황에 따라 여러 가지 의미로 쓰이는 표현이다.
+  </div>
+  <div class="factor-grid">
+    <div class="factor-card blue"><h4>① 사과</h4><p>미안합니다 / 죄송합니다 — 잘못이나 실수에 대해 사과할 때</p></div>
+    <div class="factor-card green"><h4>② 감사</h4><p>고맙습니다 — 누군가가 나를 위해 무언가를 해 주었을 때</p></div>
+    <div class="factor-card purple"><h4>③ 주의 환기</h4><p>저기요 / 실례합니다 — 모르는 사람에게 말을 걸거나 길을 물을 때</p></div>
+  </div>
+
+  <div class="section-title"><span class="icon">📦</span>존재 표현 — あります / います</div>
+  <table class="cmp-table teal-th">
+    <thead><tr><th>분류</th><th>정중체 (긍정 / 부정)</th><th>보통체 (긍정 / 부정)</th></tr></thead>
+    <tbody>
+      <tr><td>사물 · 식물</td><td>あります / ありません</td><td>ある / ない</td></tr>
+      <tr><td>사람 · 동물</td><td>います / いません</td><td>いる / いない</td></tr>
+    </tbody>
+  </table>
+  <div class="tip">💡 물건 · 식물처럼 <strong>스스로 움직이지 않는 것</strong>은 あります(ある), 사람 · 동물처럼 <strong>스스로 움직이는 것</strong>은 います(いる)를 쓴다.</div>
+
+  <div class="section-title"><span class="icon">👨‍👩‍👧</span>본문 — 친구네 집에 놀러 가기</div>
+  <table class="ex-table">
+    <thead><tr><th>화자</th><th>일본어</th><th>한국어 해석</th></tr></thead>
+    <tbody>
+      <tr><td>ハナ・なみ</td><td>こんにちは。</td><td>안녕하세요.</td></tr>
+      <tr><td>ひなた</td><td>ハナさん、ぼくの ちちと ははです。</td><td>하나 씨, 저희 아빠와 엄마예요.</td></tr>
+      <tr><td>おとうさん</td><td>いらっしゃい。</td><td>어서 와요.</td></tr>
+      <tr><td>おかあさん</td><td>どうぞ、あがって。</td><td>자, 들어와요.</td></tr>
+      <tr><td>ハナ・なみ</td><td>おじゃまします。</td><td>실례합니다.</td></tr>
+      <tr><td>ハナ</td><td>あのう、これ、かんこくの おかしです。</td><td>저, 이거 한국 과자예요.</td></tr>
+      <tr><td>おかあさん</td><td>あら、ありがとう。</td><td>어머, 고마워.</td></tr>
+      <tr><td>おかあさん</td><td>きょうの おひるごはんは カツどんよ。さあ、どうぞ。</td><td>오늘 점심은 가츠동이야. 자, 어서 먹어.</td></tr>
+      <tr><td>ハナ・なみ</td><td>いただきます。</td><td>잘 먹겠습니다.</td></tr>
+      <tr><td>ひなた</td><td>いただきます。</td><td>잘 먹겠습니다.</td></tr>
+      <tr><td>ハナ</td><td>おいしい！</td><td>맛있다!</td></tr>
+      <tr><td>다같이</td><td>ごちそうさまでした。</td><td>잘 먹었습니다.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-title"><span class="icon">🗣️</span>인사 · 식사 표현 모음</div>
+  <div class="factor-card gray">
+    <p>
+      <span class="badge badge-blue">いらっしゃい</span> 어서 오세요　
+      <span class="badge badge-blue">どうぞ、あがって</span> 자, 들어오세요　
+      <span class="badge badge-green">おじゃまします</span> 실례합니다　
+      <span class="badge badge-orange">いただきます</span> 잘 먹겠습니다　
+      <span class="badge badge-orange">ごちそうさまでした</span> 잘 먹었습니다　
+      <span class="badge badge-purple">あら</span> 어머　
+      <span class="badge badge-rose">おいしい</span> 맛있다
+    </p>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <div class="quiz-title"><span class="icon">📝</span>확인 문제</div>
+      <div class="scoreboard" id="scoreboard-5"></div>
+    </div>
+    <div class="quiz-type-bar" id="typebar-5"></div>
+    <div class="q-progress-wrap"><div class="q-progress-fill" id="progress-5"></div></div>
+    <div id="qlist-5"></div>
+  </div>
+
+</div><!-- /panel-5 -->
+
+</div><!-- /content-wrap -->
+<button class="totop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+function switchTab(idx) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+  document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ============================================================
+   QUIZ ENGINE
+   ============================================================ */
+const TYPE_CONFIG = [
+  { key:'ox',   label:'OX 퀴즈', icon:'⭕', diff:'기초',   diffCls:'diff-basic' },
+  { key:'mc',   label:'객관식',  icon:'📋', diff:'중급',   diffCls:'diff-mid' },
+  { key:'hard', label:'고난도',  icon:'🔥', diff:'고난도', diffCls:'diff-hard' },
+];
+
+const QUIZ_DATA = {
+
+/* ===================== TAB 0 : 가타카나 ===================== */
+0: {
+  ox: [
+    { q:`가타카나는 한자의 일부분을 떼어 만든 문자이다.`, a:true,
+      exp:`가타카나는 한자 글자의 일부 획을 떼어내어 만들어진 문자이다.` },
+    { q:`가타카나는 일본의 고유어를 표기할 때 주로 사용한다.`, a:false,
+      exp:`가타카나는 주로 외래어, 의성어·의태어, 강조하는 말을 표기할 때 쓰며, 고유어는 보통 히라가나나 한자로 쓴다.` },
+    { q:`ピーポーピーポー(삐뽀삐뽀)는 모습이나 느낌을 나타내는 의태어이다.`, a:false,
+      exp:`ピーポーピーポー는 사이렌 소리를 흉내 낸 의성어이다. 모습·느낌을 나타내는 말은 의태어이다.` },
+    { q:`ドキドキ(두근두근)는 심장이 뛰는 느낌을 나타내는 의태어이다.`, a:true,
+      exp:`맞다. 모습이나 느낌을 흉내 낸 말은 의태어이며, 가타카나로 표기한다.` },
+    { q:`カステラ(카스텔라)는 포르투갈에서 전해진 외래어이다.`, a:true,
+      exp:`카스텔라는 포르투갈에서 전해진 일본식 스펀지케이크로, 외래어를 가타카나로 표기한 예이다.` },
+    { q:`仁(인)이라는 한자에서 가타카나 ロ가 만들어졌다.`, a:false,
+      exp:`仁(인)에서 만들어진 가타카나는 ニ이다. ロ는 呂(려)에서 만들어졌다.` },
+    { q:`オアシス(오아시스)는 본래 안전 운전을 위한 인사말 표현에서 유래한 말이다.`, a:true,
+      exp:`맞다. 오아시스는 안전 운전을 위해 정한 배려의 인사말 표현의 앞글자를 딴 조어에서 유래했으며, 강조하는 말로도 쓰인다.` },
+    { q:`가타카나로 쓰인 단어는 모두 일본에서 만들어진 순수 일본어이다.`, a:false,
+      exp:`가타카나는 외래어 표기에도 쓰이므로, 외국에서 들어온 단어인 경우가 많다.` },
+  ],
+  mc: [
+    { q:`다음 중 한자 '多'에서 만들어진 가타카나는?`, opts:[`カ`,`タ`,`ニ`,`リ`], a:1,
+      exp:`多(다)의 윗부분을 떼어내면 タ가 된다.` },
+    { q:`다음 중 의성어의 예로 가장 적절한 것은?`, opts:[`ドキドキ`,`ピーポーピーポー`,`カステラ`,`オアシス`], a:1,
+      exp:`ピーポーピーポー(삐뽀삐뽀)는 사이렌 소리를 흉내 낸 의성어이다. ドキドキ는 의태어, カステラ는 외래어, オアシス는 강조하는 말이다.` },
+    { q:`가타카나가 주로 사용되는 경우로 적절하지 않은 것은?`, opts:[`외래어`,`의성어·의태어`,`강조하는 말`,`일상적인 고유어`], a:3,
+      exp:`일상적인 고유어는 보통 히라가나나 한자로 표기하며, 가타카나는 외래어·의성어·의태어·강조하는 말에 주로 쓰인다.` },
+    { q:`한자 '江'의 일부를 떼어 만든 가타카나는?`, opts:[`エ`,`リ`,`ロ`,`タ`], a:0,
+      exp:`江(강)의 오른쪽 부분을 떼어내면 エ가 된다.` },
+    { q:`ドキドキ가 나타내는 것으로 가장 적절한 것은?`, opts:[`사이렌 소리`,`심장이 뛰는 느낌`,`과자의 이름`,`안전 운전 인사말`], a:1,
+      exp:`ドキドキ는 심장이 두근거리는 느낌(모습·상태)을 나타내는 의태어이다.` },
+    { q:`다음 중 외래어를 가타카나로 표기한 예로 적절한 것은?`, opts:[`カステラ`,`ドキドキ`,`ピーポーピーポー`,`オアシス`], a:0,
+      exp:`カステラ(카스텔라)는 포르투갈에서 전해진 단어를 가타카나로 표기한 외래어이다.` },
+    { q:`가타카나와 히라가나의 차이를 가장 바르게 설명한 것은?`, opts:[`가타카나는 한자를 흘려 써서 만든 문자이다`,`가타카나는 한자의 일부분을 떼어 만든 문자이다`,`히라가나는 외래어를 표기할 때만 쓰인다`,`가타카나는 받아쓰기 전용 문자이다`], a:1,
+      exp:`가타카나는 한자 글자의 일부를 떼어 만든 문자이다. (히라가나는 한자를 흘려 쓴 모양에서 유래했다.)` },
+    { q:`オアシス가 가타카나로 표기되어 갖게 된 의미로 가장 적절한 것은?`, opts:[`사람 이름을 나타내는 말`,`어떤 말을 강조하는 느낌의 말`,`음식의 이름`,`장소를 나타내는 말`], a:1,
+      exp:`オアシス는 원래 안전 운전 인사말 표현의 머리글자를 딴 말이었으나, 가타카나로 표기되어 강조하는 말의 느낌으로도 쓰인다.` },
+  ],
+  hard: [
+    { q:`다음 설명 중 옳은 것을 모두 고른 것은?<br><br>(가) 가타카나는 한자의 일부분을 떼어 만들어졌다.<br>(나) 가타카나는 고유어를 표기할 때 주로 사용한다.<br>(다) 의성어와 의태어는 모두 가타카나로 표기될 수 있다.<br>(라) ドキドキ는 사이렌 소리를 흉내 낸 의성어이다.`,
+      opts:[`(가), (다)`,`(나), (라)`,`(가), (나), (라)`,`(나), (다), (라)`], a:0,
+      exp:`(가)와 (다)만 옳다. 가타카나는 고유어가 아닌 외래어·의성어·의태어·강조어에 주로 쓰이며(나는 틀림), ドキドキ는 의태어이다(라는 틀림).` },
+    { q:`다음 설명 중 옳은 것을 모두 고른 것은?<br><br>(가) カステラ는 외래어를 가타카나로 표기한 예이다.<br>(나) オアシス는 원래 안전 운전 관련 인사말 표현에서 유래했다.<br>(다) 加(가)에서 만들어진 가타카나는 タ이다.<br>(라) 利(리)에서 만들어진 가타카나는 ロ이다.`,
+      opts:[`(다), (라)`,`(가), (나)`,`(가), (다)`,`(나), (라)`], a:1,
+      exp:`(가)와 (나)가 옳다. 加에서 만들어진 가타카나는 カ이다(다는 틀림), 利에서 만들어진 가타카나는 リ이다(라는 틀림).` },
+    { q:`다음 설명 중 옳은 것을 모두 고른 것은?<br><br>(가) ピーポーピーポー는 의태어이다.<br>(나) 가타카나는 한자를 흘려 써서 만든 문자이다.<br>(다) 강조하고 싶은 말도 가타카나로 표기할 수 있다.<br>(라) 仁(인)에서 만들어진 가타카나는 ニ이다.`,
+      opts:[`(가), (나)`,`(가), (다)`,`(다), (라)`,`(나), (라)`], a:2,
+      exp:`(다)와 (라)가 옳다. ピーポーピーポー는 의성어이다(가는 틀림), 가타카나는 한자의 일부를 떼어 만든 문자이다(나는 틀림, 한자를 흘려 쓴 것은 히라가나).` },
+    { q:`다음 설명 중 옳은 것을 모두 고른 것은?<br><br>(가) ドキドキ는 가타카나로 표기되는 의태어이다.<br>(나) 呂(려)에서 만들어진 가타카나는 ロ이다.<br>(다) オアシス는 음식의 이름을 나타내는 말이다.<br>(라) 가타카나는 외래어, 의성어·의태어, 강조하는 말 등에 쓰인다.`,
+      opts:[`(가), (다)`,`(나), (다)`,`(다), (라)`,`(가), (나), (라)`], a:3,
+      exp:`(가),(나),(라)는 모두 옳다. オアシス는 강조하는 말로 쓰이는 표현이며 음식 이름이 아니다(다는 틀림).` },
+  ],
+},
+
+/* ===================== TAB 1 : 장소·위치·가족 어휘 ===================== */
+1: {
+  ox: [
+    { q:`コンビニ는 '편의점'을 의미한다.`, a:true, exp:`맞다. コンビニ(컨비니)는 '편의점'을 의미한다.` },
+    { q:`パンや의 'や'는 '~사람'이라는 뜻이다.`, a:false,
+      exp:`명사+や(屋)는 '~가게'라는 뜻이다. パンや는 '빵집'을 의미한다.` },
+    { q:`となり는 같은 종류의 것이 바로 옆에 있을 때 주로 쓰는 말이다.`, a:true,
+      exp:`맞다. となり는 같은 종류의 것이 바로 옆에 줄지어 있을 때 주로 쓴다.` },
+    { q:`そば는 바로 옆에 붙어 있는 것만을 가리키는 말이다.`, a:false,
+      exp:`そば는 종류와 관계없이 '가까운 곳·주변'을 나타내는 말이다.` },
+    { q:`うしろ는 '뒤'를 의미한다.`, a:true, exp:`맞다. うしろ(後ろ)는 '뒤'를 의미한다.` },
+    { q:`남에게 자신의 아버지를 말할 때는 'おとうさん'이라고 한다.`, a:false,
+      exp:`남에게 자신의 가족을 말할 때는 낮추는 말 'ちち'를 쓰고, 'おとうさん'은 남의 아버지를 가리키거나 직접 부를 때 쓰는 높임말이다.` },
+    { q:`こうばん은 '파출소'를 의미한다.`, a:true, exp:`맞다. こうばん(交番)은 '파출소'를 의미한다.` },
+    { q:`동생을 직접 부를 때는 보통 이름으로 부른다.`, a:true,
+      exp:`맞다. おとうと(남동생)·いもうと(여동생)는 직접 부를 때 보통 이름으로 부른다.` },
+  ],
+  mc: [
+    { q:`다음 중 '도서관'을 의미하는 일본어는?`, opts:[`としょかん`,`びょういん`,`ゆうびんきょく`,`えいがかん`], a:0,
+      exp:`としょかん(図書館)이 '도서관'을 의미한다.` },
+    { q:`'パンや'의 의미로 가장 적절한 것은?`, opts:[`빵을 만드는 사람`,`빵집`,`빵을 먹는 곳`,`빵의 종류`], a:1,
+      exp:`명사+や(屋)는 '~가게'라는 뜻이므로 パン(빵)+や → 빵집이다.` },
+    { q:`위치를 나타내는 말 중 '안 · 속'을 의미하는 것은?`, opts:[`うえ`,`なか`,`そば`,`した`], a:1,
+      exp:`なか(中)는 '안·속'을 의미한다.` },
+    { q:`다음 중 남의 아버지를 가리키거나 직접 부를 때 쓰는 말은?`, opts:[`ちち`,`はは`,`おとうさん`,`あに`], a:2,
+      exp:`おとうさん은 남의 아버지를 가리키거나 직접 부를 때 쓰는 높임말이다.` },
+    { q:`'おねえさん'이 가리키는 대상으로 가장 적절한 것은?`, opts:[`남의 남동생`,`남의 여동생`,`남의 언니·누나`,`남의 오빠·형`], a:2,
+      exp:`おねえさん은 남의 언니·누나를 가리키거나 직접 부를 때 쓰는 높임말이다.` },
+    { q:`다음 중 '병원'을 의미하는 일본어는?`, opts:[`びょういん`,`こうばん`,`こうえん`,`としょかん`], a:0,
+      exp:`びょういん(病院)이 '병원'을 의미한다.` },
+    { q:`となり와 そば의 차이를 가장 바르게 설명한 것은?`, opts:[`となり는 주변 전체를, そば는 바로 옆만 가리킨다`,`となり는 같은 종류가 바로 옆에 있을 때, そば는 종류와 관계없이 가까운 곳을 가리킨다`,`두 단어는 의미가 완전히 같다`,`となり는 사람에게만, そば는 사물에게만 쓴다`], a:1,
+      exp:`となり는 같은 종류의 것이 바로 옆에 있을 때, そば는 종류와 관계없이 가까운 곳·주변을 가리킬 때 쓴다.` },
+    { q:`내 가족 중 '여동생'을 낮추어 말할 때 쓰는 말은?`, opts:[`いもうと`,`いもうとさん`,`おとうと`,`あね`], a:0,
+      exp:`いもうと는 내 여동생을 남에게 말할 때 쓰는 낮춤말이다.` },
+  ],
+  hard: [
+    { q:`다음 설명 중 옳은 것을 모두 고른 것은?<br><br>(가) パンや는 '빵집'을 의미한다.<br>(나) こうばん은 '도서관'을 의미한다.<br>(다) みぎ는 '오른쪽'을 의미한다.<br>(라) おとうとさん은 내 남동생을 남에게 말할 때 쓰는 낮춤말이다.`,
+      opts:[`(가), (다)`,`(나), (라)`,`(가), (나)`,`(다), (라)`], a:0,
+      exp:`(가)와 (다)가 옳다. こうばん은 '파출소'를 의미하며(나는 틀림), おとうとさん은 남의 남동생을 가리키거나 직접 부를 때 쓰는 높임말이다(라는 틀림).` },
+    { q:`다음 설명 중 옳은 것을 모두 고른 것은?<br><br>(가) としょかん은 '도서관'이다.<br>(나) コンビニ는 '편의점'이다.<br>(다) うしろ는 '앞'을 의미한다.<br>(라) あね는 남의 누나·언니를 가리키는 말이다.`,
+      opts:[`(다), (라)`,`(가), (나)`,`(가), (다)`,`(나), (라)`], a:1,
+      exp:`(가),(나)가 옳다. うしろ는 '뒤'를 의미하며(다는 틀림), あね는 내 언니·누나를 낮춰 부르는 말이다(라는 틀림, 남의 언니·누나는 おねえさん).` },
+    { q:`다음 설명 중 옳은 것을 모두 고른 것은?<br><br>(가) ひだり는 '오른쪽'을 의미한다.<br>(나) 명사+や는 항상 '~사람'이라는 뜻이 된다.<br>(다) 동생을 직접 부를 때는 보통 이름을 부른다.<br>(라) えいがかん은 '영화관'을 의미한다.`,
+      opts:[`(가), (나)`,`(가), (다)`,`(다), (라)`,`(나), (라)`], a:2,
+      exp:`(다),(라)가 옳다. ひだり는 '왼쪽'을 의미하며(가는 틀림), 명사+や는 '~가게'를 뜻한다(나는 틀림).` },
+    { q:`다음 설명 중 옳은 것을 모두 고른 것은?<br><br>(가) なか는 '안·속'을 의미한다.<br>(나) まえ는 '앞'을 의미한다.<br>(다) おかあさん은 남의 어머니를 가리키거나 직접 부를 때 쓰는 말이다.<br>(라) ゆうびんきょく는 '영화관'을 의미한다.`,
+      opts:[`(가), (라)`,`(나), (라)`,`(다), (라)`,`(가), (나), (다)`], a:3,
+      exp:`(가),(나),(다)는 모두 옳다. ゆうびんきょく는 '우체국'을 의미하므로 (라)는 틀렸다.` },
+  ],
+},
+
+/* ===================== TAB 2 : 면류·생선·고기 ===================== */
+2: {
+  ox: [
+    { q:`일본 고유의 요리를 '와쇼쿠(和食)'라고 한다.`, a:true, exp:`맞다. 일본 고유의 요리를 와쇼쿠(和食, 화식)라고 부른다.` },
+    { q:`일본 요리는 맛만 중요하게 여기고 그릇과의 조화는 신경 쓰지 않는다.`, a:false,
+      exp:`일본 요리는 미각뿐 아니라 시각도 고려해 음식과 그릇의 조화를 중요하게 여긴다.` },
+    { q:`そば는 메밀로 만든 국수이다.`, a:true, exp:`맞다. そば(소바)는 메밀로 만든 국수이다.` },
+    { q:`年越しそば는 이사할 때 먹는 풍습 음식이다.`, a:false,
+      exp:`이사할 때 먹는 풍습 음식은 引っ越しそば이며, 年越しそば는 한 해를 마무리할 때 먹는다.` },
+    { q:`きつねうどん이라는 이름은 여우가 유부를 좋아한다는 속설에서 유래했다.`, a:true,
+      exp:`맞다. きつね(여우)가 유부를 좋아한다는 속설에서 이름이 유래했다.` },
+    { q:`たぬきうどん에는 실제로 너구리 고기가 들어간다.`, a:false,
+      exp:`たぬきうどん은 튀김 부스러기를 얹은 우동으로, 이름에 너구리(たぬき)가 들어가지만 실제 너구리와는 관련이 없다.` },
+    { q:`さしみ는 어패류를 날것 그대로 간장과 와사비에 찍어 먹는 생식 요리이다.`, a:true,
+      exp:`맞다. さしみ(사시미)는 신선한 어패류를 날것 그대로 간장과 와사비에 찍어 먹는 생식 요리이다.` },
+    { q:`すし와 さしみ는 둘 다 식초로 양념한 밥과 함께 먹는다.`, a:false,
+      exp:`すし는 식초로 양념한 밥과 함께 먹지만, さしみ는 밥 없이 어패류만 먹는다.` },
+  ],
+  mc: [
+    { q:`일본 고유의 요리를 가리키는 말은?`, opts:[`라멘`,`와쇼쿠`,`스시`,`돈부리`], a:1,
+      exp:`일본 고유의 요리를 와쇼쿠(和食)라고 부른다.` },
+    { q:`そうめん과 관련된 여름 풍습으로 유명한 것은?`, opts:[`年越しそば`,`引っ越しそば`,`流しそうめん`,`おにぎり`], a:2,
+      exp:`流しそうめん(나가시소멘)은 여름에 즐기는 풍습으로 유명하다.` },
+    { q:`규동, 가츠동, 텐동처럼 밥 위에 재료를 얹는 일본식 덮밥을 가리키는 말은?`, opts:[`どんぶり`,`しゃぶしゃぶ`,`さしみ`,`すし`], a:0,
+      exp:`どんぶり(돈부리)는 밥 위에 올라가는 재료에 따라 이름이 달라지는 일본식 덮밥이다.` },
+    { q:`しゃぶしゃぶ에 대한 설명으로 가장 적절한 것은?`, opts:[`날생선을 간장에 찍어 먹는 요리`,`끓는 국물에 얇은 고기·채소를 데쳐 양념장에 찍어 먹는 전골 요리`,`식초로 양념한 밥에 생선을 얹은 요리`,`메밀로 만든 국수`], a:1,
+      exp:`しゃぶしゃぶ는 끓는 국물에 얇게 썬 고기와 채소 등을 데쳐 양념장에 찍어 먹는 전골 요리이다.` },
+    { q:`きつねうどん의 'きつね(여우)'라는 이름이 붙은 이유로 가장 적절한 것은?`, opts:[`여우 모양으로 만들기 때문`,`여우가 유부를 좋아한다는 속설 때문`,`여우가 자주 출몰하는 지역의 음식이기 때문`,`여우 고기를 사용하기 때문`], a:1,
+      exp:`여우가 유부를 좋아한다는 속설에서 이름이 유래했다.` },
+    { q:`すし에 대한 설명으로 가장 적절한 것은?`, opts:[`메밀로 만든 면 요리`,`식초로 양념한 밥 위에 어패류 등을 얹은 요리`,`끓는 국물에 고기를 데쳐 먹는 요리`,`튀김 부스러기를 얹은 우동`], a:1,
+      exp:`すし는 식초로 양념한 밥(스시밥) 위에 제철 어패류 등을 얹어 만든 요리이다.` },
+    { q:`다음 중 '생식(날것)' 요리에 해당하는 것은?`, opts:[`すき焼き`,`ラーメン`,`さしみ`,`とんかつ`], a:2,
+      exp:`さしみ는 어패류를 날것 그대로 먹는 생식 요리이다.` },
+    { q:`たぬきうどん에 얹는 재료로 가장 적절한 것은?`, opts:[`유부`,`튀김 부스러기`,`날달걀`,`채 썬 고기`], a:1,
+      exp:`たぬきうどん은 튀김 부스러기(튀김 가루)를 얹은 우동이다.` },
+  ],
+  hard: [
+    { q:`다음 설명 중 옳은 것을 모두 고른 것은?<br><br>(가) 일본 고유의 요리를 와쇼쿠(和食)라고 한다.<br>(나) そば는 쌀로 만든 면이다.<br>(다) すし는 식초로 양념한 밥을 사용한다.<br>(라) どんぶり는 항상 같은 이름의 요리이다.`,
+      opts:[`(가), (다)`,`(나), (라)`,`(가), (나)`,`(다), (라)`], a:0,
+      exp:`(가),(다)가 옳다. そば는 메밀로 만든 면이며(나는 틀림), どんぶり는 올라가는 재료에 따라 이름이 달라진다(라는 틀림).` },
+    { q:`다음 설명 중 옳은 것을 모두 고른 것은?<br><br>(가) 引っ越しそば는 이사할 때 먹는 음식이다.<br>(나) 流しそうめん은 여름철 풍습 음식이다.<br>(다) きつねうどん은 너구리 고기를 사용한 우동이다.<br>(라) さしみ는 식초로 양념한 밥과 함께 먹는 요리이다.`,
+      opts:[`(다), (라)`,`(가), (나)`,`(가), (다)`,`(나), (라)`], a:1,
+      exp:`(가),(나)가 옳다. きつねうどん은 유부를 얹은 우동이며(다는 틀림), さしみ는 밥 없이 어패류만 먹는 요리이다(라는 틀림).` },
+    { q:`다음 설명 중 옳은 것을 모두 고른 것은?<br><br>(가) しゃぶしゃぶ는 날생선을 그대로 먹는 요리이다.<br>(나) たぬきうどん은 너구리 고기를 사용한다.<br>(다) すし는 제철 어패류를 식초로 양념한 밥 위에 얹어 만든다.<br>(라) そうめん은 우리나라의 소면과 비슷한 가는 면이다.`,
+      opts:[`(가), (나)`,`(가), (다)`,`(다), (라)`,`(나), (라)`], a:2,
+      exp:`(다),(라)가 옳다. しゃぶしゃぶ는 끓는 국물에 데쳐 먹는 전골 요리이며(가는 틀림), たぬきうどん은 튀김 부스러기를 얹은 우동으로 너구리와 관련이 없다(나는 틀림).` },
+    { q:`다음 설명 중 옳은 것을 모두 고른 것은?<br><br>(가) 일본 요리는 미각과 시각을 모두 고려해 그릇과의 조화를 중요하게 여긴다.<br>(나) どんぶり는 밥 위에 올리는 재료에 따라 이름이 달라진다.<br>(다) きつねうどん은 유부를 얹은 우동이다.<br>(라) すき焼き는 면류에 속한다.`,
+      opts:[`(가), (라)`,`(나), (라)`,`(다), (라)`,`(가), (나), (다)`], a:3,
+      exp:`(가),(나),(다)는 모두 옳다. すき焼き는 면류가 아니라 야키류(구이 요리)에 속한다(라는 틀림).` },
+  ],
+},
+
+/* ===================== TAB 3 : 야키·외래음식·식사예절 ===================== */
+3: {
+  ox: [
+    { q:`お好み焼き는 관서(오사카) 지방의 부침개와 비슷한 음식이다.`, a:true,
+      exp:`맞다. お好み焼き는 양배추·면·밀가루 등을 반죽해 부쳐 먹는, 관서 지방의 부침개와 비슷한 음식이다.` },
+    { q:`たこ焼き는 오징어를 넣어 만든다.`, a:false, exp:`たこ焼き는 문어(たこ)를 넣어 만든다.` },
+    { q:`すき焼き는 날달걀에 찍어 먹는다.`, a:true, exp:`맞다. すき焼き는 끓인 재료를 날달걀에 찍어 먹는다.` },
+    { q:`たい焼き는 생선을 구운 요리이다.`, a:false,
+      exp:`たい焼き는 붕어빵과 비슷한 모양의 빵으로, 안에 팥소가 들어 있다(생선 요리가 아니다).` },
+    { q:`ラーメン은 일본식 중화 요리이며 일본의 대표적인 국민 음식 중 하나로 여겨진다.`, a:true,
+      exp:`맞다. ラーメン은 일본식 중화 요리로, 일본의 국민 음식 중 하나로 여겨진다.` },
+    { q:`とんかつ는 일본에서 처음부터 존재했던 순수 일본 전통 음식이다.`, a:false,
+      exp:`とんかつ는 서양의 포크커틀릿이 일본화된 음식이다.` },
+    { q:`일본에서는 식사할 때 밥그릇과 국그릇을 손에 들고 먹는다.`, a:true,
+      exp:`맞다. 일본에서는 밥그릇과 국그릇을 손에 들고 먹는 것이 식사 예절이다.` },
+    { q:`일본에서는 음식을 젓가락으로 다른 사람의 젓가락에 건네주는 것이 예의이다.`, a:false,
+      exp:`젓가락으로 음식을 건네는 행동은 장례식에서 유골을 옮기는 모습과 비슷하여 식사 자리에서는 꺼리는 행동이다.` },
+  ],
+  mc: [
+    { q:`お好み焼き에 얹어 먹는 것으로 적절하지 않은 것은?`, opts:[`가쓰오부시`,`소스`,`마요네즈`,`생크림`], a:3,
+      exp:`お好み焼き에는 가쓰오부시, 소스, 마요네즈 등을 얹어 먹으며 생크림은 사용하지 않는다.` },
+    { q:`카레(カレー)의 유래로 가장 적절한 것은?`, opts:[`프랑스의 크로켓에서 유래`,`인도의 커리를 일본식으로 만든 음식`,`포르투갈의 카스텔라에서 유래`,`중국의 라멘에서 유래`], a:1,
+      exp:`카레는 인도의 '커리'를 일본식으로 만든 음식이다.` },
+    { q:`とんかつ의 이름이 만들어진 방식으로 가장 적절한 것은?`, opts:[`돼지(豚)+커틀릿(カツ)`,`닭(鳥)+커틀릿`,`소(牛)+카레`,`돈(돈)+카스텔라`], a:0,
+      exp:`とんかつ는 돼지를 뜻하는 '豚(돈)'과 '커틀릿(カツ)'이 합쳐진 말이다.` },
+    { q:`다음 중 프랑스어 '오믈렛'과 영어 '라이스'가 합쳐진 음식은?`, opts:[`カレー`,`オムライス`,`コロッケ`,`カステラ`], a:1,
+      exp:`オムライス는 프랑스어 オムレツ(오믈렛)와 영어 ライス(라이스)가 합쳐진 말이다.` },
+    { q:`일본의 식사 예절로 적절하지 않은 것은?`, opts:[`밥그릇을 들고 먹는다`,`면류를 젓가락으로 건져 먹는다`,`식기 위에 젓가락을 걸쳐 놓는다`,`젓가락을 상 앞에 가로로 놓는다`], a:2,
+      exp:`식기 위에 젓가락을 걸쳐 놓는 것은 하지 말아야 할 행동이다.` },
+    { q:`일본에서 식사 중 젓가락으로 음식을 옮기는 행동을 꺼리는 이유로 가장 적절한 것은?`, opts:[`젓가락이 더러워지기 때문`,`장례식에서 유골을 옮기는 모습과 비슷하기 때문`,`음식이 차가워지기 때문`,`예전부터 금지된 법이 있기 때문`], a:1,
+      exp:`일본에는 장례식에서 젓가락으로 유골을 옮기는 풍습이 있어, 음식을 젓가락으로 옮기는 행동은 그 모습을 떠올리게 하여 꺼린다.` },
+    { q:`たい焼き에 들어가는 속 재료로 가장 적절한 것은?`, opts:[`팥소`,`치즈`,`문어`,`유부`], a:0,
+      exp:`たい焼き 안에는 팥소 등이 들어 있다.` },
+    { q:`すき焼き에 대한 설명으로 가장 적절한 것은?`, opts:[`밀가루 반죽에 문어를 넣어 구운 요리`,`전용 냄비에 소고기와 채소 등을 끓여 날달걀에 찍어 먹는 요리`,`식초로 양념한 밥에 생선을 얹은 요리`,`끓는 국물에 얇은 고기를 데쳐 양념장에 찍어 먹는 요리`], a:1,
+      exp:`すき焼き는 전용 냄비에 얇게 썬 소고기와 채소, 실곤약, 두부 등을 끓인 뒤 날달걀에 찍어 먹는 요리이다.` },
+  ],
+  hard: [
+    { q:`다음 설명 중 옳은 것을 모두 고른 것은?<br><br>(가) お好み焼き는 양배추, 면, 밀가루 등을 반죽해 부쳐 먹는 음식이다.<br>(나) たこ焼き에는 문어가 들어간다.<br>(다) コロッケ는 인도의 커리에서 유래했다.<br>(라) 일본의 식사 예절상 식기 위에 젓가락을 얹어 놓아도 된다.`,
+      opts:[`(가), (나)`,`(다), (라)`,`(가), (다)`,`(나), (라)`], a:0,
+      exp:`(가),(나)가 옳다. コロッケ는 프랑스어 croquette에서 유래했으며(다는 틀림), 식기 위에 젓가락을 얹는 것은 예의에 맞지 않는다(라는 틀림).` },
+    { q:`다음 설명 중 옳은 것을 모두 고른 것은?<br><br>(가) とんかつ는 서양의 포크커틀릿이 일본화된 음식이다.<br>(나) オムライス는 '오믈렛'과 '라이스'가 합쳐진 말이다.<br>(다) たい焼き는 생선을 구워서 만든 요리이다.<br>(라) ラーメン은 일본에서 만들어지지 않은 음식이라 일본 음식으로 보지 않는다.`,
+      opts:[`(다), (라)`,`(가), (나)`,`(가), (다)`,`(나), (라)`], a:1,
+      exp:`(가),(나)가 옳다. たい焼き는 빵 안에 팥소가 들어간 음식이며(다는 틀림), ラーメン은 일본의 대표적인 국민 음식 중 하나로 여겨진다(라는 틀림).` },
+    { q:`다음 설명 중 옳은 것을 모두 고른 것은?<br><br>(가) すき焼き는 면을 볶아 만든 요리이다.<br>(나) 카레는 프랑스에서 유래한 음식이다.<br>(다) 일본에서는 국그릇을 들어서 입에 대고 마신다.<br>(라) たこ焼き는 동그랗게 구워 가쓰오부시와 소스를 뿌려 먹는다.`,
+      opts:[`(가), (나)`,`(가), (다)`,`(다), (라)`,`(나), (라)`], a:2,
+      exp:`(다),(라)가 옳다. すき焼き는 끓이는 요리이며(가는 틀림), 카레는 인도의 커리에서 유래했다(나는 틀림).` },
+    { q:`다음 설명 중 옳은 것을 모두 고른 것은?<br><br>(가) お好み焼き는 관서지방의 부침개와 비슷하다.<br>(나) コロッケ는 프랑스어 croquette에서 유래했다.<br>(다) 일본의 식사 예절상 젓가락은 상 앞에 가로로 놓는다.<br>(라) やきそば는 끓는 국물에 면을 넣어 먹는 요리이다.`,
+      opts:[`(가), (라)`,`(나), (라)`,`(다), (라)`,`(가), (나), (다)`], a:3,
+      exp:`(가),(나),(다)는 모두 옳다. やきそば는 국물 요리가 아니라 볶음면이다(라는 틀림).` },
+  ],
+},
+
+/* ===================== TAB 4 : 회화① 길찾기 + 조사 문법 ===================== */
+4: {
+  ox: [
+    { q:`명사+の는 '~의'로 해석되며 소유·소속 관계를 나타낸다.`, a:true,
+      exp:`맞다. 명사+の는 명사와 명사를 연결해 소유·소속 관계를 나타내며 '~의'로 해석된다.` },
+    { q:`본문에서 정리한 조사 'に'는 장소를 나타내며 '~에'로 해석된다.`, a:true,
+      exp:`맞다. 명사+に는 장소를 나타내는 조사로 '~에'로 해석된다.` },
+    { q:`조사 'は'는 항상 [ha]로 발음한다.`, a:false,
+      exp:`は는 표기는 'は'이지만 조사로 쓰일 때 발음은 [wa]가 된다.` },
+    { q:`'パンやは どこですか'에서 'は'는 '~은/는'으로 해석된다.`, a:true,
+      exp:`맞다. は는 주제를 나타내는 조사로 '~은/는'으로 해석된다.` },
+    { q:`정중체의 부정 대답은 'ううん'이다.`, a:false,
+      exp:`정중체의 부정 대답은 いいえ이며, ううん은 보통체(반말)의 부정 대답이다.` },
+    { q:`'お'는 명사 앞에 붙어 말을 정중하고 부드럽게 만들어 주는 접두어이다.`, a:true,
+      exp:`맞다. お + 명사는 말을 정중하고 부드럽게 만들어 준다. 예) おちゃ, おかし` },
+    { q:`종조사 'よ'는 문장 앞에 붙는다.`, a:false,
+      exp:`よ는 문장 끝에 붙어 정보를 알려주거나 강조하는 느낌을 더해주는 종조사이다.` },
+    { q:`명사문 보통체의 부정형은 '~じゃない'이다.`, a:true,
+      exp:`맞다. 명사문 보통체의 부정형은 ~じゃない이다.` },
+  ],
+  mc: [
+    { q:`'ほんやの となり'에서 'の'의 의미로 가장 적절한 것은?`, opts:[`~은/는`,`~의`,`~에`,`~도`], a:1,
+      exp:`の는 명사와 명사를 연결해 '~의'로 해석된다.` },
+    { q:`'コンビニの となりに あります'에서 'に'가 나타내는 것은?`, opts:[`시간`,`장소`,`이유`,`방법`], a:1,
+      exp:`に는 장소를 나타내는 조사로 '~에'로 해석된다.` },
+    { q:`'パンやは どこですか'에서 'は'의 발음으로 옳은 것은?`, opts:[`[ha]`,`[he]`,`[wa]`,`[wo]`], a:2,
+      exp:`조사 は는 표기와 다르게 [wa]로 발음한다.` },
+    { q:`정중체로 긍정 대답을 할 때 쓰는 말은?`, opts:[`うん`,`ううん`,`はい`,`いいえ`], a:2,
+      exp:`정중체의 긍정 대답은 はい이다.` },
+    { q:`보통체(반말)로 부정 대답을 할 때 쓰는 말은?`, opts:[`はい`,`いいえ`,`うん`,`ううん`], a:3,
+      exp:`보통체(반말)의 부정 대답은 ううん이다.` },
+    { q:`'おちゃ'에서 'お'의 역할로 가장 적절한 것은?`, opts:[`부정의 의미를 더한다`,`말을 정중하고 부드럽게 만든다`,`장소를 나타낸다`,`과거를 나타낸다`], a:1,
+      exp:`お는 명사 앞에 붙어 말을 정중하고 부드럽게 만들어 주는 접두어이다.` },
+    { q:`'ちかくだよ'에서 'よ'의 역할로 가장 적절한 것은?`, opts:[`질문을 나타낸다`,`듣는 사람에게 정보를 알려주거나 강조한다`,`과거를 나타낸다`,`존경을 나타낸다`], a:1,
+      exp:`よ는 문장 끝에 붙어 정보를 알려주거나 강조하는 느낌을 더해주는 종조사이다.` },
+    { q:`명사문 정중체의 부정형으로 적절한 것은?`, opts:[`~だ`,`~じゃない`,`~です`,`~じゃないです / ~じゃありません`], a:3,
+      exp:`명사문 정중체의 부정형은 ~じゃないです 또는 ~じゃありません이다.` },
+  ],
+  hard: [
+    { q:`다음 설명 중 옳은 것을 모두 고른 것은?<br><br>(가) 명사+の는 '~의'로 해석된다.<br>(나) 명사+に는 장소를 나타내며 '~에'로 해석된다.<br>(다) 조사 'は'는 발음할 때 [ha]로 소리 난다.<br>(라) 정중체의 긍정 대답은 'うん'이다.`,
+      opts:[`(가), (나)`,`(다), (라)`,`(가), (다)`,`(나), (라)`], a:0,
+      exp:`(가),(나)가 옳다. 조사 は는 발음이 [wa]가 되며(다는 틀림), 정중체의 긍정 대답은 はい이다(라는 틀림, うん은 보통체).` },
+    { q:`다음 설명 중 옳은 것을 모두 고른 것은?<br><br>(가) 'お'는 명사 앞에 붙어 말을 부드럽게 만든다.<br>(나) 'よ'는 문장 끝에 붙어 정보를 알려주거나 강조하는 느낌을 더한다.<br>(다) 명사문 보통체의 부정형은 '~です'이다.<br>(라) 'パンやは どこかな?'에서 'は'는 목적격 조사이다.`,
+      opts:[`(다), (라)`,`(가), (나)`,`(가), (다)`,`(나), (라)`], a:1,
+      exp:`(가),(나)가 옳다. 명사문 보통체의 부정형은 ~じゃない이며(다는 틀림), は는 주제를 나타내는 조사이다(라는 틀림).` },
+    { q:`다음 설명 중 옳은 것을 모두 고른 것은?<br><br>(가) 명사+に는 사람의 이름을 나타내는 조사이다.<br>(나) 정중체의 부정 대답은 'ううん'이다.<br>(다) 'ほんやの となり'에서 の는 명사와 명사를 연결한다.<br>(라) 'ちかくだよ'는 보통체 표현이다.`,
+      opts:[`(가), (나)`,`(가), (다)`,`(다), (라)`,`(나), (라)`], a:2,
+      exp:`(다),(라)가 옳다. に는 장소를 나타내는 조사이며(가는 틀림), 정중체의 부정 대답은 いいえ이다(나는 틀림).` },
+    { q:`다음 설명 중 옳은 것을 모두 고른 것은?<br><br>(가) 명사+の는 소유·소속 관계를 나타낸다.<br>(나) は는 표기와 발음이 다른 조사이다([wa]로 발음).<br>(다) 명사문 정중체의 부정형에는 ~じゃないです와 ~じゃありません이 모두 쓰인다.<br>(라) 'うん'은 정중체의 긍정 대답이다.`,
+      opts:[`(가), (라)`,`(나), (라)`,`(다), (라)`,`(가), (나), (다)`], a:3,
+      exp:`(가),(나),(다)는 모두 옳다. うん은 보통체(반말)의 긍정 대답이며, 정중체의 긍정 대답은 はい이다(라는 틀림).` },
+  ],
+},
+
+/* ===================== TAB 5 : 회화② 가족 방문 + 존재표현 ===================== */
+5: {
+  ox: [
+    { q:`すみません은 '사과'와 '감사' 등 여러 의미로 쓰인다.`, a:true,
+      exp:`맞다. すみません은 사과, 감사, 주의 환기(저기요) 등 여러 의미로 쓰인다.` },
+    { q:`사물이나 식물이 있다고 말할 때는 'います'를 쓴다.`, a:false,
+      exp:`사물·식물처럼 스스로 움직이지 않는 것이 있을 때는 あります를 쓰고, 사람·동물처럼 움직이는 것에는 います를 쓴다.` },
+    { q:`사람이나 동물이 있다고 말할 때는 'います'를 쓴다.`, a:true,
+      exp:`맞다. 사람·동물이 있을 때는 います를 쓴다.` },
+    { q:`'ある'의 보통체 부정형은 'いない'이다.`, a:false,
+      exp:`ある의 보통체 부정형은 ない이며, いない는 いる의 부정형이다.` },
+    { q:`'いらっしゃい'는 손님을 맞이할 때 '어서 오세요'라는 뜻으로 쓰인다.`, a:true,
+      exp:`맞다. いらっしゃい는 손님을 맞이할 때 하는 인사이다.` },
+    { q:`'おじゃまします'는 집을 나설 때 하는 인사이다.`, a:false,
+      exp:`おじゃまします는 남의 집에 들어갈 때 '실례합니다'라는 뜻으로 하는 인사이다.` },
+    { q:`식사를 시작하기 전에는 'いただきます'라고 말한다.`, a:true,
+      exp:`맞다. いただきます는 식사를 시작할 때 하는 인사이다.` },
+    { q:`식사를 마친 후에는 'ごちそうさまでした'라고 말한다.`, a:true,
+      exp:`맞다. ごちそうさまでした는 식사를 마친 후 하는 인사이다.` },
+  ],
+  mc: [
+    { q:`친구가 길을 알려준 후 'すみません'이라고 말했다면 이때의 의미로 가장 적절한 것은?`, opts:[`사과`,`감사`,`질문`,`명령`], a:1,
+      exp:`도움을 받은 뒤의 すみません은 '감사'의 의미로 쓰인 것이다.` },
+    { q:`'책상 위에 사과가 있다'를 일본어로 표현할 때 알맞은 동사는?`, opts:[`います`,`いません`,`あります`,`いる`], a:2,
+      exp:`사물(사과)이 있을 때는 あります를 쓴다.` },
+    { q:`'교실에 학생이 있다'를 표현할 때 알맞은 동사는?`, opts:[`あります`,`ありません`,`います`,`ない`], a:2,
+      exp:`사람(학생)이 있을 때는 います를 쓴다.` },
+    { q:`'ある'의 정중체 부정형으로 옳은 것은?`, opts:[`ない`,`いない`,`ありません`,`いません`], a:2,
+      exp:`ある의 정중체 부정형은 ありません이다.` },
+    { q:`남의 집에 들어갈 때 하는 인사로 가장 적절한 것은?`, opts:[`いただきます`,`おじゃまします`,`ごちそうさまでした`,`いらっしゃい`], a:1,
+      exp:`おじゃまします는 남의 집에 들어갈 때 하는 인사이다.` },
+    { q:`식사를 마친 뒤 하는 인사로 가장 적절한 것은?`, opts:[`いただきます`,`おじゃまします`,`ごちそうさまでした`,`いらっしゃい`], a:2,
+      exp:`ごちそうさまでした는 식사를 마친 후 하는 인사이다.` },
+    { q:`손님을 맞이할 때 집주인이 하는 말로 가장 적절한 것은?`, opts:[`いらっしゃい`,`おじゃまします`,`いただきます`,`ごちそうさまでした`], a:0,
+      exp:`いらっしゃい는 손님을 맞이할 때 집주인이 하는 인사이다.` },
+    { q:`'いる'의 정중체 부정형으로 옳은 것은?`, opts:[`いません`,`ありません`,`いない`,`ない`], a:0,
+      exp:`いる의 정중체 부정형은 いません이다.` },
+  ],
+  hard: [
+    { q:`다음 설명 중 옳은 것을 모두 고른 것은?<br><br>(가) すみません은 사과의 의미로도 쓰인다.<br>(나) すみません은 감사의 의미로도 쓰인다.<br>(다) 사람이 있을 때는 あります를 쓴다.<br>(라) ある의 보통체 부정형은 いない이다.`,
+      opts:[`(가), (나)`,`(다), (라)`,`(가), (다)`,`(나), (라)`], a:0,
+      exp:`(가),(나)가 옳다. 사람이 있을 때는 います를 쓰며(다는 틀림), ある의 보통체 부정형은 ない이다(라는 틀림).` },
+    { q:`다음 설명 중 옳은 것을 모두 고른 것은?<br><br>(가) いらっしゃい는 손님을 맞이할 때 하는 인사이다.<br>(나) いただきます는 식사를 시작할 때 하는 인사이다.<br>(다) おじゃまします는 집을 나설 때 하는 인사이다.<br>(라) ある의 정중체 부정형은 いません이다.`,
+      opts:[`(다), (라)`,`(가), (나)`,`(가), (다)`,`(나), (라)`], a:1,
+      exp:`(가),(나)가 옳다. おじゃまします는 남의 집에 들어갈 때 하는 인사이며(다는 틀림), ある의 정중체 부정형은 ありません이다(라는 틀림).` },
+    { q:`다음 설명 중 옳은 것을 모두 고른 것은?<br><br>(가) ごちそうさまでした는 식사를 시작할 때 하는 인사이다.<br>(나) あります(ある)의 부정형은 いない이다.<br>(다) いる의 정중체 부정형은 いません이다.<br>(라) すみません은 누군가에게 말을 걸 때 '저기요'라는 뜻으로도 쓰인다.`,
+      opts:[`(가), (나)`,`(가), (다)`,`(다), (라)`,`(나), (라)`], a:2,
+      exp:`(다),(라)가 옳다. ごちそうさまでした는 식사를 마친 후 하는 인사이며(가는 틀림), あります(ある)의 부정형은 ない이다(나는 틀림).` },
+    { q:`다음 설명 중 옳은 것을 모두 고른 것은?<br><br>(가) いただきます는 식사 시작 인사이다.<br>(나) ごちそうさまでした는 식사 후 인사이다.<br>(다) いる의 보통체 부정형은 いない이다.<br>(라) あります는 사람이 있을 때 쓰는 표현이다.`,
+      opts:[`(가), (라)`,`(나), (라)`,`(다), (라)`,`(가), (나), (다)`], a:3,
+      exp:`(가),(나),(다)는 모두 옳다. あります는 사물·식물이 있을 때 쓰는 표현이며, 사람이 있을 때는 います를 쓴다(라는 틀림).` },
+  ],
+},
+
+};
+
+/* ============ STATE ============ */
+const quizState = {};
+for (let t=0; t<6; t++) {
+  quizState[t] = {
+    activeType: 0,
+    answered: {
+      ox:   QUIZ_DATA[t].ox.map(()=>null),
+      mc:   QUIZ_DATA[t].mc.map(()=>null),
+      hard: QUIZ_DATA[t].hard.map(()=>null),
+    }
+  };
+}
+
+/* ============ BUILD FUNCTIONS ============ */
+function buildScoreboard(tabIdx) {
+  return TYPE_CONFIG.map(t => {
+    const arr = quizState[tabIdx].answered[t.key];
+    const total = arr.length;
+    const correct = arr.filter(x=>x && x.correct).length;
+    return `<div class="score-chip ${t.key}"><span class="score-icon">${t.icon}</span>${t.label} ${correct}/${total}</div>`;
+  }).join('');
+}
+
+function buildTypeBar(tabIdx) {
+  return TYPE_CONFIG.map((t,i) => {
+    const arr = quizState[tabIdx].answered[t.key];
+    const attempted = arr.filter(x=>x!==null).length;
+    const active = quizState[tabIdx].activeType===i ? 'active' : '';
+    return `<button class="qtype-btn ${active}" onclick="switchQType(${tabIdx},${i})">
+      <span class="qtype-icon">${t.icon}</span>
+      <span class="qtype-label">${t.label}</span>
+      <span class="qtype-count">${attempted}/${arr.length}</span>
+    </button>`;
+  }).join('');
+}
+
+function buildProgressPct(tabIdx) {
+  const state = quizState[tabIdx];
+  const key = TYPE_CONFIG[state.activeType].key;
+  const arr = state.answered[key];
+  const attempted = arr.filter(x=>x!==null).length;
+  return Math.round(attempted/arr.length*100);
+}
+
+function buildQCard(tabIdx, typeKey, qi, qdata) {
+  const state = quizState[tabIdx];
+  const ans = state.answered[typeKey][qi];
+  const typeCfg = TYPE_CONFIG.find(t=>t.key===typeKey);
+  let cardCls = 'q-card';
+  if (ans) cardCls += ans.correct ? ' answered-correct' : ' answered-wrong';
+
+  let body = '';
+  if (typeKey === 'ox') {
+    body += `<div class="ox-row">`;
+    [true,false].forEach(val=>{
+      let cls = 'ox-btn';
+      const label = val ? '⭕' : '❌';
+      if (ans) {
+        if (ans.picked===val && ans.correct) cls += ' picked-correct';
+        else if (ans.picked===val && !ans.correct) cls += ' picked-wrong';
+        else if (qdata.a===val && !ans.correct) cls += ' reveal-correct';
+      }
+      body += `<button class="${cls}" ${ans?'disabled':''} onclick="submitOX(${tabIdx},${qi},${val})">${label}</button>`;
+    });
+    body += `</div>`;
+  } else {
+    body += `<div class="mc-options">`;
+    const letters = ['A','B','C','D'];
+    qdata.opts.forEach((opt,oi)=>{
+      let cls = 'mc-opt';
+      if (ans) {
+        if (oi===qdata.a) cls += ' correct';
+        else if (oi===ans.picked && oi!==qdata.a) cls += ' wrong';
+      }
+      body += `<button class="${cls}" ${ans?'disabled':''} onclick="submitMC(${tabIdx},'${typeKey}',${qi},${oi})">
+        <span class="mc-opt-letter">${letters[oi]}</span><span>${opt}</span>
+      </button>`;
+    });
+    body += `</div>`;
+  }
+
+  let feedback = '';
+  if (ans) {
+    feedback = `<div class="q-feedback ${ans.correct?'correct':'wrong'}">
+      <div class="fb-head">${ans.correct?'✅ 정답입니다':'❌ 오답입니다'}</div>
+      ${qdata.exp}
+    </div>`;
+  }
+
+  return `<div class="${cardCls}" id="qcard-${tabIdx}-${typeKey}-${qi}">
+    <div class="q-meta">
+      <span class="q-num">Q${qi+1}</span>
+      <span class="q-difficulty ${typeCfg.diffCls}">${typeCfg.diff}</span>
+    </div>
+    <div class="q-text">${qdata.q}</div>
+    ${body}
+    ${feedback}
+  </div>`;
+}
+
+function buildResult(tabIdx) {
+  const state = quizState[tabIdx];
+  const key = TYPE_CONFIG[state.activeType].key;
+  const arr = state.answered[key];
+  const total = arr.length;
+  const correct = arr.filter(x=>x && x.correct).length;
+  const pct = Math.round(correct/total*100);
+  let msg;
+  if (pct === 100) msg = '모든 문제를 맞혔습니다 🎉';
+  else if (pct >= 70) msg = '잘했어요! 틀린 문제의 설명을 한 번 더 확인해 보세요.';
+  else msg = '아래 문제별 설명을 다시 읽고 복습해 보세요.';
+
+  const bars = TYPE_CONFIG.map(t => {
+    const a = quizState[tabIdx].answered[t.key];
+    const c = a.filter(x=>x && x.correct).length;
+    const p = Math.round(c/a.length*100);
+    return `<div class="mini-bar-row">
+      <div class="mini-bar-label">${t.label}</div>
+      <div class="mini-bar-track"><div class="mini-bar-fill ${t.key}" style="width:${p}%"></div></div>
+      <div class="mini-bar-pct">${c}/${a.length}</div>
+    </div>`;
+  }).join('');
+
+  return `<div class="quiz-result">
+    <div class="result-score">${correct} / ${total}</div>
+    <div class="result-msg">${msg}</div>
+    <div class="mini-bars">${bars}</div>
+    <button class="reset-btn" onclick="resetType(${tabIdx},'${key}')">다시 풀기</button>
+  </div>`;
+}
+
+function renderQuiz(tabIdx) {
+  const state = quizState[tabIdx];
+  document.getElementById(`scoreboard-${tabIdx}`).innerHTML = buildScoreboard(tabIdx);
+  document.getElementById(`typebar-${tabIdx}`).innerHTML = buildTypeBar(tabIdx);
+  document.getElementById(`progress-${tabIdx}`).style.width = buildProgressPct(tabIdx) + '%';
+
+  const key = TYPE_CONFIG[state.activeType].key;
+  const arr = state.answered[key];
+  const data = QUIZ_DATA[tabIdx][key];
+  const allAnswered = arr.every(x => x !== null);
+
+  let html = '';
+  if (allAnswered) html += buildResult(tabIdx);
+  html += data.map((qdata, qi) => buildQCard(tabIdx, key, qi, qdata)).join('');
+
+  document.getElementById(`qlist-${tabIdx}`).innerHTML = html;
+}
+
+function afterSubmit(tabIdx) {
+  const state = quizState[tabIdx];
+  const key = TYPE_CONFIG[state.activeType].key;
+  const arr = state.answered[key];
+  const nextIdx = arr.findIndex(x => x === null);
+  renderQuiz(tabIdx);
+  if (nextIdx !== -1) {
+    setTimeout(() => {
+      const el = document.getElementById(`qcard-${tabIdx}-${key}-${nextIdx}`);
+      if (el) el.scrollIntoView({behavior:'smooth', block:'center'});
+    }, 150);
+  }
+}
+
+function submitOX(tabIdx, qi, picked) {
+  const qdata = QUIZ_DATA[tabIdx].ox[qi];
+  const correct = picked === qdata.a;
+  quizState[tabIdx].answered.ox[qi] = {picked, correct};
+  afterSubmit(tabIdx);
+}
+
+function submitMC(tabIdx, typeKey, qi, picked) {
+  const qdata = QUIZ_DATA[tabIdx][typeKey][qi];
+  const correct = picked === qdata.a;
+  quizState[tabIdx].answered[typeKey][qi] = {picked, correct};
+  afterSubmit(tabIdx);
+}
+
+function switchQType(tabIdx, typeIdx) {
+  quizState[tabIdx].activeType = typeIdx;
+  renderQuiz(tabIdx);
+}
+
+function resetType(tabIdx, typeKey) {
+  quizState[tabIdx].answered[typeKey] = quizState[tabIdx].answered[typeKey].map(()=>null);
+  renderQuiz(tabIdx);
+}
+
+/* ============ INIT ============ */
+for (let t=0; t<6; t++) renderQuiz(t);
+</script>
 </body>
 </html>
