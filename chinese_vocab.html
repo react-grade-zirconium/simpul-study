@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>중국어 단어장</title>
+  <style>
+    :root{color-scheme:light;font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;--red:#dc2626;--red-dark:#991b1b;--gold:#f59e0b;--line:#e2e8f0;--muted:#64748b;--text:#0f172a;--bg:#fff7ed}
+    *{box-sizing:border-box}
+    body{margin:0;padding:24px;background:linear-gradient(135deg,#fff7ed 0%,#fef2f2 48%,#f8fafc 100%);color:var(--text)}
+    main{max-width:980px;margin:0 auto;display:grid;gap:18px}
+    section{border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.94);padding:24px;box-shadow:0 16px 34px rgba(153,27,27,.10)}
+    .badge{display:inline-flex;align-items:center;gap:8px;border-radius:999px;background:#fee2e2;color:var(--red-dark);padding:7px 13px;font-size:.88rem;font-weight:900}
+    h1{margin:12px 0 8px;font-size:clamp(1.55rem,4vw,2.35rem);letter-spacing:-.04em}
+    h2{margin:0 0 12px;color:var(--red-dark);font-size:1.08rem}
+    p{margin:0;color:var(--muted);line-height:1.7}
+    .routine{margin:12px 0 0;padding-left:1.2rem;color:#334155;line-height:1.8}
+    .vocab-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+    .word-card{border:1px solid #fed7aa;border-radius:18px;background:#fffaf5;padding:16px;display:grid;gap:7px}
+    .hanzi{font-size:1.85rem;font-weight:900;color:var(--red);line-height:1.1}
+    .pinyin{font-weight:800;color:#b45309}
+    .meaning{font-weight:800;color:#1e293b}
+    .example{font-size:.92rem;color:var(--muted);line-height:1.55}
+    table{width:100%;border-collapse:collapse;overflow:hidden;border-radius:16px;background:#fff}
+    th,td{border-bottom:1px solid var(--line);padding:12px 10px;text-align:left;vertical-align:top;line-height:1.55}
+    th{background:#fee2e2;color:var(--red-dark);font-weight:900}
+    tr:last-child td{border-bottom:0}
+    @media (max-width:640px){body{padding:14px}section{padding:18px}.vocab-grid{grid-template-columns:1fr}table{font-size:.92rem}}
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero" aria-labelledby="chineseTitle">
+      <span class="badge">🇨🇳 중국어 단어장</span>
+      <h1 id="chineseTitle">기초 중국어 어휘를 한눈에 정리해요</h1>
+      <p>한자, 병음, 뜻, 짧은 예문을 함께 보며 중국어 단어를 반복 학습할 수 있는 단어장입니다.</p>
+      <ul class="routine">
+        <li>한자를 먼저 보고 병음과 뜻을 떠올리기</li>
+        <li>성조를 소리 내어 읽고 예문까지 따라 말하기</li>
+        <li>헷갈리는 단어는 표에 표시해 두고 마지막에 다시 복습하기</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="dailyWordsTitle">
+      <h2 id="dailyWordsTitle">필수 생활 단어</h2>
+      <div class="vocab-grid">
+        <article class="word-card"><span class="hanzi">你好</span><span class="pinyin">nǐ hǎo</span><span class="meaning">안녕하세요</span><span class="example">你好！很高兴见到你。 / 안녕하세요! 만나서 반가워요.</span></article>
+        <article class="word-card"><span class="hanzi">谢谢</span><span class="pinyin">xiè xie</span><span class="meaning">고마워요</span><span class="example">谢谢你的帮助。 / 도와줘서 고마워요.</span></article>
+        <article class="word-card"><span class="hanzi">朋友</span><span class="pinyin">péng you</span><span class="meaning">친구</span><span class="example">他是我的朋友。 / 그는 내 친구예요.</span></article>
+        <article class="word-card"><span class="hanzi">学校</span><span class="pinyin">xué xiào</span><span class="meaning">학교</span><span class="example">我去学校。 / 나는 학교에 가요.</span></article>
+        <article class="word-card"><span class="hanzi">老师</span><span class="pinyin">lǎo shī</span><span class="meaning">선생님</span><span class="example">老师好！ / 선생님 안녕하세요!</span></article>
+        <article class="word-card"><span class="hanzi">学生</span><span class="pinyin">xué sheng</span><span class="meaning">학생</span><span class="example">我是学生。 / 나는 학생이에요.</span></article>
+      </div>
+    </section>
+
+    <section aria-labelledby="quickListTitle">
+      <h2 id="quickListTitle">빠른 암기표</h2>
+      <table>
+        <thead><tr><th>중국어</th><th>병음</th><th>뜻</th><th>체크 포인트</th></tr></thead>
+        <tbody>
+          <tr><td>再见</td><td>zài jiàn</td><td>안녕히 가세요/또 만나요</td><td>헤어질 때 쓰는 인사</td></tr>
+          <tr><td>对不起</td><td>duì bu qǐ</td><td>미안합니다</td><td>사과 표현</td></tr>
+          <tr><td>没关系</td><td>méi guān xi</td><td>괜찮아요</td><td>사과에 답할 때 자주 사용</td></tr>
+          <tr><td>中国</td><td>Zhōng guó</td><td>중국</td><td>나라 이름은 첫 글자 대문자 표기 가능</td></tr>
+          <tr><td>韩国</td><td>Hán guó</td><td>한국</td><td>国(guó)는 나라라는 뜻</td></tr>
+          <tr><td>今天</td><td>jīn tiān</td><td>오늘</td><td>시간 표현과 함께 문장 만들기</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>
