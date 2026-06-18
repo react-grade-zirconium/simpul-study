@@ -1,72 +1,670 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>중국어 단어장</title>
-  <style>
-    :root{color-scheme:light;font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;--red:#dc2626;--red-dark:#991b1b;--gold:#f59e0b;--line:#e2e8f0;--muted:#64748b;--text:#0f172a;--bg:#fff7ed}
-    *{box-sizing:border-box}
-    body{margin:0;padding:24px;background:linear-gradient(135deg,#fff7ed 0%,#fef2f2 48%,#f8fafc 100%);color:var(--text)}
-    main{max-width:980px;margin:0 auto;display:grid;gap:18px}
-    section{border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.94);padding:24px;box-shadow:0 16px 34px rgba(153,27,27,.10)}
-    .badge{display:inline-flex;align-items:center;gap:8px;border-radius:999px;background:#fee2e2;color:var(--red-dark);padding:7px 13px;font-size:.88rem;font-weight:900}
-    h1{margin:12px 0 8px;font-size:clamp(1.55rem,4vw,2.35rem);letter-spacing:-.04em}
-    h2{margin:0 0 12px;color:var(--red-dark);font-size:1.08rem}
-    p{margin:0;color:var(--muted);line-height:1.7}
-    .routine{margin:12px 0 0;padding-left:1.2rem;color:#334155;line-height:1.8}
-    .vocab-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
-    .word-card{border:1px solid #fed7aa;border-radius:18px;background:#fffaf5;padding:16px;display:grid;gap:7px}
-    .hanzi{font-size:1.85rem;font-weight:900;color:var(--red);line-height:1.1}
-    .pinyin{font-weight:800;color:#b45309}
-    .meaning{font-weight:800;color:#1e293b}
-    .example{font-size:.92rem;color:var(--muted);line-height:1.55}
-    table{width:100%;border-collapse:collapse;overflow:hidden;border-radius:16px;background:#fff}
-    th,td{border-bottom:1px solid var(--line);padding:12px 10px;text-align:left;vertical-align:top;line-height:1.55}
-    th{background:#fee2e2;color:var(--red-dark);font-weight:900}
-    tr:last-child td{border-bottom:0}
-    @media (max-width:640px){body{padding:14px}section{padding:18px}.vocab-grid{grid-template-columns:1fr}table{font-size:.92rem}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>중국어 단어장</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #c0392b;       --primary-light: #fdf2f1;
+  --gold:    #d4a017;       --gold-light:    #fefae8;
+  --green:   #16a34a;       --green-light:   #f0fdf4;
+  --blue:    #2563eb;       --blue-light:    #eff6ff;
+  --purple:  #7c3aed;       --purple-light:  #f5f3ff;
+  --bg:      #f8fafc;       --surface:       #fff;
+  --border:  #e2e8f0;
+  --text:    #0f172a;       --text-sec:      #64748b;
+  --shadow:  0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14.5px;
+  line-height: 1.75;
+}
+
+/* ── HEADER ── */
+.page-header {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+.header-inner {
+  max-width: 980px; margin: 0 auto;
+  padding: 12px 20px 0;
+}
+.subject-label {
+  font-size: 11px; font-weight: 500; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--text-sec);
+  margin-bottom: 2px;
+}
+.page-title {
+  font-size: 19px; font-weight: 700;
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 10px;
+}
+.badge-unit {
+  font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 99px;
+  background: var(--primary); color: #fff; letter-spacing: .03em;
+}
+
+/* ── TAB BAR ── */
+.tab-bar {
+  display: flex; overflow-x: auto; gap: 2px;
+  scrollbar-width: none; padding-bottom: 0;
+}
+.tab-bar::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex-shrink: 0; display: flex; align-items: center; gap: 6px;
+  padding: 8px 14px; font-size: 13px; font-weight: 500;
+  color: var(--text-sec); background: none; border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer; transition: color .15s;
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 700; }
+.tab-num {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--border); color: var(--text-sec);
+  font-size: 10px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .15s, color .15s;
+}
+.tab-btn.active .tab-num { background: var(--primary); color: #fff; }
+
+/* ── CONTENT ── */
+.content-wrap {
+  max-width: 980px; margin: 0 auto;
+  padding: 24px 20px 100px;
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── UNIT BANNER ── */
+.unit-banner {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--primary-light); border: 1px solid #f5c6c2;
+  border-radius: 6px; padding: 5px 12px;
+  font-size: 12px; font-weight: 500; color: var(--primary);
+  margin-bottom: 18px;
+}
+
+/* ── CONTROLS BAR ── */
+.controls-bar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  margin-bottom: 18px;
+}
+.search-wrap {
+  position: relative; flex: 1; min-width: 180px;
+}
+.search-wrap input {
+  width: 100%; padding: 7px 12px 7px 34px;
+  border: 1px solid var(--border); border-radius: 8px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13px; color: var(--text);
+  background: var(--surface); outline: none;
+  transition: border-color .15s;
+}
+.search-wrap input:focus { border-color: var(--primary); }
+.search-icon {
+  position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+  color: var(--text-sec); font-size: 14px; pointer-events: none;
+}
+.sort-btn {
+  padding: 7px 13px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--surface); font-family: 'Noto Sans KR', sans-serif;
+  font-size: 12px; font-weight: 500; color: var(--text-sec);
+  cursor: pointer; transition: all .15s;
+}
+.sort-btn:hover, .sort-btn.active { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+.count-badge {
+  font-size: 12px; color: var(--text-sec); padding: 0 4px;
+}
+
+/* ── VIEW TOGGLE ── */
+.view-toggle { display: flex; gap: 4px; }
+.view-btn {
+  width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--border);
+  background: var(--surface); cursor: pointer; color: var(--text-sec);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; transition: all .15s;
+}
+.view-btn.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+/* ── TABLE VIEW ── */
+.vocab-table { width: 100%; border-collapse: collapse; }
+.vocab-table thead th {
+  background: #1e293b; color: #fff; font-size: 12px;
+  font-weight: 700; padding: 9px 14px; text-align: left;
+  letter-spacing: .04em;
+}
+.vocab-table thead th:first-child { border-radius: 8px 0 0 0; }
+.vocab-table thead th:last-child  { border-radius: 0 8px 0 0; }
+.vocab-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background .1s;
+}
+.vocab-table tbody tr:hover { background: var(--primary-light); }
+.vocab-table td {
+  padding: 9px 14px; font-size: 13.5px;
+}
+.td-word {
+  font-weight: 700; font-size: 16px; letter-spacing: .02em;
+  color: var(--primary);
+}
+.td-pinyin {
+  font-size: 13px; color: var(--blue); font-weight: 500; font-style: italic;
+}
+.td-meaning { color: var(--text); }
+
+/* ── CARD VIEW ── */
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+.vocab-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px 14px 12px;
+  box-shadow: var(--shadow); cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  position: relative; overflow: hidden;
+  user-select: none;
+}
+.vocab-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 3px; background: var(--primary);
+}
+.vocab-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.1); }
+.card-word {
+  font-size: 22px; font-weight: 700; color: var(--primary);
+  letter-spacing: .04em; margin-bottom: 4px;
+}
+.card-pinyin {
+  font-size: 12px; color: var(--blue); font-weight: 500; font-style: italic;
+  margin-bottom: 8px;
+}
+.card-meaning {
+  font-size: 13px; color: var(--text); font-weight: 500;
+  border-top: 1px solid var(--border); padding-top: 8px;
+}
+.card-flip-hint {
+  font-size: 10px; color: var(--text-sec);
+  text-align: right; margin-top: 6px;
+}
+
+/* ── FLASHCARD VIEW ── */
+.flashcard-wrap {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 10px 0;
+}
+.fc-nav {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 20px;
+}
+.fc-counter { font-size: 13px; color: var(--text-sec); font-weight: 500; }
+.fc-btn {
+  width: 38px; height: 38px; border-radius: 50%;
+  border: 1px solid var(--border); background: var(--surface);
+  cursor: pointer; font-size: 16px; color: var(--text-sec);
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s;
+}
+.fc-btn:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
+.fc-btn:disabled { opacity: .35; cursor: default; }
+.flashcard {
+  width: 100%; max-width: 420px; min-height: 240px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,.08);
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 32px 28px;
+  cursor: pointer; position: relative;
+  transition: transform .12s;
+}
+.flashcard:active { transform: scale(.98); }
+.flashcard::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 4px; background: var(--primary); border-radius: 16px 16px 0 0;
+}
+.fc-word {
+  font-size: 42px; font-weight: 700; color: var(--primary);
+  letter-spacing: .06em; margin-bottom: 8px;
+}
+.fc-pinyin {
+  font-size: 16px; color: var(--blue); font-style: italic; font-weight: 500;
+  margin-bottom: 18px;
+}
+.fc-answer {
+  font-size: 18px; font-weight: 700; color: var(--text);
+  border-top: 2px solid var(--border); padding-top: 16px;
+  text-align: center; width: 100%;
+  display: none;
+}
+.flashcard.revealed .fc-answer { display: block; }
+.fc-reveal-hint {
+  font-size: 12px; color: var(--text-sec); margin-top: 16px;
+}
+.flashcard.revealed .fc-reveal-hint { display: none; }
+.fc-actions { display: flex; gap: 10px; margin-top: 16px; }
+.fc-result-btn {
+  flex: 1; padding: 9px 16px; border-radius: 8px; border: none;
+  font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 700;
+  cursor: pointer; transition: opacity .15s;
+}
+.fc-result-btn:hover { opacity: .85; }
+.btn-good { background: var(--green); color: #fff; }
+.btn-bad  { background: var(--primary); color: #fff; }
+.fc-progress {
+  width: 100%; max-width: 420px; margin-top: 12px;
+  display: flex; gap: 6px; align-items: center; font-size: 12px; color: var(--text-sec);
+}
+.fc-progress-bar {
+  flex: 1; height: 5px; background: var(--border); border-radius: 99px; overflow: hidden;
+}
+.fc-progress-fill { height: 100%; background: var(--green); border-radius: 99px; transition: width .3s; }
+
+/* ── EMPTY STATE ── */
+.empty-state {
+  text-align: center; padding: 48px 20px;
+  color: var(--text-sec); font-size: 13px;
+}
+.empty-state div { font-size: 32px; margin-bottom: 10px; }
+
+/* ── SCROLL TO TOP ── */
+.totop {
+  position: fixed; bottom: 24px; right: 24px;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--primary); color: #fff;
+  border: none; cursor: pointer; font-size: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity .2s, transform .2s;
+  opacity: 0; transform: translateY(10px); pointer-events: none;
+}
+.totop.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .vocab-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+  .fc-word { font-size: 34px; }
+  .flashcard { min-height: 200px; padding: 24px 20px; }
+}
+</style>
 </head>
 <body>
-  <main>
-    <section class="hero" aria-labelledby="chineseTitle">
-      <span class="badge">🇨🇳 중국어 단어장</span>
-      <h1 id="chineseTitle">기초 중국어 어휘를 한눈에 정리해요</h1>
-      <p>한자, 병음, 뜻, 짧은 예문을 함께 보며 중국어 단어를 반복 학습할 수 있는 단어장입니다.</p>
-      <ul class="routine">
-        <li>한자를 먼저 보고 병음과 뜻을 떠올리기</li>
-        <li>성조를 소리 내어 읽고 예문까지 따라 말하기</li>
-        <li>헷갈리는 단어는 표에 표시해 두고 마지막에 다시 복습하기</li>
-      </ul>
-    </section>
 
-    <section aria-labelledby="dailyWordsTitle">
-      <h2 id="dailyWordsTitle">필수 생활 단어</h2>
-      <div class="vocab-grid">
-        <article class="word-card"><span class="hanzi">你好</span><span class="pinyin">nǐ hǎo</span><span class="meaning">안녕하세요</span><span class="example">你好！很高兴见到你。 / 안녕하세요! 만나서 반가워요.</span></article>
-        <article class="word-card"><span class="hanzi">谢谢</span><span class="pinyin">xiè xie</span><span class="meaning">고마워요</span><span class="example">谢谢你的帮助。 / 도와줘서 고마워요.</span></article>
-        <article class="word-card"><span class="hanzi">朋友</span><span class="pinyin">péng you</span><span class="meaning">친구</span><span class="example">他是我的朋友。 / 그는 내 친구예요.</span></article>
-        <article class="word-card"><span class="hanzi">学校</span><span class="pinyin">xué xiào</span><span class="meaning">학교</span><span class="example">我去学校。 / 나는 학교에 가요.</span></article>
-        <article class="word-card"><span class="hanzi">老师</span><span class="pinyin">lǎo shī</span><span class="meaning">선생님</span><span class="example">老师好！ / 선생님 안녕하세요!</span></article>
-        <article class="word-card"><span class="hanzi">学生</span><span class="pinyin">xué sheng</span><span class="meaning">학생</span><span class="example">我是学生。 / 나는 학생이에요.</span></article>
-      </div>
-    </section>
+<header class="page-header">
+  <div class="header-inner">
+    <div class="subject-label">중국어 · 어휘</div>
+    <div class="page-title">
+      🇨🇳 중국어 단어장
+      <span class="badge-unit">단어장 1</span>
+      <span class="badge-unit" style="background:var(--blue)">단어장 2</span>
+      <span class="badge-unit" style="background:var(--green)">단어장 3</span>
+    </div>
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab(0)"><span class="tab-num">1</span>단어장 1</button>
+      <button class="tab-btn" onclick="switchTab(1)"><span class="tab-num">2</span>단어장 2</button>
+      <button class="tab-btn" onclick="switchTab(2)"><span class="tab-num">3</span>단어장 3</button>
+      <button class="tab-btn" onclick="switchTab(3)"><span class="tab-num">4</span>전체 단어</button>
+    </div>
+  </div>
+</header>
 
-    <section aria-labelledby="quickListTitle">
-      <h2 id="quickListTitle">빠른 암기표</h2>
-      <table>
-        <thead><tr><th>중국어</th><th>병음</th><th>뜻</th><th>체크 포인트</th></tr></thead>
-        <tbody>
-          <tr><td>再见</td><td>zài jiàn</td><td>안녕히 가세요/또 만나요</td><td>헤어질 때 쓰는 인사</td></tr>
-          <tr><td>对不起</td><td>duì bu qǐ</td><td>미안합니다</td><td>사과 표현</td></tr>
-          <tr><td>没关系</td><td>méi guān xi</td><td>괜찮아요</td><td>사과에 답할 때 자주 사용</td></tr>
-          <tr><td>中国</td><td>Zhōng guó</td><td>중국</td><td>나라 이름은 첫 글자 대문자 표기 가능</td></tr>
-          <tr><td>韩国</td><td>Hán guó</td><td>한국</td><td>国(guó)는 나라라는 뜻</td></tr>
-          <tr><td>今天</td><td>jīn tiān</td><td>오늘</td><td>시간 표현과 함께 문장 만들기</td></tr>
-        </tbody>
-      </table>
-    </section>
-  </main>
+<div class="content-wrap">
+
+  <!-- ══ TAB 0: 단어장 1 ══ -->
+  <div class="tab-panel active" id="panel-0">
+    <div class="unit-banner">📌 단어장 1 · 취미와 꿈 (27단어)</div>
+    <div id="controls-0" class="controls-bar"></div>
+    <div id="view-0"></div>
+  </div>
+
+  <!-- ══ TAB 1: 단어장 2 ══ -->
+  <div class="tab-panel" id="panel-1">
+    <div class="unit-banner">📌 단어장 2 · 교통과 장소 (34단어)</div>
+    <div id="controls-1" class="controls-bar"></div>
+    <div id="view-1"></div>
+  </div>
+
+  <!-- ══ TAB 2: 단어장 3 ══ -->
+  <div class="tab-panel" id="panel-2">
+    <div class="unit-banner">📌 단어장 3 · 음식과 문화 (37단어)</div>
+    <div id="controls-2" class="controls-bar"></div>
+    <div id="view-2"></div>
+  </div>
+
+  <!-- ══ TAB 3: 전체 ══ -->
+  <div class="tab-panel" id="panel-3">
+    <div class="unit-banner">📌 전체 단어 · 총 98단어</div>
+    <div id="controls-3" class="controls-bar"></div>
+    <div id="view-3"></div>
+  </div>
+
+</div>
+
+<button class="totop" id="totop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// ── DATA ──────────────────────────────────────────────
+const VOCAB = {
+  0: [
+    { w:'爱好',   p:'àihào',        m:'취미' },
+    { w:'喜欢',   p:'xǐhuan',       m:'좋아하다' },
+    { w:'拍',     p:'pāi',          m:'(사진·동영상을) 찍다' },
+    { w:'视频',   p:'shìpín',       m:'동영상, 영상' },
+    { w:'将来',   p:'jiānglái',     m:'장래, 미래' },
+    { w:'想',     p:'xiǎng',        m:'~하고 싶다' },
+    { w:'当',     p:'dāng',         m:'(직업 등을) 맡다, ~이 되다' },
+    { w:'网红',   p:'wǎnghóng',     m:'인플루언서, internet 스타' },
+    { w:'做',     p:'zuò',          m:'만들다, 하다' },
+    { w:'菜',     p:'cài',          m:'요리, 반찬' },
+    { w:'听',     p:'tīng',         m:'듣다' },
+    { w:'音乐',   p:'yīnyuè',       m:'음악' },
+    { w:'电影',   p:'diànyǐng',     m:'영화' },
+    { w:'医生',   p:'yīshēng',      m:'의사' },
+    { w:'作家',   p:'zuòjiā',       m:'작가' },
+    { w:'运动员', p:'yùndòngyuán',  m:'운동선수' },
+    { w:'会',     p:'huì',          m:'(배워서) ~할 줄 안다' },
+    { w:'打',     p:'dǎ',           m:'(손으로 하는 운동을) 하다' },
+    { w:'乒乓球', p:'pīngpāngqiú',  m:'탁구' },
+    { w:'一起',   p:'yìqǐ',         m:'함께, 같이' },
+    { w:'吧',     p:'ba',           m:'~하자 (제안·권유)' },
+    { w:'啊',     p:'ā / a',        m:'아! (감탄사) / ~구나 (어기조사)' },
+    { w:'得',     p:'de',           m:'(동사 뒤에서 수식) ~하는 정도가' },
+    { w:'不错',   p:'búcuò',        m:'좋다, 괜찮다' },
+    { w:'哪儿',   p:'nǎr',          m:'어디' },
+    { w:'篮球',   p:'lánqiú',       m:'농구' },
+    { w:'太极拳', p:'tàijíquán',    m:'태극권' },
+  ],
+  1: [
+    { w:'踢',     p:'tī',           m:'(발로) 차다, 축구를 하다' },
+    { w:'足球',   p:'zúqiú',        m:'축구' },
+    { w:'写',     p:'xiě',          m:'쓰다' },
+    { w:'很',     p:'hěn',          m:'매우, 아주 (습관적으로 붙음)' },
+    { w:'唱',     p:'chàng',        m:'노래하다' },
+    { w:'非常',   p:'fēicháng',     m:'대단히, 매우' },
+    { w:'画',     p:'huà',          m:'그리다, 그림' },
+    { w:'太',     p:'tài',          m:'너무, 무척' },
+    { w:'真',     p:'zhēn',         m:'진짜, 정말' },
+    { w:'棒',     p:'bàng',         m:'훌륭하다, 짱이다' },
+    { w:'极',     p:'jí',           m:'끝내주게 ~하다, 극히' },
+    { w:'厉害',   p:'lìhai',        m:'대단하다, 장난 아니다' },
+    { w:'唱歌',   p:'chànggē',      m:'노래를 부르다' },
+    { w:'运动',   p:'yùndòng',      m:'운동, 운동하다' },
+    { w:'玩',     p:'wán',          m:'놀다' },
+    { w:'游戏',   p:'yóuxì',        m:'게임' },
+    { w:'怎么',   p:'zěnme',        m:'어떻게' },
+    { w:'去',     p:'qù',           m:'가다' },
+    { w:'天安门', p:'Tiān\'ānmén',  m:'톈안먼 (북경의 명소)' },
+    { w:'坐',     p:'zuò',          m:'(교통수단을) 타다, 앉다' },
+    { w:'地铁',   p:'dìtiě',        m:'지하철' },
+    { w:'站',     p:'zhàn',         m:'역, 정류장' },
+    { w:'远',     p:'yuǎn',         m:'멀다' },
+    { w:'往',     p:'wǎng',         m:'~를 향해서' },
+    { w:'前',     p:'qián',         m:'앞, 앞쪽' },
+    { w:'走',     p:'zǒu',          m:'걷다, 가다' },
+    { w:'就',     p:'jiù',          m:'바로, 곧' },
+    { w:'到',     p:'dào',          m:'도착하다, ~에 이르다' },
+    { w:'了',     p:'le',           m:'~했다 (변화·완료)' },
+    { w:'办',     p:'bàn',          m:'처리하다, 하다' },
+    { w:'念',     p:'niàn',         m:'읽다, 소리 내어 읽다' },
+    { w:'火车',   p:'huǒchē',       m:'기차' },
+    { w:'公交车', p:'gōngjiāochē',  m:'버스' },
+    { w:'骑',     p:'qí',           m:'(자전거·말 등을) 타다' },
+  ],
+  2: [
+    { w:'自行车', p:'zìxíngchē',    m:'자전거' },
+    { w:'左',     p:'zuǒ',          m:'왼쪽' },
+    { w:'拐',     p:'guǎi',         m:'(방향을) 돌다, 꺾다' },
+    { w:'右',     p:'yòu',          m:'오른쪽' },
+    { w:'有点儿', p:'yǒudiǎnr',     m:'약간, 조금 (주로 부정적 어조)' },
+    { w:'头疼',   p:'tóuténg',      m:'머리가 아프다, 두통' },
+    { w:'医院',   p:'yīyuàn',       m:'병원' },
+    { w:'在',     p:'zài',          m:'~에 있다' },
+    { w:'学校',   p:'xuéxiào',      m:'학교' },
+    { w:'旁边',   p:'pángbiān',     m:'옆, 옆쪽' },
+    { w:'后边',   p:'hòubian',      m:'뒤, 뒤쪽' },
+    { w:'发烧',   p:'fāshāo',       m:'열이 나다' },
+    { w:'咳嗽',   p:'késou',        m:'기침하다' },
+    { w:'流',     p:'liú',          m:'흐르다' },
+    { w:'鼻涕',   p:'bítì',         m:'콧물' },
+    { w:'银行',   p:'yínháng',      m:'은행' },
+    { w:'左边',   p:'zuǒbian',      m:'왼쪽, 좌측' },
+    { w:'超市',   p:'chāoshì',      m:'슈퍼마켓, 마트' },
+    { w:'右边',   p:'yòubian',      m:'오른쪽, 우측' },
+    { w:'洗手间', p:'xǐshǒujiān',   m:'화장실' },
+    { w:'前边',   p:'qiánbian',     m:'앞쪽, 전방' },
+    { w:'要',     p:'yào',          m:'원하다, 필요로 하다' },
+    { w:'点',     p:'diǎn',         m:'(음식을) 주문하다' },
+    { w:'来',     p:'lái',          m:'가져오다, 오다' },
+    { w:'碗',     p:'wǎn',          m:'그릇 (음식을 세는 단위)' },
+    { w:'牛肉面', p:'niúròumiàn',   m:'우육면 (소고기 국수)' },
+    { w:'这儿',   p:'zhèr',         m:'여기, 이곳' },
+    { w:'吃',     p:'chī',          m:'먹다' },
+    { w:'还是',   p:'háishi',       m:'아니면, 또는 (선택 의문문)' },
+    { w:'带',     p:'dài',          m:'포장하다, 지니다' },
+    { w:'扫',     p:'sǎo',          m:'(QR코드를) 스캔하다, 쓸다' },
+    { w:'一下',   p:'yíxià',        m:'좀 ~해보다 (가벼운 시도)' },
+    { w:'二维码', p:'èrwéimǎ',      m:'QR 코드' },
+    { w:'这个',   p:'zhège',        m:'이것, 이 사람' },
+    { w:'只',     p:'zhī',          m:'마리 (동물을 세는 단위)' },
+    { w:'烤鸭',   p:'kǎoyā',        m:'오리구이 (베이징 덕)' },
+    { w:'包子',   p:'bāozi',        m:'바오쯔 (고기/야채 만두)' },
+    { w:'杯',     p:'bēi',          m:'잔, 컵 (단위)' },
+    { w:'可乐',   p:'kělè',         m:'콜라' },
+    { w:'米饭',   p:'mǐfàn',        m:'쌀밥, 공깃밥' },
+    { w:'饺子',   p:'jiǎozi',       m:'물만두, 교자' },
+    { w:'喝',     p:'hē',           m:'마시다' },
+    { w:'茶',     p:'chá',          m:'차 (음료)' },
+    { w:'咖啡',   p:'kāfēi',        m:'커피' },
+    { w:'以前',   p:'yǐqián',       m:'이전에, 예전에' },
+    { w:'过',     p:'guo',          m:'~해 본 적이 있다 (경험)' },
+    { w:'火锅',   p:'huǒguō',       m:'훠궈 (중국식 샤브샤브)' },
+    { w:'味道',   p:'wèidao',       m:'맛' },
+    { w:'怎么样', p:'zěnmeyàng',    m:'어때, 어떠한가' },
+    { w:'辣',     p:'là',           m:'맵다' },
+    { w:'不过',   p:'búguò',        m:'하지만, 그렇지만' },
+    { w:'好吃',   p:'hǎochī',       m:'맛있다' },
+    { w:'没事儿', p:'méishìr',      m:'괜찮아, 문제없어' },
+    { w:'怕',     p:'pà',           m:'무서워하다, 두려워하다' },
+    { w:'天气',   p:'tiānqì',       m:'날씨' },
+    { w:'咸',     p:'xián',         m:'짜다' },
+    { w:'北京',   p:'Běijīng',      m:'베이징 (중국의 수도)' },
+    { w:'京剧',   p:'jīngjù',       m:'경극 (중국 전통 연극)' },
+    { w:'穿',     p:'chuān',        m:'(옷·신발을) 입다, 신다' },
+    { w:'旗袍',   p:'qípáo',        m:'치파오 (중국 전통 의상)' },
+    { w:'酸',     p:'suān',         m:'시다' },
+    { w:'甜',     p:'tián',         m:'달다' },
+    { w:'苦',     p:'kǔ',           m:'쓰다' },
+  ],
+};
+VOCAB[3] = [...VOCAB[0], ...VOCAB[1], ...VOCAB[2]];
+
+// ── STATE ──────────────────────────────────────────────
+const tabState = [0,1,2,3].map(() => ({
+  viewMode: 'table',   // 'table' | 'card' | 'flash'
+  sort: 'default',     // 'default' | 'alpha' | 'shuffle'
+  search: '',
+  fcIdx: 0,
+  fcRevealed: false,
+  fcKnown: new Set(),
+  fcUnknown: new Set(),
+}));
+
+// ── UTILITY ──────────────────────────────────────────────
+function getFiltered(tabIdx) {
+  const s = tabState[tabIdx];
+  let data = [...VOCAB[tabIdx]];
+  if (s.search.trim()) {
+    const q = s.search.trim().toLowerCase();
+    data = data.filter(d =>
+      d.w.includes(q) || d.p.toLowerCase().includes(q) || d.m.includes(q)
+    );
+  }
+  if (s.sort === 'alpha') data.sort((a,b) => a.w.localeCompare(b.w));
+  if (s.sort === 'shuffle') data.sort(() => Math.random() - .5);
+  return data;
+}
+
+// ── RENDER CONTROLS ──────────────────────────────────────
+function renderControls(tabIdx) {
+  const s = tabState[tabIdx];
+  const data = getFiltered(tabIdx);
+  const el = document.getElementById(`controls-${tabIdx}`);
+  el.innerHTML = `
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="단어, 병음, 뜻 검색…" value="${s.search}"
+        oninput="tabState[${tabIdx}].search=this.value; renderAll(${tabIdx})">
+    </div>
+    <button class="sort-btn ${s.sort==='default'?'active':''}" onclick="setSort(${tabIdx},'default')">기본순</button>
+    <button class="sort-btn ${s.sort==='alpha'?'active':''}" onclick="setSort(${tabIdx},'alpha')">가나다순</button>
+    <button class="sort-btn ${s.sort==='shuffle'?'active':''}" onclick="setSort(${tabIdx},'shuffle')">셔플 🔀</button>
+    <span class="count-badge">${data.length}개</span>
+    <div class="view-toggle">
+      <button class="view-btn ${s.viewMode==='table'?'active':''}" title="목록" onclick="setView(${tabIdx},'table')">☰</button>
+      <button class="view-btn ${s.viewMode==='card'?'active':''}" title="카드" onclick="setView(${tabIdx},'card')">⊞</button>
+      <button class="view-btn ${s.viewMode==='flash'?'active':''}" title="플래시카드" onclick="setView(${tabIdx},'flash')">🃏</button>
+    </div>
+  `;
+}
+
+// ── RENDER TABLE ──────────────────────────────────────────
+function renderTable(tabIdx) {
+  const data = getFiltered(tabIdx);
+  if (!data.length) return `<div class="empty-state"><div>🔍</div>검색 결과가 없습니다.</div>`;
+  return `<table class="vocab-table">
+    <thead><tr>
+      <th style="width:100px">단어 (汉字)</th>
+      <th style="width:140px">병음 (Pinyin)</th>
+      <th>뜻 (Meaning)</th>
+    </tr></thead>
+    <tbody>
+      ${data.map(d=>`<tr>
+        <td class="td-word">${d.w}</td>
+        <td class="td-pinyin">${d.p}</td>
+        <td class="td-meaning">${d.m}</td>
+      </tr>`).join('')}
+    </tbody>
+  </table>`;
+}
+
+// ── RENDER CARD ───────────────────────────────────────────
+function renderCards(tabIdx) {
+  const data = getFiltered(tabIdx);
+  if (!data.length) return `<div class="empty-state"><div>🔍</div>검색 결과가 없습니다.</div>`;
+  return `<div class="vocab-grid">
+    ${data.map(d=>`<div class="vocab-card">
+      <div class="card-word">${d.w}</div>
+      <div class="card-pinyin">${d.p}</div>
+      <div class="card-meaning">${d.m}</div>
+    </div>`).join('')}
+  </div>`;
+}
+
+// ── RENDER FLASHCARD ──────────────────────────────────────
+function renderFlash(tabIdx) {
+  const s = tabState[tabIdx];
+  const data = getFiltered(tabIdx);
+  if (!data.length) return `<div class="empty-state"><div>🔍</div>검색 결과가 없습니다.</div>`;
+  if (s.fcIdx >= data.length) s.fcIdx = 0;
+
+  const d = data[s.fcIdx];
+  const total = data.length;
+  const knownPct = Math.round((s.fcKnown.size / total) * 100);
+
+  return `<div class="flashcard-wrap">
+    <div class="fc-nav">
+      <button class="fc-btn" ${s.fcIdx===0?'disabled':''} onclick="fcMove(${tabIdx},-1)">←</button>
+      <span class="fc-counter">${s.fcIdx+1} / ${total}</span>
+      <button class="fc-btn" ${s.fcIdx===total-1?'disabled':''} onclick="fcMove(${tabIdx},1)">→</button>
+    </div>
+    <div class="flashcard ${s.fcRevealed?'revealed':''}" onclick="fcReveal(${tabIdx})" id="fc-${tabIdx}">
+      <div class="fc-word">${d.w}</div>
+      <div class="fc-pinyin">${d.p}</div>
+      <div class="fc-answer">${d.m}</div>
+      <div class="fc-reveal-hint">탭하여 뜻 보기 👆</div>
+    </div>
+    ${s.fcRevealed ? `<div class="fc-actions">
+      <button class="fc-result-btn btn-bad" onclick="fcResult(${tabIdx},'bad')">❌ 모름</button>
+      <button class="fc-result-btn btn-good" onclick="fcResult(${tabIdx},'good')">✅ 알아요!</button>
+    </div>` : ''}
+    <div class="fc-progress">
+      <span>학습 진도</span>
+      <div class="fc-progress-bar"><div class="fc-progress-fill" style="width:${knownPct}%"></div></div>
+      <span>${s.fcKnown.size}/${total}</span>
+    </div>
+  </div>`;
+}
+
+// ── FLASHCARD ACTIONS ────────────────────────────────────
+function fcReveal(tabIdx) {
+  tabState[tabIdx].fcRevealed = true;
+  renderView(tabIdx);
+}
+function fcMove(tabIdx, dir) {
+  const s = tabState[tabIdx];
+  const data = getFiltered(tabIdx);
+  s.fcIdx = Math.max(0, Math.min(data.length-1, s.fcIdx + dir));
+  s.fcRevealed = false;
+  renderView(tabIdx);
+}
+function fcResult(tabIdx, res) {
+  const s = tabState[tabIdx];
+  const data = getFiltered(tabIdx);
+  const key = `${tabIdx}-${s.fcIdx}`;
+  if (res === 'good') s.fcKnown.add(key);
+  else s.fcUnknown.add(key);
+  if (s.fcIdx < data.length - 1) {
+    s.fcIdx++;
+    s.fcRevealed = false;
+  }
+  renderView(tabIdx);
+}
+
+// ── HELPERS ──────────────────────────────────────────────
+function setView(tabIdx, mode) {
+  tabState[tabIdx].viewMode = mode;
+  renderAll(tabIdx);
+}
+function setSort(tabIdx, sort) {
+  tabState[tabIdx].sort = sort;
+  renderAll(tabIdx);
+}
+function renderView(tabIdx) {
+  const s = tabState[tabIdx];
+  const el = document.getElementById(`view-${tabIdx}`);
+  if (s.viewMode === 'table') el.innerHTML = renderTable(tabIdx);
+  else if (s.viewMode === 'card') el.innerHTML = renderCards(tabIdx);
+  else el.innerHTML = renderFlash(tabIdx);
+}
+function renderAll(tabIdx) {
+  renderControls(tabIdx);
+  renderView(tabIdx);
+}
+
+// ── TAB SWITCH ───────────────────────────────────────────
+function switchTab(idx) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+  document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
+  renderAll(idx);
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ── SCROLL TO TOP ────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('totop').classList.toggle('visible', window.scrollY > 300);
+});
+
+// ── INIT ─────────────────────────────────────────────────
+[0,1,2,3].forEach(i => renderAll(i));
+</script>
 </body>
-</html>
+</html
