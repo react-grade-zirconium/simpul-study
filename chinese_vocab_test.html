@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>중국어 단어 테스트</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#c0392b;--primary-light:#fdf2f1;--green:#16a34a;--green-light:#f0fdf4;--blue:#2563eb;--bg:#f8fafc;--surface:#fff;--border:#e2e8f0;--text:#0f172a;--text-sec:#64748b;--shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);font-size:14.5px;line-height:1.75;min-height:100vh}
+.page-header{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+.header-inner{max-width:980px;margin:0 auto;padding:12px 20px}.subject-label{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text-sec);margin-bottom:2px}.page-title{font-size:19px;font-weight:700;display:flex;align-items:center;gap:8px}.badge-unit{font-size:11px;font-weight:700;padding:2px 9px;border-radius:99px;background:var(--primary);color:#fff;letter-spacing:.03em}
+.content-wrap{max-width:980px;margin:0 auto;padding:24px 20px 100px}.unit-banner{display:inline-flex;align-items:center;gap:6px;background:var(--primary-light);border:1px solid #f5c6c2;border-radius:6px;padding:5px 12px;font-size:12px;font-weight:500;color:var(--primary);margin-bottom:18px}.quiz-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);padding:22px;max-width:720px;margin:0 auto}.quiz-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:18px}.quiz-title{font-size:18px;font-weight:700;color:var(--primary)}.quiz-stats{color:var(--text-sec);font-size:12px;font-weight:700}.quiz-question{text-align:center;padding:22px 12px;background:var(--primary-light);border-radius:14px;margin-bottom:18px}.quiz-word{font-size:44px;font-weight:700;color:var(--primary);letter-spacing:.05em}.quiz-pinyin{margin-top:4px;font-size:15px;color:var(--blue);font-style:italic;font-weight:500}.quiz-options{display:grid;gap:10px}.quiz-option{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);font-family:'Noto Sans KR',sans-serif;font-size:14px;text-align:left;cursor:pointer;transition:all .15s}.quiz-option:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light)}.quiz-option.correct{border-color:var(--green);background:var(--green-light);color:var(--green);font-weight:700}.quiz-option.wrong{border-color:var(--primary);background:var(--primary-light);color:var(--primary);font-weight:700}.quiz-feedback{min-height:28px;margin:14px 0 0;font-size:14px;font-weight:700;text-align:center}.quiz-actions{display:flex;justify-content:center;gap:10px;margin-top:16px}.quiz-action-btn{padding:9px 16px;border:none;border-radius:9px;background:var(--primary);color:#fff;font-family:'Noto Sans KR',sans-serif;font-weight:700;cursor:pointer}.quiz-select{padding:8px 10px;border:1px solid var(--border);border-radius:8px;font-family:'Noto Sans KR',sans-serif;background:#fff;color:var(--text)}.back-link{display:inline-flex;margin-bottom:14px;color:var(--primary);font-weight:700;text-decoration:none}.empty-state{text-align:center;padding:48px 20px;color:var(--text-sec);font-size:13px}
+@media (max-width:640px){.quiz-word{font-size:36px}.quiz-card{padding:18px}.quiz-top{align-items:stretch}.quiz-select{width:100%}}
+</style>
+</head>
+<body>
+<header class="page-header">
+  <div class="header-inner">
+    <div class="subject-label">중국어 · 어휘</div>
+    <div class="page-title">🇨🇳 중국어 단어 테스트 <span class="badge-unit">뜻 고르기</span></div>
+  </div>
+</header>
+<div class="content-wrap">
+  <a class="back-link" href="./chinese_hub.html">← 중국어 선택으로 돌아가기</a><br>
+  <div class="unit-banner">🧠 단어 테스트 · 제시된 중국어 단어의 뜻 고르기</div>
+  <div id="quiz-root" class="empty-state">단어 데이터를 불러오는 중입니다…</div>
+</div>
+<script>
+const quizState={tabIdx:3,current:null,options:[],selected:null,answered:0,correct:0,vocab:null};
+function shuffleList(list){return[...list].sort(()=>Math.random()-.5)}
+async function loadVocab(){
+  const html=await fetch('./chinese_vocab.html').then(res=>res.text());
+  const match=html.match(/const VOCAB = ([\s\S]*?\n};)/);
+  if(!match) throw new Error('VOCAB 데이터를 찾을 수 없습니다.');
+  const VOCAB=Function(`return (${match[1].replace(/;\s*$/,'')})`)();
+  VOCAB[3]=[...VOCAB[0],...VOCAB[1],...VOCAB[2]];
+  quizState.vocab=VOCAB;
+}
+function makeQuizQuestion(){
+  const pool=quizState.vocab[quizState.tabIdx];
+  const current=pool[Math.floor(Math.random()*pool.length)];
+  const wrong=shuffleList(quizState.vocab[3].filter(item=>item!==current)).slice(0,3);
+  quizState.current=current;quizState.options=shuffleList([current,...wrong]);quizState.selected=null;
+}
+function renderQuiz(){
+  if(!quizState.vocab)return;
+  if(!quizState.current)makeQuizQuestion();
+  const root=document.getElementById('quiz-root');
+  const d=quizState.current;
+  const isAnswered=quizState.selected!==null;
+  root.className='';
+  root.innerHTML=`<div class="quiz-card">
+    <div class="quiz-top"><div><div class="quiz-title">제시된 중국어 단어의 뜻을 고르세요.</div><div class="quiz-stats">맞힌 개수 ${quizState.correct} / 푼 문제 ${quizState.answered}</div></div>
+      <select class="quiz-select" onchange="setQuizTab(Number(this.value))" aria-label="테스트 단어장 선택"><option value="0" ${quizState.tabIdx===0?'selected':''}>단어장 1</option><option value="1" ${quizState.tabIdx===1?'selected':''}>단어장 2</option><option value="2" ${quizState.tabIdx===2?'selected':''}>단어장 3</option><option value="3" ${quizState.tabIdx===3?'selected':''}>전체 단어</option></select></div>
+    <div class="quiz-question"><div class="quiz-word">${d.w}</div><div class="quiz-pinyin">${d.p}</div></div>
+    <div class="quiz-options">${quizState.options.map((opt,i)=>{const cls=!isAnswered?'':opt===d?'correct':i===quizState.selected?'wrong':'';return`<button class="quiz-option ${cls}" ${isAnswered?'disabled':''} onclick="answerQuiz(${i})">${opt.m}</button>`}).join('')}</div>
+    <div class="quiz-feedback">${isAnswered?(quizState.options[quizState.selected]===d?'정답이에요! 🎉':`아쉬워요. 정답은 “${d.m}”입니다.`):''}</div>
+    <div class="quiz-actions"><button class="quiz-action-btn" onclick="nextQuiz()">${isAnswered?'다음 문제':'건너뛰기'}</button></div>
+  </div>`;
+}
+function setQuizTab(tabIdx){quizState.tabIdx=tabIdx;quizState.answered=0;quizState.correct=0;makeQuizQuestion();renderQuiz()}
+function answerQuiz(optionIdx){if(quizState.selected!==null)return;quizState.selected=optionIdx;quizState.answered++;if(quizState.options[optionIdx]===quizState.current)quizState.correct++;renderQuiz()}
+function nextQuiz(){makeQuizQuestion();renderQuiz()}
+loadVocab().then(renderQuiz).catch(err=>{document.getElementById('quiz-root').textContent=`단어 데이터를 불러오지 못했습니다: ${err.message}`});
+</script>
+</body>
+</html>
