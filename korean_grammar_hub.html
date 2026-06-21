@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>공통국어 문법 학습 선택</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{width:100%;height:100%;background:#f6f8fc;color:#0f172a;font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif}
+    body{display:grid;place-items:center;padding:20px;overflow:auto}
+    .grammar-select{width:min(560px,100%);border:1px solid #dbe3ef;border-radius:22px;background:#fff;padding:28px;box-shadow:0 12px 32px rgba(15,23,42,.08);text-align:center}
+    .label{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;background:#eff6ff;color:#1d4ed8;padding:7px 12px;font-size:.88rem;font-weight:800}
+    h1{margin-top:14px;font-size:clamp(1.55rem,4vw,2.15rem);line-height:1.25;letter-spacing:-.04em}
+    p{margin-top:8px;color:#64748b;line-height:1.55;font-size:.96rem}
+    .choices{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+    .choice{display:flex;align-items:center;justify-content:center;gap:8px;min-height:74px;border:1px solid #dbe3ef;border-radius:16px;background:#f8fafc;color:#0f172a;text-decoration:none;font-size:1.18rem;font-weight:900;transition:background .15s ease,border-color .15s ease,transform .15s ease}
+    .choice:hover,.choice:focus-visible{background:#eff6ff;border-color:#93c5fd;transform:translateY(-2px);outline:none}
+    .choice.elements:hover,.choice.elements:focus-visible{background:#f5f3ff;border-color:#c4b5fd}
+    .back{display:inline-flex;margin-top:18px;color:#64748b;text-decoration:none;font-size:.9rem;font-weight:700}
+    .back:hover,.back:focus-visible{color:#1d4ed8;outline:none}
+    @media (max-width:520px){body{padding:14px}.grammar-select{padding:22px 16px}.choices{grid-template-columns:1fr}.choice{min-height:62px}}
+  </style>
+</head>
+<body>
+  <main class="grammar-select" aria-labelledby="grammarTitle">
+    <span class="label">🧩 공통국어 문법</span>
+    <h1 id="grammarTitle">문법 파트를 선택하세요</h1>
+    <p>사회 탭처럼 문법을 세부 단원으로 나누어 학습할 수 있어요.</p>
+
+    <nav class="choices" aria-label="공통국어 문법 파트 선택">
+      <a class="choice phonology" href="./korean_phonology.html">🔊 음운</a>
+      <a class="choice elements" href="./korean_grammar_elements.html">🧱 문법 요소</a>
+    </nav>
+
+    <a class="back" href="./korean_hub.html">← 국어 선택으로</a>
+  </main>
+</body>
+</html>
