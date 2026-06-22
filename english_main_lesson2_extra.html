@@ -1,37 +1,850 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>영어 본문 — 2과 추가 지문</title>
-  <style>
-    :root{color-scheme:light;font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif}
-    *{box-sizing:border-box}
-    body{margin:0;padding:24px;background:#f6f8fc;color:#0f172a}
-    main{max-width:860px;margin:0 auto;display:grid;gap:16px}
-    section{border:1px solid #dbe3ef;border-radius:18px;background:#fff;padding:22px;box-shadow:0 12px 28px rgba(15,23,42,.08)}
-    a.back{display:inline-flex;margin-bottom:10px;color:#4338ca;text-decoration:none;font-weight:800}
-    h1{margin:0;font-size:clamp(1.5rem,4vw,2.2rem);letter-spacing:-.04em}
-    h2{margin:0 0 10px;color:#4338ca;font-size:1.05rem}
-    p,li{line-height:1.7}
-    ul{margin:0;padding-left:1.2rem}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The World of Curries</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --deep:#6b3a00;
+    --mid:#b06000;
+    --light:#e8a040;
+    --accent:#c8860a;
+    --sand:#fdf8f0;
+    --card:#ffffff;
+    --text:#2d1a00;
+    --catA:#8b5e00;  /* 관계사·접속사 */
+    --catB:#9b3a1a;  /* 시제·수동태 */
+    --catC:#2e7d6e;  /* 준동사·부정사 */
+    --catD:#5a6e2e;  /* 동사구·관용표현 */
+    --catE:#6a3a8a;  /* 문장구조·대조 */
+    --catF:#b5546a;  /* 심화 표현·관점 */
+    --syn:#2e7d6e;
+    --ant:#9b3a1a;
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    font-family:'Noto Sans KR', sans-serif;
+    background:var(--sand);
+    color:var(--text);
+    padding-bottom:40px;
+  }
+  header{
+    background:linear-gradient(135deg, var(--deep), var(--mid));
+    color:#fff;
+    padding:22px 18px 28px;
+    text-align:center;
+    border-radius:0 0 22px 22px;
+    box-shadow:0 4px 14px rgba(107,58,0,0.25);
+  }
+  header h1{
+    font-family:'Gowun Batang', serif;
+    font-size:22px;
+    margin:0 0 6px;
+    letter-spacing:0.3px;
+    line-height:1.35;
+  }
+  header p{ margin:0; font-size:13px; opacity:0.9; }
+
+  .guide{
+    max-width:680px;
+    margin:14px auto 0;
+    padding:14px 16px;
+    background:#fff;
+    border-radius:14px;
+    box-shadow:0 2px 8px rgba(107,58,0,0.08);
+    font-size:13.5px;
+    line-height:1.6;
+  }
+  .guide b{ color:var(--mid); }
+  .guide ol{ margin:6px 0 0; padding-left:20px; }
+  .guide li{ margin-bottom:3px; }
+
+  .tabs{
+    max-width:680px;
+    margin:14px auto 0;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    padding:0 8px;
+  }
+  .tab-btn{
+    padding:11px 4px;
+    border:none;
+    border-radius:12px;
+    background:#fff;
+    color:var(--deep);
+    font-weight:700;
+    font-size:13.5px;
+    cursor:pointer;
+    box-shadow:0 2px 6px rgba(107,58,0,0.08);
+    transition:all .15s;
+  }
+  .tab-btn.active{ background:var(--mid); color:#fff; }
+
+  main{
+    max-width:680px;
+    margin:14px auto 0;
+    padding:0 8px;
+  }
+  .tab-content{ display:none; }
+  .tab-content.active{ display:block; }
+
+  .section-intro{
+    background:#fff;
+    border-radius:14px;
+    padding:12px 14px;
+    font-size:13px;
+    line-height:1.6;
+    margin-bottom:10px;
+    box-shadow:0 2px 6px rgba(107,58,0,0.06);
+  }
+
+  /* 원문 */
+  .passage-section{ margin-bottom:14px; }
+  .passage-card{
+    background:var(--card);
+    border-radius:14px;
+    padding:16px;
+    box-shadow:0 2px 8px rgba(107,58,0,0.07);
+  }
+  .passage-para-block{ margin-bottom:6px; }
+  .passage-para-block:last-child{ margin-bottom:0; }
+  .passage-para-first{
+    display:flex;
+    gap:8px;
+    align-items:flex-start;
+  }
+  .passage-num{
+    flex-shrink:0;
+    font-weight:700;
+    color:var(--mid);
+    font-size:14px;
+    line-height:2.5;
+    font-family:'Noto Sans KR', sans-serif;
+  }
+  .passage-sentences{ flex:1; }
+  .sent-en{
+    display:inline;
+    font-size:15.5px;
+    line-height:2.5;
+    font-family:'Gowun Batang', serif;
+    cursor:pointer;
+    border-radius:4px;
+    padding:1px 2px;
+    transition:background .15s;
+  }
+  .sent-en:hover{ background:#fde8c0; }
+  .sent-en.active{ background:#ffd080; }
+  .sent-tr{
+    display:block;
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease, padding .3s ease, margin .3s ease;
+    background:#fdf3e3;
+    border-left:3px solid var(--light);
+    border-radius:0 8px 8px 0;
+    font-size:13.5px;
+    line-height:1.75;
+    color:#5a3300;
+    padding:0 10px;
+    margin:0;
+  }
+  .sent-tr.show{
+    max-height:200px;
+    padding:7px 10px;
+    margin:2px 0 5px 0;
+  }
+  .passage-hint{
+    font-size:12px;
+    color:#c8a878;
+    text-align:center;
+    padding:0 0 8px;
+  }
+
+  /* 필터 칩 */
+  .chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-bottom:10px;
+  }
+  .chip{
+    padding:6px 12px;
+    border-radius:18px;
+    border:1.5px solid #ccc;
+    background:#fff;
+    font-size:12.5px;
+    font-weight:500;
+    cursor:pointer;
+    color:#666;
+    transition:all .15s;
+    white-space:nowrap;
+  }
+  .count-info{
+    font-size:12px;
+    color:#999;
+    margin:0 2px 10px;
+    text-align:right;
+  }
+
+  /* 문법 카드 */
+  .card{
+    background:var(--card);
+    border-radius:14px;
+    padding:14px 15px;
+    margin-bottom:10px;
+    box-shadow:0 2px 8px rgba(107,58,0,0.07);
+    border-left:5px solid #ccc;
+  }
+  .card-top{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:8px;
+    flex-wrap:wrap;
+  }
+  .para-badge{
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--deep);
+    background:#fdf0e0;
+    border-radius:8px;
+    padding:2px 8px;
+  }
+  .cat-tag{
+    font-size:11.5px;
+    font-weight:700;
+    padding:2px 9px;
+    border-radius:18px;
+  }
+  .en-sentence{
+    font-size:15px;
+    line-height:1.65;
+    margin:0 0 8px;
+    font-weight:500;
+    font-family:'Gowun Batang', serif;
+  }
+  .en-sentence mark{
+    background:#ffe9a8;
+    padding:0 2px;
+    border-radius:3px;
+    font-weight:700;
+  }
+  .point-title{
+    font-size:14px;
+    font-weight:700;
+    margin:0 0 4px;
+    color:var(--deep);
+  }
+  .desc{
+    font-size:13.5px;
+    line-height:1.7;
+    margin:0;
+    color:#4a2800;
+  }
+
+  /* 동의어/반의어 카드 */
+  .syn-card{
+    background:var(--card);
+    border-radius:14px;
+    padding:14px 15px;
+    margin-bottom:10px;
+    box-shadow:0 2px 8px rgba(107,58,0,0.07);
+  }
+  .syn-head{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:6px;
+  }
+  .syn-word{
+    font-size:16px;
+    font-weight:700;
+    font-family:'Gowun Batang', serif;
+  }
+  .syn-icon{
+    font-size:14px;
+    font-weight:900;
+    padding:1px 9px;
+    border-radius:18px;
+    color:#fff;
+  }
+  .syn-icon.syn{ background:var(--syn); }
+  .syn-icon.ant{ background:var(--ant); }
+  .syn-meaning{ font-size:13.5px; color:#666; margin:0 0 7px; }
+  .syn-example{
+    font-size:13.5px;
+    line-height:1.65;
+    background:#fdf3e3;
+    border-radius:10px;
+    padding:8px 10px;
+    margin:0 0 6px;
+    font-family:'Gowun Batang', serif;
+  }
+  .syn-example mark{
+    background:#ffe9a8;
+    padding:0 2px;
+    border-radius:3px;
+    font-weight:700;
+  }
+  .syn-note{ font-size:12.5px; color:#999; margin:0; }
+
+  /* 패러프레이징 카드 */
+  .para-card{
+    background:var(--card);
+    border-radius:14px;
+    padding:14px 15px;
+    margin-bottom:10px;
+    box-shadow:0 2px 8px rgba(107,58,0,0.07);
+  }
+  .para-label{ font-size:11.5px; color:#bbb; margin:0 0 4px; font-weight:700; }
+  .para-orig{
+    font-size:15px;
+    line-height:1.65;
+    margin:0 0 4px;
+    font-weight:500;
+    font-family:'Gowun Batang', serif;
+  }
+  .reveal-btn{
+    margin-top:8px;
+    border:1.5px solid var(--mid);
+    color:var(--mid);
+    background:#fff;
+    font-size:12.5px;
+    font-weight:700;
+    padding:6px 12px;
+    border-radius:18px;
+    cursor:pointer;
+    transition:all .15s;
+  }
+  .reveal-btn.open{ background:var(--mid); color:#fff; }
+  .para-answer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+  }
+  .para-answer.show{ max-height:400px; }
+  .para-answer-inner{
+    margin-top:10px;
+    padding:10px 12px;
+    background:#fdf0e0;
+    border-radius:10px;
+    font-size:14px;
+    line-height:1.65;
+    font-family:'Gowun Batang', serif;
+  }
+  .para-tip{
+    font-size:12.5px;
+    color:#999;
+    margin:6px 0 0;
+    font-family:'Noto Sans KR', sans-serif;
+  }
+  .toggle-all{
+    display:block;
+    margin:0 0 10px auto;
+    border:1.5px solid var(--deep);
+    color:var(--deep);
+    background:#fff;
+    font-size:12.5px;
+    font-weight:700;
+    padding:6px 12px;
+    border-radius:18px;
+    cursor:pointer;
+  }
+
+  footer{
+    text-align:center;
+    font-size:11.5px;
+    color:#ccc;
+    margin-top:18px;
+    padding:0 12px;
+    line-height:1.6;
+  }
+</style>
 </head>
 <body>
-  <main>
-    <section>
-      <a class="back" href="./english_main_hub.html">← 영어 본문 선택으로</a>
-      <h1>📗 영어 본문 2과 추가 지문</h1>
-      <p>2과 추가 지문을 중심으로 핵심 내용, 문장 구조, 근거 문장을 정리하는 공간입니다.</p>
-    </section>
-    <section>
-      <h2>학습 루틴</h2>
-      <ul>
-        <li>지문별 중심 내용과 주제를 한 문장으로 요약하기</li>
-        <li>관계사, 분사구문, 접속사 등 문장 구조 표시하기</li>
-        <li>문제 근거가 되는 문장을 본문에서 찾아 표시하기</li>
-      </ul>
-    </section>
-  </main>
+
+<header>
+  <h1>🍛 The World of Curries</h1>
+  <p>고등학교 영어 · 원문 · 문법 포인트 · 동의어·반의어 · 패러프레이징</p>
+</header>
+
+<div class="guide">
+  <b>📖 학습 가이드</b>
+  <ol>
+    <li><b>문법 포인트·동의어·반의어·패러프레이징</b> 탭을 먼저 학습한 뒤, <b>원문 읽기</b> 탭으로 돌아와 배운 내용을 본문에 직접 표시하거나 필기해 보세요. (문법 요소에 밑줄 긋기, 여백에 동의어 적기, 문장 패러프레이징해 보기 등)</li>
+    <li><b>문법 포인트</b>: 핵심 구문을 카테고리별로 정리. 칩으로 원하는 유형만 골라 복습하세요.</li>
+    <li><b>동의어·반의어</b>: 본문 핵심 표현의 유의어(≈)·반의어(↔)를 예문과 함께 익히세요.</li>
+    <li><b>패러프레이징</b>: 먼저 스스로 바꿔 써본 뒤, 버튼으로 예시 답안을 확인하세요.</li>
+  </ol>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" data-tab="passage">원문 읽기</button>
+  <button class="tab-btn" data-tab="grammar">문법 포인트</button>
+  <button class="tab-btn" data-tab="synonyms">동의어·반의어</button>
+  <button class="tab-btn" data-tab="paraphrase">패러프레이징</button>
+</div>
+
+<main>
+  <section id="passage" class="tab-content active">
+    <div class="section-intro">
+      전체 본문과 문장별 해석입니다. 문장을 탭하면 해석이 나타납니다.
+    </div>
+    <div id="passageList"></div>
+  </section>
+
+  <section id="grammar" class="tab-content">
+    <div class="section-intro">
+      핵심 문법 포인트입니다. <mark style="background:#ffe9a8;padding:0 2px;border-radius:3px;">노란색 표시</mark> 부분이 해당 문법의 핵심 어구예요.
+    </div>
+    <div class="chips" id="grammarChips"></div>
+    <div class="count-info" id="grammarCount"></div>
+    <div id="grammarList"></div>
+  </section>
+
+  <section id="synonyms" class="tab-content">
+    <div class="section-intro">
+      <span class="syn-icon syn" style="font-size:12px;padding:1px 7px;">≈</span> 동의어 ·
+      <span class="syn-icon ant" style="font-size:12px;padding:1px 7px;">↔</span> 반의어로 표시했어요.
+    </div>
+    <div id="synList"></div>
+  </section>
+
+  <section id="paraphrase" class="tab-content">
+    <div class="section-intro">
+      원문을 보고 스스로 패러프레이징해 본 뒤, 버튼을 눌러 예시 답안과 비교해 보세요.
+    </div>
+    <button class="toggle-all" id="toggleAllBtn">전체 펼치기</button>
+    <div id="paraList"></div>
+  </section>
+</main>
+
+<footer>본 자료는 필기 내용 및 본문을 바탕으로 제작된 학습 자료입니다.</footer>
+
+<script>
+/* ============================================================
+   DATA
+============================================================ */
+const circled = {1:'①',2:'②',3:'③',4:'④',5:'⑤'};
+
+const passageData = [
+{
+  title: null,
+  paragraphs: [
+    {
+      num: 1,
+      sentences: [
+        { en: `When you think of curry, do you think of your favorite spicy dish from a local Indian restaurant or something milder spread over steamed white rice?`,
+          tr: `카레를 생각하면, 동네 인도 음식점에서 먹는 좋아하는 매운 요리가 떠오르는가, 아니면 흰 쌀밥 위에 얹어 먹는 좀 더 순한 무언가가 떠오르는가?` },
+        { en: `There are different types of curries all around the world.`,
+          tr: `세계 곳곳에는 다양한 종류의 카레가 있다.` },
+        { en: `Curry comes in many flavors, and the recipes are different depending on where you are in the world.`,
+          tr: `카레는 다양한 맛으로 나오며, 레시피는 세계 어디에 있느냐에 따라 다르다.` },
+        { en: `For example, Japanese curry differs significantly from Indian curry despite sharing the same origin.`,
+          tr: `예를 들어, 일본 카레는 같은 기원을 공유함에도 불구하고 인도 카레와 상당히 다르다.` },
+        { en: `The term "curry" comes from the Tamil word "kario," which means "sauce."`,
+          tr: `"curry"라는 용어는 타밀어 "kario"에서 유래했는데, 이는 "소스"를 의미한다.` },
+        { en: `According to The Japan Times, curry made its way to Japan from India in the 1850s and 1860s, when the country began trading with British sailors.`,
+          tr: `Japan Times에 따르면, 카레는 1850~1860년대에 인도에서 일본으로 전해졌는데, 그 시기는 일본이 영국 선원들과 무역을 시작한 때였다.` },
+        { en: `The Royal Navy introduced curry to Japan in the late 19th century, and the Japanese Navy adapted it to suit their own tastes and needs.`,
+          tr: `영국 해군이 19세기 후반에 일본에 카레를 소개했고, 일본 해군은 자신들의 입맛과 필요에 맞게 카레를 변형시켰다.` },
+        { en: `Not surprisingly, the Japanese curry (or kare raisu) looks quite different from the Indian version.`,
+          tr: `놀랍지 않게도, 일본 카레(또는 카레라이스)는 인도식 카레와 상당히 다른 모습이다.` }
+      ]
+    }
+  ]
+},
+{
+  title: null,
+  paragraphs: [
+    {
+      num: 2,
+      sentences: [
+        { en: `The main difference between Japanese curry and Indian curry is the spice mix that is used.`,
+          tr: `일본 카레와 인도 카레의 주된 차이점은 사용되는 향신료 혼합물이다.` },
+        { en: `In Japan, curry spices come in the form of small, pre-packaged blocks, which are sold in grocery stores.`,
+          tr: `일본에서는 카레 향신료가 작은 포장 블록 형태로 나오는데, 이는 식료품점에서 판매된다.` },
+        { en: `On the other hand, Indian cooks do not typically use pre-mixed spices.`,
+          tr: `반면, 인도 요리사들은 일반적으로 미리 혼합된 향신료를 사용하지 않는다.` },
+        { en: `They create their own mixtures of turmeric, ginger, and other spices to make curry.`,
+          tr: `그들은 카레를 만들기 위해 강황, 생강, 그리고 다른 향신료들의 혼합물을 직접 만든다.` },
+        { en: `Since pre-packaged spices are not commonly used, Indian curries vary in color and texture: some are bright yellow, while others are deep red.`,
+          tr: `포장된 향신료가 일반적으로 사용되지 않기 때문에, 인도 카레는 색상과 질감이 다양하다. 어떤 것은 밝은 노란색인 반면, 다른 것들은 진한 붉은색이다.` },
+        { en: `Some are thin and soupy, while others are thick and dense.`,
+          tr: `어떤 것은 묽고 수프 같은 반면, 다른 것들은 걸쭉하고 진하다.` }
+      ]
+    }
+  ]
+},
+{
+  title: null,
+  paragraphs: [
+    {
+      num: 3,
+      sentences: [
+        { en: `The curry that we eat in Korea today was introduced by the Japanese.`,
+          tr: `오늘날 한국에서 먹는 카레는 일본에 의해 도입되었다.` },
+        { en: `It became popular in the late 1960s when ready-made curry powder made it easy to prepare a quick, simple meal.`,
+          tr: `그것은 즉석 카레 가루가 빠르고 간단한 식사를 준비하기 쉽게 만들어 준 1960년대 후반에 인기를 얻었다.` },
+        { en: `Therefore, the curry served in Korea is similar to Japanese curry, with the main difference being that Korean curry is bright yellow because it contains turmeric, a deep yellow spice.`,
+          tr: `따라서 한국에서 제공되는 카레는 일본 카레와 유사하며, 주된 차이점은 한국 카레가 진한 노란색 향신료인 강황을 함유하고 있어 밝은 노란색이라는 점이다.` }
+      ]
+    }
+  ]
+}
+];
+
+const catNames = {
+  A: '관계사·접속사',
+  B: '시제·수동태',
+  C: '준동사·부정사',
+  D: '동사구·관용표현',
+  E: '문장구조·대조',
+  F: '심화 표현·관점'
+};
+const catColors = {
+  A:'var(--catA)', B:'var(--catB)', C:'var(--catC)',
+  D:'var(--catD)', E:'var(--catE)', F:'var(--catF)'
+};
+
+const grammarData = [
+  {
+    para:1, cat:'C',
+    title:'분사의 형용사적 수식 (p.p. / V-ing)',
+    en:`...or something milder <mark>spread over steamed white rice</mark>?`,
+    desc:`spread는 과거분사로 앞의 something milder를 수식합니다. = "something milder <b>which is spread</b> over steamed white rice". steamed도 같은 방식으로 white rice를 수식하는 과거분사입니다.`
+  },
+  {
+    para:1, cat:'A',
+    title:'관계부사 where (~하는 곳에서, ~에 따라)',
+    en:`...the recipes are different depending on <mark>where you are in the world</mark>.`,
+    desc:`where절이 depending on의 목적어 역할을 하는 명사절입니다. depending on = "~에 따라, ~에 의존하여"의 의미를 가진 전치사구입니다.`
+  },
+  {
+    para:1, cat:'A',
+    title:'전치사 despite (~에도 불구하고)',
+    en:`Japanese curry differs significantly from Indian curry <mark>despite sharing the same origin</mark>.`,
+    desc:`despite + 동명사(V-ing) = "~에도 불구하고". = although/even though/in spite of the fact that they share the same origin. 필기에 although = in spite of = (even) though로 정리됨.`
+  },
+  {
+    para:1, cat:'A',
+    title:'관계대명사 which의 계속적 용법',
+    en:`The term "curry" comes from the Tamil word "kario," <mark>which means "sauce."</mark>`,
+    desc:`콤마 + which는 앞의 "kario"를 보충 설명하는 <b>계속적 용법</b>입니다. = "and it means 'sauce'". 필기에 = and it 로 표기됨.`
+  },
+  {
+    para:1, cat:'A',
+    title:'관계부사 when의 계속적 용법',
+    en:`...curry made its way to Japan from India in the 1850s and 1860s, <mark>when the country began trading with British sailors</mark>.`,
+    desc:`콤마 + when은 앞의 시간 표현(the 1850s and 1860s)을 받아 "그때 ~했다"는 추가 정보를 덧붙입니다. = "and then / in which". 필기에 = and then = in which 로 표기됨.`
+  },
+  {
+    para:1, cat:'D',
+    title:'make one\'s way to (~로 나아가다/전해지다)',
+    en:`...curry <mark>made its way to</mark> Japan from India in the 1850s and 1860s.`,
+    desc:`'make one's way to'는 "~로 (점차) 나아가다, ~에 전해지다"라는 의미의 관용표현입니다. 필기에 ~로 가다로 표기됨.`
+  },
+  {
+    para:1, cat:'D',
+    title:'adapt A to suit B (B에 맞게 A를 변형하다)',
+    en:`...the Japanese Navy <mark>adapted</mark> it <mark>to suit</mark> their own tastes and needs.`,
+    desc:`adapt는 "적응시키다, 맞게 변형하다"(필기: 중청하다, 적응하다), suit는 "~에 맞다, ~를 맞추다"(필기: ~를 맞추다). to suit는 목적을 나타내는 to부정사입니다.`
+  },
+  {
+    para:2, cat:'A',
+    title:'목적격 관계대명사 that (관계대명사절이 주어를 수식)',
+    en:`The main difference between Japanese curry and Indian curry is the spice mix <mark>that is used</mark>.`,
+    desc:`that은 the spice mix를 수식하는 목적격 관계대명사입니다. that is used = "사용되는"(수동). 필기에 [that is used] 형태로 강조 표시됨.`
+  },
+  {
+    para:2, cat:'A',
+    title:'관계대명사 which의 계속적 용법 (재등장)',
+    en:`In Japan, curry spices come in the form of small, pre-packaged blocks, <mark>which are sold in grocery stores</mark>.`,
+    desc:`콤마 + which는 앞의 small, pre-packaged blocks를 보충 설명합니다. = "and they are sold in grocery stores".`
+  },
+  {
+    para:2, cat:'E',
+    title:'대조 접속사 while (~인 반면에)',
+    en:`...some are bright yellow, <mark>while</mark> others are deep red. Some are thin and soupy, <mark>while</mark> others are thick and dense.`,
+    desc:`while은 두 대조적인 사실을 연결하는 접속사입니다. "~인 반면에"의 의미로 쓰이며, 본문에서 두 번 반복 사용되어 인도 카레의 다양성을 강조합니다. 필기에 Point 1로 표시됨.`
+  },
+  {
+    para:3, cat:'B',
+    title:'수동태 (was introduced by)',
+    en:`The curry that we eat in Korea today <mark>was introduced by</mark> the Japanese.`,
+    desc:`'be introduced by'는 "~에 의해 소개/도입되다"라는 수동태 표현입니다. 행위자(the Japanese)보다 행위의 대상(카레)에 초점을 맞춥니다.`
+  },
+  {
+    para:3, cat:'C',
+    title:'가목적어 it + to부정사 (진목적어)',
+    en:`...ready-made curry powder <mark>made it easy to prepare</mark> a quick, simple meal.`,
+    desc:`'make + it(가목적어) + 형용사 + to부정사(진목적어)' 구조입니다. it은 to prepare a quick, simple meal을 대신하는 가목적어입니다. 필기에 가목적어 OC로 표기됨.`
+  },
+  {
+    para:3, cat:'F',
+    title:'with + 명사 + 분사구문 (동시 상황)',
+    en:`...the curry served in Korea is similar to Japanese curry, <mark>with the main difference being that Korean curry is bright yellow</mark> because it contains turmeric, a deep yellow spice.`,
+    desc:`'with + 명사 + V-ing' 구조로 "~인 채로, ~이면서"의 의미를 나타내는 동시상황 분사구문입니다. "그리고/그런데 (명사)는 ~이다"로 자연스럽게 해석합니다. 필기에 "그리고/그런데 명사는 ~입니다"로 표기됨.`
+  },
+  {
+    para:3, cat:'A',
+    title:'관계부사 when + 가목적어 구문',
+    en:`It became popular in the late 1960s <mark>when ready-made curry powder made it easy to prepare a quick, simple meal</mark>.`,
+    desc:`when절이 앞의 the late 1960s를 수식하는 관계부사절입니다. "~하던 (그) 때에"의 의미로, 그 절 안에 'make it easy to V' 가목적어 구문이 포함되어 있습니다.`
+  }
+];
+
+const synData = [
+  {
+    type:'syn',
+    words:'depending on ≈ according to / based on',
+    meaning:'~에 따라, ~에 의존하여',
+    example:`...the recipes are different <mark>depending on</mark> where you are in the world.`,
+    note:`전치사구로 뒤에 명사 또는 명사절이 옵니다. "~에 따라 다르다"는 differ/vary depending on 형태로 자주 쓰입니다.`
+  },
+  {
+    type:'syn',
+    words:'differ from ≈ be different from',
+    meaning:'~와 다르다',
+    example:`Japanese curry <mark>differs</mark> significantly <mark>from</mark> Indian curry despite sharing the same origin.`,
+    note:`differ from = be different from. 필기에 "A: A와 다르다"로 표기됨. significantly(상당히)와 함께 자주 쓰입니다.`
+  },
+  {
+    type:'syn',
+    words:'despite ≈ although / even though / in spite of',
+    meaning:'~에도 불구하고',
+    example:`Japanese curry differs significantly from Indian curry <mark>despite</mark> sharing the same origin.`,
+    note:`despite/in spite of + 명사(구)/동명사 // although/even though + 주어 + 동사. 필기에 although = in spite of = (even) though 로 정리됨.`
+  },
+  {
+    type:'syn',
+    words:'On the other hand ≈ In contrast / Conversely',
+    meaning:'반면에, 반대로',
+    example:`<mark>On the other hand</mark>, Indian cooks do not typically use pre-mixed spices.`,
+    note:`단락 간 대조를 이어주는 접속부사입니다. 필기에 = In contrast, Conversely 로 표기됨.`
+  },
+  {
+    type:'syn',
+    words:'vary ≈ differ / be diverse',
+    meaning:'다양하다, 다르다',
+    example:`Indian curries <mark>vary</mark> in color and texture.`,
+    note:`vary in + 명사: "~에 있어 다양하다". 필기에 "다양하다"로 표기됨.`
+  },
+  {
+    type:'syn',
+    words:'adapt ≈ adjust / modify',
+    meaning:'적응시키다, 맞게 변형하다',
+    example:`...the Japanese Navy <mark>adapted</mark> it to suit their own tastes and needs.`,
+    note:`adapt A to B = "B에 맞게 A를 적응/변형시키다". 필기에 "중청하다, 적응하다"로 표기됨.`
+  },
+  {
+    type:'ant',
+    words:'thin and soupy ↔ thick and dense',
+    meaning:'묽고 수프 같은 ↔ 걸쭉하고 진한',
+    example:`Some are <mark>thin and soupy</mark>, while others are <mark>thick and dense</mark>.`,
+    note:`while로 연결된 대조 표현. 인도 카레의 다양한 질감을 나타내는 반의어 쌍입니다.`
+  }
+];
+
+const paraData = [
+  {
+    orig:`Japanese curry differs significantly from Indian curry despite sharing the same origin.`,
+    re:`Although Japanese curry shares the same origin as Indian curry, it differs significantly from it.`,
+    tip:`despite + 동명사 → although/even though + 주어 + 동사 (절로 전환)`
+  },
+  {
+    orig:`The term "curry" comes from the Tamil word "kario," which means "sauce."`,
+    re:`The term "curry" comes from the Tamil word "kario," and it means "sauce."`,
+    tip:`관계대명사 which의 계속적 용법 → and + 대명사로 풀어쓰기`
+  },
+  {
+    orig:`...curry made its way to Japan from India in the 1850s and 1860s, when the country began trading with British sailors.`,
+    re:`...curry made its way to Japan from India in the 1850s and 1860s, and then the country began trading with British sailors.`,
+    tip:`관계부사 when의 계속적 용법 → and then / and at that time으로 풀어쓰기`
+  },
+  {
+    orig:`On the other hand, Indian cooks do not typically use pre-mixed spices.`,
+    re:`In contrast, Indian cooks do not typically use pre-mixed spices.`,
+    tip:`On the other hand ≈ In contrast / Conversely (대조 접속부사 교체)`
+  },
+  {
+    orig:`...ready-made curry powder made it easy to prepare a quick, simple meal.`,
+    re:`...ready-made curry powder made preparing a quick, simple meal easy.`,
+    tip:`가목적어 it + to부정사 → 진목적어(동명사)를 목적어 자리로 이동`
+  },
+  {
+    orig:`...the curry served in Korea is similar to Japanese curry, with the main difference being that Korean curry is bright yellow because it contains turmeric, a deep yellow spice.`,
+    re:`...the curry served in Korea is similar to Japanese curry. However, the main difference is that Korean curry is bright yellow because it contains turmeric, a deep yellow spice.`,
+    tip:`with + 명사 + 분사구문(동시상황) → 별개의 문장으로 분리`
+  }
+];
+
+/* ============================================================
+   RENDER: 원문
+============================================================ */
+function renderPassage(){
+  const wrap = document.getElementById('passageList');
+  let sid = 0;
+
+  wrap.innerHTML = passageData.map(sec => {
+    const paras = sec.paragraphs.map(p => {
+      const inner = p.sentences.map(s => {
+        const id = `s${sid++}`;
+        return `<span class="sent-en" data-id="${id}">${s.en} </span><span class="sent-tr" id="${id}">${s.tr}</span>`;
+      }).join('');
+      return `<div class="passage-para-block">
+        <div class="passage-para-first">
+          <span class="passage-num">${circled[p.num]}</span>
+          <span class="passage-sentences">${inner}</span>
+        </div>
+      </div>`;
+    }).join('');
+
+    return `<div class="passage-section">
+      <p class="passage-hint">✏️ 문장을 탭하면 해석이 나타납니다</p>
+      <div class="passage-card">${paras}</div>
+    </div>`;
+  }).join('');
+
+  wrap.addEventListener('click', e => {
+    const el = e.target.closest('.sent-en');
+    if (!el) return;
+    const id = el.dataset.id;
+    const tr = document.getElementById(id);
+    const isOpen = tr.classList.contains('show');
+    const block = el.closest('.passage-sentences');
+    block.querySelectorAll('.sent-en').forEach(s => s.classList.remove('active'));
+    block.querySelectorAll('.sent-tr').forEach(t => t.classList.remove('show'));
+    if (!isOpen) {
+      el.classList.add('active');
+      tr.classList.add('show');
+    }
+  });
+}
+
+/* ============================================================
+   RENDER: 문법
+============================================================ */
+function renderGrammarChips(){
+  const wrap = document.getElementById('grammarChips');
+  const cats = ['all', ...Object.keys(catNames)];
+  wrap.innerHTML = cats.map((c,i) => {
+    const label = c==='all' ? '전체' : catNames[c];
+    const col = c==='all' ? 'var(--deep)' : catColors[c];
+    return `<button class="chip" data-cat="${c}" data-col="${col}"
+      style="${i===0?`background:${col};color:#fff;border-color:${col}`:''}">
+      ${label}</button>`;
+  }).join('');
+  wrap.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      wrap.querySelectorAll('.chip').forEach(c2 => {
+        c2.style.cssText = 'background:#fff;color:#666;border-color:#ccc';
+      });
+      const col = chip.dataset.col;
+      chip.style.cssText = `background:${col};color:#fff;border-color:${col}`;
+      renderGrammarList(chip.dataset.cat);
+    });
+  });
+}
+
+function renderGrammarList(filter){
+  const list = document.getElementById('grammarList');
+  const items = filter==='all' ? grammarData : grammarData.filter(g => g.cat===filter);
+  document.getElementById('grammarCount').textContent = `총 ${items.length}개 항목`;
+  list.innerHTML = items.map(g => `
+    <div class="card" style="border-left-color:${catColors[g.cat]}">
+      <div class="card-top">
+        <span class="para-badge">단락 ${circled[g.para]}</span>
+        <span class="cat-tag" style="color:${catColors[g.cat]};background:${catColors[g.cat]}1a">${catNames[g.cat]}</span>
+      </div>
+      <p class="en-sentence">${g.en}</p>
+      <p class="point-title">📌 ${g.title}</p>
+      <p class="desc">${g.desc}</p>
+    </div>
+  `).join('');
+}
+
+/* ============================================================
+   RENDER: 동의어·반의어
+============================================================ */
+function renderSyn(){
+  document.getElementById('synList').innerHTML = synData.map(s => `
+    <div class="syn-card">
+      <div class="syn-head">
+        <span class="syn-icon ${s.type}">${s.type==='syn'?'≈':'↔'}</span>
+        <span class="syn-word">${s.words}</span>
+      </div>
+      <p class="syn-meaning">${s.meaning}</p>
+      <p class="syn-example">${s.example}</p>
+      <p class="syn-note">${s.note}</p>
+    </div>
+  `).join('');
+}
+
+/* ============================================================
+   RENDER: 패러프레이징
+============================================================ */
+function renderPara(){
+  const list = document.getElementById('paraList');
+  list.innerHTML = paraData.map((p,i) => `
+    <div class="para-card">
+      <p class="para-label">원문 ${i+1}</p>
+      <p class="para-orig">${p.orig}</p>
+      <button class="reveal-btn" data-i="${i}">패러프레이징 보기</button>
+      <div class="para-answer" id="ans-${i}">
+        <div class="para-answer-inner">
+          <p style="margin:0">${p.re}</p>
+          <p class="para-tip">💡 ${p.tip}</p>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  list.querySelectorAll('.reveal-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const ans = document.getElementById('ans-'+btn.dataset.i);
+      const open = ans.classList.toggle('show');
+      btn.classList.toggle('open', open);
+      btn.textContent = open ? '패러프레이징 숨기기' : '패러프레이징 보기';
+    });
+  });
+}
+
+document.getElementById('toggleAllBtn').addEventListener('click', function(){
+  const expand = this.textContent === '전체 펼치기';
+  document.querySelectorAll('.para-answer').forEach(a => a.classList.toggle('show', expand));
+  document.querySelectorAll('.reveal-btn').forEach(b => {
+    b.classList.toggle('open', expand);
+    b.textContent = expand ? '패러프레이징 숨기기' : '패러프레이징 보기';
+  });
+  this.textContent = expand ? '전체 접기' : '전체 펼치기';
+});
+
+/* ============================================================
+   TABS
+============================================================ */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+/* ============================================================
+   INIT
+============================================================ */
+renderPassage();
+renderGrammarChips();
+renderGrammarList('all');
+renderSyn();
+renderPara();
+</script>
 </body>
-</html>
+</html
