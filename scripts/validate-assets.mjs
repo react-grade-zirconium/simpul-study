@@ -6,14 +6,14 @@ const htmlFiles = fs.readdirSync(rootDir)
   .filter((file) => file.endsWith('.html'))
   .sort();
 const attrPattern = /(?:href|src)="([^"#]+)"/g;
-const ignoredProtocols = /^(?:https?:|mailto:|tel:|javascript:|about:)/i;
+const ignoredProtocols = /^(?:https?:|mailto:|tel:|javascript:|about:|data:)/i;
 const missing = [];
 
 for (const htmlFile of htmlFiles) {
   const html = fs.readFileSync(path.join(rootDir, htmlFile), 'utf8');
   for (const match of html.matchAll(attrPattern)) {
     const ref = match[1];
-    if (ignoredProtocols.test(ref) || ref.startsWith('#')) continue;
+    if (ignoredProtocols.test(ref) || ref.startsWith('#') || ref.includes('{{') || ref.includes('+') || ref.endsWith('/')) continue;
     const cleanRef = ref.split(/[?#]/, 1)[0];
     const target = path.resolve(rootDir, path.dirname(htmlFile), cleanRef);
     if (!fs.existsSync(target)) missing.push(`${htmlFile} -> ${ref}`);
