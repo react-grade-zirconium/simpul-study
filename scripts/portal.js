@@ -292,14 +292,34 @@ function getNestedFrameDocument(rootFrame) {
   }
 }
 
+function getFramePageId(rootFrame) {
+  const normalizePath = (value) => {
+    const clean = String(value || '')
+      .split(/[?#]/)[0]
+      .split('/')
+      .pop()
+      ?.replace(/\.html?$/i, '')
+      || 'page';
+    return clean.replace(/[^a-zA-Z0-9가-힣_-]+/g, '_');
+  };
+  try {
+    const win = rootFrame?.contentWindow;
+    const path = win?.location?.pathname || rootFrame?.getAttribute('src') || '';
+    return normalizePath(path);
+  } catch (_) {
+    return normalizePath(rootFrame?.getAttribute('src') || '');
+  }
+}
+
 function getCurrentInkScope() {
   if (!document.body.classList.contains('subject-mode')) return 'dashboard';
   const subject = frame?.dataset.subject || inferSubjectFromSrc(frame?.getAttribute('src') || '');
+  const page = getFramePageId(frame);
   const doc = getNestedFrameDocument(frame);
   const activeTab = doc?.querySelector('.tab-btn.active');
   const activePanel = doc?.querySelector('.tab-panel.active');
   const tab = activeTab?.dataset?.tab || activePanel?.id || 'page';
-  return `subject:${subject}:tab:${tab}`;
+  return `subject:${subject}:page:${page}:tab:${tab}`;
 }
 
 let subjectFrameResizeId = 0;
