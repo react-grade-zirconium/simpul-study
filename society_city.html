@@ -1044,12 +1044,19 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <button class="totop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
-function switchTab(idx) {
+function switchTab(idx, options = {}) {
 document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
 document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i===idx));
-window.scrollTo({top:0, behavior:'smooth'});
+window.scrollTo({top:0, behavior: options.instant ? 'auto' : 'smooth'});
 const qEl = document.getElementById('quiz-'+idx);
 if (qEl && !qEl.innerHTML.trim()) buildQuizSection(idx);
+}
+
+function getInitialTabIndex() {
+const params = new URLSearchParams(window.location.search);
+const raw = params.get('tab') || (window.location.hash || '').replace(/^#(?:panel-|tab-)?/, '');
+const idx = Number(raw);
+return Number.isInteger(idx) && idx >= 0 && idx < document.querySelectorAll('.tab-panel').length ? idx : 0;
 }
 
 // ══════════════════════════════════════════════════
@@ -1814,7 +1821,8 @@ return `<span class="score-chip ${tc.cls}">${tc.icon} ${done}/10 (${sc[0]}점)</
 }).join('');
 }
 
-buildQuizSection(0);
+const initialTab = getInitialTabIndex();
+switchTab(initialTab, { instant: true });
 </script>
 </body>
 </html>
